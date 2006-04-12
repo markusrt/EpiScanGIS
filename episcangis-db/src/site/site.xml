@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project name="EpiScanGIS DB">
+	<bannerLeft>
+		<name>EpiScanGIS</name>
+		<src>../images/logo_episcangis.png</src>
+		<href>../index.html</href>
+	</bannerLeft>
+	<bannerRight>
+		<name>NRZM</name>
+		<src>../images/logo_nrzm.png</src>
+		<href>http://www.meningococcus.de</href>
+	</bannerRight>
+	<body>
+		<links>
+			<item name="Uni-W&#x00FC;rzburg"
+				href="http://www.uni-wuerzburg.de" />
+		</links>
+		${modules} 
+		${reports}
+	</body>
+</project>

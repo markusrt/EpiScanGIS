@@ -1,0 +1,21 @@
+  ---
+  EpiScanGIS DB
+  ---
+  Markus Reinhardt
+  ---
+  06.04.2006
+  ---
+
+EpiScanGIS DB
+
+<Draft>
+  
+  Dieses Paket implementiert die Java-Schnittstelle zu der PostgreSQL-Datenbank.
+  Die Implementierung basiert auf dem Prinzip des 
+  "Data Access Objects"-Entwurfsmusters (DAO) von  
+  {{{http://java.sun.com/blueprints/corej2eepatterns/Patterns/DataAccessObject.html}Sun}}. 
+  Dieses Entwurfsmuster kapselt alle Zugriffe auf eine Datenbank vor 
+  dem Rest der Anwendung.
+
+  Alle Datenbankzugriffe in EpiDeGIS laufen über dieses Paket. SQL-Code 
+  verschwindet damit komplett aus dem Java-Code aller anderen Klassen.
