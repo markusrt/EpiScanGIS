@@ -1,0 +1,15 @@
+  ---
+  EpiScanGIS Importer
+  ---
+  Markus Reinhardt
+  ---
+  06.04.2006
+  ---
+
+EpiScanGIS Importer
+
+<Draft>
+
+* EpiScanGIS Importer 
+  
+  Import-Anwendung - importiert eine CSV-Datei in die Datenbank von EpiDeGIS.
