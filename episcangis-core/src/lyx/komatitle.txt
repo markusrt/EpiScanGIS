@@ -1,0 +1,12 @@
+\subject{Diplomarbeit\\Universität Würzburg\\Lehrstuhl für Informatik II\\Prof. Dr. Jürgen Albert}
+
+\title{Web-basierter GIS-Service zur Überwachung von Infektionen}
+
+\author{Markus Reinhardt}
+
+\publishers{Beginn: 23. Juni 2005\\Ende: hoffentlich}
+
+\date{23. Dezember 2005}
+
+\maketitle
+

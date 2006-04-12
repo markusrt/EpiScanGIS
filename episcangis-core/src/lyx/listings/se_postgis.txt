@@ -1,0 +1,2 @@
+createlang plpgsql <Datenbankname>
+psql -f lwpostgis.sql -d <Datenbankname>

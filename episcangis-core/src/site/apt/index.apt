@@ -1,0 +1,74 @@
+  ---
+  EpiScanGIS Web Surveillance
+  ---
+  Markus Reinhardt
+  ---
+  06.04.2006
+  ---
+
+EpiScanGIS Web Surveillance
+
+<Draft>
+
+ Das ist die HTML-Dokumentation zu dem Softwareprojekt der Diplomarbeit mit 
+ dem Titel:
+ 
+ <<"Web-basierter GIS-Service zur Überwachung von Infektionen">>
+ 
+ Das Softwaresystem trägt den Arbeitstitel <<EpiScanGIS>>.
+
+  Von hier aus lassen sich Informationen zu jedem einzelnen Unterprojekt 
+  aufrufen. Die beiden wichtigsten Informationsquellen sind dabei die 
+  JavaDoc- und die Source Xref-Dokumentation. Diese finden sich nach dem Öffnen
+  eines Unterprojektes in der linken Navigation (z.B. EpiDeGIS Database
+  Access) im jeweiligen Menü Project Reports.
+ 
+  Besonders die JavaDocs werden noch erweitert. Weiterhin bieten die 
+  Einstiegsseiten zu jedem Teilprojekt Informationen dazu, wie es kompiliert 
+  und angewendet werden kann bzw. welche Punkte noch zu überarbeiten sind.
+
+  Die Unterprojekte von EpiDeGIS haben im Einzelnen folgende Aufgaben:
+      
+* EpiScanGIS Database Access
+  
+  Dieses Paket implementiert die Java-Schnittstelle zu der PostgreSQL-Datenbank.
+  Die Implementierung basiert auf dem Prinzip des 
+  "Data Access Objects"-Entwurfsmusters (DAO) von  
+  {{{http://java.sun.com/blueprints/corej2eepatterns/Patterns/DataAccessObject.html}Sun}}. 
+  Dieses Entwurfsmuster kapselt alle Zugriffe auf eine Datenbank vor 
+  dem Rest der Anwendung.
+
+  Alle Datenbankzugriffe in EpiDeGIS laufen über dieses Paket. SQL-Code 
+  verschwindet damit komplett aus dem Java-Code aller anderen Klassen.
+
+* EpiScanGIS Web application
+  
+  Dieses Unterprojekt enthält zwei Java-Pakete, die beide in der 
+  Webanwendung eingesetzt werden:
+  
+  <<de.meningococcus.episcangis.map:>>
+  Hier sind alle Klassen zusammengefasst, die für die Java-Repräsentation einer 
+  Karte benötigt werden. Sie implementieren die abstrakten Datentypen Karte, 
+  Ebenen und Parameter sowie die Kommunikation mit dem MapServer.
+  
+  <<de.meningococcus.episcangis.web>>:
+  Die Webanwendung enthält alles, was der Tomcat-Server zum Ausführen der 
+  serverseitigen EpiDeGIS-Komponente benötigt. Das ist die mit Struts 
+  implementierte Webanwendung, der Quellcode für die OpenLaszlo-Applikation 
+  und alle weiteren Ressourcen (JSP, CSS, Grafiken). Die Webanwendung verwendet
+   das Karten-Paket als Schnittstelle  zum Mapserver.
+
+* EpiScanGIS SatScan
+
+  Ein kleines Java-Programm ist für die automatische Ausführung von
+  {{{http://www.satscan.org}SaTScan}} zur Cluster-Identifizierung zuständig. Es 
+  ist in diesem Paket implementiert.
+
+* EpiScanGIS Transfer
+  
+  Transfer-Applikation - stellt eine SSH-Verbindung her, um Daten vom NRZM an 
+  den Datenserver zu übertragen.
+
+* EpiScanGIS Importer 
+  
+  Import-Anwendung - importiert eine CSV-Datei in die Datenbank von EpiDeGIS.

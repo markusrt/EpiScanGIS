@@ -1,0 +1,51 @@
+  ---
+  EpiScanGIS Web Surveillance - R-Komponente
+  ---
+  Markus Reinhardt
+  ---
+  10.04.2006
+  ---
+
+EpiScanGIS Web Surveillance - R-Komponente
+
+ Die R-Komponente soll für bestimmte Datenbankanfragen Grafiken und Diagramme
+ erzeugen können. Die Anfragen werden hierfür aus Java heraus an eine
+ {{{http://www.joeconway.com/plr/}PL/R}}-Methode übermittelt. Diese erzeugt die
+ Bilddatei. Für jeden Diagrammtyp wird dazu eine eigene Funktion benötigt.
+
+ <<Beispiel:>> 
+ 
+ Verteilung eines Merkmals als Balkendiagramm.
+ 
++------------------------------------------------------------------------------+
+episcangis_r_barplot ( query, mainTitle, subTitle, xlabTitle, 
+  ylabTitle, targetFile )
++------------------------------------------------------------------------------+
+ 
+ Hier ist <<<query>>> eine Abfrage, die eine Tabelle der Form zurückliefert:
+ 
+*-----------------------*--------*
+|<<Merkmalsbezeichnung>>|<<Wert>>|
+*--
+|29E|5|
+*--
+|C|574|
+*--
+|A|1|
+*--
+|...|...|
+*--
+
+ Diese könnte beispielsweise die Verteilung der einzelnen Meningokokkenfälle
+ im letzten Jahr, gruppiert Serogruppen enthalten.
+ 
+ Im Zusammenhang mit dem Einsatz von PL/R ergeben sich folgene Probleme:
+ 
+  * Die erzeugten Bilddateien werden im Verzeichnis <<</tmp>>>
+    mit den Zugriffsrechten <<<-rw-------   1 postgres   postgres>>> abgelegt. 
+    Sie müssen daher vom postgresql Prozess mit den neuen Rechten
+    versehen werden, damit der Tomcat Server darauf zugreifen kann.
+     
+  * Die PL/R-Erweiterung hat Zugriff auf das Dateisystem. Daher müssen die
+    darin implementierten Funktionen auf größtmögliche Sicherheit ausgelegt 
+    werden.

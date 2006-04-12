@@ -1,0 +1,1 @@
+SELECT *,centroid(kreis_geom) FROM imprt_kreis, kreise WHERE CAST( kreis_nr AS int)=kreis_n AND NOT contains(kreis_geom, GeometryFromText('POINT(' || longitude || ' ' || latitude || ')',-1))

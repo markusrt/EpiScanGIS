@@ -1,0 +1,1 @@
+INSERT INTO types (agent_type) (SELECT DISTINCT (sg || ';' || vr1|| ';' || vr2|| ';' || feta) as tut FROM nrzm_imprt_tmp);

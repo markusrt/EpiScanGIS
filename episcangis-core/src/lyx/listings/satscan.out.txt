@@ -1,0 +1,32 @@
+SUMMARY OF DATA
+
+Study period..........: 2001/11/1 - 2001/11/24
+Number of locations...: 191
+Total population......: 203
+Total cases...........: 62
+
+MOST LIKELY CLUSTER
+
+1.Location IDs included.: 19, 18, 14, 26
+  Coordinates / radius..: (5026,4301) / 4.47 
+  Population............: 4
+  Number of cases.......: 4
+  Expected cases........: 1.22
+  Observed / expected...: 3.274
+  Log likelihood ratio..: 4.836516
+  Monte Carlo rank......: 674/1000
+  P-value...............: 0.674
+
+SECONDARY CLUSTERS
+
+2.Location IDs included.: 170, 173, 172, 169
+  Coordinates / radius..: (5176,4669) / 5.83 
+  Population............: 4
+  Number of cases.......: 4
+  Expected cases........: 1.22
+  Observed / expected...: 3.274
+  Log likelihood ratio..: 4.836516
+  Monte Carlo rank......: 674/1000
+  P-value...............: 0.674
+  
+  ...

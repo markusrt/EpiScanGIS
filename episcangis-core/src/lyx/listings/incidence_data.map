@@ -1,0 +1,20 @@
+DATA "the_geom from (
+  SELECT awt.area_id AS oid, awt.the_geom, 
+    count(*)/(awt.population::real/100000)*
+     ( 12/((%toYear%*12+%toMonth%) - 
+       (%fromYear%*12+%fromMonth%)+1)) 
+    AS incidence
+  FROM contains_area_case AS cac, areas_with_types AS awt, 
+       cases, types_with_attributes AS twa
+  WHERE cac.area_id=awt.area_id 
+    AND cac.case_id=cases.case_id
+    AND cases.case_type_id = twa.case_type_id
+    AND twa.attname LIKE 'Serogroup'
+    AND twa.attvalue IN (%SEROGROUPS%)
+    AND CAST(to_char(reportdate, 'YYYY') AS int) * 12 
+         + CAST(to_char(reportdate, 'MM') AS int)
+        BETWEEN %fromYear%*12+%fromMonth% 
+          AND %toYear%*12+%toMonth%
+    AND awt.tier=%INCITIER%
+  GROUP BY awt.area_id, awt.the_geom, population
+) AS foo USING SRID=4326 USING UNIQUE oid"

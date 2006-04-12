@@ -1,0 +1,1 @@
+SELECT serotype, age, count(*) FROM (SELECT split_part(types.agent_type, ';',1) AS serotype, reported_cases.age FROM reported_cases, types WHERE reported_cases.agent_type=types.id) AS sero_age WHERE serotype='B' GROUP BY serotype,age ORDER BY age;

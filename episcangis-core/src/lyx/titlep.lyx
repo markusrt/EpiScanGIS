@@ -1,0 +1,423 @@
+#LyX 1.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 221
+\textclass report
+\begin_preamble
+\usepackage{german}
+\usepackage{umlaut}
+\usepackage{url}
+\usepackage{doc}
+\usepackage{makeidx}
+\usepackage{parskip}
+\usepackage{amssymb}
+\end_preamble
+\language german
+\inputencoding default
+\fontscheme palatino
+\graphics default
+\float_placement hbtp
+\paperfontsize 12
+\spacing single 
+\papersize Default
+\paperpackage widemarginsa4
+\use_geometry 0
+\use_amsmath 0
+\use_natbib 0
+\use_numerical_citations 0
+\paperorientation portrait
+\secnumdepth 4
+\tocdepth 3
+\paragraph_separation indent
+\defskip medskip
+\quotes_language english
+\quotes_times 2
+\papercolumns 1
+\papersides 2
+\paperpagestyle headings
+
+\layout Standard
+
+
+\begin_inset ERT
+status Open
+
+\layout Standard
+
+\backslash 
+titlepage
+\end_inset 
+
+
+\layout Standard
+\added_space_top 0.3cm \added_space_bottom 0.3cm \align center 
+
+\begin_inset Graphics
+	filename figures/unilogo_h.gif
+	lyxscale 7
+	display none
+	width 3cm
+	height 3cm
+
+\end_inset 
+
+
+\layout Standard
+\added_space_bottom 0.3cm \noindent \align center 
+
+\family sans 
+\series bold 
+\size larger 
+Universität Würzburg
+\newline 
+
+\newline 
+
+\family default 
+\series default 
+\size default 
+ 
+\family sans 
+\series bold 
+\size larger 
+Lehrstuhl für Informatik II
+\layout Standard
+\added_space_bottom 2cm \noindent \align center 
+
+\family sans 
+\size large 
+
+\begin_inset Graphics
+	filename figures/info2logov2_schwarz_solo.eps
+	width 3cm
+
+\end_inset 
+
+
+\layout Standard
+\noindent \align center 
+
+\family sans 
+\series bold 
+\size huge 
+Diplomarbeit
+\series default 
+\size default 
+
+\newline 
+
+\newline 
+
+\size larger 
+Web-basierter GIS-Service zur Überwachung von Infektionen
+\layout Standard
+
+
+\begin_inset Float table
+placement b
+wide false
+collapsed false
+
+\layout Standard
+\align center 
+
+\begin_inset  Tabular
+<lyxtabular version="3" rows="13" columns="2">
+<features>
+<column alignment="left" valignment="top" width="0pt">
+<column alignment="left" valignment="top" width="0pt">
+<row>
+<cell alignment="left" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\layout Standard
+
+
+\family sans 
+\size large 
+Diplomand: 
+\end_inset 
+</cell>
+<cell alignment="left" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\layout Standard
+
+
+\family sans 
+\size large 
+Markus Reinhardt
+\end_inset 
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\layout Standard
+
+
+\family sans 
+\size large 
+Matrikelnummer: 
+\end_inset 
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\layout Standard
+
+
+\family sans 
+\size large 
+1277246
+\end_inset 
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\layout Standard
+
+
+\family sans 
+\size large 
+Anschrift: 
+\end_inset 
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\layout Standard
+
+
+\family sans 
+\size large 
+Friesstraße 18
+\end_inset 
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\layout Standard
+
+\end_inset 
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\layout Standard
+
+
+\family sans 
+\size large 
+97074 Würzburg
+\end_inset 
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\layout Standard
+
+\end_inset 
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\layout Standard
+
+\end_inset 
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\layout Standard
+
+
+\family sans 
+\size large 
+Betreuer: 
+\end_inset 
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\layout Standard
+
+
+\family sans 
+\size large 
+Prof.
+ Dr.
+ Jürgen Albert
+\end_inset 
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\layout Standard
+
+\end_inset 
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\layout Standard
+
+
+\family sans 
+\size large 
+Prof.
+ Dr.
+ med.
+ Ulrich Vogel
+\end_inset 
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\layout Standard
+
+\end_inset 
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\layout Standard
+
+
+\family sans 
+\size large 
+Prof.
+ Dr.
+ Dag Harmsen
+\end_inset 
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\layout Standard
+
+\end_inset 
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\layout Standard
+
+
+\family sans 
+\size large 
+Dr.
+ med.
+ Johannes Elias
+\end_inset 
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\layout Standard
+
+\end_inset 
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\layout Standard
+
+
+\family sans 
+\size large 
+Dipl.-Inf.
+ Jörg Rothgänger
+\end_inset 
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\layout Standard
+
+\end_inset 
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\layout Standard
+
+\end_inset 
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\layout Standard
+
+
+\family sans 
+\size large 
+Beginn: 
+\end_inset 
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\layout Standard
+
+
+\family sans 
+\size large 
+23.
+ Juni 2005
+\end_inset 
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\layout Standard
+
+
+\family sans 
+\size large 
+Abgabe: 
+\end_inset 
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\layout Standard
+
+
+\family sans 
+\size large 
+23.
+ Dezember 2005
+\end_inset 
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset 
+
+
+\end_inset 
+
+
+\the_end

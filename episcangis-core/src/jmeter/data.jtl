@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testResults version="1.1">
+
+<sampleResult timeStamp="1127946572734" dataType="bin" threadName="Local GetMap.do 1-1" label="GetMap.do" time="3656" responseMessage="OK" responseCode="200" success="true"/>
+<sampleResult timeStamp="1127946587859" dataType="text" threadName="Local GetMap.do 1-1" label="Mapserver direkt" time="15125" responseMessage="Non HTTP response message" responseCode="Non HTTP response code" success="false"/>
+
+<sampleResult timeStamp="1127946645734" dataType="bin" threadName="Local GetMap.do 1-1" label="GetMap.do" time="3469" responseMessage="OK" responseCode="200" success="true"/>
+<sampleResult timeStamp="1127946660812" dataType="text" threadName="Local GetMap.do 1-1" label="Mapserver direkt" time="15078" responseMessage="Non HTTP response message" responseCode="Non HTTP response code" success="false"/>
+
+<sampleResult timeStamp="1127946890531" dataType="bin" threadName="Local GetMap.do 1-1" label="GetMap.do" time="3766" responseMessage="OK" responseCode="200" success="true"/>
+
+<sampleResult timeStamp="1127946960296" dataType="bin" threadName="Local GetMap.do 1-1" label="GetMap.do" time="3656" responseMessage="OK" responseCode="200" success="true"/>
+
+<sampleResult timeStamp="1127947016562" dataType="bin" threadName="Local GetMap.do 1-1" label="GetMap.do" time="3672" responseMessage="OK" responseCode="200" success="true"/>
+
+<sampleResult timeStamp="1127947076718" dataType="bin" threadName="Local GetMap.do 1-1" label="GetMap.do" time="3765" responseMessage="OK" responseCode="200" success="true"/>
+
+<sampleResult timeStamp="1127947156484" dataType="bin" threadName="Local GetMap.do 1-1" label="GetMap.do" time="3625" responseMessage="OK" responseCode="200" success="true"/>
+<sampleResult timeStamp="1127947171593" dataType="text" threadName="Local GetMap.do 1-1" label="Mapserver direkt" time="15109" responseMessage="Non HTTP response message" responseCode="Non HTTP response code" success="false"/>
+
+<sampleResult timeStamp="1127947192687" dataType="bin" threadName="Local GetMap.do 1-1" label="GetMap.do" time="3719" responseMessage="OK" responseCode="200" success="true"/>
+<sampleResult timeStamp="1127947195296" dataType="bin" threadName="Local GetMap.do 1-1" label="Mapserver direkt" time="2609" responseMessage="OK" responseCode="200" success="true"/>
+</testResults>

@@ -1,0 +1,19 @@
+[...]
+<datasource name="ds">
+  [...]
+  <dataset type="http" name="SetParameter"/>
+</datasource>
+[...]
+var d= canvas.ds.SetParameter;
+var p=new LzParam();
+p.addValue("name", strName, true);
+p.addValue("value", strValue, true);
+d.setQueryString(p);
+d.doRequest();
+[...]
+<datapointer id="setp" xpath="SetParameter:/result">
+  <method event="ondata" args="d">
+   <!--Behandelt die Antwort auf die SetParameter-Aktion-->
+  </method>
+</datapointer>
+[...]

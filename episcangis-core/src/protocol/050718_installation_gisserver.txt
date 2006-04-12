@@ -1,0 +1,10 @@
+Installationsprotokoll des GIS Servers
+--------------------------------------
+
+Der GIS Server hat die Aufgabe, Karten zu erzeugen und die Datenbank zu 
+verwalten. Diese Installtionsanleitung beschreibt den Vorgang bei einem Linux 
+System. Eine Installation unter Windows ist ebenfalls möglich. 
+
+Benötigte Software:
+
+Für das Datenbanksystem wird PostgreSQL mit der Erweiterung PostGIS verwendet.

@@ -1,0 +1,84 @@
+MAP
+  NAME EPIDEGIS_WEB_SURVEILLANCE
+  EXTENT 3280173.25 5238019 3921337.5 6103262.5
+  FONTSET "fonts/fonts.list"
+  SYMBOLSET "symbols/symbols35.sym" 
+  WEB
+    MINSCALE 1000
+    MAXSCALE 15000000
+    METADATA
+      "wms_title" "EpiDeGIS Web Surveillance WMS"
+      "wms_onlineresource" "http://localhost/cgi-bin/ms4?map=../maps/simple.map&"
+      "wms_srs" "EPSG:4326 EPSG:31467"
+    END
+  END
+  OUTPUTFORMAT
+    NAME png
+    DRIVER "GD/PNG"
+    MIMETYPE "image/png"
+    IMAGEMODE RGB
+    EXTENSION "png"
+  END
+  IMAGETYPE gif
+  SIZE  460 500
+  IMAGECOLOR     255 255 255
+  PROJECTION
+    "init=epsg:4326"
+  END
+  LEGEND
+    KEYSIZE 12 12
+    LABEL
+      TYPE BITMAP
+      SIZE MEDIUM
+      COLOR 0 0 89
+    END
+    IMAGECOLOR 192 192 192
+    STATUS OFF
+  END
+  LAYER
+    NAME cities
+    STATUS ON
+    CONNECTIONTYPE postgis
+    CONNECTION "user=mapserver dbname=epidegis_works host=localhost"
+    DATA "the_geom from (
+      SELECT gid, the_geom,
+      full_name AS name, population_n AS population
+        FROM cities
+      ) AS foo USING SRID=4326 USING UNIQUE gid"
+    TYPE POINT
+    LABELITEM "name"
+    METADATA
+      "WMS_SRS"    "epsg:4326"
+      "WMS_TITLE"    "Cities"
+    END
+    PROJECTION
+      "init=epsg:4326"
+    END
+    LABELMAXSCALE 15000000
+    SYMBOLSCALE 1000
+    CLASS	
+      EXPRESSION ([population] > 1000000)
+      NAME 'over 1 Million' 
+      MINSCALE 1000
+      MAXSCALE 15000000
+      STYLE
+        SYMBOL 'square'
+        MINSIZE 8
+        MAXSIZE 16
+        COLOR 255 0 0
+        OUTLINECOLOR 0 0 0 
+      END
+      LABEL
+        TYPE TRUETYPE
+        FONT "arial-bold"
+        MINSIZE 10
+        MAXSIZE 15
+        POSITION AUTO
+        MINDISTANCE 2
+        OUTLINECOLOR 230 230 230
+        COLOR 0 0 0
+        PARTIALS FALSE
+      END
+    END
+  END
+END

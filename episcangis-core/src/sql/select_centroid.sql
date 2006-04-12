@@ -1,0 +1,1 @@
+SELECT SetSRID(Centroid(the_geom),4326) FROM locations

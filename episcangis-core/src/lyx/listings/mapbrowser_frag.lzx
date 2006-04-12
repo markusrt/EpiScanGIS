@@ -1,0 +1,13 @@
+[...]
+<include href="includes/parameters.lzx"/>
+<datasource name="ds">
+  <method event="oninit">
+    this.mapserverData.setSrc(getBaseUrl() + 'Map.do');
+  </method>
+  <dataset type="http" name="mapserverData"/>
+</datasource>
+[...]
+<selectparameter width="${parent.width}"
+  datapath="mapserverData:/map/selectparameter"
+  mapview="${classroot}"/>
+[...]

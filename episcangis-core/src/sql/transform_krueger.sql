@@ -1,0 +1,1 @@
+CREATE VIEW freddy AS SELECT gid, transform(the_geom,31467) FROM locations

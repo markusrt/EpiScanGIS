@@ -1,0 +1,26 @@
+<map>
+  <size width="640" height="480"/>
+  <selectparameter name="areaId">
+    <title>Area</title>
+    <value selected="true" name="Germany">9470</value>
+    <value selected="false" name="  Bayern">8713</value>
+    <value selected="false" name="  Nordrhein-Westfalen">
+      8718
+    </value>
+  </selectparameter>
+  <layer title="Population density" active="false"
+    name="popdensity" description="">
+    <legend/>
+    <selectparameter name="POPDENTIER">
+      <title>Depth</title>
+      <value selected="true" 
+        name="Federal states">3</value>
+      <value selected="false" 
+        name="Counties">4</value>
+    </selectparameter>
+  </layer>
+  <layer title="Cities" active="true" 
+    name="cities_default" description="">
+    <legend/>
+  </layer>
+</map>

@@ -1,0 +1,9 @@
+<form-bean type="de.meningococcus.episcangis.web.MoveMapFormBean"
+        name="move"/>
+[...]
+<action path="/MoveMap"
+        type="de.meningococcus.episcangis.web.MoveMapAction"
+        name="move" scope="request">
+  <forward name="success" path="/WEB-INF/results/xmlDefaultSuccess.jsp"/>
+  <forward name="error" path="/WEB-INF/errors/xmlDefaultError.jsp"/>
+</action>

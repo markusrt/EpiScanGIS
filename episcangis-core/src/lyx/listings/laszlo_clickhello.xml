@@ -1,0 +1,8 @@
+<canvas>
+ <simplelayout axis="y" spacing="10"/>
+ <button onclick="parent.helloclick.setVisible(true)">
+   Klick mich!
+ </button>
+ <text name="helloclick" 
+   visible="false">Hallo Mausklick!</text>
+</canvas>

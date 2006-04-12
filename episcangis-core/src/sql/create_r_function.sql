@@ -1,0 +1,1 @@
+CREATE OR REPLACE FUNCTION echo() RETURNS text AS 'oioi <<- pg.spi.exec (''select x as "my a" ,y as "my b" from temp order by x,y'');pdf(''/tmp/myplot.pdf'');plot(str,type="l",main="Graphics Demonstration",sub="Line Graph");dev.off();print(''done'');' language 'plr';

@@ -1,0 +1,1 @@
+SELECT gid, split_part(types.agent_type, ';',1) AS serotype, reported_cases.gender, reported_cases.age, locations.the_geom FROM reported_cases, locations, types WHERE reported_cases.agent_type=types.id AND reported_cases.place_of_incidence=locations.gid HAVING split_part(types.agent_type, ';',1)='B';

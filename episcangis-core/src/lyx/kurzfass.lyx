@@ -1,0 +1,53 @@
+#LyX 1.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 221
+\textclass scrbook
+\language german
+\inputencoding default
+\fontscheme palatino
+\graphics default
+\float_placement hbtp
+\paperfontsize 12
+\spacing single 
+\papersize Default
+\paperpackage a4
+\use_geometry 0
+\use_amsmath 0
+\use_natbib 0
+\use_numerical_citations 0
+\paperorientation portrait
+\secnumdepth 4
+\tocdepth 2
+\paragraph_separation skip
+\defskip medskip
+\quotes_language english
+\quotes_times 2
+\papercolumns 1
+\papersides 2
+\paperpagestyle empty
+
+\layout Section*
+
+
+\begin_inset ERT
+status Open
+
+\layout Standard
+
+\backslash 
+thispagestyle{empty}
+\end_inset 
+
+Zusammenfassung
+\layout Standard
+\added_space_top medskip 
+Die Überwachung von Infektionen erlangt in einer globalen Gesellschaft eine
+ immer größere Bedeutung.
+ Der Zugang zu Informationen über potenzielle Erkrankungsherde sollte aus
+ diesem Grund so einfach wie möglich sein.
+ Die vorliegende Arbeit befasst sich mit der Entwicklung einer web-basierten
+ Anwendung, welche den Zugriff auf Untersuchungsergebnisse aus der Epidemiologie
+ beschleunigt und vereinfacht.
+ Erkrankungsfälle werden auf Landkarten visualisiert und Risikoanalysen
+ automatisch ausgeführt.
+ Über die globale Plattform Internet sind alle Informationen sofort sichtbar.
+\the_end

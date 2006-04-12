@@ -1,0 +1,3 @@
+epidegis@localhost:/src/mapserver/mapserver-4.6.1 # ./mapserv -v
+MapServer version 4.6.1 OUTPUT=GIF OUTPUT=PNG OUTPUT=JPEG OUTPUT=WBMP OUTPUT=SVG SUPPORTS=PROJ SUPPORTS=FREETYPE SUPPORTS=WMS_SERVER SUPPORTS=GEOS INPUT=EPPL7 INPUT=POSTGIS INPUT=SHAPEFILE
+epidegis@localhost:/src/mapserver/mapserver-4.6.1 #

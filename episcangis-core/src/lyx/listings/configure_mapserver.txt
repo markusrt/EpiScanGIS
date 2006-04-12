@@ -1,0 +1,1 @@
+./configure --with-proj=/usr/local --with-geos=/usr/bin/geos-config --with-postgis=/usr/local/pgsql/bin/pg_config

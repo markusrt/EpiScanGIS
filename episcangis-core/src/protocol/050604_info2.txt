@@ -1,0 +1,19 @@
+Besprochene Punkte:
+-------------------
+-	Hinzufügen einer Attributtabelle zum speichern von beliebig vielen 
+	Metainformationen zu den Erregertypen. Beim SPA Typ wären das z.B.
+	Clusterinformationen. Manche Typen lassen sich gruppieren.
+	
+	(AttributID, TypID, Wert)
+	
+-	Benutzeroberfläche sollte möglichst eingängig sein. So sollten am besten
+	keine aufwändigen Formulare auszufüllen sein. Besser ist es die wichtigen
+	Daten schon gebrauchsfertig aufzubereiten.
+	
+- Wichtig bei einer Clusteranalyse ist es, den Nahbereiche einer Häufung
+	betrachten zu können. Hierbei müssen auch kleinere Städte zu sehen sein.
+	
+Nächster Meilenstein:
+--------------------- 
+-	Integration von Flash
+-	Beispiel einer Animation von der Wochenweisen Entwicklung eines Merkmals

@@ -1,0 +1,161 @@
+[Input]
+; case data filename
+casefile=${casfile}
+; control data filename
+ControlFile=
+; population data filename
+PopulationFile=${popfile}
+; coordinate data filename
+CoordinatesFile=${geofile}
+; use grid file? (y/n)
+UseGridFile=n
+; grid data filename
+GridFile=
+; time precision (0=None, 1=Year, 2=Month, 3=Day)
+PrecisionCaseTimes=3
+; coordinate type (0=Cartesian, 1=latitude/longitude)
+CoordinatesType=1
+; study period start date (YYYY/MM/DD)
+StartDate=${startdate}
+; study period end date (YYYY/MM/DD)
+EndDate=${enddate}
+
+
+[Analysis]
+; analysis type (1=Purely Spatial, 2=Purely Temporal, 3=Retrospective Space-Time, 4=Prospective Space-Time, 5=N/A, 6=Prospective Purely Temporal)
+AnalysisType=${analysistype}
+; model type (0=Poisson, 1=Bernoulli, 2=Space-Time Permutation)
+ModelType=${modeltype}
+; scan areas (1=High, 2=Low, 3=High or Low)
+ScanAreas=${scanareas}
+; time aggregation units (0=None, 1=Year, 2=Month, 3=Day)
+TimeAggregationUnits=${timeaggregationunits}
+; time aggregation length (positive integer)
+TimeAggregationLength=${timeaggregationlength}
+; Monte Carlo replications (0, 9, 999, n999)
+MonteCarloReps=${montecarloreps}
+
+[Output]
+; analysis results output filename
+ResultsFile=${outfile}
+; output simulated log likelihoods ratios in ASCII format? (y/n)
+SaveSimLLRsASCII=n
+; output simulated log likelihoods ratios in dBase format? (y/n)
+SaveSimLLRsDBase=n
+; output relative risks in ASCII format? (y/n)
+IncludeRelativeRisksCensusAreasASCII=n
+; output relative risks in dBase format? (y/n)
+IncludeRelativeRisksCensusAreasDBase=n
+; output location information in ASCII format? (y/n)
+CensusAreasReportedClustersASCII=y
+; output location information in dBase format? (y/n)
+CensusAreasReportedClustersDBase=n
+; output cluster information in ASCII format? (y/n)
+MostLikelyClusterEachCentroidASCII=y
+; output cluster information in dBase format? (y/n)
+MostLikelyClusterEachCentroidDBase=n
+
+[Multiple Data Sets]
+; multiple data sets purpose type (multivariate=0, adjustment=1)
+MultipleDataSetsPurposeType=0
+
+[Spatial Window]
+; maximum geographic cluster size (<=50%)
+MaxGeographicSize=5.000000
+; include purely temporal clusters? (y/n)
+IncludePurelyTemporal=n
+; how max spatial size should be interpretted (0=Percentage, 1=Distance, 2=Percentage of max circle population file)
+MaxSpatialSizeInterpretation=0
+; maximum circle size filename
+MaxCirclePopulationFile=
+
+[Temporal Window]
+; maximum temporal cluster size (<=90%)
+MaxTemporalSize=${maxtemporalsize}
+; include purely spatial clusters? (y/n)
+IncludePurelySpatial=n
+; how max temporal size should be interpretted (0=Percentage, 1=Time)
+MaxTemporalSizeInterpretation=1
+; temporal clusters evaluated (0=All, 1=Alive, 2=Flexible Window)
+IncludeClusters=0
+
+[Space and Time Adjustments]
+; flexible temporal window start range (YYYY/MM/DD,YYYY/MM/DD)
+IntervalStartRange=1900/1/1,1900/1/1
+; flexible temporal window end range (YYYY/MM/DD,YYYY/MM/DD)
+IntervalEndRange=1900/12/31,1900/12/31
+; time trend adjustment type (0=None, 1=Nonparametric, 2=LogLinearPercentage, 3=CalculatedLogLinearPercentage, 4=TimeStratifiedRandomization)
+TimeTrendAdjustmentType=0
+; time trend adjustment percentage (>-100)
+TimeTrendPercentage=0.000000
+; adjustments by known relative risks file name (with HA Randomization=1 or ...)
+AdjustmentsByKnownRelativeRisksFilename=
+; use adjustments by known relative risks file? (y/n)
+UseAdjustmentsByRRFile=n
+; Spatial Adjustments Type (no spatial adjustment=0, spatially stratified randomization=1)
+SpatialAdjustmentType=0
+
+[Inference]
+; prospective surveillance start date (YYYY/MM/DD)
+ProspectiveStartDate=${enddate}
+; terminate simulations early for large p-values? (y/n)
+EarlySimulationTermination=n
+; adjust for earlier analyses(prospective analyses only)? (y/n)
+AdjustForEarlierAnalyses=n
+; report critical values for .01 and .05? (y/n)
+;CriticalValue=y
+
+[Clusters Reported]
+; criteria for reporting secondary clusters(0=NoGeoOverlap, 1=NoCentersInOther, 2=NoCentersInMostLikely,  3=NoCentersInLessLikely, 4=NoPairsCentersEachOther, 5=NoRestrictions)
+CriteriaForReportingSecondaryClusters=0
+; max reported geographic size (< max geographical cluster size%)
+MaxReportedGeoClusterSize=50.000000
+; restrict reported clusters to maximum geographical cluster size? (y/n)
+UseReportOnlySmallerClusters=n
+
+[Elliptic Scan]
+; number of ellipses to scan, other than circle (0-10)
+NumberOfEllipses=0
+; elliptic shapes - one value for each ellipse (comma separated decimal values)
+EllipseShapes=
+; elliptic angles - one value for each ellipse (comma separated integer values)
+EllipseAngles=
+; elliptic non-compactness penalty? (y/n)
+NonCompactnessPenalty=n
+
+[Isotonic Scan]
+; isotonic scan (0=Standard, 1=Monotone)
+IsotonicScan=0
+
+[Sequential Scan]
+; perform sequential scans? (y/n)
+SequentialScan=n
+; maximum iterations for sequential scan (0-32000)
+SequentialScanMaxIterations=0
+; max p-value for sequential scan before cutoff (0.000-1.000)
+SequentialScanMaxPValue=0.000000
+
+[Power Simulations]
+; p-values for 2 pre-specified log likelihood ratios? (y/n)
+PValues2PrespecifiedLLRs=n
+; power calculation log likelihood ratio (no. 1)
+LLR1=0.000000
+; power calculation log likelihood ratio (no. 2)
+LLR2=0.000000
+; simulation methods (Null Randomization=0, HA Randomization=1, File Import=2)
+SimulatedDataMethodType=0
+; simulation data input file name (with File Import=2)
+SimulatedDataInputFilename=
+; print simulation data to file? (y/n)
+PrintSimulatedDataToFile=n
+; simulation data output filename
+SimulatedDataOutputFilename=
+
+[BatchMode Features]
+; validate parameters prior to analysis execution? (y/n)
+ValidateParameters=y
+
+[System]
+; system setting - do not modify
+Version=5.1.3
+

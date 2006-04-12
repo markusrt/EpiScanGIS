@@ -1,0 +1,1 @@
+SELECT locations.plz99_n, plzort99, plz_kreis.kreis_n FROM locations INNER JOIN plz_kreis USING (plz99_n);

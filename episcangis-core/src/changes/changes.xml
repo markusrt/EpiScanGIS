@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE document [
+<!ENTITY % local.common.attrib
+       "xml:base CDATA #IMPLIED
+        xmlns:xi CDATA #FIXED 'http://www.w3.org/2003/XInclude'" >
+  <!--<!ENTITY sql.select_distance SYSTEM "../src/sql/distance_query.sql" NDATA sql>-->
+  ]>
+  <document>
+    <properties>
+      <title>Changes</title>
+    </properties>
+    <body>
+      <release version="1.0" date="SNAPSHOT" description="Beta Kartenbetrachter">
+        <action type="add" dev="mtk">
+          <b>04.01.2006</b><br/>
+          Neue Version (4.8.3) des Mapservers installiert. 
+          Verbesserung der Performanz durch Kompilation mit FastCGI.
+        </action>
+        <action type="add" dev="mtk">
+          <b>05.09.2005</b><br/>
+          Ich habe mir einen Überblick über R verschafft. Es ist möglich
+          R als Programmiersprache direkt in PostgreSQL einzubinden.
+        </action>
+        <action type="update" dev="mtk">
+          <b>01.09.2005</b><br/>
+          Aktualisierung der Mapdatei damit der neue Altersgruppenparameter
+          berücksichtigt wird.
+        </action>
+        <action type="udpate" dev="mtk">
+          <b>31.08.2005</b><br/>
+          Optimierung der SQL Abfrage, welche die Inzidenz ermittelt. Dies hat
+          die Postgis Funktion contains(the_geom, the_geom) verwendet, welche
+          relativ lange braucht. Die Lösung war eine zusätzliche Tabelle,
+          welche speichert, ob ein Fall in einem Gebietspolygon enthalten ist.
+          <br/>
+          Diese Tabelle muss nur erneuert werden, wenn neue Fälle/Gebiete
+          zu Datenbank hinzugefügt werden.
+          <br/>
+          Diese Maßnahme hat die Geschwindigkeit der Inzidenzberechnung 
+          verdreifacht.
+        </action>
+        <action type="update" dev="mtk">
+          <b>29.08.2005</b><br/>
+          Geschwindigkeitsoptimierungen. Einzelne Karten werden jetzt 
+          schneller geladen. Komplexe Ebenen wie beispielsweise die Inzidenz
+          brauchen allerdings viel Rechenzeit. Weiter Verbesserung ist durch
+          Caching möglich.
+        </action>
+      </release>
+      <release version="0.0.1" date="-" description="Planungsphase">
+        <action type="update" dev="mtk">
+          Es war mir möglich, über die Postleitzahlen und die Zuordnungstabelle 
+          PLZ&lt;-&gt;Kreisnummer die Umrissdaten aller Landkreise aus der Datenbank
+          abzufragen. Auf der entstandenen Karte ist zu sehen, dass die Kreisgrenzen
+          der freien Deutschland-Daten frei von Löchern sind.<br/>
+          Anbei wieder ein Bild:<br/>
+          <a href="./images/wip/kreise.jpg" target="_blank"> <IMG 
+              src="./images/wip/kreise.jpg" border="0" 
+              alt="Landkreise Deutschland" 
+              width="640"/></a>
+        </action>
+        <action type="update" dev="mtk">Ich habe Experimente mit der Software R 
+          (<a href="http://www.r-project.org/" 
+            target="_blank">http://www.r-project.org/</a>) durchgeführt. Hierbei 
+          handelt es sich um ein freies Statistikpaket, welches sich mit 
+          PostgreSQL und auch Java verwenden lässt. Es scheint auch die 
+          Möglichkeiten von spatio-temporalen Analysen zu bieten. Inwieweit diese 
+          SaTScan ebenbürtig sind werde ich noch ausprobieren. Ein Vorteil 
+          gegenüber SaTScan wäre, dass man direkt aus R heraus Grafen und 
+          Diagramme erzeugen kann. Auch komplexe Grafiken sind möglich. In meinen 
+          ersten Versuchen habe ich nur ein einfaches Balkendiagramm generiert. 
+          Die Daten lassen sich direkt über SQL abfragen.<br/> <a 
+            href="./images/wip/serob_barplot.jpg" target="_blank"> <IMG 
+              src="./images/wip/serob_barplot.jpg" border="0" 
+              alt="Anzahl Serogruppe B nach Alter vom 1.12.2001 bis 1.5.2005" 
+              width="640"/></a> </action>
+        <action type="update" dev="mtk">Durchführung einer Testabfrage, welche 
+          die Anzahl der Serogruppe B Fälle nach PLZ ermittelt. Durch den Export 
+          dieser Daten in eine SHP-Datei war es möglich die Karte anzuzeigen. Zur 
+          Darstellung habe ich vorerst <a 
+            href="http://udig.refractions.net/confluence/display/UDIG/Home" 
+            target="_blank">User-friendly Desktop Internet GIS (uDig)</a> 
+          verwendet. Diese Java Anwendung basiert auf der geotools API. Ziel wird 
+          sein, direkt aus Java heraus die Datenbank abzufragen. Anbei noch die 
+          erzeugte Karte:<br/> <a href="./images/wip/serob_plz_map.jpg" 
+            target="_blank"> <IMG src="./images/wip/serob_plz_map.jpg" border="0" 
+              alt="Anzahl Serogruppe B nach Postleitzahlen" width="640"/></a> 
+        </action>
+        <action dev="mtk" type="add">Integration der freien Deutschland-Daten von 
+          dem Sourceforge Projekt <a 
+            href="https://sourceforge.net/project/showfiles.php?group_id=88554" 
+            target="_blank"> Mapbender</a>. PostgreSQL hat integrierte GIS 
+          Funktionalität (PostGIS), welche neben der Speicherung von Geodaten 
+          auch geografische Abfragen möglich macht. 
+          <source>
+            <!--<xi:include xmlns:xi="http://www.w3.org/2001/XInclude" parse="text"
+              href="./src/sql/distance_query.sql"/>-->
+            SELECT the_geom FROM locations<br/>
+            WHERE the_geom &amp;&amp; 'BOX3D(12.71 50.07, 14.71 52.07)'::box3d<br/>
+            AND distance( the_geom, GeometryFromText('POINT(13.71 51.07)', -1 )) &lt; 1
+          </source>
+        </action>
+        <action dev="mtk" type="add"> Integration der Daten des NRZM in eine 
+          PostgreSQL Datenbank. Import der Daten aus CSV Dateien ist mittels SQL 
+          Skripten möglich. Dies hat Geschwindigkeitsvorteile und lässt 
+          sich viel effizienter implementieren.</action>
+        <action dev="mtk" type="add">
+          Erstellung eines Pflichtenheftes.
+        </action>
+      </release>
+    </body>
+  </document>

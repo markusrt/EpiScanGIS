@@ -1,0 +1,1375 @@
+#-------------------------------------------------------------------------------
+# EpiDeGIS Web Surveillance, UMN Mapserver (WMS) MAP file
+#
+# Copyright ©2005 Markus Reinhardt - All Rights Reserved.
+# Author: Markus Reinhardt <m.reinhardt[at]bitmap-friends.de>
+#-------------------------------------------------------------------------------
+
+
+
+#-------------------------------------------------------------------------------
+# cold cyan websafe gradient (5 values)
+# COLOR 0 255 255
+# COLOR 0 204 255
+# COLOR 0 153 255
+# COLOR 0 102 255
+# COLOR 0 51 255
+# 
+# approx. harmonising colors:
+#  COLOR 255 0 255
+#  COLOR 255 255 0
+#  COLOR 255 102 0
+#  COLOR 255 0 0
+#-------------------------------------------------------------------------------
+
+MAP
+  NAME EPIDEGIS_WEB_SURVEILLANCE
+  #EXTENT 3237147 5579525 3588719 5834935
+  #EXTENT 2886610 5230448 4285190 6130010
+  #EXTENT 3280173.17737989 5238018.88155289 3921337.60817421 6103262.57144029
+  EXTENT 3280173.25 5238019 3921337.5 6103262.5
+#EXTENT -180 -90 180 90
+  FONTSET "fonts/fonts.list"
+  SYMBOLSET "symbols/symbols35.sym" 
+  DEBUG ON
+  WEB
+    log "epidegis-map.log"
+    MINSCALE 1000
+    MAXSCALE 15000000
+    METADATA
+      "wms_title" "EpiDeGIS Web Surveillance WMS"
+      "wms_onlineresource" "http://132.187.144.10/cgi-bin/mapserv?map=../maps/fmv7.map&"
+      "wms_srs" "EPSG:4326 EPSG:31467"
+    END
+  END
+
+  OUTPUTFORMAT
+    NAME gif
+    DRIVER "GD/GIF"
+    MIMETYPE "image/gif"
+    IMAGEMODE PC256
+    EXTENSION "gif"
+  END
+
+  OUTPUTFORMAT
+    NAME jpeg
+    DRIVER "GD/JPEG"
+    FORMATOPTION "QUALITY=95"
+    MIMETYPE "image/jpeg"
+    IMAGEMODE RGB
+    EXTENSION "jpg"
+  END
+  
+  OUTPUTFORMAT
+    NAME png
+    DRIVER "GD/PNG"
+    MIMETYPE "image/png"
+    IMAGEMODE RGB
+    EXTENSION "png"
+  END
+  
+  IMAGETYPE gif
+  
+  LEGEND
+    KEYSIZE 12 12
+    LABEL
+      TYPE BITMAP
+      SIZE MEDIUM
+      COLOR 0 0 89
+    END
+    IMAGECOLOR 238 238 238
+    STATUS OFF
+  END
+  
+  SCALEBAR
+    IMAGECOLOR 255 255 255
+    LABEL
+      COLOR 0 0 0
+      SIZE TINY
+    END
+    STYLE 0
+    SIZE 120 2
+    COLOR 0 0 0
+    BACKGROUNDCOLOR 232 239 250
+    UNITS KILOMETERS
+    INTERVALS 3
+    TRANSPARENT TRUE
+    STATUS EMBED
+    POSITION LR
+  END
+
+  SIZE  460 500
+  
+  IMAGECOLOR     255 255 255
+  
+  PROJECTION
+    "init=epsg:4326"
+  END
+  
+  
+  LAYER
+    NAME "topography_disabled"
+    STATUS ON
+    CONNECTIONTYPE postgis
+    CONNECTION "user=apache password=DMmnc dbname=epidegis_works host=localhost"
+    DATA "the_geom from topography"
+    TYPE POLYGON
+	  PROJECTION
+        "init=epsg:4326"
+    END
+    METADATA
+      "WMS_SRS"    "epsg:4326"
+      "WMS_TITLE"    "Topography"
+      "WMS_FEATURE_INFO_MIME_TYPE"    "text/html"
+    END
+    CLASSITEM "hypytype"
+    CLASS
+      NAME "Lowlands"
+      EXPRESSION "1"
+      SYMBOL 0
+      COLOR 255 255 255
+    END
+    CLASS
+      NAME "Lowlands"
+      EXPRESSION "2"
+      SYMBOL 0
+      COLOR 204 253 161
+    END
+    CLASS
+      NAME "Highland"
+      EXPRESSION "3"
+      SYMBOL 0
+      COLOR 215 200 145
+    END
+    CLASS
+      NAME "Alps"
+      EXPRESSION "4"
+      SYMBOL 0
+      COLOR 173 136 77
+    END
+    CLASS
+      NAME "High mountains"
+      EXPRESSION "5"
+      SYMBOL 0
+      COLOR 115 38 0
+    END
+  END
+  
+  LAYER #cloudtest
+    METADATA
+      "wms_title" "Wolkentest"
+    END
+    NAME cloudtest_disabled
+    CONNECTIONTYPE postgis
+    CONNECTION "user=apache password=DMmnc dbname=epidegis_works host=localhost"
+    DATA "the_geom from (
+      SELECT case_id AS oid, the_geom
+       FROM cases_random NATURAL JOIN types_with_attributes
+          WHERE ( reportdate BETWEEN to_timestamp('%FROMDATE%', 'MMYYYY') 
+                AND to_timestamp('%TODATE%', 'MMYYYY'))
+                AND attname='Serogruppe' 
+                AND attvalue IN (%SEROGROUP%) ) AS foo USING SRID=4326 USING UNIQUE oid"
+    STATUS ON 
+    TYPE POINT
+    PROJECTION
+      "init=epsg:4326"
+    END
+    TRANSPARENCY 50
+    CLASS
+#STYLE
+#       SYMBOL "cloud1"
+#       SIZE 20
+#     END
+      STYLE
+        SYMBOL "cloud3"
+        SIZE 30
+      END
+    END
+  END
+  
+  LAYER #Population density
+    TEMPLATE "DUMMY"
+    DUMP TRUE
+    METADATA
+      "wms_title" "Population density"
+    END
+    NAME popdensity
+    CONNECTIONTYPE postgis
+    CONNECTION "user=apache password=DMmnc dbname=epidegis_works host=localhost"
+    DATA "the_geom from (
+      SELECT area_id AS oid, the_geom, identifier AS Areaname, 
+        population/(area(transform(the_geom,31467))/1000000) AS popdensity 
+      FROM areas_with_types AS awt
+      WHERE tier=%POPDENTIER%
+      ) AS foo USING SRID=4326 USING UNIQUE oid"
+    STATUS ON 
+    TYPE POLYGON
+    PROJECTION
+      "init=epsg:4326"
+    END
+    
+    CLASS
+     NAME "Population density"
+     EXPRESSION (0)
+    END
+    CLASS
+     NAME "(Residents/km2): "
+     EXPRESSION (0)
+    END
+    CLASS
+     NAME "less than 50"
+     EXPRESSION ([popdensity] < 50)
+     #COLOR 232 239 250
+     COLOR 0 255 255
+    END
+    CLASS
+     NAME "50 to under 130"
+     EXPRESSION ([popdensity] >= 50 AND [popdensity] < 130)
+     #COLOR 181 188 205
+     COLOR 0 204 255
+    END
+    CLASS
+     NAME "130 to under 210"
+     EXPRESSION ([popdensity] >= 130 AND [popdensity] < 210)
+     #COLOR 150 156 178
+     COLOR 0 153 255
+    END
+    CLASS
+     NAME "210 to unter 390"
+     EXPRESSION ([popdensity] >= 210 AND [popdensity] < 390)
+     #COLOR 139 146 168
+     COLOR 0 102 255
+    END
+    CLASS
+     NAME "390 and above"
+     EXPRESSION ([popdensity] >= 390)
+     COLOR 0 51 255
+    END
+    #CLASS
+    # NAME "1500 and above"
+    # EXPRESSION ([density] >= 1500)
+    # COLOR 41 21 111
+    #END
+  END #Layer Population density
+  
+  LAYER #incidence
+    #GROUP "query"
+    TEMPLATE "DUMMY"
+    DUMP TRUE
+    METADATA
+      "wms_title" "Annual incidence"
+    END
+    NAME incidence
+    CONNECTIONTYPE postgis
+    CONNECTION "user=apache password=DMmnc dbname=epidegis_works host=localhost"
+    DATA "the_geom from (
+        SELECT awt.area_id AS oid, awt.the_geom, 
+          count(*)::real/(awt.population::real/100000::real)*
+           ( 12/((%toYear%*12+%toMonth%) - 
+             (%fromYear%*12+%fromMonth%)+1)::real)::real 
+          AS incidence
+        FROM contains_area_case, areas_with_types AS awt, cases
+        WHERE contains_area_case.area_id=awt.area_id 
+          AND contains_area_case.case_id=cases.case_id
+          AND case_type_id = types_with_attributes.case_type_id
+          AND types_with_attributes.attname LIKE 'Serogroup'
+          AND types_with_attributes.attvalue IN (%SEROGROUPS%)
+          AND CAST(to_char(reportdate, 'YYYY') AS int) * 12 
+               + CAST(to_char(reportdate, 'MM') AS int)
+              BETWEEN %fromYear%*12+%fromMonth% 
+                AND %toYear%*12+%toMonth%
+          AND awt.tier=%INCITIER%
+        GROUP BY awt.area_id, awt.the_geom, population
+      ) AS foo USING SRID=4326 USING UNIQUE oid"
+    STATUS ON 
+    TYPE POLYGON
+    PROJECTION
+      "init=epsg:4326"
+    END
+   
+    CLASS
+     NAME "Annual incidence"
+     EXPRESSION (0)
+    END
+    CLASS
+     NAME "(mean of observation"
+     EXPRESSION (0)
+    END
+    CLASS
+     NAME "period/100000/a)"
+     EXPRESSION (0)
+    END
+    CLASS
+     NAME "0"
+     EXPRESSION ([incidence] <= 0)
+     COLOR 254 254 254
+    END
+    CLASS
+     NAME "> 0 - 0.3"
+     EXPRESSION (([incidence] > 0 AND [incidence] <= 0.3))
+     COLOR  0 255 255
+    END
+    CLASS
+     NAME "0.3 - 0.6"
+     EXPRESSION (([incidence] > 0.3 AND [incidence] <= 0.6))
+     COLOR 0 204 255
+    END
+    CLASS
+     NAME "0.6 - 1.2"
+     EXPRESSION (([incidence] > 0.6 AND [incidence] <= 1.2))
+     COLOR 0 153 255
+    END
+    CLASS
+     NAME "1.2 - 2.4"
+     EXPRESSION (([incidence] > 1.2 AND [incidence] <= 2.4))
+     COLOR 0 102 255
+    END
+    CLASS
+     NAME "> 2.4"
+     EXPRESSION ([incidence] > 2.4)
+      COLOR 0 51 255
+    END
+  END #Layer incidence
+  
+  LAYER #borders
+    DUMP TRUE
+    NAME borders_default
+    DEBUG ON
+    METADATA
+      "wms_title" "Borders"
+      #"wms_feature_info_mime_type" "application/vnd.ogc.gml"
+      #"wms_style"        "mystyle"
+      #"wms_mystyle_sld"  "http://afs2b.informatik.uni-wuerzburg.de/ms4/mystyle.xml"
+    END
+    CONNECTIONTYPE postgis
+    CONNECTION "user=apache password=DMmnc dbname=epidegis_works host=localhost"
+    DATA "the_geom FROM (
+      SELECT areas.oid, the_geom, areas.identifier AS areaname,
+        area_types.tier AS depth 
+        FROM areas NATURAL JOIN area_types 
+        WHERE tier=%BORDERTIER% OR tier=2
+        ) 
+      AS foo USING SRID=4326 USING UNIQUE oid"
+    #FILTER "(area_types.area_type_id='4|5')"
+    SYMBOLSCALE 3000000
+    STATUS ON 
+    TYPE POLYGON
+    PROJECTION
+      "init=epsg:4326"
+    END
+#SIZEUNITS pixels
+#CLASS
+#     EXPRESSION ('[tier]' = '5')
+#     STYLE
+#     OUTLINECOLOR 192 192 192 #169 169 169
+#WIDTH 1
+#     END
+#		END
+#   CLASS
+#     NAME 'Counties'
+#     EXPRESSION ('[tier]' = '4')
+#     STYLE
+#     OUTLINECOLOR 194 96 128 #169 169 169
+#     SYMBOL 'circle'
+#     MAXSIZE 1
+#    WIDTH 1
+#   END
+#		END
+#CLASS
+#    NAME "Borders"
+#     EXPRESSION (0)
+#   END
+    CLASS
+      #MINSCALE 1000
+      #MAXSCALE 15000000
+      #     NAME 'Countries'
+      EXPRESSION ([depth] = 2)
+      STYLE
+        OUTLINECOLOR 0 0 0 #169 169 169
+        SYMBOL 'border'
+        #MINWIDTH 1
+        MAXSIZE 3
+      END
+    END
+    CLASS
+    #NAME 'Selected depth'
+      TEMPLATE "DUMMY"
+      EXPRESSION ([depth] > 2)
+      STYLE
+      #OUTLINECOLOR 192 192 192 #169 169 169
+      OUTLINECOLOR 0 0 0 #169 169 169
+      SYMBOL 'circle'
+      MAXSIZE 1
+#     WIDTH 2
+      END
+		END
+  END #Layer borders
+  
+  LAYER #rivers
+    METADATA
+      "wms_title" "Rivers"
+    END
+    NAME rivers_disabled
+    CONNECTIONTYPE postgis
+    CONNECTION "user=apache password=DMmnc dbname=epidegis_works host=localhost"
+#DEBUG ON
+    DATA "the_geom FROM rivers AS foo USING SRID=4326"
+    STATUS OFF 
+    TYPE LINE
+    PROJECTION
+      "init=epsg:4326"
+    END
+    CLASS
+     COLOR 0 0 200
+     SIZE 0
+    END
+  END #Layer rivers
+  
+  LAYER
+    NAME casetypes
+    #GROUP "query"
+    #TEMPLATE "DUMMY"
+    DUMP TRUE
+    TOLERANCE 10
+
+    METADATA
+  "wms_title" "Finetypes"
+    END
+    CONNECTIONTYPE postgis
+    CONNECTION "user=apache password=DMmnc dbname=epidegis_works host=localhost"
+    DATA "the_geom from ( 
+    SELECT case_id AS oid, the_geom, nice_identifier AS finetype
+        FROM cases_random NATURAL JOIN case_types_nrzm
+          WHERE 
+            CAST(to_char(reportdate, 'YYYY') AS int) * 12 
+              + CAST(to_char(reportdate, 'MM') AS int)
+              BETWEEN %fromYear%*12+%fromMonth% 
+                AND %toYear%*12+%toMonth%
+            AND identifier IN (%CASETYPES%) 
+            AND age BETWEEN %fromAge% AND %toAge%
+    ) AS foo USING SRID=4326 USING UNIQUE oid"
+    
+    STATUS ON
+#DEBUG ON
+   TYPE POINT
+   #kleinerer Wert -> Ebene auch bei größerem Zoom sichtbar
+   MINSCALE 500000
+   #kleinerer Wert -> Ebene verschwindet beim rauszoomen eher
+   MAXSCALE 4000000
+   
+   PROJECTION
+     "init=epsg:4326"
+   END
+   #TRANSPARENCY 50
+   SYMBOLSCALE 50000000 
+    CLASS
+     NAME " Finetypes:"
+     EXPRESSION (0)
+    END
+    CLASS
+      NAME ' Selected finetype'
+      SYMBOL 'circle' 		
+      MINSCALE 500000
+      MAXSCALE 4000000
+      MINSIZE 23
+      MAXSIZE 100
+      COLOR 255 180 30
+      OUTLINECOLOR 0 0 0
+    END
+  END
+  
+  LAYER
+    #GROUP "query"
+    TEMPLATE "DUMMY"
+    DUMP TRUE
+    NAME serogroups_default
+    TOLERANCE 10
+    METADATA
+      "wms_title" "Serogroups"
+    END
+    CONNECTIONTYPE postgis
+    CONNECTION "user=apache password=DMmnc dbname=epidegis_works host=localhost"
+#SELECT case_id AS oid, setSrid(translate(the_geom,random(),random(),random()),4326) AS the_geom, identifier, attvalue, attname 
+    DATA "the_geom from ( 
+    SELECT case_id AS oid, the_geom, attvalue AS serogroup, reportdate
+        FROM cases_random NATURAL JOIN types_with_attributes
+        WHERE 
+          CAST(to_char(reportdate, 'YYYY') AS int) * 12 
+            + CAST(to_char(reportdate, 'MM') AS int)
+            BETWEEN %fromYear%*12+%fromMonth% 
+              AND %toYear%*12+%toMonth%
+          AND attname='Serogroup' 
+          AND attvalue IN (%SEROGROUPS%)
+          AND age BETWEEN %fromAge% AND %toAge%
+    ) AS foo USING SRID=4326 USING UNIQUE oid"
+    STATUS ON
+   TYPE POINT
+
+   SYMBOLSCALE 3000000
+   
+   PROJECTION
+     "init=epsg:4326"
+   END
+    CLASSITEM "Serogroup"    
+    CLASS
+     NAME "Serogroups"
+     EXPRESSION (0)
+    END
+    CLASS
+      MINSIZE 7
+      MAXSIZE 30
+      MINSCALE 1000
+      MAXSCALE 15000000
+      NAME 'B'
+      EXPRESSION "B"
+      SYMBOL 'triangle' 		
+      COLOR 255 0 255
+      OUTLINECOLOR 0 0 0
+    END
+    CLASS
+      MINSIZE 7
+      MAXSIZE 30
+      MINSCALE 1000
+      MAXSCALE 15000000
+      NAME 'C'
+      EXPRESSION "C"
+      SYMBOL 'triangle' 		
+      COLOR 255 255 0
+      OUTLINECOLOR 0 0 0
+    END
+    CLASS
+      MINSIZE 7
+      MAXSIZE 30
+      MINSCALE 1000
+      MAXSCALE 15000000
+      NAME 'Y'
+      EXPRESSION "Y"
+      SYMBOL 'triangle' 		
+      COLOR 0 255 0
+      OUTLINECOLOR 0 0 0
+    END
+    CLASS
+      MINSIZE 6
+      MAXSIZE 27
+      MINSCALE 1000
+      MAXSCALE 15000000
+      NAME 'W135'
+      EXPRESSION "W135"
+      SYMBOL 'square' 		
+      COLOR 255 0 255
+      OUTLINECOLOR 0 0 0
+    END
+    CLASS
+      MINSIZE 6
+      MAXSIZE 27
+      MINSCALE 1000
+      MAXSCALE 15000000
+      NAME '29E'
+      EXPRESSION "29E"
+      SYMBOL 'square' 		
+      COLOR 255 255 0
+      OUTLINECOLOR 0 0 0
+    END
+    CLASS
+      MINSIZE 6
+      MAXSIZE 27
+      MINSCALE 1000
+      MAXSCALE 15000000
+      NAME 'A'
+      EXPRESSION "A"
+      SYMBOL 'square' 		
+      COLOR 0 255 0
+      OUTLINECOLOR 0 0 0
+    END
+    CLASS
+      MINSIZE 10
+      MAXSIZE 27
+      MINSCALE 1000
+      MAXSCALE 15000000
+      NAME 'others'
+      SYMBOL 'star' 		
+      COLOR 255 0 0
+      OUTLINECOLOR 0 255 0
+    END
+  END
+  
+  
+  LAYER
+    DUMP TRUE
+    TEMPLATE "DUMMY"
+    NAME cities_default
+    STATUS ON
+    CONNECTIONTYPE postgis
+    CONNECTION "user=apache password=DMmnc dbname=epidegis_works host=localhost"
+    DATA "the_geom from (
+      SELECT gid AS oid, the_geom,
+      full_name AS name, population_n AS population
+        FROM cities
+      ) AS foo USING SRID=4326 USING UNIQUE oid"
+    TOLERANCE 3
+    TYPE POINT
+#UNITS METERS
+#  SIZEUNITS PIXELS
+#SYMBOLSCALE 1200000
+		
+    LABELITEM "name"
+    
+	  METADATA
+      "WMS_SRS"    "epsg:4326"
+      "WMS_TITLE"    "Cities"
+      "WMS_FEATURE_INFO_MIME_TYPE"    "application/vnd.ogc.gml"
+    END
+    PROJECTION
+      "init=epsg:4326"
+    END
+      
+   LABELMAXSCALE 15000000
+   SYMBOLSCALE 1000
+		
+     CLASS
+       NAME "Cities"
+      EXPRESSION (0)
+     END
+     CLASS
+       NAME "(Population):"
+      EXPRESSION (0)
+     END
+     CLASS	#over 1M citizens
+      EXPRESSION ([population] > 1000000)
+      NAME 'over 1 Million' 
+      MINSCALE 1000
+      MAXSCALE 15000000
+      STYLE
+        SYMBOL 'square'
+        MINSIZE 8
+        MAXSIZE 16
+        COLOR 255 0 0 #169 169 169
+        OUTLINECOLOR 0 0 0 
+      END
+      #STYLE
+      #  SYMBOL 'square'
+      #  MINSIZE 3
+      #  MAXSIZE 6
+      #  COLOR 0 0 0 #169 169 169
+      #END
+      LABEL
+        #TYPE BITMAP
+        TYPE TRUETYPE
+        FONT "arial-bold"
+        MINSIZE 10
+        MAXSIZE 15
+        #MAXSIZE 15
+        POSITION AUTO
+        #POSITION ur
+        #OFFSET 1 1
+        MINDISTANCE 2
+        #BACKGROUNDCOLOR 255 255 255
+        OUTLINECOLOR 230 230 230
+        COLOR 0 0 0
+        #ANTIALIAS TRUE
+        PARTIALS FALSE
+      END
+		END
+	  
+    CLASS #500K - 1M citizens
+      EXPRESSION ([population] > 500000 AND [population] <= 1000000)
+      #SYMBOL 'square'
+      NAME '500000 - 1 Million' 
+      MINSCALE 1000
+      MAXSCALE 15000000
+      #MINSIZE 6
+      #COLOR 255 0 0 #169 169 169
+      #OUTLINECOLOR 0 0 0
+      STYLE
+        SYMBOL 'circle'
+        MINSIZE 9
+        MAXSIZE 11
+        COLOR 255 0 0 #169 169 169
+        OUTLINECOLOR 0 0 0 
+      END
+      STYLE
+        SYMBOL 'circle'
+        MINSIZE 3
+        MAXSIZE 5
+        COLOR 0 0 0 #169 169 169
+      END
+      LABEL
+        #TYPE BITMAP
+        TYPE TRUETYPE
+        FONT "arial-bold"
+        MINSIZE 9
+        MAXSIZE 11
+        POSITION AUTO
+        #POSITION ur
+        #OFFSET 1 1
+        MINDISTANCE -1
+        #BACKGROUNDCOLOR 255 255 255
+        OUTLINECOLOR 254 254 254
+        COLOR 0 0 0
+        #ANTIALIAS TRUE
+        PARTIALS FALSE
+      END
+		END
+    
+    CLASS #100K - 500K citizens
+      EXPRESSION ([population] > 100000 AND [population] <= 500000)
+      NAME '100000 - 500000' 
+      MINSCALE 1000
+      MAXSCALE 2500000
+      MINSIZE 7
+      MAXSIZE 9
+      SYMBOL 'circle'
+      COLOR 255 0 0 #169 169 169
+      LABEL
+        #TYPE BITMAP
+        TYPE TRUETYPE
+        FONT "arial-bold"
+        MINSIZE 8
+        POSITION AUTO
+        #POSITION ur
+        #OFFSET 1 1
+        MINDISTANCE 10
+        
+        #BACKGROUNDCOLOR 255 255 255
+        OUTLINECOLOR 254 254 254
+        COLOR 0 0 0
+        #ANTIALIAS TRUE
+        PARTIALS FALSE
+      END
+      OUTLINECOLOR 0 0 0
+		END
+    
+    CLASS #50K - 100K citizens
+      EXPRESSION ([population] > 20000 AND [population] <= 100000)
+      NAME '20000 - 100000' 
+      MINSCALE 1000
+      MAXSCALE 500000
+      MINSIZE 5
+      MAXSIZE 7
+      SYMBOL 'circle'
+      COLOR 250 250 250 #169 169 169
+      LABEL
+        #TYPE BITMAP
+        TYPE TRUETYPE
+        FONT "arial-bold"
+        MINSIZE 8
+        POSITION AUTO
+        #POSITION ur
+        #OFFSET 1 1
+        MINDISTANCE 10
+        
+        #BACKGROUNDCOLOR 255 255 255
+        OUTLINECOLOR 254 254 254
+        COLOR 0 0 0
+        #ANTIALIAS TRUE
+        PARTIALS FALSE
+      END
+      OUTLINECOLOR 0 0 0
+		END
+    
+    CLASS #20K citizens and below
+      EXPRESSION ([population] <= 20000)
+      NAME 'less than 20000' 
+      MINSCALE 1000
+      MAXSCALE 300000
+      MINSIZE 3
+      MAXSIZE 5
+      SYMBOL 'circle'
+      COLOR 0 0 0 #169 169 169
+      LABEL
+        #TYPE BITMAP
+        TYPE TRUETYPE
+        FONT "arial-bold"
+        MINSIZE 8
+        POSITION AUTO
+        #POSITION ur
+        #OFFSET 1 1
+        MINDISTANCE 10
+        
+        #BACKGROUNDCOLOR 255 255 255
+        OUTLINECOLOR 254 254 254
+        COLOR 0 0 0
+        #ANTIALIAS TRUE
+        PARTIALS FALSE
+      END
+		END
+    
+    #CLASS	
+    #  EXPRESSION "3"
+    #  MINSCALE 1000
+    #  MAXSCALE 200000
+    #  SYMBOL 'circle'
+    #  #SIZE 3
+    #  COLOR 255 255 255 #169 169 169
+    #  OUTLINECOLOR 0 0 0
+    #END
+    
+    #CLASS	
+    #  EXPRESSION "4"
+    #  MINSCALE 1000
+    #  MAXSCALE 200000
+    #  SYMBOL 'square'
+    #  #SIZE 1
+    #  COLOR 0 255 0 #169 169 169
+    #END
+  END
+  
+  LAYER
+    NAME citynames_disabled
+    STATUS ON
+    CONNECTIONTYPE postgis
+    CONNECTION "user=apache password=DMmnc dbname=epidegis_works host=localhost"
+    DATA "the_geom from cities"
+    TYPE ANNOTATION
+    TOLERANCE 20
+    TOLERANCEUNITS PIXELS
+#SIZEUNITS PIXELS
+    SYMBOLSCALE 800000
+    LABELITEM "full_name"
+    METADATA
+      "WMS_SRS"    "epsg:4326"
+      "WMS_TITLE"    "City names"
+      "WMS_FEATURE_INFO_MIME_TYPE"    "text/html"
+    
+    END
+    PROJECTION
+     "init=epsg:4326"
+    END
+
+    CLASSITEM "pc"
+    CLASS	#Großstädte
+      EXPRESSION  "10" #('[NAME_TYP]' = '1')	#das gleiche wie EXPRESSION "1"
+      MINSCALE 0
+      MAXSCALE 50000000
+      LABEL
+#TYPE BITMAP
+        TYPE TRUETYPE
+        FONT "arial-bold"
+        SIZE 15
+        MINSIZE 7
+        MAXSIZE 15
+        #POSITION AUTO
+        POSITION ur
+        OFFSET 1 1
+        MINDISTANCE -1
+        COLOR 0 0 0
+        ANTIALIAS FALSE
+        PARTIALS FALSE
+        BACKGROUNDSHADOWCOLOR 255 255 255
+       FORCE TRUE
+      END
+    END
+
+  CLASS			#Landeshauptstädte
+     EXPRESSION '1'
+     MINSCALE 0
+     MAXSCALE 5000000
+     LABEL
+       TYPE TRUETYPE
+       FONT "arial-bold"
+       SIZE 8
+       MINSIZE 7
+       MAXSIZE 11
+       POSITION AUTO
+       OFFSET 1 1
+       MINDISTANCE -1
+       COLOR 50 50 50
+       ANTIALIAS FALSE
+       PARTIALS FALSE
+       FORCE FALSE
+      END
+  END
+
+  CLASS			
+   EXPRESSION ('[pc]' = '2')
+   MINSCALE 0
+    MAXSCALE 1000000
+     LABEL
+      #TYPE BITMAP
+       TYPE TRUETYPE
+       FONT "arial-bold"
+       SIZE 8
+       # SIZE small
+        MINSIZE 7
+        MAXSIZE 10
+        POSITION AUTO
+        #POSITION ur
+        OFFSET 1 1
+        MINDISTANCE -1
+        COLOR 50 50 50
+        ANTIALIAS FALSE
+        PARTIALS FALSE
+        #FORCE TRUE
+      END
+    END
+      
+  CLASS			
+   EXPRESSION ('[pc]' = '3')
+   MINSCALE 0
+    MAXSCALE 450000
+     LABEL
+      #TYPE BITMAP
+       TYPE TRUETYPE
+       FONT "arial-bold"
+       SIZE 8
+       # SIZE small
+        MINSIZE 7
+        MAXSIZE 10
+        POSITION AUTO
+        #POSITION ur
+        OFFSET 1 1
+        MINDISTANCE -1
+        COLOR 50 50 50
+        ANTIALIAS FALSE
+        PARTIALS FALSE
+        #FORCE TRUE
+      END
+      
+      END
+      
+  CLASS			
+   EXPRESSION ('[pc]' = '4')
+   MINSCALE 0
+    MAXSCALE 225000
+     LABEL
+      #TYPE BITMAP
+       TYPE TRUETYPE
+       FONT "arial-bold"
+       SIZE 8
+       # SIZE small
+        MINSIZE 7
+        MAXSIZE 10
+        POSITION AUTO
+        #POSITION ur
+        OFFSET 1 1
+        MINDISTANCE -1
+        COLOR 50 50 50
+        ANTIALIAS FALSE
+        PARTIALS FALSE
+        #FORCE TRUE
+      END	
+    END		
+  END
+  
+  LAYER #cluster_perimeter
+    GROUP cluster
+    NAME cluster_perimeter_disabled
+    TEMPLATE "DUMMY"
+    DEBUG ON
+    METADATA
+      "wms_title" "Cluster Perimeter"
+      "wms_layer_group" "/cluster"
+      "wms_group_title" "Living clusters"
+      #"wms_feature_info_mime_type" "application/vnd.ogc.gml"
+      #"wms_style"        "mystyle"
+      #"wms_mystyle_sld"  "http://afs2b.informatik.uni-wuerzburg.de/ms4/mystyle.xml"
+    END
+    CONNECTIONTYPE postgis
+    CONNECTION "user=apache password=DMmnc dbname=epidegis_works host=localhost"
+    DATA "the_geom FROM (
+     SELECT a.area_id AS oid, ct.nice_identifier AS finetype,
+       sc.startdate, sc.enddate, sc.pvalue,
+       CASE 
+         WHEN circleradius=0 THEN
+          (|/(area(transform(a.the_geom,31467))/pi()))/1000 || ' km'
+         ELSE
+           sc.circleradius || ' km'
+       END AS circleradius,
+       ct.case_type_id%3 AS color,
+       CASE 
+         WHEN circleradius=0 THEN
+           transform(
+             setSRID(
+               buffer(
+                 transform(centroid(a.the_geom),31467)
+                 ,|/(area(transform(a.the_geom,31467))/pi())
+               ),
+               31467
+             ),
+             4326
+           )
+         ELSE
+           transform(
+             setSRID(
+               buffer(
+                 transform(centroid(a.the_geom),31467)
+                 ,circleradius*1000
+               ),
+               31467
+             ),
+             4326
+           )
+      END AS the_geom
+      FROM areas AS a, satscan_clusters AS sc, case_types_nrzm AS ct
+      WHERE a.area_id=sc.area_id
+        AND pvalue<=0.05
+        AND sc.case_type_id=ct.case_type_id
+        AND analysisdate IN (
+          SELECT analysisdate 
+            FROM satscan_clusters 
+            WHERE satscan_job_id=82
+            GROUP BY analysisdate 
+            ORDER BY analysisdate DESC 
+            LIMIT 1)
+      ) 
+      AS foo USING SRID=4326 USING UNIQUE oid"
+    STATUS ON 
+    TYPE POLYGON
+    PROJECTION
+      "init=epsg:4326"
+    END
+    LABELITEM "finetype" 
+    CLASSITEM "color"
+    CLASS
+      EXPRESSION "0"
+      OUTLINECOLOR 255 0 255
+      SYMBOL 'circle'
+      SIZE 3
+      LABEL
+        TYPE TRUETYPE
+        FONT "arial-bold"
+        MINSIZE 10
+        MAXSIZE 15
+        OUTLINECOLOR 255 0 255
+        COLOR 0 0 0
+      END
+    END
+    CLASS
+      EXPRESSION "1"
+      OUTLINECOLOR 255 255 0
+      SYMBOL 'circle'
+      SIZE 3
+      LABEL
+        TYPE TRUETYPE
+        FONT "arial-bold"
+        MINSIZE 10
+        MAXSIZE 15
+        OUTLINECOLOR 255 255 0
+        COLOR 0 0 0
+      END
+    END
+    CLASS
+      EXPRESSION "2"
+      OUTLINECOLOR 255 0 0
+      SYMBOL 'circle'
+      SIZE 3
+      LABEL
+        TYPE TRUETYPE
+        FONT "arial-bold"
+        MINSIZE 10
+        MAXSIZE 15
+        OUTLINECOLOR 255 0 0
+        COLOR 0 0 0
+      END
+    END
+    CLASS
+      EXPRESSION "3"
+      OUTLINECOLOR 0 255 0
+      SYMBOL 'circle'
+      SIZE 3
+      LABEL
+        TYPE TRUETYPE
+        FONT "arial-bold"
+        MINSIZE 10
+        MAXSIZE 15
+        OUTLINECOLOR 0 255 0
+        COLOR 0 0 0
+      END
+    END
+  END #Layer cluster_perimeter
+  
+  LAYER
+    GROUP cluster
+    TEMPLATE "DUMMY"
+    DUMP TRUE
+    NAME cluster_cases_disabled
+    METADATA
+      "wms_layer_group" "/cluster"
+      "wms_title" "Cluster cases"
+    END
+    CONNECTIONTYPE postgis
+    CONNECTION "user=apache password=DMmnc dbname=epidegis_works host=localhost"
+    DATA "the_geom from ( 
+     SELECT c.case_id AS oid, c.the_geom, ct.identifier, 
+       ct.case_type_id%3 AS color
+      FROM cases_random AS c, satscan_clusters AS sc, satscan_cluster_cases AS scc, 
+        case_types AS ct
+      WHERE c.case_type_id = ct.case_type_id AND
+        sc.satscan_cluster_id = scc.satscan_cluster_id AND
+        c.case_id = scc.case_id    
+        AND pvalue<=0.05
+        AND analysisdate IN (
+          SELECT analysisdate 
+            FROM satscan_clusters 
+            WHERE satscan_job_id=82
+            GROUP BY analysisdate 
+            ORDER BY analysisdate DESC 
+            LIMIT 1)
+    ) AS foo USING SRID=4326 USING UNIQUE oid"
+    STATUS ON
+    TYPE POINT
+    PROJECTION
+      "init=epsg:4326"
+    END
+    CLASSITEM "color"
+    CLASS
+      EXPRESSION "0"
+      COLOR 255 0 255
+      OUTLINECOLOR 0 0 0
+      SYMBOL 'star' 		
+      SIZE 10
+    END
+    CLASS
+      EXPRESSION "1"
+      COLOR 255 255 0
+      OUTLINECOLOR 0 0 0
+      SYMBOL 'star' 		
+      SIZE 10
+    END
+    CLASS
+      EXPRESSION "2"
+      COLOR 255 0 0
+      OUTLINECOLOR 0 0 0
+      SYMBOL 'star' 		
+      SIZE 10
+    END
+    CLASS
+      EXPRESSION "3"
+      COLOR 0 255 0
+      OUTLINECOLOR 0 0 0
+      SYMBOL 'star' 		
+      SIZE 10
+    END
+  END
+  
+  LAYER #cluster_perimeter
+    GROUP clusterretro
+    NAME clusterretroperimeter_disabled
+    TEMPLATE "DUMMY"
+    DEBUG ON
+    METADATA
+      "wms_title" "Cluster Perimeter"
+      "wms_group_title" "Monthly retrospective clusters"
+      #"wms_feature_info_mime_type" "application/vnd.ogc.gml"
+      #"wms_style"        "mystyle"
+      #"wms_mystyle_sld"  "http://afs2b.informatik.uni-wuerzburg.de/ms4/mystyle.xml"
+    END
+    CONNECTIONTYPE postgis
+    CONNECTION "user=apache password=DMmnc dbname=epidegis_works host=localhost"
+    DATA "the_geom FROM (
+     SELECT a.area_id AS oid, ct.nice_identifier AS finetype,
+       a.identifier AS center,
+       sc.startdate, sc.enddate, sc.pvalue,
+       CASE 
+         WHEN circleradius=0 THEN
+          (|/(area(transform(a.the_geom,31467))/pi()))/1000 || ' km'
+         ELSE
+           sc.circleradius || ' km'
+       END AS circleradius,
+       ct.case_type_id%3 AS color,
+       CASE 
+         WHEN circleradius=0 THEN
+           transform(
+             setSRID(
+               buffer(
+                 transform(centroid(a.the_geom),31467)
+                 ,|/(area(transform(a.the_geom,31467))/pi())
+               ),
+               31467
+             ),
+             4326
+           )
+         ELSE
+           transform(
+             setSRID(
+               buffer(
+                 transform(centroid(a.the_geom),31467)
+                 ,circleradius*1000
+               ),
+               31467
+             ),
+             4326
+           )
+      END AS the_geom
+      FROM areas AS a, satscan_clusters AS sc, case_types_nrzm AS ct
+      WHERE a.area_id=sc.area_id
+        AND pvalue<=0.05
+        AND sc.case_type_id=ct.case_type_id
+        AND analysisdate='%CLUSTERANALYSISDATE211%'
+        AND satscan_job_id=211
+      ) 
+      AS foo USING SRID=4326 USING UNIQUE oid"
+    STATUS ON 
+    TYPE POLYGON
+    PROJECTION
+      "init=epsg:4326"
+    END
+    LABELITEM "finetype" 
+    CLASSITEM "color"
+    CLASS
+      EXPRESSION "0"
+      OUTLINECOLOR 255 0 255
+      SYMBOL 'circle'
+      SIZE 3
+      LABEL
+        TYPE TRUETYPE
+        FONT "arial-bold"
+        MINSIZE 10
+        MAXSIZE 15
+        OUTLINECOLOR 255 0 255
+        COLOR 0 0 0
+      END
+    END
+    CLASS
+      EXPRESSION "1"
+      OUTLINECOLOR 255 255 0
+      SYMBOL 'circle'
+      SIZE 3
+      LABEL
+        TYPE TRUETYPE
+        FONT "arial-bold"
+        MINSIZE 10
+        MAXSIZE 15
+        OUTLINECOLOR 255 255 0
+        COLOR 0 0 0
+      END
+    END
+    CLASS
+      EXPRESSION "2"
+      OUTLINECOLOR 255 0 0
+      SYMBOL 'circle'
+      SIZE 3
+      LABEL
+        TYPE TRUETYPE
+        FONT "arial-bold"
+        MINSIZE 10
+        MAXSIZE 15
+        OUTLINECOLOR 255 0 0
+        COLOR 0 0 0
+      END
+    END
+    CLASS
+      EXPRESSION "3"
+      OUTLINECOLOR 0 255 0
+      SYMBOL 'circle'
+      SIZE 3
+      LABEL
+        TYPE TRUETYPE
+        FONT "arial-bold"
+        MINSIZE 10
+        MAXSIZE 15
+        OUTLINECOLOR 0 255 0
+        COLOR 0 0 0
+      END
+    END
+  END #Layer cluster_perimeter
+  
+  LAYER
+    GROUP clusterretro
+    TEMPLATE "DUMMY"
+    DUMP TRUE
+    NAME clusterretrocases_disabled
+    METADATA
+      "wms_layer_group" "/cluster"
+      "wms_title" "Cluster cases"
+    END
+    CONNECTIONTYPE postgis
+    CONNECTION "user=apache password=DMmnc dbname=epidegis_works host=localhost"
+    DATA "the_geom from ( 
+     SELECT c.case_id AS oid, c.the_geom, ct.identifier, 
+       ct.case_type_id%3 AS color
+      FROM cases_random AS c, satscan_clusters AS sc, satscan_cluster_cases AS scc, 
+        case_types AS ct
+      WHERE c.case_type_id = ct.case_type_id AND
+        sc.satscan_cluster_id = scc.satscan_cluster_id AND
+        c.case_id = scc.case_id    
+        AND pvalue<=0.05
+        AND analysisdate='%CLUSTERANALYSISDATE211%'
+        AND satscan_job_id=211
+    ) AS foo USING SRID=4326 USING UNIQUE oid"
+    STATUS ON
+    TYPE POINT
+    PROJECTION
+      "init=epsg:4326"
+    END
+    CLASSITEM "color"
+    CLASS
+      EXPRESSION "0"
+      COLOR 255 0 255
+      OUTLINECOLOR 0 0 0
+      SYMBOL 'star' 		
+      SIZE 10
+    END
+    CLASS
+      EXPRESSION "1"
+      COLOR 255 255 0
+      OUTLINECOLOR 0 0 0
+      SYMBOL 'star' 		
+      SIZE 10
+    END
+    CLASS
+      EXPRESSION "2"
+      COLOR 255 0 0
+      OUTLINECOLOR 0 0 0
+      SYMBOL 'star' 		
+      SIZE 10
+    END
+    CLASS
+      EXPRESSION "3"
+      COLOR 0 255 0
+      OUTLINECOLOR 0 0 0
+      SYMBOL 'star' 		
+      SIZE 10
+    END
+  END
+  
+  LAYER #cluster_perimeter
+    NAME caseperimeter_disabled
+    TEMPLATE "DUMMY"
+    DEBUG ON
+    METADATA
+      "wms_srs"    "epsg:4326"
+      "wms_title"    "Case count"
+    END
+    CONNECTIONTYPE postgis
+    CONNECTION "user=apache password=DMmnc dbname=epidegis_works host=localhost"
+    DATA "the_geom FROM (
+     SELECT case_id AS oid, the_geom, count
+      FROM count_cases_in_perimeter ORDER BY COUNT ) 
+      AS foo USING SRID=4326 USING UNIQUE oid"
+    STATUS ON 
+    TYPE POLYGON
+    PROJECTION
+      "init=epsg:4326"
+    END
+    CLASS
+     NAME "1"
+     EXPRESSION ([count] = 1)
+     #COLOR 232 239 250
+     COLOR 0 255 255
+    END
+    CLASS
+     NAME "2"
+     EXPRESSION ([count] = 2)
+     #COLOR 181 188 205
+     COLOR 0 204 255
+    END
+    CLASS
+     NAME "3"
+     EXPRESSION ([count] = 3)
+     #COLOR 150 156 178
+     COLOR 0 153 255
+    END
+    CLASS
+     NAME "4-6"
+     EXPRESSION ([count] >= 4 AND [count] <= 6)
+     #COLOR 139 146 168
+     COLOR 0 102 255
+    END
+    CLASS
+     NAME "7 and above"
+     EXPRESSION ([count] >= 7)
+     COLOR 0 51 255
+    END
+  END #Layer cases_perimeter
+END # end of map file/object

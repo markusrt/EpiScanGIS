@@ -1,0 +1,14 @@
+<canvas layout="spacing: 2">
+    <dataset name="myData">
+        <people>
+            <Tim> Nice guy.  </Tim>
+            <Ron> Not so bright.  </Ron>
+            <Kelly> Tall.  </Kelly>
+            <Adam> Bombastic.  </Adam>
+        </people>
+    </dataset>
+    <view datapath="myData:/people/*" layout="axis:'x'">
+        <text datapath="name()"/>
+        <text datapath="text()"/>
+    </view>
+</canvas>

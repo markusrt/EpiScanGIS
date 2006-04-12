@@ -1,0 +1,5 @@
+USE_PROJ ?= 1
+PROJ_DIR ?= /usr/local
+
+USE_GEOS ?= 1
+GEOS_DIR ?= /usr

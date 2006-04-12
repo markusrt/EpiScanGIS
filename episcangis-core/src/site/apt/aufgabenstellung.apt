@@ -1,0 +1,66 @@
+  ---
+  Aufgabenstellung
+  ---
+  Markus Reinhardt
+  ---
+  01.08.2005
+  ---
+
+Aufgabenstellung
+
+* Web-basierter, einer breiten Benutzergruppe zugänglicher, epidemiologischer 
+GIS-Service
+  
+  Die Aufgabe der vorliegenden Diplomarbeit ist es, einen Web-basierten
+  GIS-Service zur Überwachung von Infektionen zu implementieren. Dieser soll es
+  dem Anwender in einer über das Internet ausführbaren Applikation erlauben,
+  Karten zu generieren, welche die geografische Verteilung von Erkrankungsfällen
+  eines Erregers aufzeigen.
+					
+	Anhand dieser Karten sind Epidemiologen, Vertreter des öffentlichen 
+	Gesundheitsdienstes, (politische)	Entscheidungsträger und die Öffentlichkeit 
+	in der Lage, Informationen über die Verteilung von Krankheitsfällen zu 
+	erlangen. Die Web-basierte Anwendung soll hierbei so ausgelegt sein, dass sie
+	möglichst wenig Anforderungen an die Konfiguration des clientseitigen Rechners
+	 stellt. Nur so ist eine weit reichende Zugänglichkeit zu den Informationen
+	 gesichert.
+					
+* Ausbruchsanalyse
+					
+	Zusätzlich hat die Arbeit zum Ziel, eine automatisierte Risikoanalyse anhand 
+	der im System gespeicherten Erkrankungsinformationen durchzuführen. Ein in das
+	Softwaresystem integriertes Statistikwerkzeug führt hierzu regelmäßige Tests 
+	durch, deren Ergebnisse Hinweise auf Kartenregionen mit einer 
+	überdurchschnittlichen Häufung von Erkrankungsfällen geben. Anhand 
+	entsprechender Darstellungen werden die	Risikoregionen visualisiert.
+
+	Durch diesen neuartigen Ansatz nimmt das System die	Stellung eines 
+	Web-basierten Frühwarnsystems ein, das mögliche Erkrankungsausbrüche 
+	vorhersagen kann.
+
+* Übertragbarkeit auf andere Krankheitserreger und Länder
+
+	Ein wichtiges Kriterium dieser Arbeit ist es, den Entwurf der Software auf 
+	Erweiterbarkeit auszulegen.	Das zu entwickelnde System soll sich auf 
+	verschiedene Krankheitserreger anwenden und auch in	anderen Ländern einsetzen 
+	lassen können.
+					
+* Kooperationen
+
+  Diese Arbeit ist in Kooperation mit dem Nationalen	Referenzzentrum für 
+  Meningokokken [nrzm:2005] des	Instituts für Hygiene und Mikrobiologie der
+	Universität Würzburg und der Firma Ridom GmbH	[ridom:2005] aus Würzburg 
+	entstanden.
+			
+	Das Nationale Referenzzentrum für Meningokokken	ermittelt seit mehreren Jahren
+	detaillierte Informationen zu in Deutschland aufgetretenen	
+	Meningokokken-Erkrankungen. Das zu entwickelnde	System soll diese Daten 
+	beispielhaft integrieren.
+
+	Die Firma Ridom ist an einer Machbarkeitsstudie zur	Entwicklung eines 
+	Web-basierten epidemiologischen	GIS interessiert.
+
+* Projektname
+
+	Das für diese Diplomarbeit entwickelte	Softwaresystem trägt den Arbeitstitel
+	EpiScanGIS
