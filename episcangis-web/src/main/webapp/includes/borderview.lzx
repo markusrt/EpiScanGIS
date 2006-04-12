@@ -1,0 +1,13 @@
+<library>
+  <class name="borderview" defaultplacement="content" bgcolor="navy">
+    <attribute name="bordersize" value="1"/>
+    <attribute name="cbgcolor" value="$once{parent.bgcolor}" type="color"/>
+    <attribute name="contentoffset" 
+      value="${Math.min(this.bordersize,this.width/2)}"/>
+    <view x="${parent.contentoffset}" y="${parent.contentoffset}"
+      width="${classroot.width - parent.contentoffset * 2}"
+      height="${classroot.height - parent.contentoffset * 2}"
+      bgcolor="${classroot.cbgcolor}" name="content"
+      clip="true"/>
+  </class>
+</library>

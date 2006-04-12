@@ -1,0 +1,49 @@
+<library>
+  <datasource name="tls">
+    <method event="oninit">
+      this.ToggleLayerState.setSrc(getBaseUrl() + 'ToggleLayerState.do');
+    </method>
+    <dataset type="http" name="ToggleLayerState"/>
+  </datasource>
+  <class name="layertabelement" extends="tabelement" text_x="20">
+    <attribute name="mapview" type="expression"/>
+    <attribute name="layer" type="expression"/>
+    <attribute name="layername" type="string"/>
+    <method event="ondata">
+      this.layer =  this.mapview.getLayer(this.layername);
+      if(this.top.header.subviews[1].hider.getValue(true) ) {
+        layer.activate();
+      }
+    </method>
+    <view placement="header">
+      <checkbox x="4" y="4" name="hider" datapath="." 
+        value="$path{'@active'}">
+        <method event="onclick"><![CDATA[
+          var layer = classroot.layer;
+          var d = canvas.tls.ToggleLayerState;
+          var p=new LzParam();
+          p.addValue("layer", layer.getAttribute("name"), true);
+          p.addValue("active", this.value, true);
+          d.setQueryString(p);
+          d.doRequest();
+          if( this.value )
+          {
+            layer.activate();
+          }
+          else {
+            layer.deactivate();
+          }
+          ]]></method>
+      </checkbox>
+      <loadbar x="${parent.parent.width-this.width-4}" y="4"
+        name="loadbar" height="14" visible="false"/>
+    </view>
+    <view width="100%" name="paramChoser" layout="spacing:5">
+      <selectparameter mapview="${classroot.mapview}"/>
+      <multiselectparameter 
+        onselect="classroot.mapview.setMapparam(this.name, this.getValue())" 
+        width="100%"/>
+      <text text="$path{'@description'}" width="100%" multiline="true"/>
+    </view>
+  </class>
+</library>

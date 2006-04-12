@@ -1,0 +1,47 @@
+<library>
+  <class name="errorwindow">
+    <window clip="true" width="800" height="400" 
+      resizable="true">
+      <view width="100%" layout="spacing:10">
+        <text>
+          <font size='12' color='#ff0000'>Error(s) occured, feel free to report 
+            <font color="#0000ff">
+              <u>
+                <a href="mailto:markus.reinhardt@stud-mail.uni-wuerzburg.de">here</a>
+              </u>
+            </font>
+          </font>
+        </text>
+        <view x="10" width="${parent.width-40}" datapath="./error" layout="spacing:5">
+          <text width="760" multiline="false">
+            <b>Error:</b>
+          </text>
+          <text width="760" multiline="true" 
+            text="$path{'message/text()'}" selectable="true"/>
+          <button x="10" text="Show more..."> 
+            <method event="onclick"><![CDATA[
+              parent.stacktrace.setVisible(!parent.stacktrace.visible);
+              if(parent.stacktrace.visible) {
+              this.setAttribute("text","Hide Stacktrace");
+              }
+              else {
+              this.setAttribute("text", "Show more...");
+              }
+              ]]></method>
+          </button>
+          <view name="stacktrace" x="10" width="${parent.width-30}" 
+            height="250" bgcolor="red" visible="false">
+            <view name="stacktrace" y="5" x="5" width="${parent.width-10}" 
+              height="${parent.height-10}" clip="true" bgcolor="white">
+              <text 
+                width="${parent.width}" multiline="true" 
+                text="$path{'stacktrace/text()'}" selectable="true"/>
+              <vscrollbar/>
+            </view>
+          </view>
+        </view>
+      </view>
+      <vscrollbar/>
+    </window>
+  </class> 
+</library>

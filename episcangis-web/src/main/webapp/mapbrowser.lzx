@@ -1,0 +1,471 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--=======================================================================-->
+<!--                                                                       -->
+<!-- mapbrowser.lzx                                                        -->
+<!--                                                                       -->
+<!--=======================================================================-->
+<!--<canvas bgcolor="silver" proxied="true" debug="false"-->
+<canvas bgcolor="silver" debug="false" 
+  width="100%" height="100%" maxtextheight="10000">
+  
+  <!--<resource name="waitcursor" src="resources/lzwaitcursor_rsc.swf"/>-->
+  <resource name="dragcursor" src="resources/drag_cursor.png"/>
+  <resource name="icon_save" src="resources/floppy.png"/>
+  <resource name="icon_drag" src="resources/drag.png"/>
+  
+  <include href="includes/parameters.lzx"/>
+  <include href="includes/loadbar.lzx"/>
+  <include href="includes/errorwindow.lzx"/>
+  <include href="includes/layertabelement.lzx"/>
+  <include href="includes/borderview.lzx"/>
+  <include href="includes/stableborder.lzx"/>
+
+  <debug y="500" width="600" height="200"/>
+  <datasource name="ds">
+    <method event="oninit">
+      this.mapserverData.setSrc(getBaseUrl() + 'Map.do');
+      this.mapserverData.doRequest();
+      this.SetParameter.setSrc(getBaseUrl() + 'SetParameter.do');
+    </method>
+    <dataset type="http" name="mapserverData"/>
+    <dataset type="http" name="SetParameter"/>
+  </datasource>
+  <datasource name="mm">
+    <method event="oninit">
+      this.MoveMap.setSrc(getBaseUrl() + 'MoveMap.do');
+    </method>
+    <dataset type="http" name="MoveMap"/>
+  </datasource>
+  <datasource name="fi">
+    <method event="oninit">
+      this.GetFeatureInfo.setSrc(getBaseUrl() + 'GetFeatureInfo.do');
+    </method>
+    <dataset type="http" name="GetFeatureInfo"/>
+  </datasource>
+
+
+  <script src="scripts/global_functions.js"/>
+
+  
+
+  <class name="mapview" extends="view">
+    <attribute name="maplayerview" type="expression"
+      value="${mainArea.mapview.layers}"/>
+    <attribute name="maplayersettings"
+      value="${sidebar.content.layers.layerlist}"/>
+    <attribute name="mapparams" value="" type="string"/>
+    <attribute name="allLayerTabsConstructed" value="false"/>
+
+    <method event="oninit">
+      Debug.write("----------------- INIT -----------------");
+      //this.updateSize();
+    </method>
+    <method name="getLayer" args="layername"><![CDATA[
+      var ret;
+      if( layername != undefined && layername.length > 0 )
+      {
+      ret = this.maplayerview.searchSubviews("name",layername);
+      }
+      if( ret == undefined ) {
+      Debug.write(this.maplayerview);
+      Debug.write("Warning: requested unknown layer: " + layername);
+      }
+      return ret;
+      ]]></method>
+
+    <method name="getMapUrl"><![CDATA[
+      var url = new String();
+      var layers = "?layers=";
+      url = getBaseUrl() + "GetMap.do";
+      return url;
+      ]]></method>
+
+    <method name="updateSize"><![CDATA[      
+      Debug.write("Update size: " + maplayerview.getWidth() + "x"
+        + maplayerview.getHeight());
+      this.setMapparam("height", maplayerview.getHeight());
+      this.setMapparam("width", maplayerview.getWidth());
+      ]]></method>
+
+    <method name="setMapparam" args="name, value"><![CDATA[
+      var strName = "";
+      var strValue = "";
+      if( !(typeof(name) == "undefined") 
+        && !(typeof(value) == undefined) ) 
+      {
+        strName = new String(name);
+        strValue = new String(value);
+      }
+      if( strName.length > 0 && strValue.length > 0 ) {
+        Debug.write("Setting Mapparam: " + strName + "=" + strValue); 
+        var d= canvas.ds.SetParameter;
+        var p=new LzParam();
+        p.addValue("name", strName, true);
+        p.addValue("value", strValue, true);
+        d.setQueryString(p);
+        Debug.write(d.getQueryString());
+        d.doRequest();
+      }
+      ]]></method>
+
+    <method name="refreshAllLayers"><![CDATA[
+      for ( var layer in this.maplayerview.subviews )
+      {
+        this.maplayerview.subviews[layer].refresh();
+      }
+      //var set = this.maplayersettings.content.subviews;
+      //var smp = 0;
+      //for(smp=0; smp < set.length; smp++) {
+      //set[smp].refreshLayer();
+      //}
+      ]]></method>
+
+    <view name="toolbar" width="100%" height="40"
+      bgcolor="silver">
+      <view x="10" height="100%" align="left">
+        <view valign="middle">
+          <simplelayout axis="x" spacing="20"/>
+          <button width="32" height="32">
+            <view valign="middle" align="center"
+              resource="icon_save"/>
+            <method event="onclick"><![CDATA[
+              var url = classroot.getMapUrl();
+              Debug.write("DL Url: " + url);
+              LzBrowser.loadURL(url, "_blank");
+              //LzBrowser.loadURL('javascript: var wptr = window.open("' 
+              //+ url + '","test","resizable=1,width=1000,height=700,left=0,top=0,screenX=0,screenY=0,menubar,location,status,scrollbars,toolbar,address"); wptr.focus(); void(0);');
+              ]]></method>
+          </button>
+          <text x="${classroot.sidebar.width + ((classroot.mainArea.width-this.width)/2)}" height="30">
+            <font size="24">EpiScanGIS - Web Surveillance</font>
+          </text>
+          
+          <!--
+          <button width="32" height="32">
+            <view valign="middle" align="center"
+              resource="icon_drag"/>
+            <method event="onclick">
+              LzCursor.setCursorGlobal('dragcursor');
+            </method>
+          </button>
+          -->
+        </view>
+      </view>
+    </view>
+    <!-- SIDEBAR -->
+    <view y="${classroot.toolbar.height}" width="280"
+      height="${parent.height-classroot.toolbar.height}"
+      name="sidebar">
+      <stableborderlayout axis="x"/>
+      <!-- left border -->
+      <view width="5" height="100%"/>
+      <!-- sidebar content -->
+      <view name="content" height="100%">
+        <simplelayout axis="y" spacing="0"/>
+        <!-- REQUEST MAP FORM -->
+        <view name="mapform" layout="spacing:10" height="30%"
+          width="100%">
+          <text name="heading" fontstyle="bold">
+            <u>Query</u>
+          </text>
+          <view x="5" name="formview" layout="spacing:10"
+            height="${parent.height-parent.heading.height-10}"
+            width="${parent.width-5}">
+            <view width="100%" layout="spacing:5">
+              <selectparameter width="${parent.width}"
+                datapath="mapserverData:/map/selectparameter"
+                mapview="${classroot}"/>
+            </view>
+            <periodparameter width="100%"
+              datapath="mapserverData:/map/periodparameter"
+              mapview="${classroot}"/>
+          </view>
+        </view>
+        <!-- LAYER CHECKBOXES -->
+        <view name="layers" height="70%" width="100%">
+          <stableborderlayout axis="y"/>
+          <text fontstyle="bold"><u>Layers</u></text>
+          <tabslider name="layerlist" width="100%">
+            <method name="showLoadBar" args="layername,show">
+              var layerTab =
+              this.content.searchSubViews("layername", layername);
+              layerTab.top.header.subviews[1].loadbar.setVisible(show);
+            </method>
+            <layertabelement visible="true" layername="$path{'@name'}"
+              datapath="mapserverData:/map/layer" text="$path{'@title'}"
+              layout="spacing:5" mapview="${classroot}" initstage="late">
+              <datapath>
+                <method event="onclones"><![CDATA[
+                  parent.classroot.updateSize();
+                  if(!this['doneDel']) { 
+                  this.doneDel = 
+                  new LzDelegate( this, 'lastCloneInit');
+                  this.doneDel.
+                  register(clones[clones.length -1], 'oninit'); 
+                  }
+                  ]]></method>
+                <method name="lastCloneInit"><![CDATA[
+                  //parent.classroot.updateSize();
+                  Debug.write("ALL DONE");
+                  parent.selectItemAt(0);
+                  parent.classroot.setAttribute(
+                  "allLayerTabsConstructed",true);
+                  //parent.classroot.refreshAllLayers();
+                  ]]></method>
+              </datapath>
+            </layertabelement>
+          </tabslider>
+          <text>University of Würzburg, 2005</text>
+        </view>
+      </view>
+      <!-- right border -->
+      <view height="100%" width="5"/>
+    </view>
+    <!-- SIDEBAR END -->
+
+    <!-- MAINAREA -->
+    <view 
+      width="${parent.width-parent.sidebar.width-parent.legendbar.width}"
+      x="${parent.sidebar.width}" y="${classroot.toolbar.height}"
+      height="${parent.height-classroot.toolbar.height}"
+      name="mainArea">
+      <simplelayout axis="y"/>
+      <borderview name="mapview" clip="true" width="100%"
+        height="100%" bordersize="2" bgcolor="navy">
+        <!-- VIEW HOLDING ALL MAPLAYERS -->
+        <view clip="true" name="layers" bgcolor="white"
+          width="100%" height="100%" focusable="true">
+          <attribute name="mouseOver" value="false"/>
+          <attribute name="mapJustMoved" value="false"/>
+          <method event="onmouseover"><![CDATA[
+            this.mouseOver = true;
+            ]]></method>
+          <method event="onmouseout"><![CDATA[
+            this.mouseOver = false;
+            ]]></method>
+          <method event="oninit"><![CDATA[
+            del = new LzDelegate(this, "pressCtrl");
+            LzKeys.callOnKeyCombo(del, ["control"]);
+            ]]></method>
+          <method event="onmousedown"><![CDATA[
+            //if(LzKeys.isKeyDown(['control'])) 
+            //{
+            //setCursor('dragcursor');
+            moveMap.apply();
+            //}
+            ]]></method>
+          <method event="onmouseup"><![CDATA[
+            var x = Math.round(this.x);
+            var y = Math.round(this.y); 
+            if(moveMap.isapplied && (x != 0 || y != 0) ) 
+            {
+              //LzCursor.unlock();
+              moveMap.remove();
+              var d=canvas.mm.MoveMap;
+              var p=new LzParam();
+              p.addValue("xoffset", -x/width, true);
+              p.addValue("yoffset", y/height, true);
+              d.setQueryString(p);
+              d.doRequest();
+              this.mapJustMoved=true;
+            }
+            ]]></method>
+          <method event="onclick"><![CDATA[
+            if( this.mouseOver && !this.mapJustMoved ) {
+              moveMap.remove();
+              var d=canvas.fi.GetFeatureInfo;
+              var p=new LzParam();
+              var x = Math.round(getMouse('x'));
+              var y = Math.round(getMouse('y'));
+              p.addValue("x", x, true);
+              p.addValue("y", y, true);
+              d.setQueryString(p);
+              d.doRequest();
+              this.infopanel.open(x-5,y-5);
+            }
+            else {
+              this.mapJustMoved=false;
+            }
+            ]]></method>
+          <datapointer id="mydp" xpath="SetParameter:/result">
+            <method event="ondata" args="d"><![CDATA[
+              if(classroot.allLayerTabsConstructed) {
+              var upd;
+              var childs = d.childNodes;
+              for( upd=0; upd < childs.length; upd++ ) {
+              if(childs[upd].nodename == "update") {
+              var updateLayer = childs[upd].childNodes[0].data;
+              parent.searchSubviews("name",updateLayer).refresh();
+              }
+              }
+              }
+              ]]></method>
+          </datapointer>
+          <datapointer id="moveMapPtr" xpath="MoveMap:/result">
+            <method event="ondata" args="d"><![CDATA[
+              //TODO check for result success
+              classroot.refreshAllLayers();
+              parent.setX(0);
+              parent.setY(0);
+              ]]></method>
+          </datapointer>
+          <dragstate name="moveMap"
+            drag_min_x="$once{-width+width/10}"
+            drag_max_x="$once{width-width/10}"
+            drag_min_y="$once{-height+height/10}"
+            drag_max_y="$once{height-height/10}"/>
+          <view width="250" height="${this.border.height}" 
+            datapath="GetFeatureInfo:/result"
+            bgcolor="0xffffe1" name="infopanel" opacity="0"
+            onmouseout="this.fadeOut.doStart()">
+            <method name="open" args="x,y"><![CDATA[
+              if( typeof x == "number" && typeof y == "number" )
+              {
+              this.setAttribute("opacity",0);
+              this.setX(x);
+              this.setY(y);
+              this.bringToFront();
+              this.fadeOut.stop();
+              this.setVisible(true);
+              this.fadeIn.doStart();
+              for ( var view in this.border.content.subviews )
+              {
+                this.border.content.subviews[view].setVisible(false);
+                }
+                this.loadbar.setVisible(true);
+              }
+                
+              ]]></method>
+            <method event="ondata"><![CDATA[
+              for ( var view in this.border.content.subviews )
+              {
+                this.border.content.subviews[view].setVisible(true);
+                }
+               this.loadbar.setVisible(false);
+                
+              ]]></method>
+            <animatorgroup name="fadeIn" duration="1000"
+              start="false">
+              <animator attribute="opacity" to="1"/>
+            </animatorgroup>
+            <animatorgroup name="fadeOut" duration="1000"
+              start="false">
+              <method event="onstop"><![CDATA[
+                parent.setVisible(false);
+              ]]></method>
+              <animator attribute="opacity" to="0"/>
+            </animatorgroup>
+            <stableborder name="border"
+              width="100%"
+              height="${Math.max(50,this.content.height)}">
+              <view name="content" width="100%" layout="spacing:4">
+              <view width="100%" datapath="./layer/" layout="spacing:2">
+                <text fontstyle="bold" width="100%" text="$path{'@title'}"/> 
+                <text width="100%" x="3" 
+                  datapath="./feature" text="$path{'text()'}"/>
+              </view>
+              </view>
+            </stableborder>
+            <loadbar x="${parent.width-this.width-5}" y="5" 
+              name="loadbar" visible="false" height="15"/>
+          </view>
+          <!-- MAP LAYER -->
+          <view visible="false" width="100%" height="100%"
+            datapath="mapserverData:/map[1]/layer/">
+            <attribute name="title" type="string"/>
+            <attribute name="mapurl" type="string"/>
+            <attribute name="isloading" type="boolean"
+              value="false"/>
+            <attribute name="changed" type="boolean"
+              value="true"/>
+            <method event="ondata"><![CDATA[
+              var title = this.datapath.xpathQuery('@title');
+              this.setAttribute('title',title); 
+              this.name = this.datapath.xpathQuery('@name');
+              var mapurl = getBaseUrl() + 'GetMapLayer.do';
+              mapurl += "?layer=" + this.name;
+
+              this.setAttribute('mapurl',mapurl); 
+              var active =  this.datapath.xpathQuery('@active');
+              ]]></method>
+            <method name="activate"><![CDATA[
+              this.setVisible(true);
+              if( typeof this.getAttribute("resource") == "undefined"
+                || this.changed) {
+                this.refresh();
+                this.changed=false;
+              }
+              ]]></method>
+            <method name="deactivate"><![CDATA[
+              this.setVisible(false);
+              ]]></method>
+            <method name="refresh">
+              if( this.visible ) {
+                setResource(mapurl, "none","");
+                this.isloading = "true";
+                classroot.maplayersettings.showLoadBar(this.name,true);
+              }
+              else {
+                Debug.write( 'Layer ' + this.title + ' not refreshed (invisible)');
+                this.changed = true;
+              }
+            </method>
+            <method event="onload">
+              Debug.write("LOADED " + this.title);
+              this.isloading = false;
+              classroot.maplayersettings.showLoadBar(this.name,false);
+            </method>
+          </view>
+        </view>
+        <!--<scrollbar axis="x"/>-->
+        <!--<scrollbar axis="y"/>-->
+      </borderview>
+
+    </view>
+    <view width="190"
+      x="${parent.sidebar.width+parent.mainArea.width}"
+      y="${classroot.toolbar.height}"
+      height="${parent.height-classroot.toolbar.height}"
+      name="legendbar" clip="true">
+      <view width="190" layout="spacing:5">
+        <view x="10" datapath="mapserverData:/map[1]/layer/legend">
+          <!--
+          <text name="title" clickable="true"
+            x="${(this.width-this.getTextWidth())/2}"
+            text="$path{'../@title'}"
+            width="100%"/>
+          -->
+          <view visible="true" width="100%"
+            height="${this.img.height+2}"
+            name="legendgraphic">
+            <!--
+            <method event="onvisible"> if(this.visible) {
+              this.open.doStart(); } else this.setOpacity(0);
+            </method>
+            <animatorgroup name="open" duration="1000"
+              start="false">
+              <animator attribute="opacity" to="0.7"/>
+            </animatorgroup>
+            -->
+            <view name="img" 
+              resource="${getBaseUrl() + 'GetLegendGraphic.do?layer=' + parent.parent.datapath.xpathQuery('../@name')}">
+              <!--
+              <method event="onload">
+                <![CDATA[
+                parent.parent.title.setText( 
+                "<u>" + parent.parent.title.text + "</u>");
+                ]]>
+              </method>
+              -->
+            </view>
+          </view>
+        </view>
+      </view>
+      <vscrollbar/>
+    </view>
+  </class>
+        
+  <mapview datapath="mapserverData:/map" 
+    width="${parent.width}" height="${parent.height}"/>
+  <errorwindow datapath="mapserverData:/result" width="100%" height="100%"/>
+</canvas>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<!DOCTYPE form-validation PUBLIC
+          "-//Apache Software Foundation//DTD Commons
+          Validator Rules Configuration 1.1.3//EN"
+          "http://jakarta.apache.org/commons/dtds/validator_1_1_3.dtd">
+
+<form-validation>
+  <formset>
+    <form name="registerUser">
+      <field property="username" depends="required">
+        <arg0 key="user.username"/>
+      </field>
+      <field property="password" depends="required">
+        <arg0 key="user.password"/>
+      </field>
+      <field property="confirmPassword" depends="required,twofields">
+        <arg0 key="user.confirmPassword"/>
+        <arg1 key="user.password"/>
+        <var>
+          <var-name>secondProperty
+          </var-name>
+          <var-value>password
+          </var-value>
+        </var>
+      </field>
+      <field property="fullName" depends="required">
+        <arg0 key="user.fullName"/>
+      </field>
+      <field property="phone" depends="required">
+        <arg0 key="user.phone"/>
+      </field>
+      <field property="email" depends="required,email">
+        <arg0 key="user.email"/>
+      </field>
+      <field property="message" depends="required">
+        <arg0 key="user.message"/>
+      </field>
+    </form>
+  </formset>
+</form-validation>

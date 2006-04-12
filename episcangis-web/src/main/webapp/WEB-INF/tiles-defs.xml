@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<!DOCTYPE tiles-definitions PUBLIC
+  "-//Apache Software Foundation//DTD Tiles Configuration 1.1//EN"
+  "http://jakarta.apache.org/struts/dtds/tiles-config_1_1.dtd">
+<!--
+Struts-tiles configuration for EpiScanGIS Websurveillance  
+Copyright ©2005 Markus Reinhardt - All Rights Reserved.
+-->
+<tiles-definitions>
+
+    <definition name="base" 
+      path="/layouts/standard.jsp">
+        <put name="header" 
+          value="/tiles/header.jsp" />
+        <put name="menu" 
+          value="/tiles/menu.jsp" />
+        <!--<put name="menu"   value=".mainMenu" />-->
+        <put name="footer" 
+          value="/tiles/footer.jsp" />
+    </definition>
+    <!--
+    <definition name=".mainMenu" path="/common/layouts/vboxLayout.jsp" >
+        <putList name="list" >
+            <add value=".menu.links" />
+            <add value=".menu.taglib.references" />
+            <add value=".menu.printer.friendly" />
+            <add value=".menu.old.documents" />
+      </putList>
+    </definition>
+    -->
+
+    <definition name="page.welcome" extends="base">
+      <put name="title" value="page.welcome.title"/>
+      <put name="body" value="/tiles/welcome.jsp" />
+    </definition>
+    <definition name="page.error" extends="base">
+      <put name="title" value="page.error.title"/>
+      <put name="body" value="/tiles/error.jsp" />
+    </definition>
+    <definition name="page.registerUser" extends="base">
+      <put name="title" value="page.registerUser.title"/>
+      <put name="body" value="/tiles/registerUser.jsp" />
+    </definition>
+  <definition name="page.registerUserSuccess" extends="base">
+    <put name="title" value="page.registerUserSuccess.title"/>
+    <put name="body" value="/tiles/registerUserSuccess.jsp"/>
+  </definition>
+    <definition name="page.incidenceform" extends="base">
+        <put name="body"   value="/incidenceform.jsp" />
+    </definition>
+    <definition name="page.incidencemap" extends="base">
+        <put name="body"   value="/results/incidencemap.jsp" />
+    </definition>
+    <definition name="page.badincidencemap" extends="base">
+        <put name="body"   value="/results/badincidencemap.jsp" />
+    </definition>
+    <definition name="page.map" extends="base">
+        <put name="body"   value="/map.jsp" />
+    </definition>
+
+</tiles-definitions>

@@ -1,0 +1,8 @@
+<library>
+  <include href="lz/tree.lzx"/>
+  <class name="areatree" extends="tree" icon="null"
+    expander="lztree_plusminus_rsc" xindent="5" yindent="18"
+    open="true">
+    <attribute name="areaid" type="string"/>
+  </class>
+</library>

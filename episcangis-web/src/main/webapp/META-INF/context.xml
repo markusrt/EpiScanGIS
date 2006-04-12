@@ -1,0 +1,14 @@
+<Context path="/epidegis-web" docBase="epidegis-web" debug="999" reloadable="true">
+  <Resource name="jdbc/dao" auth="Container"
+    type="javax.sql.DataSource"
+    driverClassName="org.postgresql.Driver"
+    url="jdbc:postgresql://localhost:5432/epidegis_works" username="tomcat"
+    password="DTh1eP" maxActive="20" maxIdle="10" maxWait="-1" />
+  <Realm className="org.apache.catalina.realm.JDBCRealm"
+    connectionName="tomcat" connectionPassword="DTh1eP"
+    driverName="org.postgresql.Driver" debug="99"
+    connectionURL="jdbc:postgresql://localhost:5432/epidegis_works"
+    userNameCol="username" userTable="users" userCredCol="password"
+    userRoleTable="user_roles" roleNameCol="rolename"
+    digest="SHA-1"/>
+</Context>

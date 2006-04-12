@@ -1,0 +1,12 @@
+<html> 
+  <title>$text.printView.title</title>	
+</html>
+<body>
+	<p>
+	  <h1>$text.printView.title</h1> 
+	</p>
+	#foreach( $layer in $printMap.ActiveLayers )
+		<b>$layer.name</b><br/>
+	#end
+</body> 
+<html>

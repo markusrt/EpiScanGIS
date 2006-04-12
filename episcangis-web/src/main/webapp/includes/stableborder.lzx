@@ -1,0 +1,24 @@
+<library>
+  <class name="stableborder" defaultplacement="content">
+    <attribute name="bordercolor" value="black" type="color"/>
+    <stableborderlayout axis="y"/>
+    <view bgcolor="${classroot.bordercolor}" 
+      height="1"
+      width="${classroot.width}"/>
+    <view width="100%">
+      <stableborderlayout axis="x"/>
+      <view bgcolor="${classroot.bordercolor}"
+        width="1"
+        height="${parent.height}"/>
+      <view height="100%" name="content"/>
+      <view bgcolor="${classroot.bordercolor}"
+        width="1"
+        height="${parent.height}"/>
+    </view>
+    <view bgcolor="${classroot.bordercolor}" 
+      height="1"
+      width="${classroot.width}">
+    </view>
+  </class>
+
+</library>

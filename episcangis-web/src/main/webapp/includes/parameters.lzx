@@ -1,0 +1,163 @@
+<library>
+  <class name="periodparameter" width="100%" datapath="periodparameter">
+    <attribute name="mapview" type="expression"/>
+    <simplelayout axis="y" spacing="3"/>
+    <text datapath="./title" name="heading" fontstyle="bold" 
+      text="$path{'text()'}" width="100%"/>
+    <view width="100%">
+      <simplelayout axis="x" spacing="3"/>
+      <text width="${(parent.width-6)*0.2}" text="from"/>
+      <selectparameter width="${(parent.width-6)*0.5}" 
+        mapview="${classroot.mapview}"
+        datapath="./selectparameter[1]"/>
+      <selectparameter width="${(parent.width-6)*0.3}" 
+        mapview="${classroot.mapview}"
+        datapath="./selectparameter[2]"/>
+    </view>
+    <view>
+      <simplelayout axis="x" spacing="3"/>
+      <text width="${(parent.parent.width-6)*0.2}" text="to"/>
+      <selectparameter width="${(parent.parent.width-6)*0.5}" 
+        mapview="${classroot.mapview}"
+        datapath="./selectparameter[3]"/>
+      <selectparameter width="${(parent.parent.width-6)*0.3}" 
+        mapview="${classroot.mapview}"
+        datapath="./selectparameter[4]"/>
+    </view>
+  </class>
+
+  <class name="selectparameter" extends="view" datapath="selectparameter"
+    width="${parent.width}">
+    <attribute name="mapview" type="expression"/>
+    <method event="oninit">
+      if(!(typeof(this.selector.title.text) == "undefined")) {
+      this.selector.subviews[1].setWidth(
+        parent.width-this.selector.title.width-5);
+      }
+    </method>
+    <method name="selectValue" args="searchValue">
+      //var query = './value[@name="'+searchValue+'"]';
+      var query = './value';
+      var list = this.datapath.xpathQuery(query);
+      for( var i in list ) {
+       if(list[i].getAttr('name') == searchValue ) {
+         selector.subviews[1].selectItemAt(i);
+         break;
+       }
+      }
+    </method>
+    <method name="getValue">
+      return this.subviews[1].getValue();
+    </method>
+    <simplelayout axis="y" spacing="5"/>
+    <view width="100%" name="selector">
+      <simplelayout axis="x" spacing="5"/>
+      <text width="25%" name="title" datapath="./title" 
+        text="$path{'text()'}" fontstyle="bold"/>
+      <combobox oninit="classroot.setName(this.name)" shownitems="12"
+        datapath="." name="$path{'./@name'}" editable="false"
+        width="${parent.width}" text_width="200" dataoption="lazy">
+        <method event="onselect">
+          classroot.mapview.setMapparam(this.name, this.getValue());
+        </method>
+        <textlistitem datapath="./value" text="$path{'@name'}"
+          value="$path{'text()'}">
+          <!--
+          <method event="oninit"><![CDATA[
+            if(this.datapath.xpathQuery('@selected')=='true')
+            {
+            parent.select(this);
+            }
+            ]]></method>
+          -->
+          <datapath replication="lazy">
+            <!--
+            Datareplication lazy safes a lot of memory, but it's tricky
+            to select an item from the list. The obvious solution
+            ... textlistitem selected="$path{'@selected'} ... doesn't work.
+
+            The onnodes event is fired before any clone is created. This code
+            just searches the index of the selected node and stores it inside
+            this datapath. The delegate lastCloneInit gets called, when the 
+            last dataelement is replicated, this is the right time to call
+            combobox.selectItemAt(...).
+            -->
+            <attribute name="selectedItem" value="0"/>
+            <method event="onnodes"><![CDATA[ 
+              for (var i in this.nodes ) {
+              var selected = this.nodes[i].getAttr('selected')
+              if( selected == 'true' ) {
+              this.selectedItem = i; 
+              }
+              }
+              if( this.nodes.length > 100 ) {
+                parent.classroot.searchBox.setVisible(true);
+              }
+              ]]></method>
+            <method event="onclones"><![CDATA[ 
+              var lastclone = this.clones[ this.clones.length - 1 ];
+
+              if( typeof this.del == "undefined" ) {
+              this.del = new LzDelegate( this, "lastCloneInit") 
+              } 
+              else {
+              this.del.ungregisterAll();
+              }
+              this.del.register( lastclone, "oninit"); 
+
+              // !! DIRTY BUGFIX !!
+              // If there are only two replicated views, lastCloneInit isn't 
+              // called. This seems to be a Laszlo bug or misunderstanding.
+              if( this.clones.length <= 2 && this.clones.length > 0 ) 
+              {
+              Debug.write("DIRTY BUGFIX 1, parameters.lzx");
+              this.lastCloneInit();
+              }
+              ]]></method>
+            <method name="lastCloneInit"><![CDATA[ 
+              parent.selectItemAt(this.selectedItem);
+              ]]></method>
+          </datapath>
+        </textlistitem>
+      </combobox>
+    </view>
+    <view width="100%" name="searchBox" visible="false">
+      <simplelayout axis="x" spacing="5"/>
+      <text width="25%" text="Search" fontstyle="bold"/>
+      <edittext resizable="false" x="0" y="10" 
+        width="100%" name="searchBox">
+        <method event="onkeydown" args="k">
+          if (k == 13) {
+            classroot.selectValue(this.getText()); 
+          }
+        </method>
+      </edittext>
+    </view>
+  </class>
+
+  <class name="multiselectparameter" layout="spacing:5"
+    datapath="multiselectparameter">
+    <method name="getValue">
+      return this.subviews[1].getValue();
+    </method>
+    <text name="chosen" visible="false"/>
+    <list width="${parent.width}" multiselect="true"
+      datapath="." name="$path{'./@name'}"
+      scrollable="true" shownitems="7" oninit="parent.setName(this.name)">
+      <method event="onselect">
+        if( this.getValue() != null ) {
+        parent.chosen.setText(this.getValue());
+        parent.chosen.setVisible(true);
+        }
+        else parent.chosen.setVisible(false);  
+        parent.onselect.sendEvent();
+      </method>
+      <!-- initstage="late" required because otherwise
+        parent is initialized after textlistitem -->
+      <textlistitem datapath="value" text="$path{'@name'}"
+        selected="$path{'@selected'}" value="$path{'text()')'}"
+        initstage="late"
+        oninit="if(this.selected == 'true') parent.select(this)"/>
+    </list>
+  </class>
+</library>
