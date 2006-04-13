@@ -5,8 +5,7 @@
 <!--                                                                       -->
 <!--=======================================================================-->
 <!--<canvas bgcolor="silver" proxied="true" debug="false"-->
-<canvas bgcolor="silver" debug="false" 
-  width="100%" height="100%" maxtextheight="10000">
+<canvas debug="false" width="100%" height="100%" maxtextheight="10000">
   
   <!--<resource name="waitcursor" src="resources/lzwaitcursor_rsc.swf"/>-->
   <resource name="dragcursor" src="images/drag_cursor.png"/>
@@ -48,7 +47,7 @@
 
   
 
-  <class name="mapview" extends="view">
+  <class bgcolor="0xeeeeee" extends="view">
     <attribute name="maplayerview" type="expression"
       value="${mainArea.mapview.layers}"/>
     <attribute name="maplayersettings"
@@ -71,8 +70,7 @@
 
     <method name="getMapUrl"><![CDATA[
       var url = new String();
-      var layers = "?layers=";
-      url = getBaseUrl() + "GetMap.do";
+      url = getBaseUrl() + "PrintMap.do";
       return url;
       ]]></method>
 
@@ -116,8 +114,7 @@
       //}
       ]]></method>
 
-    <view name="toolbar" width="100%" height="40"
-      bgcolor="silver">
+    <view name="toolbar" width="100%" height="40">
       <view x="10" height="100%" align="left">
         <view valign="middle">
           <simplelayout axis="x" spacing="20"/>
@@ -126,11 +123,8 @@
               resource="icon_save"/>
             <method event="onclick"><![CDATA[
               var url = classroot.getMapUrl();
-              Debug.write("DL Url: " + url);
               LzBrowser.loadURL(url, "_blank");
-              //LzBrowser.loadURL('javascript: var wptr = window.open("' 
-              //+ url + '","test","resizable=1,width=1000,height=700,left=0,top=0,screenX=0,screenY=0,menubar,location,status,scrollbars,toolbar,address"); wptr.focus(); void(0);');
-              ]]></method>
+            ]]></method>
           </button>
           <!--
           <button width="32" height="32">

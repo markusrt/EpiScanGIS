@@ -80,7 +80,7 @@
 
     <action path="/PrintMap"
       type="de.meningococcus.episcangis.web.PrintMapAction">
-      <forward name="success" path="/WEB-INF/pages/printView.vm"/>
+      <forward name="success" path="/WEB-INF/pages/printableMap.vm"/>
     </action>
     
 		<action path="/ShowMap" scope="session"

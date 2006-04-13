@@ -6,6 +6,9 @@
 	<body>
 		<release version="1.0" date="SNAPSHOT"
 			description="Beta Kartenbetrachter">
+      <action tpye="add" dev="mtk" date="13.04.2006">
+        Integration von Velocity-Struts.
+      </action>
 			<action tpye="add" dev="mtk">
 				Die EpiScanGIS-Anwendung unterstützt jetzt
 				"Container-based Security". Hierbei erfolgt die

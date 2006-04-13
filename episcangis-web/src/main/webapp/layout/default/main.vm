@@ -10,12 +10,14 @@
       #if ( $disableNav )
       @import url("./css/episcangis-nonav.css");
       #end
+      #if( $disableBanner )
+      @import url("./css/episcangis-nobanner.css");
+      #end
     </style>
     <style type="text/css" media="print">
       @import url("./css/episcangis-print.css");
     </style>
   </head>
-</html>
 <body>
   <div id="banner">
     <div id="bannerLeft">
@@ -30,6 +32,10 @@
   </div>
   <div id="breadcrumbs">
     <div class="xleft">
+      <a href="http://www.uni-wuerzburg.de" class="externalLink">
+        University of W&#x0000FC;rzburg</a>
+      | <a href="http://www.ridom.de" class="externalLink">
+          Ridom GmbH</a>	
     </div>
     <div class="xright">
       #if ($user)
@@ -46,11 +52,11 @@
   <div id="leftColumn">
     <div id="navcolumn">
       <h5>Quick Links</h5>
-      <a href="welcome.vm">Home</a><br/>
       <a href="#"
-        onClick="window.open('mapbrowser_1024x786.html','mapbrowser','status=no,scrollbars=yes,width=1020,height=766')">Launch EpiScanGIS</a>
+        onClick="window.open('mapbrowser.vm','mapbrowser','status=no,scrollbars=yes,width=1020,height=800')">Launch EpiScanGIS</a>
+      <a href="welcome.vm">Home</a><br/>
       <h5>About EpiScanGIS</h5>
-      <a href="whatIs.vm">What is EpiScanGIS</a><br/>
+      <a href="whatis.vm">What is EpiScanGIS</a><br/>
       <a href="screenshots.vm">Screenshots</a>
       #if($user)
       #if($user.isInRole("nrzm"))
