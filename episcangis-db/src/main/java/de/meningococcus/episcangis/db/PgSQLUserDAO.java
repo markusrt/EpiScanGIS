@@ -6,6 +6,7 @@ package de.meningococcus.episcangis.db;
  */
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -62,6 +63,12 @@ final class PgSQLUserDAO extends DbUtilsDAO implements UserDAO
     {
       result = (User) run
           .query(GET_USER, username, new BeanHandler(User.class));
+      if(result != null )
+      {
+        for( String role : getUserRoles(result) ) {
+          result.addRole(role);
+        }
+      }
     }
     catch (SQLException e)
     {
@@ -146,7 +153,7 @@ final class PgSQLUserDAO extends DbUtilsDAO implements UserDAO
   @SuppressWarnings("unchecked")
   public Collection<String> getUserRoles(User user)
   {
-    List<String> result = null;
+    List<String> result = new ArrayList<String>();
     try
     {
       List<Object[]> resultRows = (List<Object[]>) run.query(GET_USER_ROLES,
