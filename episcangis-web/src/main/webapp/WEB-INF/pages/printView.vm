@@ -1,0 +1,96 @@
+#set ($page_title=$msg.printView.title)
+#set ($disableNav=true)
+                                                                                          
+<div class="section">
+  <h2>$msg.printView.title</h2>
+  <table class="bodyTable">
+    <tbody>
+      <tr>
+        <td>
+          <div id="map">
+            <img src="GetMap.do" alt="current map"/>
+          </div>
+        </td>
+        <td>
+          <div id="legend">
+            <b>$msg.printView.legend</b><br/>
+                                                                                          
+            #foreach( $layer in $printMap.ActiveLayers )
+            #if ($layer.hasLegend())
+            <img src="GetLegendGraphic.do?layer=$layer.name"
+              alt="legend for layer $layer.name"/>
+            <br/>
+            #end
+            #end
+                                                                                          
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="section">
+    <h3>General Settings</h3>
+    <table class="bodyTable">
+      <thead>
+        <tr>
+          <th>Parameter</th>
+          <th>Value</th>
+        </tr>
+      </thead>
+      <tbody>
+        #if( $printMap.Mapparameters.size() > 0 )
+        #foreach( $param in $printMap.Mapparameters )
+        #if ( $param.value && $param.value != "")
+        <tr class="a">
+          <td>$param.title</td>
+          <td>
+            #foreach( $value in $param.values )
+            #if ( $value.isSelected() )
+            $value.title<br/>
+            #end
+            #end
+          </td>
+        </tr>
+        #end
+        #end
+        #end
+      </tody>
+    </table>
+  </div>
+  <div class="section">
+    <h3>Layer Information</h3>
+    #foreach( $layer in $printMap.ActiveLayers )
+      <h4>$layer.title</h4>
+    <p>
+    $layer.description
+    </p>
+    #if( $layer.getParameters(false).size() > 1 )
+    <table class="bodyTable">
+      <thead>
+        <tr>
+          <th>Parameter</th>
+          <th>Value</th>
+        </tr>
+      </thead>
+      <tbody>
+        #foreach( $param in $layer.getParameters(false) )
+        #if ( $param.value && $param.value != "")
+        <tr>
+          <td>$param.title</td>
+          <td>
+            #foreach( $value in $param.values )
+            #if ( $value.isSelected() )
+            $value.title<br/>
+            #end
+            #end
+          </td>
+        </tr>
+        #end
+        #end
+      </tody>
+    </table>
+    #end
+    #end
+                                                                                          
+  </div>
+</div>

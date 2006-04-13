@@ -34,7 +34,7 @@ PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.2//EN"
 	<servlet>
 		<servlet-name>velocity</servlet-name>
 		<servlet-class>
-			org.apache.velocity.tools.view.servlet.VelocityViewServlet
+			org.apache.velocity.tools.view.servlet.VelocityLayoutServlet
 		</servlet-class>
 
 		<init-param>

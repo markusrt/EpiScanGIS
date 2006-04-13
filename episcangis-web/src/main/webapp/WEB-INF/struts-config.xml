@@ -14,10 +14,6 @@
 	<form-beans>
 
 		<form-bean
-			type="de.meningococcus.episcangis.web.IncidenceFormBean"
-			name="incidenceFormBean" />
-
-		<form-bean
 			type="de.meningococcus.episcangis.web.MoveMapFormBean" name="move" />
 
 		<form-bean type="de.meningococcus.episcangis.web.LayerFormBean"
@@ -61,8 +57,8 @@
 
 	<!-- Action Mapping Definitions -->
 	<action-mappings>
-		<action path="/Welcome" forward="page.welcome" />
-		<action path="/RegisterUser" forward="page.registerUser" />
+		<action path="/Welcome" forward="/WEB-INF/pages/welcome.vm" />
+		<action path="/RegisterUser" forward="/WEB-INF/pages/registerUser.vm" />
 
 		<action path="/Map"
 			type="de.meningococcus.episcangis.web.CreateMapAction">
@@ -84,7 +80,7 @@
 
     <action path="/PrintMap"
       type="de.meningococcus.episcangis.web.PrintMapAction">
-      <forward name="success" path="/WEB-INF/results/printView.vm"/>
+      <forward name="success" path="/WEB-INF/pages/printView.vm"/>
     </action>
     
 		<action path="/ShowMap" scope="session"
@@ -140,12 +136,7 @@
 
 	<!-- Controller Configuration -->
 
-	<!-- 
-		Configure controller to use struts-tiles
-		see: http://struts.apache.org/struts-tiles/
-	-->
-	<controller bufferSize="4096"
-		processorClass="org.apache.struts.tiles.TilesRequestProcessor" />
+	<controller processorClass="org.apache.struts.action.RequestProcessor" />
 
 	<!-- 
 		Message Resources Definitions
@@ -154,23 +145,6 @@
 	<message-resources parameter="MessageResources" />
 
 	<!-- Plug Ins Configuration -->
-
-	<!-- Tiles plugin configuration -->
-	<plug-in className="org.apache.struts.tiles.TilesPlugin">
-
-		<!-- Path to XML definition file -->
-		<set-property property="definitions-config"
-			value="/WEB-INF/tiles-defs.xml" />
-		<!-- 
-			Set Module-awareness to true (default)
-		-->
-		<set-property property="moduleAware" value="true" />
-		<!-- 
-			Specify if XML parser should validate the Tiles configuration file
-		-->
-		<set-property value="definitions-parser-validate"
-			property="true" />
-	</plug-in>
 
 	<!-- Validator plugin configuration -->
 	<plug-in className="org.apache.struts.validator.ValidatorPlugIn">

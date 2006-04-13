@@ -1,7 +1,8 @@
-#leftColumn {
-  display: none;
+#leftColumn, #navColumn {
+	display: none !important;
 }
 
 #bodyColumn {
-  margin-left: 0px;
+	margin: 0 !important;
+	border: none !important
 }

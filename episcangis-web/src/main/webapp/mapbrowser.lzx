@@ -9,9 +9,9 @@
   width="100%" height="100%" maxtextheight="10000">
   
   <!--<resource name="waitcursor" src="resources/lzwaitcursor_rsc.swf"/>-->
-  <resource name="dragcursor" src="resources/drag_cursor.png"/>
-  <resource name="icon_save" src="resources/floppy.png"/>
-  <resource name="icon_drag" src="resources/drag.png"/>
+  <resource name="dragcursor" src="images/drag_cursor.png"/>
+  <resource name="icon_save" src="images/floppy.png"/>
+  <resource name="icon_drag" src="images/drag.png"/>
   
   <include href="includes/parameters.lzx"/>
   <include href="includes/loadbar.lzx"/>
@@ -56,10 +56,6 @@
     <attribute name="mapparams" value="" type="string"/>
     <attribute name="allLayerTabsConstructed" value="false"/>
 
-    <method event="oninit">
-      Debug.write("----------------- INIT -----------------");
-      //this.updateSize();
-    </method>
     <method name="getLayer" args="layername"><![CDATA[
       var ret;
       if( layername != undefined && layername.length > 0 )
@@ -136,6 +132,14 @@
               //+ url + '","test","resizable=1,width=1000,height=700,left=0,top=0,screenX=0,screenY=0,menubar,location,status,scrollbars,toolbar,address"); wptr.focus(); void(0);');
               ]]></method>
           </button>
+          <!--
+          <button width="32" height="32">
+            <text valign="middle" align="center">Test</text>
+            <method event="onclick"><![CDATA[
+              canvas.ds.mapserverData.doRequest();
+              ]]></method>
+          </button>
+          -->
           <text x="${classroot.sidebar.width + ((classroot.mainArea.width-this.width)/2)}" height="30">
             <font size="24">EpiScanGIS - Web Surveillance</font>
           </text>

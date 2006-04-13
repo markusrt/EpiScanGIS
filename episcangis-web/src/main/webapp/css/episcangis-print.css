@@ -1,5 +1,9 @@
-#legend {
-  margin: 0px 0 0 15px;
-  border: 1px solid #999;
-  background-color: #eee;
+#banner, #footer, #leftcol, #breadcrumbs, .docs #toc, .docs .courtesylinks, #leftColumn, #navColumn {
+	display: none !important;
 }
+
+#bodyColumn, body.docs div.docs {
+	margin: 0 !important;
+	border: none !important
+}
+

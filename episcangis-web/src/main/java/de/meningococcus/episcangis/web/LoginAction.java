@@ -40,6 +40,8 @@ public class LoginAction extends Action
       if (user != null)
       {
         session.setAttribute("user", user);
+        log.debug("Is user " + user.getUsername() + " in role nrzm? "
+            + user.isInRole("nrzm"));
         forward = FORWARD_SUCCESS;
       }
       else

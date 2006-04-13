@@ -43,6 +43,7 @@ div.clear hr{
 }
 #banner {
   padding: 0px;
+  margin-bottom: 0px;
 }
 #banner img {
   border: none;
@@ -64,20 +65,20 @@ div.clear hr{
 #legend {
   padding: 8px 0 8px 0;
 }
-#navColumn {
+#navcolumn {
   padding: 8px 4px 0 8px;
 }
-#navColumn h5 {
+#navcolumn h5 {
   margin: 0;
   padding: 0;
   font-size: small;
 }
-#navColumn ul {
+#navcolumn ul {
   margin: 0;
   padding: 0;
   font-size: small;
 }
-#navColumn li {
+#navcolumn li {
   list-style-type: none;
   background-image: none;
   background-repeat: no-repeat;
@@ -86,12 +87,6 @@ div.clear hr{
   list-style-position: outside;
   line-height: 1.2em;
   font-size: smaller;
-}
-#navColumn li.expanded {
-  background-image: url(../images/expanded.gif);
-}
-#navColumn li.collapsed {
-  background-image: url(../images/collapsed.gif);
 }
 #poweredBy {
   text-align: center;
@@ -155,10 +150,11 @@ div.clear hr{
   max-width:600px;
 }
 
-#legend {
+#mapLegend {
+  margin: 0px 0 0 15px;
   padding: 8px 4px 0 8px;
 }
 
-#legend img {
+#mapLegend img {
   max-width: 170px;
 }

@@ -10,60 +10,66 @@ code{
   font-size: 13px;
 }
 a {
-  text-decoration: none;
+  text-decoration: underline;
 }
 a:link {
-  color:#36a;
+  color:#008;
 }
 a:visited  {
-  color:#47a;
+  color:#5b5e75;
+  text-decoration: none;
 }
+
 a:active, a:hover {
-  color:#69c;
+  color:#008;
+  text-decoration: underline
 }
+
+
 #legend li.externalLink {
-  background: url(../images/external.png) left top no-repeat;
+  background: url(episcangis-theme/external.png) left top no-repeat;
   padding-left: 18px;
 }
 a.externalLink, a.externalLink:link, a.externalLink:visited, a.externalLink:active, a.externalLink:hover {
-  background: url(../images/external.png) right center no-repeat;
+  background: url(episcangis-theme/external.png) right center no-repeat;
   padding-right: 18px;
 }
 #legend li.newWindow {
-  background: url(../images/newwindow.png) left top no-repeat;
+  background: url(episcangis-theme/newwindow.png) left top no-repeat;
   padding-left: 18px;
 }
 a.newWindow, a.newWindow:link, a.newWindow:visited, a.newWindow:active, a.newWindow:hover {
-  background: url(../images/newwindow.png) right center no-repeat;
+  background: url(episcangis-theme/newwindow.png) right center no-repeat;
   padding-right: 18px;
 }
 h2 {
   padding: 4px 4px 4px 6px;
   border: 1px solid #999;
-  color: #900;
-  background-color: #ddd;
+  color: #060;
+  border: 1px solid #585b71;
+  background-color: #acb1dc;
   font-weight:900;
   font-size: x-large;
 }
 h3 {
   padding: 4px 4px 4px 6px;
-  border: 1px solid #aaa;
-  color: #900;
-  background-color: #eee;
+  color: #060;
+  border: 1px solid #585b71;
+  background-color: #acb1dc;
   font-weight: normal;
   font-size: large;
 }
 h4 {
   padding: 4px 4px 4px 6px;
-  border: 1px solid #bbb;
-  color: #900;
-  background-color: #fff;
+  color: #060;
+  border: 1px solid #585b71;
+  background-color: #acb1dc;
   font-weight: normal;
   font-size: large;
 }
 h5 {
   padding: 4px 4px 4px 6px;
-  color: #900;
+  color: #060;
   font-size: normal;
 }
 p {
@@ -71,20 +77,25 @@ p {
   font-size: small;
 }
 #breadcrumbs {
-  border-top: 1px solid #aaa;
-  border-bottom: 1px solid #aaa;
-  background-color: #ccc;
+  border-bottom: 1px solid #555;
+  background-image: url(episcangis-theme/breadcrumbs_bg.png);
 }
 #leftColumn {
   margin: 10px 0 0 5px;
-  border: 1px solid #999;
-  background-color: #eee;
+  border: 1px solid #585b71;
+  background-color: #acb1dc;
 }
 #navcolumn h5 {
   font-size: smaller;
-  border-bottom: 1px solid #aaaaaa;
-  padding-top: 2px;
-  color: #000;
+  border-bottom: 1px solid #585b71;
+  padding-top: 4px;
+  color: #030;
+}
+#navcolumn li.expanded {
+  background-image: url(episcangis-theme/expanded.gif);
+}
+#navcolumn li.collapsed {
+  background-image: url(episcangis-theme/collapsed.gif);
 }
 
 table.bodyTable th {
@@ -121,10 +132,10 @@ dt {
   margin: 8px;
 }
 #banner {
-  border-bottom: 1px solid #fff;
+  border-bottom: 1px solid #555;
 }
 
-#legend {
+#mapLegend {
   margin: 0px 0 0 15px;
   border: 1px solid #999;
   background-color: #eee;
