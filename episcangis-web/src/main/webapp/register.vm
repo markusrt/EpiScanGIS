@@ -1,18 +1,18 @@
 #set ($page_title=$msg.page.registerUser.title)
-
-<form method="/ManageUsers.do?method=register" focus="username">
-	<table id="userForm">
-		<tr>
-			<th>$msg.user.username</th>
-			<td>
-			  <input type="text" name="username" value="$registerUser.username">
-			</td>
-			<td id="formError">$errors.username</td>
-		</tr>
-		<tr><th colspan="3">
-		  <button type="submit">
-			$msg.page.registerUser.submit
-		  </button>
-        </th></tr>
-	</table>
+ 
+<form action="ManageUsers.do?method=register" method="post" focus="username">
+  <table id="registerUser">
+    <tr>
+      <th>$msg.user.username</th>
+      <td>
+        <input type="text" name="username" value="$!registerUser.username">
+      </td>
+      <td id="formError">$!errors.getMsgs("username")</td>
+    </tr>
+    <tr>
+      <td colspan="3">
+        <button type="submit">$msg.page.registerUser.submit</button>
+      </td>
+    </tr>
+  </table>
 </form>
