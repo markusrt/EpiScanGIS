@@ -1,8 +1,10 @@
 <?xml version="1.0"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"  "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
-<html>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
   <head>
-    <title>$!page_title</title>
+    <title>$msg.global.name - $!page_title</title>
     <style type="text/css" media="all">
       @import url("./css/episcangis-base.css");
       @import url("./css/episcangis-theme.css");
@@ -18,68 +20,39 @@
       @import url("./css/episcangis-print.css");
     </style>
   </head>
-<body>
-  <div id="banner">
-    <div id="bannerLeft">
-      <img src="images/logo_episcangis.png" alt="$global.title"/>
-    </div>
-    <div id="bannerRight">
-      <img src="images/logo_nrzm.png" alt="$global.organization"/>
-    </div>
-    <div class="clear">
-      <hr/>
-    </div>
-  </div>
-  <div id="breadcrumbs">
-    <div class="xleft">
-      <a href="http://www.uni-wuerzburg.de" class="externalLink">
-        University of W&#x0000FC;rzburg</a>
-      | <a href="http://www.ridom.de" class="externalLink">
-          Ridom GmbH</a>	
-    </div>
-    <div class="xright">
-      #if ($user)
-      <a href="Logout.do">$msg.global.logout</a> $user.fullName
-      #else
-      <a href="Login.do">$msg.global.login</a> or
-      <a href="RegisterUser.do">$msg.global.register</a>
-      #end
-    </div>
-    <div class="clear">
-      <hr/>
-    </div>
-  </div>
-  <div id="leftColumn">
-    <div id="navcolumn">
-      <h5>Quick Links</h5>
-      <a href="#"
-        onClick="window.open('mapbrowser.vm','mapbrowser','status=no,scrollbars=yes,width=1020,height=800')">Launch EpiScanGIS</a>
-      <a href="welcome.vm">Home</a><br/>
-      <h5>About EpiScanGIS</h5>
-      <a href="whatis.vm">What is EpiScanGIS</a><br/>
-      <a href="screenshots.vm">Screenshots</a>
-      #if($user)
-      #if($user.isInRole("nrzm"))
-      <h5>NRZM intern</h5>
-      #end
-      #end
-                                                                                          
-      <a href="http://maven.apache.org/" title="Built by Maven" id="poweredBy">
-        <img alt="Built by Maven" src="./images/maven-feather.png"></img>
-      </a>
-                                                                                          
-    </div>
-  </div>
-  <div id="bodyColumn">
-    <div id="contentBox">
-      $screen_content
-    </div>
-  </div>
-  <div class="clear">
-    <hr/>
-  </div>
-  <div id="footer">
-    <div class="xright">$msg.global.copyright</div>
-  </div>
-</body>
-<html>
+	<body>
+	  <div id="banner">
+	    <div id="bannerLeft">
+	      <a href="."><img 
+	        src="images/logo_episcangis.png" alt="$msg.global.title"/></a>
+	    </div>
+	    <div id="bannerRight">
+	      <a href="http://www.meningococcus.de"><img 
+	        src="images/logo_nrzm.png" alt="$msg.global.organization"/></a>
+	    </div>
+	    <div class="clear">
+	      <hr/>
+	    </div>
+	  </div>
+	  <div id="breadcrumbs">
+	    #parse('layout/default/breadcrumbs.vm')
+	    <div class="clear">
+	      <hr/>
+	    </div>
+	  </div>
+	  <div id="leftColumn">
+	  	#parse('layout/default/navigation.vm')
+	  </div>
+	  <div id="bodyColumn">
+	    <div id="contentBox">
+	      $screen_content
+	    </div>
+	  </div>
+	  <div class="clear">
+	    <hr/>
+	  </div>
+	  <div id="footer">
+	    <div class="xright">$msg.global.copyright</div>
+	  </div>
+	</body>
+</html>

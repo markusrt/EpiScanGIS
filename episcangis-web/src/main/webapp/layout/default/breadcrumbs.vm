@@ -1,0 +1,14 @@
+<div class="xleft">
+  <a href="http://www.uni-wuerzburg.de" class="externalLink" target="_blank">
+    $msg.global.university-wuerzburg</a>
+  | <a href="http://www.ridom.de" class="externalLink" target="_blank">
+      Ridom GmbH</a>	
+</div>
+<div class="xright">
+  #if ($user)
+  <a href="Logout.do">$msg.global.logout</a> $user.fullName
+  #else
+  <a href="Login.do">$msg.global.login</a> or
+  <a href="registerUser.vm">$msg.global.register</a>
+  #end
+</div>
