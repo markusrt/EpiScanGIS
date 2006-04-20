@@ -1,0 +1,17 @@
+#set ($page_title=$msg.global.title)
+
+<div class="section">
+	<h1>$msg.global.title</h1> 
+	#if( $user )
+	<p>
+	</p>
+	#end
+	<emph>
+	  <a href="#"
+      onclick="window.open('mapbrowser.vm','mapbrowser','status=no,scrollbars=yes,width=1020,height=810')"
+      >$msg.global.name starten (1024x768)</a></emph>
+    <br />
+	<a href="#" 
+      onclick="window.open('mapbrowser.vm?width=796&height=600','mapbrowser','status=no,scrollbars=yes,width=796,height=650')"
+      >$msg.global.name starten (800x600)</a>
+</div>

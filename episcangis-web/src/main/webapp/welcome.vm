@@ -1,16 +1,1 @@
-<div class="section">
-	<h2>$msg.global.title</h2> 
-	#if( $user )
-	<p>
-		Hello $user.fullName
-	</p>
-	#end
-	<h2>
-		<a href="#" 
-		   onClick="window.open('mapbrowser_1024x786.html','mapbrowser','status=no,scrollbars=yes,width=1020,height=766')">Start EpiScanGIS - Web Surveillance (1024x786)</a>
-	</h2>
-	<h3>
-		<a href="#" 
-		   onClick="window.open('mapbrowser_800x600.html','mapbrowser','status=no,scrollbars=yes,width=796,height=600')">Start EpiScanGIS - Web Surveillance (800x600)</a>
-	</h3>
-</div>
+#parse($msg.page.welcome)

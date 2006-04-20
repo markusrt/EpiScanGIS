@@ -2,7 +2,8 @@
   <h5>$msg.page.navigation.quicklinks</h5>
   <ul>
     <li><a href="#"
-      onclick="window.open('mapbrowser.vm','mapbrowser','status=no,scrollbars=yes,width=1020,height=800')">Launch EpiScanGIS</a></li>
+      onclick="window.open('mapbrowser.vm','mapbrowser','status=no,scrollbars=yes,width=1020,height=810')"
+      >$msg.page.navigation.launch</a></li>
   </ul>
   <h5>$msg.page.navigation.about</h5>
   <ul>
@@ -12,14 +13,15 @@
   </ul>
 
   #if($user)
-  #if($user.isInRole("public_health") || $user.isInRole("nrzm"))
-  <h5>$msg.domain.public_health</h5>
+  #if($user.isInRole("public_health"))
+  ## || $user.isInRole("nrzm"))
+  <h5>$msg.role.public_health</h5>
   <ul>
   	<li></li>
   </ul>
   #end
   #if($user.isInRole("nrzm"))
-  <h5>$msg.domain.public_health</h5>
+  <h5>$msg.role.nrzm</h5>
   <ul>
   	<li>Beta
   	 <ul>

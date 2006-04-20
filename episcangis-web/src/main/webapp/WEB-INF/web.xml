@@ -8,7 +8,6 @@ PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.2//EN"
 	<display-name>EpiScanGIS Web Surveillance</display-name>
 
   <!--SERVLETS ==============================================================-->
-
 	<!-- Struts Standard Action Servlet Configuration (with debugging) -->
 	<servlet>
 		<servlet-name>action</servlet-name>
@@ -29,7 +28,10 @@ PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.2//EN"
 		</init-param>
 		<load-on-startup>2</load-on-startup>
 	</servlet>
-
+  <error-page>
+    <error-code>403</error-code>
+    <location>/WEB-INF/errors/error_403.vm</location>
+  </error-page>
 	<!-- Velocity template compiler -->
 	<servlet>
 		<servlet-name>velocity</servlet-name>

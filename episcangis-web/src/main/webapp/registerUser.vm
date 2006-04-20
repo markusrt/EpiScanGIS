@@ -1,18 +1,98 @@
 #set ($page_title=$msg.page.registerUser.title)
- 
-<form action="ManageUsers.do?method=register" method="post" focus="username">
-  <table id="registerUser">
-    <tr>
-      <th>$msg.user.username</th>
-      <td>
-        <input type="text" name="username" value="$!registerUser.username">
-      </td>
-      <td id="formError">$!errors.getMsgs("username")</td>
-    </tr>
-    <tr>
-      <td colspan="3">
-        <button type="submit">$msg.page.registerUser.submit</button>
-      </td>
-    </tr>
-  </table>
-</form>
+
+<div class="section">
+  <h1>$msg.page.registerUser.title</h1> 
+  	<form action="$link.setAction('ManageUsers').addQueryData('method','register')"
+  	  method="post">
+  	  <fieldset>
+  	    <legend>Choose login</legend>
+		    <ul class="verticalFormElements">
+		      <li>$msg.user.username:</li>
+		      <li><input type="text" name="username" 
+		        value="$!registerUser.username" /></li>
+		      <li class="error">$!errors.getMsgs("username")</li>
+		    </ul>
+		    <ul class="horizontalFormElements">
+		      <li>
+		        <ul class="verticalFormElements">
+		          <li>$msg.user.password:</li>
+		          <li><input type="password" name="password" /></li>
+		          <li class="error">$!errors.getMsgs("password")</li>
+		        </ul>
+		      </li>
+		      <li>
+		        <ul class="verticalFormElements">
+		          <li>$msg.user.confirmPassword:</li>
+		          <li><input type="password" name="confirmPassword" /></li>
+		          <li class="error">$!errors.getMsgs("confirmPassword")</li>
+		        </ul>
+		      </li>
+		    </ul>
+		  </fieldset>
+		  <fieldset>
+		    <legend>Contact</legend>
+		    <ul class="verticalFormElements">
+		      <li>$msg.user.fullName:</li>
+		      <li><input type="text" name="fullName" 
+		        value="$!registerUser.fullName" /></li>
+		      <li class="error">$!errors.getMsgs("fullName")</li>
+		    </ul>
+		    <ul class="horizontalFormElements">
+		      <li>
+				    <ul class="verticalFormElements">
+				      <li>$msg.user.phone:</li>
+				      <li><input type="text" name="phone" 
+				        value="$!registerUser.phone" /></li>
+				      <li class="error">$!errors.getMsgs("phone")</li>
+				    </ul>
+		    	</li>
+			    <li>
+				    <ul class="verticalFormElements">
+				      <li>$msg.user.email:</li>
+				      <li><input type="text" name="email" 
+				        value="$!registerUser.email" /></li>
+				      <li class="error">$!errors.getMsgs("email")</li>
+				    </ul>
+			    </li>
+		    </ul>
+		    <div class="clear">
+	        <hr/>
+	      </div>
+	      <ul class="horizontalFormElements">
+		      <li>
+				    <ul class="verticalFormElements">
+				      <li>$msg.user.organization:</li>
+				      <li><input type="text" name="organization" 
+				        value="$!registerUser.organization" /></li>
+				      <li class="error">$!errors.getMsgs("organization")</li>
+				    </ul>
+		      </li>
+		      <li>
+				    <ul class="verticalFormElements">
+				      <li>$msg.user.domain:</li>
+				      <li>
+								<select name="domain" size="1">
+								  <option>$msg.domain.public_health</option>
+								  <option>$msg.domain.nrzm</option>
+								</select>
+				      </li>
+				      <li class="error">$!errors.getMsgs("domain")</li>
+				    </ul>
+		      </li>
+		    </ul>
+		    <div class="clear">
+	        <hr/>
+	      </div>
+		    <ul class="verticalFormElements">
+		      <li>$msg.user.message:</li>
+		      <li class="error">$!errors.getMsgs("message")</li>
+		      <li>
+		        <textarea name="message" cols="60" rows="20">$!registerUser.message
+		        </textarea>
+		      </li>
+		    </ul>
+		    <br />
+		    <button type="submit">$msg.page.registerUser.submit</button>
+		  </fieldset>
+		</form>
+</div>

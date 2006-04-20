@@ -1,0 +1,7 @@
+#set ($page_title=$msg.page.whatis.title)
+
+<div class="section">
+	<h1>$msg.page.whatis.title</h1> 
+	<p>
+	</p>
+</div>

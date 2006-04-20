@@ -30,4 +30,9 @@
 		<scope>request</scope>
 		<class>org.apache.velocity.tools.struts.ValidatorTool</class>
 	</tool>
+  <tool>
+   <key>alternator</key>
+   <scope>application</scope>
+   <class>org.apache.velocity.tools.generic.AlternatorTool</class>
+  </tool>
 </toolbox>

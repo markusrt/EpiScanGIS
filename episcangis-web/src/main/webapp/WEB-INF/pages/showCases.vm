@@ -1,0 +1,15 @@
+#set ($page_title=$msg.page.registerUserSuccess.title)
+#set( $rowclass = $alternator.make(true,'a', 'b') )
+                                                                                                                                                             
+<div class="section">
+  <h1>Cases</h1>
+  <table class="bodyTable">
+    #foreach( $row in $cases )
+    <tr class="$rowclass">
+      #foreach( $col in $row )
+      <td>$col</td>
+      #end
+    </tr>
+    #end
+  </table>
+</div>

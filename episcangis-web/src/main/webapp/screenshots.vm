@@ -1,5 +1,7 @@
+#set ($page_title=$msg.page.screenshots.title)
+
 <div class="section">
-	<h2>Screenshots</h2> 
+	<h1>Screenshots</h1> 
 	<p>
 	</p>
 </div>

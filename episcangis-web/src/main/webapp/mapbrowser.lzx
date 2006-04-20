@@ -47,7 +47,7 @@
 
   
 
-  <class bgcolor="0xeeeeee" extends="view">
+  <class name="mapview" bgcolor="0xeeeeee" extends="view">
     <attribute name="maplayerview" type="expression"
       value="${mainArea.mapview.layers}"/>
     <attribute name="maplayersettings"

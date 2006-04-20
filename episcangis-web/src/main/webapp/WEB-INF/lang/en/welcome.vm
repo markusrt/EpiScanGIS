@@ -1,0 +1,17 @@
+#set ($page_title=$msg.global.title)
+
+<div class="section">
+	<h1>$msg.global.title</h1> 
+	#if( $user )
+	<p>
+	</p>
+	#end
+	<emph>
+	  <a href="#" 
+		 onclick="window.open('mapbrowser.vm','mapbrowser','status=no,scrollbars=yes,width=1020,height=800')">Start EpiScanGIS - Web Surveillance (1024x786)</a>
+	</emph>
+	<h5>
+	  <a href="#" 
+        onclick="window.open('mapbrowser.vm?width=796&height=600','mapbrowser','status=no,scrollbars=yes,width=796,height=650')">Start EpiScanGIS - Web Surveillance (800x600)</a>
+	</h5>
+</div>

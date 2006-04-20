@@ -48,7 +48,7 @@
   <!--  Global Exception Definitions -->
   <global-exceptions>
     <exception key="error" type="java.lang.Exception"
-      path="/WEB-INF/errors/xmlExceptionResult.jsp" scope="request" />
+      path="/WEB-INF/errors/error.vm" scope="request" />
   </global-exceptions>
 
   <!-- Global Forward Definitions -->
@@ -62,6 +62,8 @@
   <action-mappings>
     <action path="/Map"
       type="de.meningococcus.episcangis.web.CreateMapAction">
+      <exception key="error" type="java.lang.Exception"
+        path="/WEB-INF/errors/xmlExceptionResult.jsp" scope="request" />
     </action>
 
     <action path="/GetMap"
@@ -115,6 +117,8 @@
     <action path="/GetFeatureInfo"
       type="de.meningococcus.episcangis.web.GetFeatureInfoAction"
       name="info" scope="request">
+      <exception key="error" type="java.lang.Exception"
+        path="/WEB-INF/errors/xmlExceptionResult.jsp" scope="request" />
     </action>
 
     <action path="/Login"

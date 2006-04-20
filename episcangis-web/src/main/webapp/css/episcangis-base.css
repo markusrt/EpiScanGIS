@@ -51,6 +51,21 @@ div.clear hr{
 #breadcrumbs {
   padding: 3px 10px 3px 10px;
 }
+h1 {
+  page-break-after: avoid;
+}
+h2 {
+  page-break-after: avoid;
+}
+h3 {
+  page-break-after: avoid;
+}
+h4 {
+  page-break-after: avoid;
+}
+h5 {
+  page-break-after: avoid;
+}
 #leftColumn {
  width: 170px;
  float:left;
@@ -97,10 +112,14 @@ div.clear hr{
 }
 #poweredBy img {
   display:block;
-  margin: 20px 0 20px 17px;
+  margin: -10px 0 10px 17px;
   border: 1px solid black;
   width: 90px;
   height: 30px;
+}
+#validator img {
+        display:block;
+  margin: 20px 0 0px 17px;
 }
 #search img {
     margin: 0px;
@@ -134,6 +153,18 @@ div.clear hr{
 #breadcrumbs {
   font-size: x-small;
   margin: 0pt;
+  height: 1.5em;
+}
+#breadcrumbs ul {
+  margin: 0;
+  padding: 0;
+  white-space: nowrap;
+ }
+                                                                                                                                                             
+#breadcrumbs li {
+  display: inline;
+  list-style-type: none;
+  font-size: smaller;
 }
 .source {
   padding: 12px;
@@ -149,12 +180,54 @@ div.clear hr{
 #map img {
   max-width:600px;
 }
-
+                                                                                                                                                             
 #mapLegend {
   margin: 0px 0 0 15px;
   padding: 8px 4px 0 8px;
 }
-
+                                                                                                                                                             
 #mapLegend img {
   max-width: 170px;
+}
+                                                                                                                                                             
+#registerUser {
+  border-collapse:collapse;
+  width: 40em;
+  border: 1px solid black;
+  margin-left: 1em;
+}
+#registerUser td {
+  text-align: right;
+  border: 1px solid black;
+  width: 12em;
+}
+#registerUser input {
+  width: 15em;
+}
+#registerUser textarea {
+  width: 27em;
+}
+                                                                                                                                                             
+ul.verticalFormElements {
+  list-style-type: none;
+  padding: 0.5em 0 0 0;
+}
+ul.verticalFormElements li {
+}
+                                                                                                                                                             
+ul.horizontalFormElements {
+  white-space: nowrap;
+  list-style-type: none;
+  padding: 0.5em 0 0 0;
+}
+ul.horizontalFormElements li {
+  display: inline;
+  margin: 0 1em 0 0;
+}
+ul.horizontalFormElements li ul.verticalFormElements {
+  padding: 0;
+  float:left;
+}
+ul.horizontalFormElements li ul.verticalFormElements li {
+  display:list-item;
 }

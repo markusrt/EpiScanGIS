@@ -1,5 +1,7 @@
 body {
   padding: 0px 0px 10px 0px;
+  background-color: #fff;
+  color: #000;
 }
 body, td, select, input, li{
   font-family: Verdana, Helvetica, Arial, sans-serif;
@@ -14,18 +16,21 @@ a {
 }
 a:link {
   color:#008;
+  background-color: inherit;
 }
 a:visited  {
   color:#5b5e75;
+  background-color: inherit;
   text-decoration: none;
 }
-
+                                                                                                                                                             
 a:active, a:hover {
   color:#008;
+  background-color: inherit;
   text-decoration: underline
 }
-
-
+                                                                                                                                                             
+                                                                                                                                                             
 #legend li.externalLink {
   background: url(episcangis-theme/external.png) left top no-repeat;
   padding-left: 18px;
@@ -42,13 +47,21 @@ a.newWindow, a.newWindow:link, a.newWindow:visited, a.newWindow:active, a.newWin
   background: url(episcangis-theme/newwindow.png) right center no-repeat;
   padding-right: 18px;
 }
-h2 {
+
+h1 {
   padding: 4px 4px 4px 6px;
-  border: 1px solid #999;
   color: #060;
   border: 1px solid #585b71;
   background-color: #acb1dc;
   font-weight:900;
+  font-size: xx-large;
+}
+h2 {
+  padding: 4px 4px 4px 6px;
+  color: #060;
+  border: 1px solid #585b71;
+  background-color: #acb1dc;
+  font-weight:500;
   font-size: x-large;
 }
 h3 {
@@ -70,7 +83,8 @@ h4 {
 h5 {
   padding: 4px 4px 4px 6px;
   color: #060;
-  font-size: normal;
+  background-color: inherit;
+  font-weight: bold;
 }
 p {
   line-height: 1.3em;
@@ -79,10 +93,12 @@ p {
 #breadcrumbs {
   border-bottom: 1px solid #555;
   background-image: url(episcangis-theme/breadcrumbs_bg.png);
+  background-repeat: repeat-x;
 }
 #leftColumn {
   margin: 10px 0 0 5px;
   border: 1px solid #585b71;
+  color: inherit;
   background-color: #acb1dc;
 }
 #navcolumn h5 {
@@ -90,6 +106,7 @@ p {
   border-bottom: 1px solid #585b71;
   padding-top: 4px;
   color: #030;
+  background-color: inherit;
 }
 #navcolumn li.expanded {
   background-image: url(episcangis-theme/expanded.gif);
@@ -97,26 +114,28 @@ p {
 #navcolumn li.collapsed {
   background-image: url(episcangis-theme/collapsed.gif);
 }
-
+                                                                                                                                                             
 table.bodyTable th {
   color: white;
   background-color: #bbb;
   text-align: left;
   font-weight: bold;
 }
-
+                                                                                                                                                             
 table.bodyTable th, table.bodyTable td {
   font-size: 1em;
 }
-
+                                                                                                                                                             
 table.bodyTable tr.a {
   background-color: #ddd;
+  color: inherit;
 }
-
+                                                                                                                                                             
 table.bodyTable tr.b {
   background-color: #eee;
+  color: inherit;
 }
-
+                                                                                                                                                             
 .source {
   border: 1px solid #999;
 }
@@ -124,9 +143,11 @@ dl {
   padding: 4px 4px 4px 6px;
   border: 1px solid #aaa;
   background-color: #ffc;
+  color: inherit;
 }
 dt {
   color: #900;
+  background-color: inherit;
 }
 #organizationLogo img, #projectLogo img, #projectLogo span{
   margin: 8px;
@@ -134,9 +155,21 @@ dt {
 #banner {
   border-bottom: 1px solid #555;
 }
-
+                                                                                                                                                             
 #mapLegend {
   margin: 0px 0 0 15px;
   border: 1px solid #999;
   background-color: #eee;
+  color: inherit;
+}
+
+fieldset {
+  background-color: #eee;
+  color: inherit;
+}
+
+.error {
+  font-weight: bold;
+  color: red;
+  background-color: yellow;
 }

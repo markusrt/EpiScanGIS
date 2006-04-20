@@ -8,7 +8,6 @@
   #if ($user)
   <a href="Logout.do">$msg.global.logout</a> $user.fullName
   #else
-  <a href="Login.do">$msg.global.login</a> or
-  <a href="registerUser.vm">$msg.global.register</a>
+  $msg.get('global.login_or_register', $link.setAction('CountCasesByAttribute'),'registerUser.vm')
   #end
 </div>

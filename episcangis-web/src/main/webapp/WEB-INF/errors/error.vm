@@ -1,7 +1,17 @@
-#if( $invocation_exception )
-    oh joy! it's a MethodInvocationException!
-
-    Message: $invocation_exception.message
-    Reference name: $invocation_exception.referenceName
-    Method name: $invocation_exception.methodName
-#end
+#set ($page_title="Error:$error_cause")
+                                                                                                                                                             
+<div class="section">
+  <h1>Error: $error_cause</h1>
+  <p>
+    Error: $stack_trace
+  </p>
+  #if( $invocation_exception )
+  <p>
+    <br />oh joy! it's a MethodInvocationException!
+    <br />
+    <br />Message: $invocation_exception.message
+    <br />name: $invocation_exception.referenceName
+    <br />Method name: $invocation_exception.methodName
+  </p>
+  #end
+</div>
