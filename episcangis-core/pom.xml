@@ -14,7 +14,19 @@
   <prerequisites>
     <maven>2</maven>
   </prerequisites>
-
+  
+  <scm>
+    <connection>
+      scm:svn:http://132.187.144.10/svn/episcangis/trunk
+    </connection>
+    <developerConnection>
+      scm:svn:http://132.187.144.10/svn/episcangis/trunk
+    </developerConnection>
+    <url>
+      scm:svn:http://132.187.144.10/svn/episcangis/trunk
+    </url>
+  </scm>
+  
   <organization>
     <name>
       National Reference Centre for Meningococci, Institute for Hygiene
@@ -32,7 +44,6 @@
       <url>http://www.meningococcus.de</url>
     </developer>
   </developers>
-
   <inceptionYear>2005</inceptionYear>
 
   <modules>
@@ -65,6 +76,14 @@
           <!--
             <stagingSiteURL>scp://132.187.144.10/srv/www/html/episcangis/</stagingSiteURL>
           -->
+        </configuration>
+      </plugin>
+      <plugin>
+        <artifactId>maven-release-plugin</artifactId>
+        <configuration>
+          <tagBase>
+            scm:svn:http://132.187.144.10/svn/episcangis/tags
+          </tagBase>
         </configuration>
       </plugin>
     </plugins>
@@ -148,6 +167,10 @@
           </reportSet>
         </reportSets>
       </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>changelog-maven-plugin</artifactId>
+      </plugin>
       <!--
         <plugin>
         <artifactId>maven-javadoc-plugin</artifactId>
@@ -183,12 +206,14 @@
       <id>ibiblio</id>
       <url>http://www.ibiblio.org/maven2</url>
     </repository>
+    <!-- 
     <repository>
       <name>Repository Hygiene</name>
       <id>uni-hygiene</id>
       <url>http://132.187.144.10/repository</url>
       <layout>legacy</layout>
     </repository>
+     -->
     <repository>
       <name>Repository Geotools</name>
       <id>geotools</id>
