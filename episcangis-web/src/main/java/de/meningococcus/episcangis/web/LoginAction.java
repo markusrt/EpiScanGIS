@@ -10,16 +10,22 @@ import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.apache.struts.action.RedirectingActionForward;
 
 import de.meningococcus.episcangis.db.DaoFactory;
 import de.meningococcus.episcangis.db.dao.UserDAO;
 import de.meningococcus.episcangis.db.model.User;
 
 /* ====================================================================
- *   Copyright �2005 Markus Reinhardt - All Rights Reserved.
+ *   Copyright © 2005 Markus Reinhardt - All Rights Reserved.
  * ====================================================================
  */
 
+/**
+ * TODO only redirect to referer if its needed (i.e. mapbrowser.vm)
+ * @author Markus Reinhardt
+ * 
+ */
 public class LoginAction extends Action
 {
   private static Log log = LogFactory.getLog(LoginAction.class);
@@ -32,6 +38,7 @@ public class LoginAction extends Action
       throws Exception
   {
     HttpSession session = request.getSession();
+    ActionForward actionForward = null;
     String forward = FORWARD_ERROR;
     if (request.isUserInRole("nrzm") || request.isUserInRole("public_health"))
     {
@@ -42,7 +49,17 @@ public class LoginAction extends Action
         session.setAttribute("user", user);
         log.debug("Is user " + user.getUsername() + " in role nrzm? "
             + user.isInRole("nrzm"));
-        forward = FORWARD_SUCCESS;
+        
+        String referer = request.getHeader("Referer");
+        //Redirect to referring site or welcome page if not present
+        if (referer != null && referer.length() > 0)
+        {
+          actionForward = new RedirectingActionForward();
+          actionForward.setPath( referer );
+        }
+        else {
+          forward = FORWARD_SUCCESS;
+        }
       }
       else
       {
@@ -51,6 +68,9 @@ public class LoginAction extends Action
             + "' was not found in database.");
       }
     }
-    return (mapping.findForward(forward));
+    if(actionForward == null){
+      actionForward = mapping.findForward(forward);
+    }
+    return (actionForward);
   }
 }
