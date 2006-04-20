@@ -13,6 +13,7 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
+import org.apache.commons.dbutils.handlers.ArrayListHandler;
 import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
 import org.apache.commons.dbutils.handlers.ScalarHandler;
@@ -27,6 +28,7 @@ import de.meningococcus.episcangis.db.model.ReportedCase;
  * Dbutils (<a href="http://jakarta.apache.org/commons/dbutils/">
  * http://jakarta.apache.org/commons/dbutils/</a>) to run queries on the
  * database and fill beans with the results.
+ * 
  * @author Markus Reinhardt <m.reinhardt[at]bitmap-friends.de>
  */
 final class PgSQLReportedCaseDAO extends DbUtilsDAO implements ReportedCaseDAO
@@ -57,7 +59,10 @@ final class PgSQLReportedCaseDAO extends DbUtilsDAO implements ReportedCaseDAO
           + "AND awt.tier=? AND reportDate BETWEEN ? AND ?",
       GET_CASES_AREA_FROM_TO_CASETYPE = GET_CASES_AREA_FROM_TO
           + " AND case_type_id = ?",
-      LAST_CHANGE = "SELECT last_change FROM cases ORDER BY last_change DESC LIMIT 1";
+      LAST_CHANGE = "SELECT last_change FROM cases ORDER BY last_change DESC LIMIT 1",
+      COUNT_CASES_PER_AREA_GROUPED_BY_ATTRIBUTE = "SELECT * FROM "
+          + "episcangis_count_cases_per_area_attribute(?, ?) AS "
+          + "(count bigint, Serogroup varchar, location varchar);";
 
   PgSQLReportedCaseDAO(DataSource dataSource)
   {
@@ -66,6 +71,7 @@ final class PgSQLReportedCaseDAO extends DbUtilsDAO implements ReportedCaseDAO
 
   /*
    * (non-Javadoc)
+   * 
    * @see de.meningococcus.episcangis.db.dao.ReportedCaseDAO#getFirstCase()
    */
   public ReportedCase getEarliestCase()
@@ -85,6 +91,7 @@ final class PgSQLReportedCaseDAO extends DbUtilsDAO implements ReportedCaseDAO
 
   /*
    * (non-Javadoc)
+   * 
    * @see de.meningococcus.episcangis.db.dao.ReportedCaseDAO#getLastCase()
    */
   public ReportedCase getLatestCase()
@@ -104,6 +111,7 @@ final class PgSQLReportedCaseDAO extends DbUtilsDAO implements ReportedCaseDAO
 
   /*
    * (non-Javadoc)
+   * 
    * @see de.meningococcus.episcangis.db.dao.ReportedCaseDAO#countCases()
    */
   public long countCases()
@@ -122,8 +130,9 @@ final class PgSQLReportedCaseDAO extends DbUtilsDAO implements ReportedCaseDAO
 
   /*
    * (non-Javadoc)
-   * @see de.meningococcus.episcangis.db.dao.ReportedCaseDAO#getCases(int, int, java.sql.Date,
-   *      java.sql.Date)
+   * 
+   * @see de.meningococcus.episcangis.db.dao.ReportedCaseDAO#getCases(int, int,
+   *      java.sql.Date, java.sql.Date)
    */
   @SuppressWarnings("unchecked")
   public Collection<ReportedCase> getCases(int areaTier, int caseTypeId,
@@ -145,8 +154,9 @@ final class PgSQLReportedCaseDAO extends DbUtilsDAO implements ReportedCaseDAO
 
   /*
    * (non-Javadoc)
-   * @see de.meningococcus.episcangis.db.dao.ReportedCaseDAO#getCases(int, java.sql.Date,
-   *      java.sql.Date)
+   * 
+   * @see de.meningococcus.episcangis.db.dao.ReportedCaseDAO#getCases(int,
+   *      java.sql.Date, java.sql.Date)
    */
   @SuppressWarnings("unchecked")
   public Collection<ReportedCase> getCases(int areaTier, Date from, Date to)
@@ -179,4 +189,20 @@ final class PgSQLReportedCaseDAO extends DbUtilsDAO implements ReportedCaseDAO
     return lastChange;
   }
 
+  @SuppressWarnings("unchecked")
+  public Collection<Object[]> countCasesPerAreaGroupedByAttribute(
+      String attribute, int areaTier)
+  {
+    List<Object[]> result = null;
+    try
+    {
+      result = (List<Object[]>) run.query(COUNT_CASES_PER_AREA_GROUPED_BY_ATTRIBUTE,
+          new Object[] { attribute, (short)areaTier }, new ArrayListHandler());
+    }
+    catch (SQLException e)
+    {
+      log.error("SQL Query caused error: " + e.getMessage());
+    }
+    return result;
+  }
 }
