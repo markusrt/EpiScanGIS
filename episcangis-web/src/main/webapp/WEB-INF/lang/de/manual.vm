@@ -3,158 +3,286 @@
 <div class="section">
   <h1>$msg.page.manual.title</h1>
   <p>
-  Diese Seite gibt einen Überblick über die <a href="#"
-    onclick="window.open('mapbrowser.vm','mapbrowser','status=no,scrollbars=yes,width=1020,height=810')"
-    >hier</a> ausführbare  Web-basierten GIS-Anwendung zur Überwachung von
-  Meningokokken-Erkrankungsfällen. Anhand der Markierungen auf dem unten
-  abgebildeten Screenshot wird erklärt, was Sie mit den jeweiligen Schaltflächen
-  der Anwendung einstellen können.
+    Diese Seite gibt einen Überblick über die Funktionsweise der
+
+    #if($user.isInRole("public_health") || $user.isInRole("nrzm"))
+    <a href="#"
+      onclick="window.open('mapbrowser.vm','mapbrowser','status=no,scrollbars=yes,width=1020,height=810')">
+      hier
+    </a>
+    #end
+
+    ausführbare Web-basierten GIS-Anwendung zur Überwachung von
+    Meningokokken-Erkrankungsfällen.
+  </p>
+  <p>
+    Anhand der Nummerierungen auf dem unten abgebildeten Screenshot wird
+    erklärt, was Sie mit den jeweiligen Schaltflächen der Anwendung
+    einstellen können.
   </p>
   <div class="section">
     <h2>Gesamtübersicht</h2>
-    <img style="width:100%;border:1px solid black" src="images/manual/komplett.eps" 
+    <img style="width:100%;border:1px solid black" width="684"
+      height="495"
+      src="images/manual/screenshot_public_health__nrzm.png"
       alt="Screenshot der EpiScanGIS Webanwendung" />
-	<p>
-    Die Oberfläche des Kartenbetrachters bietet folgende
-    Einstellungsmöglichkeiten:
+    <p>
+      Die Oberfläche des Kartenbetrachters bietet folgende
+      Einstellungsmöglichkeiten:
     </p>
     <ol>
-      <li>Über diese Schaltfläche kann die Karte in einer
-      druckfähigen Version aufgerufen werden.</li>
-      <li>Über diese Dropdown-Listen können Filter eingestellt
-      werden, welche die angezeigten Karten verändern:
-      <ol type="a">
-        <li>dargestelltes Gebiet (Bundesgebiet oder einzelne
-        Bundesländer)</li>
-        <li>Altersgrenzen (von, bis), auf welche die
-        dargestellten Erkrankungsfälle eingegrenzt werden</li>
-        <li>Zeitraum zur Begrenzung der erzeugten
-        epidemiologischer Informationen</li>
-      </ol>
+      <li>
+        Über diese Schaltfläche kann die Karte in einer druckfähigen
+        Version aufgerufen bzw. lokal abgespeichert werden.
       </li>
-      <li>In diesem Bereich ist für jede vorhandene
-      Kartenebene ein Reiter zu sehen. In der Kopfzeile
-      lässt sich die Ebene ein- bzw. ausblenden. Zudem wird
-      anhand eines Ladebalkens angezeigt, ob sich eine
-      Ebene gerade aktualisiert. Einstellungen zu den
-      einzelnen Ebenen sind unten aufgelistet.</li>
-      <li>Der Hauptbereich der Anwendung zeigt die aktuelle,
-      anhand aller Filtereinstellungen generierte Karte.
-      Durch klicken und ziehen der Maus lässt sich der
-      Kartenausschnitt verschieben. Ein einfacher Mausklick
-      ohne Bewegung zeigt Informationen zu einem gewählten
-      Punkt auf der Karte an. Hierbei werden alle gerade
-      aktiven Ebenen nach Informationen abgefragt.</li>
-      <li>Die Legende am rechten Rand zeigt die Bedeutung, der
-      in den Ebenen verwendeten Farben und Symbole.</li>
+      <li>
+        Mittels dieser Dropdown-Listen können Filter eingestellt werden,
+        welche die angezeigten Karten verändern:
+        <ol type="a">
+
+          #if($user.isInRole("public_health") || $user.isInRole("nrzm"))
+          <li>
+            Je nach Auswahl ändert sich der Zoombereich des
+            dargestellten Gebietes auf der Karte (Bundesgebiet oder
+            einzelne Bundesländer).
+          </li>
+          #end
+
+          <li>
+            Altersgrenzen (von, bis), auf welche die dargestellten
+            Erkrankungsfälle eingegrenzt werden. Hierbei sind beide
+            Grenzwerte mit eingeschlossen. Die Einstellung von 0 bis 0
+            würde z.B. nur die Fälle der unter Einjährigen anzeigen.
+            <br />
+            <br />
+            Die Änderungen an diesem Filter hat Einfluss auf die Ebene
+            der Serogruppen und Feintypen.
+          </li>
+          <li>
+            Zeitraum zur Begrenzung der erzeugten epidemiologischer
+            Informationen.
+            <br />
+            <br />
+            Der Beobachtungszeitraum lässt sich mit der Genauigkeit von
+            einem #if($user.isInRole("public_health") ||
+            $user.isInRole("nrzm")) einem Monat #elseif Jahr #end
+            einstellen, wobei wiederum die Grenzwerte mit eingeschlossen
+            sind.
+            <br />
+            <br />
+            Die Änderungen an diesem Filter hat Einfluss auf die Ebene
+            der Serogruppen, Feintypen und Inzidenzen.
+          </li>
+        </ol>
+      </li>
+      <li>
+        In diesem Bereich ist für jede vorhandene Kartenebene ein Reiter
+        zu sehen. In der Kopfzeile lässt sich über den Haken die Ebene
+        ein- bzw. ausblenden. Zudem wird anhand eines Ladebalkens
+        angezeigt, ob sich eine Ebene gerade aktualisiert. Spezielle
+        Einstellungen zu den einzelnen Kartenebenen können Sie über
+        einen Mausklick auf die Kopfzeile einblenden.
+      </li>
+      <li>
+        Der Hauptbereich der Anwendung zeigt die aktuelle, anhand aller
+        Filtereinstellungen generierte Karte. Durch klicken und ziehen
+        der Maus lässt sich der Kartenausschnitt verschieben. Ein
+        einfacher Mausklick ohne Bewegung zeigt Informationen zu einem
+        gewählten Punkt auf der Karte an. Hierbei werden alle gerade
+        aktiven Ebenen nach Informationen abgefragt.
+      </li>
+      <li>
+        Die Legende am rechten Rand zeigt die Bedeutung, der in den
+        Ebenen verwendeten Farben und Symbole.
+      </li>
     </ol>
   </div>
-  <div class="section"><h2>Ebenen</h2>
+  <div class="section">
+    <h2>Ebenen</h2>
     <p>
-    Im Folgenden werden die verschiedenen Ebenen
-    aufgelistet, deren spezifische Filtermöglichkeiten
-    beschrieben und Beispielabbildungen gezeigt:
+      Digitale Karten sind in Geoinformationssystemen meistens mittels
+      Ebenen organisiert. Zusammengehörige Daten liegen dabei in einer
+      Ebene.
     </p>
-    <div class="section"><h3>Population density</h3>
+    <p>
+      $msg.global.name nutzt u.a. die Ebenen Bevölkerungsdichte,
+      Inzidenz, Erkrankungsfälle nach Serogruppen, Erkrankungsfälle nach
+      Feintypen, Grenzen und Städte.
+    </p>
+    <p>
+      In einer Ebene zusammengefasste Elemente sind immer vom gleichen
+      geometrischen Typ: Bei Grenzen und Inzidenz handelt es sich um
+      Flächen-, bei Städten und Erkrankungsfällen um Punktinformationen.
+      Die einzelnen Schichten erzeugen zusammen das Gesamtbild der
+      Karte. Sie können die Darstellung durch Ein- und Ausblenden
+      einzelner Ebenen verändern.
+    </p>
+    <p>
+      Im Folgenden werden die verschiedenen Ebenen aufgelistet, deren
+      spezifische Filtermöglichkeiten beschrieben und jeweils
+      Beispielabbildungen gezeigt:
+    </p>
+    <div class="section">
+      <h3>Population density</h3>
       <p>
-      Stellt die Bevölkerungsdichte dar. Diese lässt sich
-      entweder auf Bundesland- oder Landkreisebene
-      visualisieren. Zwei Beispiele zeigt Abbildung [fig:Bevölkerungsdichte-auf-Bundesland-].
+        Stellt die Bevölkerungsdichte dar. Diese lässt sich entweder auf
+        Bundesland- oder Landkreisebene visualisieren.
       </p>
-      <img style="border:1px solid black" 
-        width="400px" src="images/manual/popdensity_bl.gif" 
+      <p>
+        Die folgenden Abbildungen zeigen zwei Beispieldarstellungen der
+        Ebene.
+      </p>
+      <img style="border:1px solid black" width="400px"
+        src="images/manual/popdensity_bl.gif"
         alt="Bevölkerungsdichte auf Bundeslandebene" />
-      <img style="border:1px solid black"
-        width="400px" src="images/manual/popdensity.gif" 
+      <img style="border:1px solid black" width="400px"
+        src="images/manual/popdensity.gif"
         alt="Bevölkerungsdichte auf Landkreisebene" />
-      <p>Bevölkerungsdichte auf Bundesland- und Landkreisebene mit Grenzlinien</p>
+      <p>
+        Bevölkerungsdichte auf Bundesland- und Landkreisebene mit
+        Grenzlinien
+      </p>
     </div>
-    <div class="section"><h3>Anual incidence</h3>
-      <p>Zeigt die Jahresinzidenz der Erkrankungsfälle in
-      Bundesländer oder Landkreisen an. Die Berechnung
-      bezieht sich dabei auf alle Fälle des ausgewählten
-      Feintyps die innerhalb des angegebenen Zeitraums
-      aufgetreten sind. Falls die Zeitspanne unter einem Jahr
-      ist, wird der Wert hochgerechnet. Bei über einem Jahr
-      wird der Mittelwert gebildet. Ein Beispiel zeigt die folgende
-      Abbildung.</p>
-      <img style="border:1px solid black"
-        width="400px" src="images/manual/incidence_bl.gif"
+    <div class="section">
+      <h3>Anual incidence</h3>
+      <p>
+        Zeigt die Jahresinzidenz der Erkrankungsfälle in Bundesländer
+        oder Landkreisen an. Die Berechnung bezieht sich dabei auf alle
+        Fälle des ausgewählten Feintyps die innerhalb des angegebenen
+        Zeitraums aufgetreten sind.
+      </p>
+      <p>
+        Falls die Zeitspanne kürzer als ein Jahr ist, wird der Wert
+        hochgerechnet. Ist sie länger als ein Jahr wird der Mittelwert
+        gebildet.
+      </p>
+      <p>
+        Die folgenden Abbildungen zeigen zwei Beispieldarstellungen der
+        Ebene.
+      </p>
+      <img style="border:1px solid black" width="400px"
+        src="images/manual/incidence_bl.gif"
         alt="Jahresinzidenz 2002, Bundesländer" />
-      <img style="border:1px solid black"
-        width="400px" src="images/manual/incidence.gif" 
-        alt="Jahresinzidenz 2002, Landkreise"/>
-      <p>Jahresinzidenz 2002 (Januar-Dezember) für alle
-      Meningokokkenfälle für Bundesländer und Landkreise</p>
+      <img style="border:1px solid black" width="400px"
+        src="images/manual/incidence.gif"
+        alt="Jahresinzidenz 2002, Landkreise" />
+      <p>
+        Jahresinzidenz 2002 (Januar-Dezember) für alle
+        Meningokokkenfälle für Bundesländer und Landkreise
+      </p>
     </div>
-    <div class="section"><h3>Finetypes</h3>
-      <p>Stellt die Verteilung eines Meningokokken-Feintyps auf
-      der Landkarte dar. Über ein Suchfeld lässt sich bei den
-      Ebeneneinstellungen ein spezifischer Feintyp aus den
-      bisher 404 verschiedenen im System erfassten anzeigen. Zwei Beispiele
-      zeigt die folgende Abbildung.</p>
-      <img style="border:1px solid black"
-        width="400px" src="images/manual/finetypes.gif"
+    <div class="section">
+      <h3>Finetypes</h3>
+      <p>
+        Stellt die Verteilung eines Meningokokken-Feintyps auf der
+        Landkarte dar, wobei die Menge der angezeigten Fälle durch die
+        Altersgrenzen und den Zeitraum beschränkt werden. Über ein
+        Suchfeld lässt sich bei den Ebeneneinstellungen ein spezifischer
+        Feintyp aus den bisher 404 verschiedenen im System erfassten
+        anzeigen.
+      </p>
+      <p>
+        <b>WICHTIG:</b>
+        im Suchfeld muss der Feintyp genau in der folgenden Form
+        eingegeben werden:
+        <pre>{Serogruppe} : P1.{PorA} : F{FetA}</pre>
+        also beispielsweise
+        <pre>B : P1.7-2,4 : F1-5</pre>
+        . Beachten Sie die Leerzeichen links und rechts von den
+        Doppelpunkten.
+      </p>
+      <p>
+        Die folgenden Abbildungen zeigen zwei Beispieldarstellungen der
+        Ebene.
+      </p>
+      <img style="border:1px solid black" width="400px"
+        src="images/manual/finetypes.gif"
         alt="Verteilung des Feintyps B:P1.7-2,4:F1-5 in Deutschland" />
-      <img style="border:1px solid black"
-        width="400px" src="images/manual/finetypes_nrw.gif" 
-        alt="Verteilung des Feintyps B:P1.7-2,4:F1-5 in Nordrhein-Westfalen"/>
-      <p>Verteilung des Feintyps B:P1.7-2,4:F1-5 in Deutschland
-      und in Nordrhein-Westfalen (Januar bis Oktober 2005)</p>
+      <img style="border:1px solid black" width="400px"
+        src="images/manual/finetypes_nrw.gif"
+        alt="Verteilung des Feintyps B:P1.7-2,4:F1-5 in Nordrhein-Westfalen" />
+      <p>
+        Verteilung des Feintyps B:P1.7-2,4:F1-5 in Deutschland und in
+        Nordrhein-Westfalen (Januar bis Oktober 2005)
+      </p>
     </div>
-    <div class="section"><h3>Serogroups</h3>
-      <p>Visualisiert Erkrankungsfälle zusammengefasst nach
-      Serogruppen. Die Menge der angezeigten Fälle wird durch
-      die Altersgrenzen und den Zeitraum gefiltert. Es ist
-      möglich die Fälle verschiedener Serogruppen
-      gleichzeitig auf der Karte anzuzeigen. Unterschiedliche
-      Symbole kennzeichnen die Gruppen B, C, Y, W135, 29E, A
-      und Z eindeutig. Zwei Beispiele zeigt die folgende Abbildung.</p>
-      <img style="border:1px solid black"
-        width="400px" src="images/manual/serogroup_b.gif"
+    <div class="section">
+      <h3>Serogroups</h3>
+      <p>
+        Visualisiert Erkrankungsfälle zusammengefasst nach Serogruppen.
+      </p>
+      <p>
+        Die Menge der angezeigten Fälle wird durch die Altersgrenzen und
+        den Zeitraum gefiltert. Es ist möglich die Fälle verschiedener
+        Serogruppen gleichzeitig auf der Karte anzuzeigen indem diese
+        mit gedrückter Strg-Taste aus der Liste gewählt werden.
+      </p>
+      <p>
+        Unterschiedliche Symbole kennzeichnen die Gruppen B, C, Y, W135,
+        29E, A und Z eindeutig.
+      </p>
+      <p>
+        Die folgenden Abbildungen zeigen zwei Beispieldarstellungen der
+        Ebene.
+      </p>
+      <img style="border:1px solid black" width="400px"
+        src="images/manual/serogroup_b.gif"
         alt="Serogruppe B Fälle in Deutschland im Jahr 2002" />
-      <img style="border:1px solid black"
-        width="400px" src="images/manual/serogroup_c.gif" 
-        alt="Serogruppe C Fälle in Deutschland im Jahr 2002"/>
+      <img style="border:1px solid black" width="400px"
+        src="images/manual/serogroup_c.gif"
+        alt="Serogruppe C Fälle in Deutschland im Jahr 2002" />
       <p>Serogruppe B und C Fälle in Deutschland im Jahr 2002</p>
     </div>
-    
+
     #if($user.isInRole("public_health") || $user.isInRole("nrzm"))
-    
-    <div class="section"><h3>Living clusters</h3>
-      <p>Diese Ebene erlaubt keine weiteren
-      Einstellungsmöglichkeiten. Sie zeigt immer die durch
-      die zuletzt durchgeführte prospektiven Analyse
-      identifizierten Cluster. Das Datum, an dem die
-      Berechnung aufgeführt wurde, wird in der Überschrift
-      der Ebene angezeigt. Zwei Beispiele zeigt die folgende Abbildung.</p>
-      <img style="border:1px solid black"
-        width="400px" src="images/manual/cluster_prosi.gif"
+    <div class="section">
+      <h3>Living clusters</h3>
+      <p>
+        Diese Ebene erlaubt keine Einstellungsmöglichkeiten. Sie zeigt
+        immer die durch die zuletzt durchgeführte prospektiven Analyse
+        identifizierten Cluster. Das Datum, an dem die Berechnung
+        aufgeführt wurde, wird in der Kopfzeile der Ebene angezeigt.
+      </p>
+      <p>
+        Die folgenden Abbildungen zeigen zwei Beispieldarstellungen der
+        Ebene.
+      </p>
+      <img style="border:1px solid black" width="400px"
+        src="images/manual/cluster_prosi.gif"
         alt="Cluster, Feintyp C:P1.7-4,14-6:F3-9" />
-      <img style="border:1px solid black"
-        width="400px" src="images/manual/cluster_prosi_re.gif" 
-        alt="Cluster, Feintyp C:P1.7-4,14-6:F3-9, deutschlandweit"/>
-      <p>Ein bei einer prospektiven Analyse am 24. Oktober 2005
-      entdeckter Cluster, Feintyp C:P1.7-4,14-6:F3-9, Dauer
-      bis dato vom 27. September - 24. Oktober 2005; rechts
-      die deutschlandweite Verteilung diese Feintyps von
-      August-Oktober 2005</p>
+      <img style="border:1px solid black" width="400px"
+        src="images/manual/cluster_prosi_re.gif"
+        alt="Cluster, Feintyp C:P1.7-4,14-6:F3-9, deutschlandweit" />
+      <p>
+        Ein bei einer prospektiven Analyse am 24. Oktober 2005
+        entdeckter Cluster, Feintyp C:P1.7-4,14-6:F3-9, Dauer bis dato
+        vom 27. September - 24. Oktober 2005; rechts die
+        deutschlandweite Verteilung diese Feintyps von August-Oktober
+        2005
+      </p>
     </div>
-    <div class="section"><h3>Monthly retrospective clusters</h3>
-      <p>Einen historisch rückblickende Darstellung der
-      Clusterlandschaft wird mittels dieser Ebene
-      visualisiert. Über ein Auswahlfeld lässt sich wählen,
-      welche der monatlich durchgeführten Retrospektiven
-      Analysen angezeigt werden soll. Ein Beispiel zeigt
-      die folgende Abbildung.</p>
-      <img style="border:1px solid black"
-        width="400px" src="images/manual/cluster_retro.gif"
+    <div class="section">
+      <h3>Monthly retrospective clusters</h3>
+      <p>
+        Einen historisch rückblickende Darstellung der Clusterlandschaft
+        wird mittels dieser Ebene visualisiert. Über ein Auswahlfeld
+        lässt sich wählen, welche der monatlich durchgeführten
+        Retrospektiven Analysen angezeigt werden soll.
+      </p>
+      <p>
+        Die folgenden Abbildungen zeigen zwei Beispieldarstellungen der
+        Ebene.
+      </p>
+      <img style="border:1px solid black" width="400px"
+        src="images/manual/cluster_retro.gif"
         alt="Historische Cluster vom 1. September 2005" />
-      <p>Durch eine retrospektive Analyse erkannte historische
-      Cluster. Die Berechnung hat vom 1. September 2005 an
-      rückblickend alle Fälle des letzten Jahres eingeschlossen.</p>
+      <p>
+        Durch eine retrospektive Analyse erkannte historische Cluster.
+        Die Berechnung hat vom 1. September 2005 an rückblickend alle
+        Fälle des letzten Jahres eingeschlossen.
+      </p>
     </div>
-    
     #end
+    
   </div>
 </div>
