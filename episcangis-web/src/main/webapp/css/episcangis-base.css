@@ -215,3 +215,14 @@ ul.horizontalFormElements li ul.verticalFormElements {
 ul.horizontalFormElements li ul.verticalFormElements li {
   display:list-item;
 }
+
+/*
+-- Table that is used in forms like registerUser.vm
+*/
+table.formBlock {
+  border-spacing:1.5em;
+  width: 30em;
+}
+table.formBlock td {
+  vertical-align:top;
+}

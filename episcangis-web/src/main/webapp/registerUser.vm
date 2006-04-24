@@ -3,94 +3,103 @@
 <div class="section">
   <h1>$msg.page.registerUser.title</h1> 
   	<form action="$link.setAction('ManageUsers').addQueryData('method','register')"
-  	  method="post">
+  	  method="post" style="width:40em;">
   	  <fieldset>
   	    <legend>Choose login</legend>
-		    <ul class="verticalFormElements">
-		      <li>$msg.user.username:</li>
-		      <li><input type="text" name="username" 
-		        value="$!registerUser.username" /></li>
-		      <li class="error">$!errors.getMsgs("username")</li>
-		    </ul>
-		    <ul class="horizontalFormElements">
-		      <li>
-		        <ul class="verticalFormElements">
-		          <li>$msg.user.password:</li>
-		          <li><input type="password" name="password" /></li>
-		          <li class="error">$!errors.getMsgs("password")</li>
-		        </ul>
-		      </li>
-		      <li>
-		        <ul class="verticalFormElements">
-		          <li>$msg.user.confirmPassword:</li>
-		          <li><input type="password" name="confirmPassword" /></li>
-		          <li class="error">$!errors.getMsgs("confirmPassword")</li>
-		        </ul>
-		      </li>
-		    </ul>
+  	    <table class="formBlock">
+  	      <tr>
+  	        <td colspan="2">
+  	          $msg.user.username:<br />
+  	          <input type="text" name="username"
+  	            value="$!registerUser.username" />
+  	          <div class="error">$!errors.getMsgs("username")</div>
+  	        </td>
+  	      </tr>
+  	      <tr>
+  	        <td>
+  	          $msg.user.password:<br />
+  	          <input type="password" name="password" />
+  	          <div class="error">$!errors.getMsgs("password")</div>
+  	        </td>
+  	        <td>
+  	          $msg.user.confirmPassword:<br />
+  	          <input type="password" name="confirmPassword" />
+  	          <div class="error">$!errors.getMsgs("confirmPassword")</div>
+  	        </td>
+  	      </tr>
+  	    </table>
 		  </fieldset>
 		  <fieldset>
 		    <legend>Contact</legend>
-		    <ul class="verticalFormElements">
-		      <li>$msg.user.fullName:</li>
-		      <li><input type="text" name="fullName" 
-		        value="$!registerUser.fullName" /></li>
-		      <li class="error">$!errors.getMsgs("fullName")</li>
-		    </ul>
-		    <ul class="horizontalFormElements">
-		      <li>
-				    <ul class="verticalFormElements">
-				      <li>$msg.user.phone:</li>
-				      <li><input type="text" name="phone" 
-				        value="$!registerUser.phone" /></li>
-				      <li class="error">$!errors.getMsgs("phone")</li>
-				    </ul>
-		    	</li>
-			    <li>
-				    <ul class="verticalFormElements">
-				      <li>$msg.user.email:</li>
-				      <li><input type="text" name="email" 
-				        value="$!registerUser.email" /></li>
-				      <li class="error">$!errors.getMsgs("email")</li>
-				    </ul>
-			    </li>
-		    </ul>
-		    <div class="clear">
-	        <hr/>
-	      </div>
-	      <ul class="horizontalFormElements">
-		      <li>
-				    <ul class="verticalFormElements">
-				      <li>$msg.user.organization:</li>
-				      <li><input type="text" name="organization" 
-				        value="$!registerUser.organization" /></li>
-				      <li class="error">$!errors.getMsgs("organization")</li>
-				    </ul>
-		      </li>
-		      <li>
-				    <ul class="verticalFormElements">
-				      <li>$msg.user.domain:</li>
-				      <li>
-								<select name="domain" size="1">
-								  <option>$msg.domain.public_health</option>
-								  <option>$msg.domain.nrzm</option>
-								</select>
-				      </li>
-				      <li class="error">$!errors.getMsgs("domain")</li>
-				    </ul>
-		      </li>
-		    </ul>
-		    <div class="clear">
-	        <hr/>
-	      </div>
-		    <ul class="verticalFormElements">
-		      <li>$msg.user.message:</li>
-		      <li class="error">$!errors.getMsgs("message")</li>
-		      <li>
-		        <textarea name="message" cols="60" rows="20">$!registerUser.message
-		        </textarea>
-		      </li>
-		    </ul>
+		    <table class="formBlock">
+  	      <tr>
+  	        <td>
+  	          $ms.user.title:<br />
+  	          <input type="text" name="title" size="6"
+  	            value="$!registerUser.title" />
+  	          <div class="error">$!errors.getMsgs("title")</div>
+  	        </td>
+  	        <td>
+  	          $ms.user.forename:<br />
+  	          <input type="text" name="forename" size="10"
+  	            value="$!registerUser.forename" />
+  	          <div class="error">$!errors.getMsgs("forename")</div>
+  	        </td>
+  	        <td>
+  	          $ms.user.surname:<br />
+  	          <input type="text" name="surname"
+  	            value="$!registerUser.surname" />
+  	          <div class="error">$!errors.getMsgs("surname")</div>
+  	        </td>
+  	      </tr>
+  	      <tr>
+  	        <td colspan="2">
+  	          $msg.user.phone:<br />
+  	          <input type="text" name="phone" value="$!registerUser.phone" 
+  	            size="30"/>
+  	          <div class="error">$!errors.getMsgs("phone")</div>
+  	        </td>
+  	        <td>
+  	          $msg.user.email:<br />
+  	          <input type="text" name="email" value="$!registerUser.email" />
+  	          <div class="error">$!errors.getMsgs("email")</div>
+  	        </td>        
+  	      </tr>
+  	      <tr>
+  	        <td>
+  	          $msg.user.organization:<br />
+  	          <input type="text" name="organization"
+  	            value="$!registerUser.organization" />
+  	          <div class="error">$!errors.getMsgs("organization")</div>
+  	        </td>
+  	        <td>
+  	          $ms.user.department:<br />
+  	          <input type="text" name="department"
+  	            value="$!registerUser.department" />
+  	          <div class="error">$!errors.getMsgs("department")</div>
+  	        </td>
+  	        <td>
+  	          $msg.user.domain:<br />
+  	          <select name="domain" size="1">
+							  <option>$msg.domain.public_health</option>
+							  <option>$msg.domain.nrzm</option>
+							</select>
+  	          <div class="error">$!errors.getMsgs("domain")</div>
+  	        </td>
+  	      </tr>
+  	      <tr>
+  	        <td colspan="3">
+  	          $msg.user.message:
+  	          <div class="error">$!errors.getMsgs("message")</div>
+  	        </td>
+  	      </tr>
+  	      <tr>
+  	        <td colspan="3">
+  	          <textarea name="message" cols="60" rows="20">$!registerUser.message
+		          </textarea>
+  	        </td>
+  	      </tr>
+  	    </table>
 		    <br />
 		    <button type="submit">$msg.page.registerUser.submit</button>
 		  </fieldset>

@@ -25,6 +25,7 @@ import de.meningococcus.episcangis.db.model.User;
  * href="http://jakarta.apache.org/commons/dbutils/">
  * http://jakarta.apache.org/commons/dbutils/</a>) to run queries on the
  * database and fill beans with the results.
+ * 
  * @author Markus Reinhardt <m.reinhardt[at]bitmap-friends.de>
  */
 final class PgSQLUserDAO extends DbUtilsDAO implements UserDAO
@@ -39,12 +40,15 @@ final class PgSQLUserDAO extends DbUtilsDAO implements UserDAO
    * database specific query parts
    */
   private static final String UPDATE_USER = "UPDATE users "
-      + "SET username = ?, password  = ?, fullname  = ?, email  = ?"
+      + "SET password = ?, title = ?, forename = ?, lastname = ?, email = ?, "
+      + " phone = ?, organisation = ?, department = ?, domain = ?"
       + " WHERE username = ?",
       GET_USER = "SELECT * FROM users WHERE username=?",
       DELETE_USER = "DELETE FROM users WHERE username=?",
       CREATE_USER = "INSERT INTO users "
-          + "(username, password, fullname, email ) " + "VALUES (?, ?, ?, ?)",
+          + "(username, password, title, forename, lastname, email, phone, "
+          + "organisation, department, domain, message ) "
+          + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
       GET_ROLES = "SELECT rolename FROM user_roles",
       GET_USER_ROLES = GET_ROLES + " WHERE username=?",
       DELETE_USER_ROLES = "DELETE FROM user_roles WHERE username=?",
@@ -63,9 +67,10 @@ final class PgSQLUserDAO extends DbUtilsDAO implements UserDAO
     {
       result = (User) run
           .query(GET_USER, username, new BeanHandler(User.class));
-      if(result != null )
+      if (result != null)
       {
-        for( String role : getUserRoles(result) ) {
+        for (String role : getUserRoles(result))
+        {
           result.addRole(role);
         }
       }
@@ -84,7 +89,10 @@ final class PgSQLUserDAO extends DbUtilsDAO implements UserDAO
     try
     {
       insertCount = run.update(CREATE_USER, new Object[] { user.getUsername(),
-          user.getPassword(), user.getFullName(), user.getEmail() });
+          user.getPassword(), user.getTitle(), user.getForename(),
+          user.getLastname(), user.getEmail(), user.getPhone(),
+          user.getOrganisation(), user.getDepartment(), user.getDomain(),
+          user.getMessage() });
       updateUserRoles(user);
     }
     catch (SQLException e)
@@ -100,9 +108,10 @@ final class PgSQLUserDAO extends DbUtilsDAO implements UserDAO
     int insertCount = 0;
     try
     {
-      insertCount = run.update(UPDATE_USER, new Object[] { user.getUsername(),
-          user.getPassword(), user.getFullName(), user.getEmail(),
-          user.getUsername() });
+      insertCount = run.update(UPDATE_USER, new Object[] { user.getPassword(),
+          user.getTitle(), user.getForename(), user.getLastname(),
+          user.getEmail(), user.getPhone(), user.getOrganisation(),
+          user.getDepartment(), user.getDomain() });
       updateUserRoles(user);
     }
     catch (SQLException e)

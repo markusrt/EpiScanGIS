@@ -24,14 +24,20 @@
           </var-value>
         </var>
       </field>
-      <field property="fullName" depends="required">
-        <arg0 key="user.fullName"/>
+      <field property="forename" depends="required">
+        <arg0 key="user.forename"/>
+      </field>
+      <field property="lastname" depends="required">
+        <arg0 key="user.lastname"/>
       </field>
       <field property="phone" depends="required">
         <arg0 key="user.phone"/>
       </field>
       <field property="email" depends="required,email">
         <arg0 key="user.email"/>
+      </field>
+      <field property="domain" depends="required">
+        <arg0 key="user.domain"/>
       </field>
       <field property="message" depends="required">
         <arg0 key="user.message"/>

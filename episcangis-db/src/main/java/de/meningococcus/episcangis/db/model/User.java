@@ -28,8 +28,8 @@ public class User
    */
   public static final String passwordDigestAlgorithm = "SHA-1";
 
-  private String username, password, fullName, email, phone, organization,
-      message;
+  private String username, password, title, forename, lastname, email, phone, 
+    organisation, department, domain, message;
 
   private Date registrationDate, lastLogin;
 
@@ -104,40 +104,13 @@ public class User
     else
       return ((char) (value + '0'));
   }
-
-  public String getPassword()
+  
+  /**
+   * @return Returns the roles.
+   */
+  public Collection<String> getRoles()
   {
-    return password;
-  }
-
-  public String getEmail()
-  {
-    return email;
-  }
-
-  public void setEmail(String email)
-  {
-    this.email = email;
-  }
-
-  public String getUsername()
-  {
-    return username;
-  }
-
-  public void setUsername(String userName)
-  {
-    this.username = userName;
-  }
-
-  public String getFullName()
-  {
-    return fullName;
-  }
-
-  public void setFullName(String fullName)
-  {
-    this.fullName = fullName;
+    return roles;
   }
 
   public boolean isInRole(String role)
@@ -153,58 +126,203 @@ public class User
     }
   }
 
-  public Collection<String> getRoles()
+  /**
+   * @return Returns the department.
+   */
+  public String getDepartment()
   {
-    return roles;
+    return department;
   }
 
-  public String getMessage()
+  /**
+   * @param department The department to set.
+   */
+  public void setDepartment(String department)
   {
-    return message;
+    this.department = department;
   }
 
-  public void setMessage(String message)
+  /**
+   * @return Returns the domain.
+   */
+  public String getDomain()
   {
-    this.message = message;
+    return domain;
   }
 
-  public String getOrganization()
+  /**
+   * @param domain The domain to set.
+   */
+  public void setDomain(String domain)
   {
-    return organization;
+    this.domain = domain;
   }
 
-  public void setOrganization(String organization)
+  /**
+   * @return Returns the email.
+   */
+  public String getEmail()
   {
-    this.organization = organization;
+    return email;
   }
 
-  public String getPhone()
+  /**
+   * @param email The email to set.
+   */
+  public void setEmail(String email)
   {
-    return phone;
+    this.email = email;
   }
 
-  public void setPhone(String phone)
+  /**
+   * @return Returns the forename.
+   */
+  public String getForename()
   {
-    this.phone = phone;
+    return forename;
   }
 
+  /**
+   * @param forename The forename to set.
+   */
+  public void setForename(String forename)
+  {
+    this.forename = forename;
+  }
+
+  /**
+   * @return Returns the lastLogin.
+   */
   public Date getLastLogin()
   {
     return lastLogin;
   }
 
+  /**
+   * @param lastLogin The lastLogin to set.
+   */
   public void setLastLogin(Date lastLogin)
   {
     this.lastLogin = lastLogin;
   }
 
+  /**
+   * @return Returns the lastname.
+   */
+  public String getLastname()
+  {
+    return lastname;
+  }
+
+  /**
+   * @param lastname The lastname to set.
+   */
+  public void setLastname(String lastname)
+  {
+    this.lastname = lastname;
+  }
+
+  /**
+   * @return Returns the message.
+   */
+  public String getMessage()
+  {
+    return message;
+  }
+
+  /**
+   * @param message The message to set.
+   */
+  public void setMessage(String message)
+  {
+    this.message = message;
+  }
+
+  /**
+   * @return Returns the organisation.
+   */
+  public String getOrganisation()
+  {
+    return organisation;
+  }
+
+  /**
+   * @param organisation The organisation to set.
+   */
+  public void setOrganisation(String organisation)
+  {
+    this.organisation = organisation;
+  }
+
+  /**
+   * @return Returns the phone.
+   */
+  public String getPhone()
+  {
+    return phone;
+  }
+
+  /**
+   * @param phone The phone to set.
+   */
+  public void setPhone(String phone)
+  {
+    this.phone = phone;
+  }
+
+  /**
+   * @return Returns the registrationDate.
+   */
   public Date getRegistrationDate()
   {
     return registrationDate;
   }
 
+  /**
+   * @param registrationDate The registrationDate to set.
+   */
   public void setRegistrationDate(Date registrationDate)
   {
     this.registrationDate = registrationDate;
+  }
+
+  /**
+   * @return Returns the title.
+   */
+  public String getTitle()
+  {
+    return title;
+  }
+
+  /**
+   * @param title The title to set.
+   */
+  public void setTitle(String title)
+  {
+    this.title = title;
+  }
+
+  /**
+   * @return Returns the username.
+   */
+  public String getUsername()
+  {
+    return username;
+  }
+
+  /**
+   * @param username The username to set.
+   */
+  public void setUsername(String username)
+  {
+    this.username = username;
+  }
+
+  /**
+   * @return Returns the password.
+   */
+  public String getPassword()
+  {
+    return password;
   }
 }

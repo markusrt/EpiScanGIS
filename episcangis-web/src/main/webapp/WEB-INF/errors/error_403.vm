@@ -2,7 +2,7 @@
 #if( $registeredUser )
   #set( $username = $request.userPrincipal.name )
 #else
-  #set( $username = $msg.page.error_403.unknown_user )    
+  #set( $username = $msg.page.error_403.unknown_user )
 #end
 <div class="section">
   <h1>$msg.page.error_403.title, $msg.user.username: $username</h1>
