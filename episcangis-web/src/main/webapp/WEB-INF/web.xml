@@ -28,10 +28,6 @@ PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.2//EN"
 		</init-param>
 		<load-on-startup>2</load-on-startup>
 	</servlet>
-  <error-page>
-    <error-code>403</error-code>
-    <location>/WEB-INF/errors/error_403.vm</location>
-  </error-page>
 	<!-- Velocity template compiler -->
 	<servlet>
 		<servlet-name>velocity</servlet-name>
@@ -119,7 +115,13 @@ PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.2//EN"
 	<welcome-file-list>
 		<welcome-file>index.jsp</welcome-file>
 	</welcome-file-list>
-
+  
+  <!--
+  <error-page>
+    <error-code>403</error-code>
+    <location>/WEB-INF/errors/error_403.vm</location>
+  </error-page>
+  -->
 	<!-- Struts Tag Library Descriptors -->
 	<taglib>
 		<taglib-uri>/tags/struts-bean</taglib-uri>
