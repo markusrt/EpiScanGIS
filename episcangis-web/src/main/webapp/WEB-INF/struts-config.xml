@@ -43,7 +43,6 @@
       <form-property name="email" type="java.lang.String" />
       <form-property name="organisation" type="java.lang.String" />
       <form-property name="department" type="java.lang.String" />
-      <form-property name="organisation" type="java.lang.String" />
       <form-property name="domain" type="java.lang.String" />
     </form-bean>
 
