@@ -14,6 +14,7 @@ import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.filefilter.PrefixFileFilter;
@@ -23,8 +24,10 @@ import org.apache.struts.actions.DownloadAction;
 
 import de.meningococcus.episcangis.db.DaoFactory;
 import de.meningococcus.episcangis.db.dao.ReportedCaseDAO;
+import de.meningococcus.episcangis.db.model.User;
 import de.meningococcus.episcangis.map.AbstractWmsMap;
 import de.meningococcus.episcangis.map.NrzmMap;
+import de.meningococcus.episcangis.map.PublicMap;
 import de.meningococcus.episcangis.map.exporter.XmlExporter;
 
 /**
@@ -44,6 +47,10 @@ public class CreateMapAction extends DownloadAction implements
   {
     AbstractWmsMap map = (AbstractWmsMap) request.getSession().getAttribute(
         "map");
+    HttpSession session = request.getSession();
+    CreateMapFormBean createMap = (CreateMapFormBean)form;
+    int width = createMap.getWidth();
+    int height = createMap.getHeight();
 
     if (map == null)
     {
@@ -64,7 +71,14 @@ public class CreateMapAction extends DownloadAction implements
         FileUtils.cleanDirectory(cacheDirectory);
       }
       
-      map = new NrzmMap();
+      User user = (User)session.getAttribute("user");
+      if( user != null && user.isInRole("nrzm")) {
+        map = new NrzmMap(width,height);
+      }
+      else {
+        map = new PublicMap(width,height);
+      }
+      
       request.getSession().setAttribute("map", map);
     }
     XmlExporter xmlExporter = new XmlExporter();

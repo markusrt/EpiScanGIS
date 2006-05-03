@@ -2,6 +2,7 @@ package de.meningococcus.episcangis.web;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -12,7 +13,10 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 
+import de.meningococcus.episcangis.db.model.User;
 import de.meningococcus.episcangis.map.AbstractWmsMap;
+import de.meningococcus.episcangis.map.NrzmMap;
+import de.meningococcus.episcangis.map.PublicMap;
 
 /* ====================================================================
  *   Copyright �2005 Markus Reinhardt - All Rights Reserved.
@@ -30,12 +34,15 @@ public class MoveMapAction extends Action
       HttpServletRequest request, HttpServletResponse response)
       throws Exception
   {
+    HttpSession session = request.getSession();
     String forward = FORWARD_ERROR;
     ActionMessages messages = new ActionMessages();
     MoveMapFormBean move = (MoveMapFormBean) form;
     AbstractWmsMap map = (AbstractWmsMap) request.getSession().getAttribute(
         "map");
-    if (map != null)
+    User user = (User)session.getAttribute("user");
+    
+    if (map != null && (user != null && user.isInRole("nrzm")))
     {
       map.move(move.getXoffset(), move.getYoffset());
       forward = FORWARD_SUCCESS;

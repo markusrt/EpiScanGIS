@@ -44,6 +44,11 @@ public class LoginAction extends Action
     {
       UserDAO userDao = DaoFactory.getDaoFactory().getUserDAO();
       User user = userDao.getUser(request.getUserPrincipal().getName());
+      
+      // invalidate session to clear existing data (map bean,...)
+      session.invalidate();
+      session = request.getSession(true);
+      
       if (user != null)
       {
         session.setAttribute("user", user);

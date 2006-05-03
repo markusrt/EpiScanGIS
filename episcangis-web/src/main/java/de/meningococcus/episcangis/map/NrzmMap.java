@@ -28,8 +28,9 @@ public class NrzmMap extends AbstractWmsMap
   AbstractParameter fromAge, toAge, areaSelector, includeUnknownAge,
       observationPeriod;
 
-  public NrzmMap() throws MapInitializationException
+  public NrzmMap(int width, int height) throws MapInitializationException
   {
+    super(width, height);
     // Get DAOs for db access
     DaoFactory daoFactory = DaoFactory.getDaoFactory();
     AreaTypeDAO atDao = daoFactory.getAreaTypeDAO();

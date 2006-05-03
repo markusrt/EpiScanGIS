@@ -22,6 +22,10 @@
     <form-bean
       type="de.meningococcus.episcangis.web.CountCasesByAttributeFormBean"
       name="countCasesByAttribute" />
+      
+    <form-bean
+      type="de.meningococcus.episcangis.web.CreateMapFormBean"
+      name="createMap" />
 
     <form-bean
       type="de.meningococcus.episcangis.web.SetParameterFormBean"
@@ -44,8 +48,9 @@
       <form-property name="organisation" type="java.lang.String" />
       <form-property name="department" type="java.lang.String" />
       <form-property name="domain" type="java.lang.String" />
+      <form-property name="message" type="java.lang.String" />
     </form-bean>
-
+    
   </form-beans>
 
   <!--  Global Exception Definitions -->
@@ -64,7 +69,8 @@
   <!-- Action Mapping Definitions -->
   <action-mappings>
     <action path="/Map"
-      type="de.meningococcus.episcangis.web.CreateMapAction">
+      type="de.meningococcus.episcangis.web.CreateMapAction"
+      name="createMap" scope="request">
       <exception key="error" type="java.lang.Exception"
         path="/WEB-INF/errors/xmlExceptionResult.jsp" scope="request" />
     </action>

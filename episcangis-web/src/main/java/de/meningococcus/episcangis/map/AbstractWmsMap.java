@@ -40,12 +40,23 @@ public abstract class AbstractWmsMap
 
   private Vector<AbstractParameter> mapParameters = new Vector<AbstractParameter>();
 
-  private int width = 640, height = 480;
+  private int width, height;
 
   private BoundingBox bbox = new BoundingBox();
 
-  public AbstractWmsMap() throws MapInitializationException
+  public AbstractWmsMap(int width, int height)
+      throws MapInitializationException
   {
+    if ((width >= 1 && width <= 2048) && (height >= 1 && height <= 2048))
+    {
+      this.width = width;
+      this.height = height;
+    }
+    else
+    {
+      throw new IllegalArgumentException(
+          "Map width and height have to be between 1 and 2048.");
+    }
     Configuration config;
     String configfile = "conf/epidegis-web.properties";
     try
@@ -64,6 +75,7 @@ public abstract class AbstractWmsMap
    * Classes which extend AbstractWmsMap need to provide a MapLayerFactory
    * implementation. The initialize() function calls this method to retrieve
    * specific layer objects.
+   * 
    * @return MapLayerFactory to create MapLayers
    */
   protected abstract MapLayerFactory getMapLayerFactory();
@@ -109,6 +121,7 @@ public abstract class AbstractWmsMap
    * implementation provides MapLayer objects for every layer. The queryable
    * flag is set if appropriate.
    * </p>
+   * 
    * @throws MapInitializationException
    */
   private void initialize() throws MapInitializationException
@@ -169,7 +182,8 @@ public abstract class AbstractWmsMap
   }
 
   /**
-   * @param box new BoundingBox for this map
+   * @param box
+   *          new BoundingBox for this map
    */
   protected void setBbox(BoundingBox box)
   {
@@ -178,27 +192,8 @@ public abstract class AbstractWmsMap
   }
 
   /**
-   * TODO subsequent calls result in invalid bounding box.
-   * @param mapHeight height for map in pixels
-   */
-  private void setHeight(int mapHeight)
-  {
-    this.height = mapHeight;
-    bbox.mapToPixels(width, height);
-  }
-
-  /**
-   * TODO subsequent calls result in invalid bounding box.
-   * @param mapWidth width for map in pixels
-   */
-  private void setWidth(int mapWidth)
-  {
-    this.width = mapWidth;
-    bbox.mapToPixels(width, height);
-  }
-
-  /**
    * Adds a new layer to this map. TODO Check for duplicates
+   * 
    * @param layer
    */
   public void addLayer(MapLayer layer)
@@ -210,12 +205,15 @@ public abstract class AbstractWmsMap
    * Sets the parameter with given name (either layer- or mapparameter) to the
    * specified value. Also accepts two predefined parameters called <b>width</b>
    * and <b>height</b> which accept Integer values from 1 to 2048.
-   * @param name parameter to change
-   * @param value new value
-   * @throws ParameterNotFoundException if the parameter with the specified name
-   *           could not be found
-   * @throws InvalidParameterValueException if the value is invalid for this
-   *           parameter
+   * 
+   * @param name
+   *          parameter to change
+   * @param value
+   *          new value
+   * @throws ParameterNotFoundException
+   *           if the parameter with the specified name could not be found
+   * @throws InvalidParameterValueException
+   *           if the value is invalid for this parameter
    */
   public Collection<String> setParameter(String name, String value)
       throws ParameterNotFoundException, InvalidParameterValueException
@@ -223,49 +221,20 @@ public abstract class AbstractWmsMap
     Collection<String> updateLayers = new Vector<String>();
     log.debug("Set parameter " + name + "=" + value);
 
-    if (name.toLowerCase(Locale.ENGLISH).equals("width")
-        || name.toLowerCase(Locale.ENGLISH).equals("height"))
+    AbstractParameter p = getParameter(name);
+    if (p == null)
     {
-      int size = Integer.parseInt(value);
-      if (size >= 1 && size <= 2048)
-      {
-        if (name.toLowerCase(Locale.ENGLISH).equals("width"))
-        {
-          setWidth(size);
-        }
-        else
-        {
-          setHeight(size);
-        }
-        for (MapLayer mlb : mapLayers.values())
-        {
-          if (mlb.isActive())
-          {
-            updateLayers.add(mlb.getName());
-          }
-        }
-      }
-      else
-      {
-        throw new InvalidParameterValueException();
-      }
+      throw new ParameterNotFoundException();
     }
-    else
+    if (p instanceof ValueParameter)
     {
-      AbstractParameter p = getParameter(name);
-      if (p == null)
+      String oldValue = ((ValueParameter) p).getValue();
+      ((ValueParameter) p).setValue(value);
+      if (!((ValueParameter) p).getValue().equals(value))
       {
-        throw new ParameterNotFoundException();
-      }
-      if (p instanceof ValueParameter)
-      {
-        String oldValue = ((ValueParameter) p).getValue();
-        ((ValueParameter) p).setValue(value);
-        if (!((ValueParameter) p).getValue().equals(value))
-        {
-          ((ValueParameter) p).setValue(oldValue);
-          throw new InvalidParameterValueException();
-        }
+        ((ValueParameter) p).setValue(oldValue);
+        throw new InvalidParameterValueException("Parameter value '" + value
+            + "' is invalid for the parameter '" + name + "'");
       }
     }
     updateLayers.addAll(findLayersWithParameter(name));
@@ -276,7 +245,9 @@ public abstract class AbstractWmsMap
   /**
    * Searches all layers, that either have a parameter with the provided name
    * defined, or reference such a parameter
-   * @param parameterName Paramter to search
+   * 
+   * @param parameterName
+   *          Paramter to search
    * @return Collection containing all found layernames
    */
   private Collection<String> findLayersWithParameter(String parameterName)
@@ -301,9 +272,13 @@ public abstract class AbstractWmsMap
 
   /**
    * Toggles the active state of the layer with specified name
-   * @param layerName layer to activate/deactivate
-   * @param active new value for layers active Attribute
-   * @throws LayerNotFoundException If a layer with this name does not exist
+   * 
+   * @param layerName
+   *          layer to activate/deactivate
+   * @param active
+   *          new value for layers active Attribute
+   * @throws LayerNotFoundException
+   *           If a layer with this name does not exist
    */
   public void toggleLayerState(String layerName, boolean active)
       throws LayerNotFoundException
