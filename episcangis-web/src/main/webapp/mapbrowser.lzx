@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--=======================================================================-->
-<!--                                                                       -->
-<!-- mapbrowser.lzx                                                        -->
-<!--                                                                       -->
-<!--=======================================================================-->
+<!--============================================================================
+ * Copyright © 2005 Markus Reinhardt - All Rights Reserved.
+ *
+ * TODO mutex getMap and setSize (first)
+ * TODO remove session timeout on long user inactiviy
+ *
+=============================================================================-->
 <!--<canvas bgcolor="silver" proxied="true" debug="false"-->
-<canvas debug="false" width="100%" height="100%" maxtextheight="10000">
+<canvas debug="true" width="100%" height="100%" maxtextheight="10000">
   
   <!--<resource name="waitcursor" src="resources/lzwaitcursor_rsc.swf"/>-->
   <resource name="dragcursor" src="images/drag_cursor.png"/>
@@ -399,7 +401,7 @@
               ]]></method>
             <method name="refresh">
               if( this.visible ) {
-                setResource(mapurl, "none","");
+                setSource(mapurl, "none","");
                 this.isloading = "true";
                 classroot.maplayersettings.showLoadBar(this.name,true);
               }
@@ -445,8 +447,14 @@
               <animator attribute="opacity" to="0.7"/>
             </animatorgroup>
             -->
-            <view name="img" 
-              resource="${getBaseUrl() + 'GetLegendGraphic.do?layer=' + parent.parent.datapath.xpathQuery('../@name')}">
+            <view name="img">
+              <method event="oninit">
+                if( parent.parent.datapath.xpathQuery('../@name') != null ) 
+                {
+                  setSource(getBaseUrl() + 'GetLegendGraphic.do?layer=' 
+                    + parent.parent.datapath.xpathQuery('../@name'), "both","");
+                }
+              </method>
               <!--
               <method event="onload">
                 <![CDATA[
