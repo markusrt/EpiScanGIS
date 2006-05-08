@@ -6,8 +6,8 @@
 </div>
 <div class="xright">
   #if ($user)
-  <a href="Logout.do">$msg.global.logout</a> $user.forename $user.lastname
+  $msg.get('global.logout', [$link.setAction('Logout'),"$user.forename $user.lastname"])
   #else
-  $msg.get('global.login_or_register', $link.setAction('CountCasesByAttribute'),'registerUser.vm')
+  $msg.get('global.login_or_register', [$link.setAction('Login'),'registerUser.vm'])
   #end
 </div>

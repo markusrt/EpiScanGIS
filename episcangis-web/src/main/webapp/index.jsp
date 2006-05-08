@@ -78,11 +78,13 @@ By using a redirect, the user-agent will change address to match the path of our
 				</div>
 				<div class="section">
 				  <h1>Screenshots</h1>
+          <p style="text-align:center">
 				  <img src="images/teaser/screenshot.png" 
 				    alt="Screenshot of EpiScanGIS Web-Application" />
 				  <br />
 				  <img src="images/teaser/serogroup_b.gif" 
 				    alt="Generated surveillance map" />
+          </p> 
 				</div>
 	    </div>
 	  </div>

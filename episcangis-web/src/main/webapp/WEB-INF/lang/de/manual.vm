@@ -18,11 +18,11 @@
   <p>
     Anhand der Nummerierungen auf dem unten abgebildeten Screenshot wird
     erklärt, was Sie mit den jeweiligen Schaltflächen der Anwendung
-    einstellen können.
+    einstellen können bzw. welche Informationen in den jeweiligen Bereichen zu sehen sind.
   </p>
   <div class="section">
     <h2>Gesamtübersicht</h2>
-    <img style="width:100%;border:1px solid black" width="684"
+    <img style="border:1px solid black" width="684"
       height="495"
       src="images/manual/screenshot_public_health__nrzm.png"
       alt="Screenshot der EpiScanGIS Webanwendung" />
@@ -49,7 +49,7 @@
           #end
 
           <li>
-            Altersgrenzen (von, bis), auf welche die dargestellten
+            Altersgruppe (von, bis), auf welche die dargestellten
             Erkrankungsfälle eingegrenzt werden. Hierbei sind beide
             Grenzwerte mit eingeschlossen. Die Einstellung von 0 bis 0
             würde z.B. nur die Fälle der unter Einjährigen anzeigen.
@@ -64,8 +64,14 @@
             <br />
             <br />
             Der Beobachtungszeitraum lässt sich mit der Genauigkeit von
-            einem #if($user.isInRole("public_health") ||
-            $user.isInRole("nrzm")) einem Monat #elseif Jahr #end
+            einem 
+            
+            #if($user.isInRole("public_health") || $user.isInRole("nrzm")) 
+            einem Monat 
+            #else 
+            Jahr 
+            #end
+            
             einstellen, wobei wiederum die Grenzwerte mit eingeschlossen
             sind.
             <br />
@@ -85,9 +91,14 @@
       </li>
       <li>
         Der Hauptbereich der Anwendung zeigt die aktuelle, anhand aller
-        Filtereinstellungen generierte Karte. Durch klicken und ziehen
-        der Maus lässt sich der Kartenausschnitt verschieben. Ein
-        einfacher Mausklick ohne Bewegung zeigt Informationen zu einem
+        Filtereinstellungen generierte Karte. 
+        
+        #if($user.isInRole("public_health") || $user.isInRole("nrzm")) 
+        Durch klicken und ziehen
+        der Maus lässt sich der Kartenausschnitt verschieben.
+        #end
+        
+        Ein einfacher Mausklick ohne Bewegung zeigt Informationen zu einem
         gewählten Punkt auf der Karte an. Hierbei werden alle gerade
         aktiven Ebenen nach Informationen abgefragt.
       </li>
@@ -178,7 +189,7 @@
         Landkarte dar, wobei die Menge der angezeigten Fälle durch die
         Altersgrenzen und den Zeitraum beschränkt werden. Über ein
         Suchfeld lässt sich bei den Ebeneneinstellungen ein spezifischer
-        Feintyp aus den bisher 404 verschiedenen im System erfassten
+        Feintyp aus den bisher im System erfassten ls
         anzeigen.
       </p>
       <p>
@@ -188,7 +199,7 @@
         <pre>{Serogruppe} : P1.{PorA} : F{FetA}</pre>
         also beispielsweise
         <pre>B : P1.7-2,4 : F1-5</pre>
-        . Beachten Sie die Leerzeichen links und rechts von den
+        Beachten Sie die Leerzeichen links und rechts von den
         Doppelpunkten.
       </p>
       <p>

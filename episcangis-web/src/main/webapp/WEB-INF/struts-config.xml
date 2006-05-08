@@ -56,14 +56,14 @@
   <!--  Global Exception Definitions -->
   <global-exceptions>
     <exception key="error" type="java.lang.Exception"
-      path="/WEB-INF/errors/error.vm" scope="request" />
+      path="/WEB-INF/errors/xmlExceptionResult.jsp" scope="request" />
   </global-exceptions>
 
   <!-- Global Forward Definitions -->
   <global-forwards>
     <!-- index.jsp forwards to this action -->
     <forward name="welcome" path="/welcome.vm" />
-    <forward name="error" path="/WEB-INF/errors/error.vm" />
+    <forward name="error" path="/WEB-INF/errors/xmlExceptionResult.jsp" />
   </global-forwards>
 
   <!-- Action Mapping Definitions -->

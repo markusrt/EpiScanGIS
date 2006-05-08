@@ -14,14 +14,12 @@
       <field property="password" depends="required">
         <arg0 key="user.password"/>
       </field>
-      <field property="confirmPassword" depends="required,twofields">
+      <field property="confirmPassword" depends="required,validwhen">
         <arg0 key="user.confirmPassword"/>
-        <arg1 key="user.password"/>
+        <arg1 key="user.passwordEqual"/>
         <var>
-          <var-name>secondProperty
-          </var-name>
-          <var-value>password
-          </var-value>
+          <var-name>test</var-name>
+          <var-value>(password == *this*)</var-value>
         </var>
       </field>
       <field property="forename" depends="required">

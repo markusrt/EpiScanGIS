@@ -1,55 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
 <document>
 	<properties>
-		<title>Changes</title>
+		<title>Aktuelle Änderungen</title>
 	</properties>
 	<body>
 		<release version="1.0" date="SNAPSHOT"
 			description="Beta Kartenbetrachter">
-      <action tpye="add" dev="mtk" date="13.04.2006">
+      <action tpye="update" dev="mreinhardt" date="28.04.2006">
+        Benutzer sehen abhängig von ihrer Rolle unterschiedliche Kartenbetrachter
+      </action>
+      <action tpye="add" dev="mreinhardt" date="27.04.2006">
+        Maske für die Benutzerregistrierung ist implementiert.
+      </action>
+      <action tpye="add" dev="mreinhardt" date="13.04.2006">
         Integration von Velocity-Struts.
       </action>
-			<action tpye="add" dev="mtk">
+			<action tpye="add" dev="mreinhardt" date="13.04.2006">
 				Die EpiScanGIS-Anwendung unterstützt jetzt
 				"Container-based Security". Hierbei erfolgt die
 				Benutzerauthentifizierung auf unterster Ebene direkt am
 				Webserver, was das Risiko des unberechtigten Eindringens
 				Dritter minimiert.
 			</action>
-			<action type="add" dev="mtk" date="01.09.2005">
+			<action type="add" dev="mreinhardt" date="01.09.2005">
 				Die Änderung eines Parameters in der
 				Benutzungsoberfläche aktualisiert automatisch alle
 				Ebenen, welche diesen verwenden. Da die Geschwindigkeit
 				vertretbar ist, kann der Klick auf den Aktualisieren
 				Knopf damit entfallen.
 			</action>
-			<action type="update" dev="mtk" date="01.09.2005">
+			<action type="update" dev="mreinhardt" date="01.09.2005">
 				Test der Kartenparamter. Update des bereits
 				existierenden Zeitraumparameters und Hinzufügung eines
 				Altersgruppenparameters.
 			</action>
-			<action type="add" dev="mtk" date="01.09.2005"> 
+			<action type="add" dev="mreinhardt" date="01.09.2005"> 
 				Hinzufügen von Kartenparametern. Diese ersetzten die
 				fest in Laszlo einprogrammierten Formularelemene wie
 				z.B. den Zeitraum. Für jeden Parameter, welchen man im
 				Java Backend definiert, wird in der Benutzungsoberfläche
 				eine entsprechende Schaltfläche hinzugefügt.
 			</action>
-			<action type="udpate" dev="mtk" date="31.08.2005">
+			<action type="udpate" dev="mreinhardt" date="31.08.2005">
 				Weitere Verbesserung der Benutzungsoberfläche. Die
 				Schaltfläche, welche die Parameter einer Ebene anzeigt,
 				enthält jetzt den Ladebalken und den An/Aus Schalter.
 				Somit sieht der Benutzer auch gleich, welche Ebenen noch
 				laden.
 			</action>
-			<action type="add" dev="mtk" date="31.08.2005">
+			<action type="add" dev="mreinhardt" date="31.08.2005">
 				Es ist jetzt möglich, die gerade sichtbare Karte als
 				Bild zu laden. Dies funktioniert mit der
 				Disketten-Schaltfläche oben links. Später wird hier auch
 				Zusatzinformation zu der Karte (Legende, Titel)
 				angezeigt.
 			</action>
-			<action type="update" dev="mtk" >
+			<action type="update" dev="mreinhardt" >
 				Überarbeitung der Oberfläche des Kartenberachters:
 				
 				* Die einzelnen Parameter werden jetzt direkt bei
@@ -61,152 +67,6 @@
 				
 				* Die Legende lässt sich für jede Ebene ein- bzw.
 					ausblenden.
-			</action>
-		</release>
-		<release version="0.3" date="28.08.2005"
-			description="Beta Kartenbetrachter">
-			<action type="add" dev="mtk">
-				<b>10.08.2005</b>
-				<br />
-				Der Demo-Kartenbetrachter ist jetzt um die
-				Funktionalität einfacher Abfragen erweitert. Es lässt
-				sich ein Beobachtungszeitraum und das gewünschte Gebiet
-				auswählen. Der Filter nach der Serogruppe ist ein
-				Beispiel für ein Zusatzattribut (siehe Eintrag vim
-				27.07.).
-				<br />
-				Die Karten, welche im Betrachter zu sehen sind, werden
-				jetzt nicht mehr mit Flash generiert. Es haben sich hier
-				zu viele Nachteile gezeigt. Wenn man z.B. ein Flash-Bild
-				vergrößert, was in den ersten Demos zu sehen war, so
-				werden alle Elemente skaliert. Eine Punktinformation
-				wird hierbei so groß, dass in Bereichen mit vielen
-				Merkmalen gar nichts mehr zu erkennen ist. Desweiteren
-				ist die Flashunterstützung im Mapserver noch nicht 100%
-				ausgereift und bietet weniger Möglichkeiten bei der
-				Kartengestaltung. Die Anwendung an sich basiert
-				natürlich weiterhin auf Flash.
-				<br />
-				Die Geschwindigkeit der Kartenerzeugung ist akzeptabel.
-				Steigerungsmöglichkeiten liesen sich mit
-				Caching-Mechanismen erreichen. Aktuell wird jede
-				geforderte Karte mit einer Mapserver-Abfrage generiert,
-				das dauert bei komplexen Ebenen (Serogruppen,
-				Inzidenzen) eine gewisse Zeit.
-				<br />
-				Die Bevölkerungsdaten von MACON sind weitestgehend in
-				die Datenbank integriert. Für jedes Gebiet sind die
-				Einwohnerdaten aus den Jahren 2000-2005 gespeichert und
-				können bei der Inzidenzberechnung bzw. später von
-				SaTScan berücksichtigt werden.
-				<br />
-				<br />
-				Die Anwendung in der aktuellsten Version ist unter
-				folgender Adresse verfügbar:
-				<br />
-				<a
-					href="http://www2.informatik.uni-wuerzburg.de:8082/epidegis-web/mapbrowser.lzx">
-					http://www2.informatik.uni-wuerzburg.de:8082/epidegis-web/mapbrowser.lzx
-				</a>
-				<br />
-				<b>Benutzername:</b>
-				<i>***</i>
-				<br />
-				<b>Passwort:</b>
-				<i>***</i>
-				<br />
-				Die Bedienfunktionen sind hoffentlich soweit klar.
-				Wichtig ist momentan noch unter Gebiete zuerst eines
-				unterhalb von 'Germany' zu wählen, sonst passiert nicht
-				viel. über den Knopf 'Aktualisieren' werden Änderungen
-				in den oberen Feldern angewendet. Hinweise über
-				ungewöhnliches bzw. umständliches Verhalten der
-				Anwendung nehme ich gerne entgegen.
-				<i>Vom 13.08.-21.08. bin ich verreist.</i>
-			</action>
-			<action type="add" dev="mtk">
-				<b>15.06.2005</b>
-				<br />
-				Rechtzeitig zu heutigen Treffen ist eine erste Demo des
-				Flash Kartenbetrachters fertig geworden.
-				<br />
-				In den letzten 2 Wochen habe ich neue GIS-Werkzeuge
-				getestet. Die vorher geplante Verwendung von Geotools
-				als Java Schnittstelle zu GIS bzw. dem Geoserver habe
-				ich mittlerweile verworfen. Geotools bietet in Hinblick
-				auf Datenbankanbindung einfach zu wenig Möglichkeiten.
-				Das untere Beispiel, welches die Fähigkeiten von Postgis
-				in einem SQL Statement nutzt, wäre hier nicht möglich
-				gewesen.
-				<br />
-				Ich habe mich statt dessen in die Funktionsweise des
-				<a href="http://mapserver.gis.umn.edu/"
-					target="_blank">
-					UNM Mapservers
-				</a>
-				eingearbeitet. Dieser ist frei verwendbar (
-				<a href="http://mapserver.gis.umn.edu/license.html"
-					target="_blank">
-					Lizenz
-				</a>
-				) und bietet sehr viele Möglichkeiten. Eine der
-				wichtigsten Funktionen ist die Möglichkeit Flash
-				Ausgabedateien zu erzeugen. Es ist möglich für jede
-				Ebene der Karte eine SWF Datei zu generieren.
-				<br />
-				Das Flash Dokument alleine bietet allerdings keine
-				Möglichkeit der Interaktion, wie z.B. Zoom oder Auswahl
-				einzelner Ebenen. In meinen ersten Versuchen habe ich
-				versucht, die Kartenebenen über ein Actionscript
-				(Programmiersprache von Flash) einzulesen. Das hat
-				funktioniert und zu neuen Problemen geführt.
-				<br />
-				Beim googlen nach möglichen Lösungen bin ich dann auf
-				die seit Oktober 2004 frei erhältliche Anwendung
-				<a href="http://www.openlaszlo.org" target="_blank">
-					OpenLaszlo
-				</a>
-				gestoßen. Hierbei handelt es sich um einen kompletten
-				Flash Anwendungsserver, welcher eigenständig oder als
-				Tomcat Webanwendung laufen kann. Die Anwendungen werden
-				mit einem XML Syntax programmiert und serverseitig in
-				lauffähige Flash Anwendungen kompiliert. Alle nötigen
-				objekte für Grafische Bneutzungsoberfläche sind
-				verfügbar (Fenster, Schaltflächen, Rollbalken,...) und
-				eine Datenanbindung über Java Server Pages bzw. XML
-				Dateien ist möglich.
-				<br />
-				Die letzte Woche habe ich mich mit OpenLaszlo
-				beschäftigt. Es ist mir gelungen einen Anwendung zu
-				bauen, welche dynamisch Ressourcen (Bilder,
-				Flash-Dateien) einlesen kann. Im Zusammenhang mit diesem
-				Projekt ist das ein großer Fortschritt, da hierdurch der
-				Benutzungsoberfläche fast keine Grenzen gesetzt sind.
-				Die unten verlinkte Demoanwendung macht folgendes:
-				<br />
-				<ul>
-					<li>
-						Verbindung zu einem JSP herstellen, welches als
-						Datenquelle fungiert
-					</li>
-					<li>
-						Das JSP liefert die URLs zu den vom Mapserver
-						erzeugten Kartenebenen als XML Datei
-					</li>
-					<li>
-						Eine Flash-Anwendung wird erzeugt, welche alle
-						abgefragten Kartenebenen enthält und (noch
-						beschränkte) Interaktion zulässt
-					</li>
-				</ul>
-				Der Flashplayer muss als Plgin im Browser installiert
-				sein, damit der folgende Link funktioniert. Sollte das
-				nicht der Fall sein, so werden Sie aufgefordert die
-				Installation durchzuführen.
-				<br />
-				<a href="./050615_demo/mapdemo.htm" target="_blank">
-					Demo starten
-				</a>
 			</action>
 		</release>
 	</body>
