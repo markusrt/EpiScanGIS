@@ -15,6 +15,7 @@
 			<item name="Uni-W&#x00FC;rzburg"
 				href="http://www.uni-wuerzburg.de" />
 		</links>
+    ${parentProject}
 		${modules} 
 		${reports}
 	</body>
