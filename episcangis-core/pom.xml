@@ -14,7 +14,7 @@
   <prerequisites>
     <maven>2</maven>
   </prerequisites>
-  
+
   <scm>
     <connection>
       scm:svn:http://132.187.144.10/svn/episcangis/trunk
@@ -22,11 +22,9 @@
     <developerConnection>
       scm:svn:http://132.187.144.10/svn/episcangis/trunk
     </developerConnection>
-    <url>
-      scm:svn:http://132.187.144.10/svn/episcangis/trunk
-    </url>
+    <url>http://132.187.144.10/svn/episcangis/trunk</url>
   </scm>
-  
+
   <organization>
     <name>
       National Reference Centre for Meningococci, Institute for Hygiene
@@ -38,7 +36,7 @@
   <developers>
     <developer>
       <name>Markus Reinhardt</name>
-      <id>mtk</id>
+      <id>mreinhardt</id>
       <email>mreinhardt[at]hygiene.uni-wuerzburg.de</email>
       <organization>NRZM</organization>
       <url>http://www.meningococcus.de</url>
@@ -73,8 +71,10 @@
           <stagingDirectory>
             /home/mreinhardt/public_html
           </stagingDirectory>
-          <!--
-            <stagingSiteURL>scp://132.187.144.10/srv/www/html/episcangis/</stagingSiteURL>
+          <!-- 
+          <stagingSiteURL>
+            scp://132.187.144.10/srv/tomcat_webapps/episcangis-${version}/
+          </stagingSiteURL>
           -->
         </configuration>
       </plugin>
@@ -126,7 +126,6 @@
         <groupId>junit</groupId>
         <artifactId>junit</artifactId>
         <version>3.8.1</version>
-        <scope>test</scope>
       </dependency>
       <dependency>
         <groupId>log4j</groupId>
@@ -138,7 +137,9 @@
 
   <distributionManagement>
     <site>
-      <url>file:///home/mreinhardt/public_html/</url>
+      <id>site</id>
+      <name>Site server</name>
+      <url>scp://132.187.144.10/srv/tomcat_webapps/developer/</url>
     </site>
   </distributionManagement>
 
@@ -207,13 +208,13 @@
       <url>http://www.ibiblio.org/maven2</url>
     </repository>
     <!-- 
-    <repository>
+      <repository>
       <name>Repository Hygiene</name>
       <id>uni-hygiene</id>
       <url>http://132.187.144.10/repository</url>
       <layout>legacy</layout>
-    </repository>
-     -->
+      </repository>
+    -->
     <repository>
       <name>Repository Geotools</name>
       <id>geotools</id>
