@@ -193,7 +193,7 @@
           <tabslider name="layerlist" width="100%">
             <method name="showLoadBar" args="layername,show">
               var layerTab =
-              this.content.searchSubViews("layername", layername);
+              this.content.searchSubviews("layername", layername);
               layerTab.top.header.subviews[1].loadbar.setVisible(show);
             </method>
             <layertabelement visible="true" layername="$path{'@name'}"
@@ -298,7 +298,7 @@
               var upd;
               var childs = d.childNodes;
               for( upd=0; upd < childs.length; upd++ ) {
-              if(childs[upd].nodename == "update") {
+              if(childs[upd].nodeName == "update") {
               var updateLayer = childs[upd].childNodes[0].data;
               parent.searchSubviews("name",updateLayer).refresh();
               }
