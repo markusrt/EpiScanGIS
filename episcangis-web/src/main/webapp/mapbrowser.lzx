@@ -128,8 +128,8 @@
       ]]></method>
 
     <alert name="timeoutAlert">
-      Your session timed out due to inactivity during the last 30 minutes.
-      Press 'OK' to reload the application...
+      Your session probably timed out due to inactivity during the last 
+      30 minutes. Press 'OK' to reload the application...
       <method event="onresult">
         if( this.result ) 
         {
