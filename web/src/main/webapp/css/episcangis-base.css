@@ -52,13 +52,13 @@ div.clear hr{
   padding: 3px 10px 3px 10px;
 }
 #leftColumn {
- width: 10.5em;
+ width: 11.5em;
  float:left;
  overflow: auto;
 }
 #bodyColumn {
   margin-right: 1.5em;
-  margin-left: 12em;
+  margin-left: 13em;
 }
 #contentBox {
 }

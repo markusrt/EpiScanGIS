@@ -23,7 +23,7 @@
   #if($user.isInRole("nrzm"))
   <h5>$msg.role.nrzm</h5>
   <ul>
-    <li><a href="http://www.episcangis.org/developer">Entwickler-Dokumentation</a></li>
+    <li><a href="http://www.episcangis.org/developer/">Projektdokumentation</a></li>
   </ul>
   <ul>
   	<li>Beta
