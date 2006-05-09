@@ -2,9 +2,6 @@
 <!--============================================================================
  * Copyright © 2005 Markus Reinhardt - All Rights Reserved.
  *
- * TODO mutex getMap and setSize (first)
- * TODO remove session timeout on long user inactiviy
- *
 =============================================================================-->
 <!--<canvas bgcolor="silver" proxied="true" debug="false"-->
 <canvas debug="true" width="100%" height="100%" maxtextheight="10000">
@@ -49,7 +46,6 @@
     <dataset type="http" name="GetFeatureInfo"/>
   </datasource>
 
-
   <script src="scripts/global_functions.js"/>
 
   
@@ -61,34 +57,43 @@
       value="${sidebar.content.layers.layerlist}"/>
     <attribute name="mapparams" value="" type="string"/>
     <attribute name="allLayerTabsConstructed" value="false"/>
+    
+    <method event="oninit">
+      this.sessionTimeoutDelegate = new LzDelegate( this, "sessionTimeout" );
+      this.updateTimoutTimer();
+    </method>
+
+    <method name="updateTimoutTimer">
+      LzTimer.removeTimer( this.sessionTimeoutDelegate );
+      LzTimer.addTimer( this.sessionTimeoutDelegate, 1750000 );
+    </method>
+
+    <method name="sessionTimeout">
+      Debug.write("TIMEOUT");
+      this.timeoutAlert.open();
+    </method>
 
     <method name="getLayer" args="layername"><![CDATA[
       var ret;
       if( layername != undefined && layername.length > 0 )
       {
-      ret = this.maplayerview.searchSubviews("name",layername);
+        ret = this.maplayerview.searchSubviews("name",layername);
       }
       if( ret == undefined ) {
-      Debug.write(this.maplayerview);
-      Debug.write("Warning: requested unknown layer: " + layername);
+        Debug.write("Warning: requested unknown layer: " + layername);
       }
       return ret;
       ]]></method>
 
     <method name="getMapUrl"><![CDATA[
+      this.updateTimoutTimer();
       var url = new String();
       url = getBaseUrl() + "PrintMap.do";
       return url;
       ]]></method>
 
-    <method name="updateSize"><![CDATA[      
-      Debug.write("Update size: " + maplayerview.getWidth() + "x"
-        + maplayerview.getHeight());
-      this.setMapparam("height", maplayerview.getHeight());
-      this.setMapparam("width", maplayerview.getWidth());
-      ]]></method>
-
     <method name="setMapparam" args="name, value"><![CDATA[
+      this.updateTimoutTimer();
       var strName = "";
       var strValue = "";
       if( !(typeof(name) == "undefined") 
@@ -110,6 +115,7 @@
       ]]></method>
 
     <method name="refreshAllLayers"><![CDATA[
+      this.updateTimoutTimer();
       for ( var layer in this.maplayerview.subviews )
       {
         this.maplayerview.subviews[layer].refresh();
@@ -120,6 +126,18 @@
       //set[smp].refreshLayer();
       //}
       ]]></method>
+
+    <alert name="timeoutAlert">
+      Your session timed out due to inactivity during the last 30 minutes.
+      Press 'OK' to reload the application...
+      <method event="onresult">
+        if( this.result ) 
+        {
+          LzBrowser.loadURL(LzBrowser.getLoadURL());
+        }
+      </method>
+    </alert>
+
 
     <view name="toolbar" width="100%" height="40">
       <view x="10" height="100%" align="left">
@@ -201,7 +219,6 @@
               layout="spacing:5" mapview="${classroot}" initstage="late">
               <datapath>
                 <method event="onclones"><![CDATA[
-                  parent.classroot.updateSize();
                   if(!this['doneDel']) { 
                   this.doneDel = 
                   new LzDelegate( this, 'lastCloneInit');
@@ -210,7 +227,6 @@
                   }
                   ]]></method>
                 <method name="lastCloneInit"><![CDATA[
-                  //parent.classroot.updateSize();
                   Debug.write("ALL DONE");
                   parent.selectItemAt(0);
                   parent.classroot.setAttribute(
