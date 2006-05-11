@@ -7,6 +7,7 @@ package de.meningococcus.episcangis.db;
 
 import java.sql.Date;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Vector;
@@ -28,6 +29,7 @@ import de.meningococcus.episcangis.db.model.NRZMCaseType;
  * Dbutils (<a href="http://jakarta.apache.org/commons/dbutils/">
  * http://jakarta.apache.org/commons/dbutils/</a>) to run queries on the
  * database and fill beans with the results.
+ * 
  * @author Markus Reinhardt <m.reinhardt[at]bitmap-friends.de>
  */
 final class PgSQLCaseTypeDAO extends DbUtilsDAO implements CaseTypeDAO
@@ -62,24 +64,25 @@ final class PgSQLCaseTypeDAO extends DbUtilsDAO implements CaseTypeDAO
 
   /*
    * (non-Javadoc)
+   * 
    * @see de.meningococcus.episcangis.db.dao.CaseTypeDAO#getCaseTypesByCount(int)
    */
   @SuppressWarnings("unchecked")
   public Collection<CaseType> getCaseTypesByCount(int limit)
   {
-    List<CaseType> result = new Vector<CaseType>();
+    List<CaseType> result = new ArrayList<CaseType>();
     try
     {
       ResultSetHandler beanHandler = new BeanListHandler(getCaseTypeClass());
       if (limit == -1)
       {
-        result = (List<CaseType>) run.query(GET_CASE_TYPES_BY_COUNT,
-            beanHandler);
+        result.addAll((List<CaseType>) run.query(GET_CASE_TYPES_BY_COUNT,
+            beanHandler));
       }
       else
       {
-        result = (List<CaseType>) run.query(GET_CASE_TYPES_BY_COUNT
-            + " LIMIT ?", new Integer(limit), beanHandler);
+        result.addAll((List<CaseType>) run.query(GET_CASE_TYPES_BY_COUNT
+            + " LIMIT ?", new Integer(limit), beanHandler));
       }
     }
     catch (SQLException e)
@@ -91,17 +94,18 @@ final class PgSQLCaseTypeDAO extends DbUtilsDAO implements CaseTypeDAO
 
   /*
    * (non-Javadoc)
+   * 
    * @see de.meningococcus.episcangis.db.dao.CaseTypeDAO#getCaseTypes(java.sql.Date,
    *      java.sql.Date)
    */
   @SuppressWarnings("unchecked")
   public Collection<CaseType> getCaseTypes(Date from, Date to)
   {
-    List<CaseType> result = null;
+    List<CaseType> result = new ArrayList<CaseType>();
     try
     {
-      result = (List<CaseType>) run.query(GET_CASE_TYPES_FROM_TO, new Object[] {
-          from, to }, new BeanListHandler(getCaseTypeClass()));
+      result.addAll((List<CaseType>) run.query(GET_CASE_TYPES_FROM_TO,
+          new Object[] { from, to }, new BeanListHandler(getCaseTypeClass())));
     }
     catch (SQLException e)
     {
@@ -112,6 +116,7 @@ final class PgSQLCaseTypeDAO extends DbUtilsDAO implements CaseTypeDAO
 
   /*
    * (non-Javadoc)
+   * 
    * @see de.meningococcus.episcangis.db.dao.CaseTypeDAO#getCaseTypeClass()
    */
   public Class getCaseTypeClass()
@@ -121,6 +126,7 @@ final class PgSQLCaseTypeDAO extends DbUtilsDAO implements CaseTypeDAO
 
   /*
    * (non-Javadoc)
+   * 
    * @see de.meningococcus.episcangis.db.dao.CaseTypeDAO#getCaseType(int)
    */
   public CaseType getCaseType(int id)

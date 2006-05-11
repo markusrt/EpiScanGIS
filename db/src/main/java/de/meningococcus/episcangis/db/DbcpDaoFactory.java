@@ -35,7 +35,7 @@ final class DbcpDaoFactory extends DataSourceDaoFactory
    * One static datasource for all instances
    */
   private static DataSource dataSource = null;
-
+  
   /**
    * The constructor establishes a database connection. The configuration
    * parameters are read from the config file epidegis-db.properties. A new
@@ -44,19 +44,18 @@ final class DbcpDaoFactory extends DataSourceDaoFactory
    */
   public DbcpDaoFactory()
   {
-    String configfile = "epidegis-db.properties";
     String dsUrl = "", user = "", password = "", driver = "";
     try
     {
       if (dataSource == null || dataSource.getConnection() == null)
       {
-        Configuration config;
+        Configuration configuration;
         // read the configuration
-        config = new PropertiesConfiguration(configfile);
-        dsUrl = config.getString("DbcpDaoFactory.url", dsUrl);
-        user = config.getString("DbcpDaoFactory.user", user);
-        password = config.getString("DbcpDaoFactory.password", password);
-        driver = config.getString("DbcpDaoFactory.driver", driver);
+        configuration = new PropertiesConfiguration(configFile);
+        dsUrl = configuration.getString("DbcpDaoFactory.url", dsUrl);
+        user = configuration.getString("DbcpDaoFactory.user", user);
+        password = configuration.getString("DbcpDaoFactory.password", password);
+        driver = configuration.getString("DbcpDaoFactory.driver", driver);
 
         log.debug("Initializing the datasource... ('" + dsUrl + "')");
         BasicDataSource bds = new BasicDataSource();
@@ -82,10 +81,10 @@ final class DbcpDaoFactory extends DataSourceDaoFactory
     }
     catch (ConfigurationException e)
     {
-      log.error("Exception while loading configuration " + configfile + ": "
+      log.error("Exception while loading configuration " + configFile + ": "
           + e.getMessage());
       throw new DaoRuntimeException("Exception while loading configuration "
-          + configfile, e);
+          + configFile, e);
     }
   }
 

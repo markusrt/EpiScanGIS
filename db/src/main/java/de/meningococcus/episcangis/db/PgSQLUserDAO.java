@@ -49,8 +49,8 @@ final class PgSQLUserDAO extends DbUtilsDAO implements UserDAO
           + "(username, password, title, forename, lastname, email, phone, "
           + "organisation, department, domain, message ) "
           + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-      GET_ROLES = "SELECT rolename FROM user_roles",
-      GET_USER_ROLES = GET_ROLES + " WHERE username=?",
+      GET_ROLES = "SELECT rolename FROM user_roles GROUP BY rolename",
+      GET_USER_ROLES = "SELECT rolename FROM user_roles WHERE username=?",
       DELETE_USER_ROLES = "DELETE FROM user_roles WHERE username=?",
       CREATE_USER_ROLE = "INSERT INTO user_roles (username, rolename) VALUES (?,?)";
 
@@ -111,7 +111,7 @@ final class PgSQLUserDAO extends DbUtilsDAO implements UserDAO
       insertCount = run.update(UPDATE_USER, new Object[] { user.getPassword(),
           user.getTitle(), user.getForename(), user.getLastname(),
           user.getEmail(), user.getPhone(), user.getOrganisation(),
-          user.getDepartment(), user.getDomain() });
+          user.getDepartment(), user.getDomain(), user.getUsername() });
       updateUserRoles(user);
     }
     catch (SQLException e)
@@ -142,7 +142,7 @@ final class PgSQLUserDAO extends DbUtilsDAO implements UserDAO
   @SuppressWarnings("unchecked")
   public Collection<String> getRoles()
   {
-    List<String> result = null;
+    List<String> result = new ArrayList<String>();
     try
     {
       List<Object[]> resultRows = (List<Object[]>) run.query(GET_ROLES,

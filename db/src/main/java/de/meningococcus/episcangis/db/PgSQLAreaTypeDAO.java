@@ -6,6 +6,7 @@ package de.meningococcus.episcangis.db;
  */
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -59,11 +60,11 @@ final class PgSQLAreaTypeDAO extends DbUtilsDAO implements AreaTypeDAO
   @SuppressWarnings("unchecked")
   public Collection<AreaType> getAreaTypes()
   {
-    List<AreaType> result = null;
+    List<AreaType> result = new ArrayList<AreaType>();
     try
     {
-      result = (List<AreaType>) run.query(GET_AREA_TYPES, new BeanListHandler(
-          AreaType.class));
+      result.addAll((List<AreaType>) run.query(GET_AREA_TYPES, new BeanListHandler(
+          AreaType.class)));
     }
     catch (SQLException e)
     {
@@ -98,11 +99,11 @@ final class PgSQLAreaTypeDAO extends DbUtilsDAO implements AreaTypeDAO
   @SuppressWarnings("unchecked")
   public Collection<AreaType> getChildAreaTypes(int parentId)
   {
-    List<AreaType> result = null;
+    List<AreaType> result = new ArrayList<AreaType>();;
     try
     {
-      result = (List<AreaType>) run.query(GET_CHILD_AREA_TYPES_PARENTID,
-          parentId, new BeanListHandler(AreaType.class));
+      result.addAll((List<AreaType>) run.query(GET_CHILD_AREA_TYPES_PARENTID,
+          parentId, new BeanListHandler(AreaType.class)));
     }
     catch (SQLException e)
     {

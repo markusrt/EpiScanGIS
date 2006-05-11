@@ -6,6 +6,7 @@ package de.meningococcus.episcangis.db;
  */
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -58,12 +59,12 @@ final class PgSQLCaseTypeAttributeDAO extends DbUtilsDAO implements
   public Collection<CaseTypeAttribute> selectDistinctCaseTypeAttributes(
       String group)
   {
-    List<CaseTypeAttribute> result = null;
+    List<CaseTypeAttribute> result = new ArrayList<CaseTypeAttribute>();
     try
     {
-      result = (List<CaseTypeAttribute>) run.query(
+      result.addAll((List<CaseTypeAttribute>) run.query(
           SELECT_DISTINCT_CASETYPEATTRIBUTES, group, new BeanListHandler(
-              CaseTypeAttribute.class));
+              CaseTypeAttribute.class)));
     }
     catch (SQLException e)
     {
@@ -80,12 +81,12 @@ final class PgSQLCaseTypeAttributeDAO extends DbUtilsDAO implements
   public Collection<CaseTypeAttribute> selectDistinctCaseTypeAttributesByCount(
       String group)
   {
-    List<CaseTypeAttribute> result = null;
+    List<CaseTypeAttribute> result = new ArrayList<CaseTypeAttribute>();
     try
     {
-      result = (List<CaseTypeAttribute>) run.query(
+      result.addAll((List<CaseTypeAttribute>) run.query(
           SELECT_DISTINCT_CASETYPEATTRIBUTES_BY_COUNT, group,
-          new BeanListHandler(CaseTypeAttribute.class));
+          new BeanListHandler(CaseTypeAttribute.class)));
     }
     catch (SQLException e)
     {

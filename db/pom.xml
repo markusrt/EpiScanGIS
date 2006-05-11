@@ -1,13 +1,15 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" 
+<project xmlns="http://maven.apache.org/POM/4.0.0"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <name>EpiScanGIS DB</name>
-  <groupId>de.meningococcus.episcangis</groupId>  
+  <groupId>de.meningococcus.episcangis</groupId>
   <artifactId>episcangis-db</artifactId>
   <packaging>jar</packaging>
-  <description>Provides access to the database via the DAO-Design-Pattern.</description>
+  <description>
+    Provides access to the database via the DAO-Design-Pattern.
+  </description>
   <parent>
     <groupId>de.meningococcus</groupId>
     <artifactId>episcangis</artifactId>
@@ -35,6 +37,12 @@
       <type>jar</type>
     </dependency>
     <dependency>
+      <groupId>dbunit</groupId>
+      <artifactId>dbunit</artifactId>
+      <version>2.1</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
       <groupId>postgresql</groupId>
       <artifactId>postgresql</artifactId>
       <version>8.0-312.jdbc3</version>
@@ -59,7 +67,7 @@
     <dependency>
       <groupId>commons-lang</groupId>
       <artifactId>commons-lang</artifactId>
-    </dependency> 
+    </dependency>
     <dependency>
       <groupId>commons-logging</groupId>
       <artifactId>commons-logging</artifactId>
@@ -79,11 +87,12 @@
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>surefire-report-maven-plugin</artifactId>
+        <version>2.0-beta-2-SNAPSHOT</version>
       </plugin>
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>taglist-maven-plugin</artifactId>
-      </plugin>      
+      </plugin>
     </plugins>
   </reporting>
 </project>

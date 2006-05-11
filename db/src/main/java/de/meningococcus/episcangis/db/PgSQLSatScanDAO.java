@@ -7,6 +7,7 @@ package de.meningococcus.episcangis.db;
 
 import java.sql.Date;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Vector;
@@ -82,11 +83,11 @@ final class PgSQLSatScanDAO extends DbUtilsDAO implements SatScanDAO
   @SuppressWarnings("unchecked")
   public Collection<SatScanJob> getSatScanJobs()
   {
-    List<SatScanJob> result = null;
+    List<SatScanJob> result = new ArrayList<SatScanJob>();
     try
     {
-      result = (List<SatScanJob>) run.query(GET_SATSCAN_JOBS,
-          new BeanListHandler(SatScanJob.class));
+      result.addAll((List<SatScanJob>) run.query(GET_SATSCAN_JOBS,
+          new BeanListHandler(SatScanJob.class)));
     }
     catch (SQLException e)
     {

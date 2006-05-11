@@ -8,6 +8,7 @@ package de.meningococcus.episcangis.db;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -21,6 +22,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import de.meningococcus.episcangis.db.dao.ReportedCaseDAO;
+import de.meningococcus.episcangis.db.model.CaseType;
 import de.meningococcus.episcangis.db.model.ReportedCase;
 
 /**
@@ -138,12 +140,12 @@ final class PgSQLReportedCaseDAO extends DbUtilsDAO implements ReportedCaseDAO
   public Collection<ReportedCase> getCases(int areaTier, int caseTypeId,
       Date from, Date to)
   {
-    List<ReportedCase> result = null;
+    List<ReportedCase> result = new ArrayList<ReportedCase>();
     try
     {
-      result = (List<ReportedCase>) run.query(GET_CASES_AREA_FROM_TO_CASETYPE,
+      result.addAll((List<ReportedCase>) run.query(GET_CASES_AREA_FROM_TO_CASETYPE,
           new Object[] { areaTier, from, to, caseTypeId }, new BeanListHandler(
-              ReportedCase.class));
+              ReportedCase.class)));
     }
     catch (SQLException e)
     {
@@ -161,12 +163,12 @@ final class PgSQLReportedCaseDAO extends DbUtilsDAO implements ReportedCaseDAO
   @SuppressWarnings("unchecked")
   public Collection<ReportedCase> getCases(int areaTier, Date from, Date to)
   {
-    List<ReportedCase> result = null;
+    List<ReportedCase> result = new ArrayList<ReportedCase>();
     try
     {
-      result = (List<ReportedCase>) run.query(GET_CASES_AREA_FROM_TO,
+      result.addAll((List<ReportedCase>) run.query(GET_CASES_AREA_FROM_TO,
           new Object[] { areaTier, from, to }, new BeanListHandler(
-              ReportedCase.class));
+              ReportedCase.class)));
     }
     catch (SQLException e)
     {
@@ -193,11 +195,11 @@ final class PgSQLReportedCaseDAO extends DbUtilsDAO implements ReportedCaseDAO
   public Collection<Object[]> countCasesPerAreaGroupedByAttribute(
       String attribute, int areaTier)
   {
-    List<Object[]> result = null;
+    List<Object[]> result = new ArrayList<Object[]>();
     try
     {
-      result = (List<Object[]>) run.query(COUNT_CASES_PER_AREA_GROUPED_BY_ATTRIBUTE,
-          new Object[] { attribute, (short)areaTier }, new ArrayListHandler());
+      result.addAll((List<Object[]>) run.query(COUNT_CASES_PER_AREA_GROUPED_BY_ATTRIBUTE,
+          new Object[] { attribute, (short)areaTier }, new ArrayListHandler()));
     }
     catch (SQLException e)
     {

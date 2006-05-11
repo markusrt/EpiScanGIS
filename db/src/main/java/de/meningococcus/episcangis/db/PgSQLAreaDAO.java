@@ -106,17 +106,13 @@ final class PgSQLAreaDAO extends DbUtilsDAO implements AreaDAO
   @SuppressWarnings("unchecked")
   public Collection<Area> getAreas(AreaType type)
   {
-    List<Area> result = null;
+    List<Area> result = new ArrayList<Area>();;
     try
     {
-      if (type == null)
+      if (type != null)
       {
-        result = new ArrayList<Area>();
-      }
-      else
-      {
-        result = (List<Area>) run.query(GET_AREAS_TYPE, type.getId(),
-            new BeanListHandler(Area.class));
+        result.addAll((List<Area>) run.query(GET_AREAS_TYPE, type.getId(),
+            new BeanListHandler(Area.class)));
       }
     }
     catch (SQLException e)
