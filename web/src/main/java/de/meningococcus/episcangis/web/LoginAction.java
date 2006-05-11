@@ -23,6 +23,7 @@ import de.meningococcus.episcangis.db.model.User;
 
 /**
  * TODO only redirect to referer if its needed (i.e. mapbrowser.vm)
+ * 
  * @author Markus Reinhardt
  * 
  */
@@ -30,41 +31,25 @@ public class LoginAction extends Action
 {
   private static Log log = LogFactory.getLog(LoginAction.class);
 
-  private static final String FORWARD_ERROR = "error",
-      FORWARD_SUCCESS = "welcome";
-
   public ActionForward execute(ActionMapping mapping, ActionForm form,
       HttpServletRequest request, HttpServletResponse response)
       throws Exception
   {
     HttpSession session = request.getSession();
-    ActionForward actionForward = null;
-    String forward = FORWARD_ERROR;
+    String forward = GlobalSettings.FORWARD_SUCCESS;
+    
     if (request.isUserInRole("nrzm") || request.isUserInRole("public_health"))
     {
       UserDAO userDao = DaoFactory.getDaoFactory().getUserDAO();
       User user = userDao.getUser(request.getUserPrincipal().getName());
-      
+
       // invalidate session to clear existing data (map bean,...)
       session.invalidate();
       session = request.getSession(true);
-      
+
       if (user != null)
       {
         session.setAttribute("user", user);
-        log.debug("Is user " + user.getUsername() + " in role nrzm? "
-            + user.isInRole("nrzm"));
-        
-        String referer = request.getHeader("Referer");
-        //Redirect to referring site or welcome page if not present
-        if (referer != null && referer.length() > 0)
-        {
-          actionForward = new RedirectingActionForward();
-          actionForward.setPath( referer );
-        }
-        else {
-          forward = FORWARD_SUCCESS;
-        }
       }
       else
       {
@@ -73,9 +58,14 @@ public class LoginAction extends Action
             + "' was not found in database.");
       }
     }
-    if(actionForward == null){
-      actionForward = mapping.findForward(forward);
+    
+    //  Redirect to referring site or welcome page if not present
+    String referer = request.getHeader("Referer");
+    if (referer != null && referer.length() > 0
+        && referer.contains(GlobalSettings.MAPBROWSER_SITE_URL))
+    {
+      forward = GlobalSettings.FORWARD_MAPBROWSER;
     }
-    return (actionForward);
+    return mapping.findForward(forward);
   }
 }

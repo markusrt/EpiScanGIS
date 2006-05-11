@@ -6,6 +6,9 @@
 	<body>
 		<release version="1.0" date="SNAPSHOT"
 			description="Beta Kartenbetrachter">
+      <action tpye="update" dev="mreinhardt">
+        <b>Bessere Qualitätssicherung durch die Integration von Strutstestcase</b>
+      </action>
       <action tpye="update" dev="mreinhardt" date="28.04.2006">
         Benutzer sehen abhängig von ihrer Rolle unterschiedliche Kartenbetrachter
       </action>

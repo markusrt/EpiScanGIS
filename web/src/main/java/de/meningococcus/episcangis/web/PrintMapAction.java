@@ -24,14 +24,11 @@ public class PrintMapAction extends Action
 {
   private static Log log = LogFactory.getLog(PrintMapAction.class);
 
-  private static final String FORWARD_ERROR = "error",
-      FORWARD_SUCCESS = "success";
-
   public ActionForward execute(ActionMapping mapping, ActionForm form,
       HttpServletRequest request, HttpServletResponse response)
       throws Exception
   {
-    String forward = FORWARD_ERROR;
+    String forward = GlobalSettings.FORWARD_ERROR;
 
     AbstractWmsMap map = (AbstractWmsMap) request.getSession().getAttribute(
         "map");
@@ -40,7 +37,7 @@ public class PrintMapAction extends Action
       PrintExporter exporter = new PrintExporter();
       map.export(exporter);
       request.setAttribute("printMap", exporter);
-      forward = FORWARD_SUCCESS;
+      forward = GlobalSettings.FORWARD_SUCCESS;
     }
     else
     {

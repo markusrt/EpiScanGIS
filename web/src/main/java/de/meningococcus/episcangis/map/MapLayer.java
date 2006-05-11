@@ -45,7 +45,7 @@ public class MapLayer
       {
         active = true;
       }
-      if (title.length() == 0)
+      if (title != null && title.length() == 0)
       {
         this.title = this.name;
       }

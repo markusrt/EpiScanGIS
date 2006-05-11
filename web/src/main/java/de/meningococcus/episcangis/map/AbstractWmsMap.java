@@ -124,7 +124,7 @@ public abstract class AbstractWmsMap
    * 
    * @throws MapInitializationException
    */
-  private void initialize() throws MapInitializationException
+  protected void initialize() throws MapInitializationException
   {
     log.debug("Initialize map from WMS URL: " + wmsUrl);
     try

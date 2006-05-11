@@ -14,6 +14,9 @@ final class NrzmMapLayerFactory implements MapLayerFactory
   {
     MapLayer ret;
     String realName;
+    if( name == null ) {
+      name = "<unnamed layer>";
+    }
     int index = name.lastIndexOf('_');
     if (index != -1)
     {

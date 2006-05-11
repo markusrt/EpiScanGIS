@@ -62,7 +62,10 @@
   <!-- Global Forward Definitions -->
   <global-forwards>
     <!-- index.jsp forwards to this action -->
+    <forward name="success" path="/welcome.vm"/>
+    <forward name="index" path="/welcome.vm" />
     <forward name="welcome" path="/welcome.vm" />
+    <forward name="mapbrowser" path="/mapbrowser.vm" />
     <forward name="error" path="/WEB-INF/errors/xmlExceptionResult.jsp" />
   </global-forwards>
 

@@ -91,8 +91,8 @@ public class NrzmMap extends AbstractWmsMap
 
         for (Area area : parentAreas)
         {
-          ParameterValue val = new ParameterValue(area.getIdentifier(), String.valueOf(area
-              .getId()));
+          ParameterValue val = new ParameterValue(area.getIdentifier(), String
+              .valueOf(area.getId()));
           ((MultiValueParameter) areaSelector).addValue(val);
         }
       }
@@ -104,9 +104,10 @@ public class NrzmMap extends AbstractWmsMap
     toAge = new OLDSelectParameter("toAge", "to");
     for (int age = 0; age <= 90; age++)
     {
-      ((MultiValueParameter) fromAge).addValue(new ParameterValue(String.valueOf(age),
-          String.valueOf(age)));
-      ParameterValue toValue = new ParameterValue(String.valueOf(age), String.valueOf(age));
+      ((MultiValueParameter) fromAge).addValue(new ParameterValue(String
+          .valueOf(age), String.valueOf(age)));
+      ParameterValue toValue = new ParameterValue(String.valueOf(age), String
+          .valueOf(age));
       if (age == 90)
       {
         toValue = new ParameterValue("90+", String.valueOf(1000));
@@ -123,22 +124,25 @@ public class NrzmMap extends AbstractWmsMap
     // Get first and last case. Construct PeriodParameter to select this
     // time range. Set from selection on last year, first month and to
     // selection on last year, last case's month;
-    Calendar from = Calendar.getInstance();
-    log.debug("FirstCase: " + rcDao.getEarliestCase().getReportDate());
-    from.setTime(rcDao.getEarliestCase().getReportDate());
+    if (rcDao.getEarliestCase() != null && rcDao.getLatestCase() != null)
+    {
+      Calendar from = Calendar.getInstance();
+      log.debug("FirstCase: " + rcDao.getEarliestCase().getReportDate());
+      from.setTime(rcDao.getEarliestCase().getReportDate());
 
-    Calendar to = Calendar.getInstance();
-    to.setTime(rcDao.getLatestCase().getReportDate());
+      Calendar to = Calendar.getInstance();
+      to.setTime(rcDao.getLatestCase().getReportDate());
 
-    observationPeriod = new PeriodParameter("observationPeriod",
-        from.getTime(), to.getTime(), "Observation period");
+      observationPeriod = new PeriodParameter("observationPeriod", from
+          .getTime(), to.getTime(), "Observation period");
 
-    from.set(Calendar.MONTH, Calendar.JANUARY);
-    from.set(Calendar.YEAR, to.get(Calendar.YEAR));
+      from.set(Calendar.MONTH, Calendar.JANUARY);
+      from.set(Calendar.YEAR, to.get(Calendar.YEAR));
 
-    ((PeriodParameter) observationPeriod).setDefaultSelection(from.getTime(),
-        to.getTime());
-    addMapParameter(observationPeriod);
+      ((PeriodParameter) observationPeriod).setDefaultSelection(from.getTime(),
+          to.getTime());
+      addMapParameter(observationPeriod);
+    }
   }
 
   public synchronized Collection<String> setParameter(String name, String value)

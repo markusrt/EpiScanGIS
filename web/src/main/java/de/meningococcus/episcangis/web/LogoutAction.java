@@ -17,32 +17,29 @@ import org.apache.struts.action.RedirectingActionForward;
 
 /**
  * TODO only redirect to referer if its needed (i.e. mapbrowser.vm)
+ * 
  * @author mreinhardt
- *
+ * 
  */
 public class LogoutAction extends Action
 {
-  private static final String FORWARD_SUCCESS = "welcome";
-
   public ActionForward execute(ActionMapping mapping, ActionForm form,
       HttpServletRequest request, HttpServletResponse response)
       throws Exception
   {
-    ActionForward actionForward = null;
-    HttpSession session = request.getSession();
-    session.invalidate();
-    session = request.getSession(true);
+    String forward = GlobalSettings.FORWARD_INDEX;
+    HttpSession session = request.getSession();  
     String referer = request.getHeader("Referer");
     
-    //Redirect to referring site or welcome page if not present
-    if (referer != null && referer.length() > 0)
+    session.invalidate();
+    session = request.getSession(true);
+
+    // Redirect to referring site or welcome page if not present
+    if (referer != null && referer.length() > 0
+        && referer.contains(GlobalSettings.MAPBROWSER_SITE_URL))
     {
-      actionForward = new RedirectingActionForward();
-      actionForward.setPath( referer );
+      forward = GlobalSettings.FORWARD_MAPBROWSER;
     }
-    else {
-      actionForward = mapping.findForward(FORWARD_SUCCESS);
-    }
-    return actionForward;
+    return mapping.findForward(forward);
   }
 }
