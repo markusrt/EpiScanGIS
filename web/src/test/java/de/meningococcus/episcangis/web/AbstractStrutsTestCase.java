@@ -14,7 +14,8 @@ public abstract class AbstractStrutsTestCase extends MockStrutsTestCase
   public void setUp() throws Exception
   {
     super.setUp();
-    DaoFactory.setConfigFile("src/test/resources/epidegis-db.properties");
+    DaoFactory
+        .setConfigFile("/home/mreinhardt/episcangis/web/src/test/resources/epidegis-db.properties");
   }
 
   public void tearDown() throws Exception
