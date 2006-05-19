@@ -32,6 +32,7 @@ import de.meningococcus.episcangis.map.exporter.XmlExporter;
 
 /**
  * @author Markus Reinhardt
+ * TODO change size if map bean already exists
  */
 public class CreateMapAction extends DownloadAction implements
     DownloadAction.StreamInfo
