@@ -55,13 +55,13 @@ public class LoginActionTest extends AbstractStrutsTestCase
     
     actionPerform();
     
-    verifyForward(GlobalSettings.FORWARD_MAPBROWSER);
+    assertTrue(getActualForward().contains(GlobalSettings.MAPBROWSER_SITE_URL));
     
     request.setHeader("Referer", "http://myhost.mockup.org/"
         + GlobalSettings.MAPBROWSER_SITE_URL + "?mockparam=134&dummy=true");
     
     actionPerform();
     
-    verifyForward(GlobalSettings.FORWARD_MAPBROWSER);
+    assertTrue(getActualForward().contains(GlobalSettings.MAPBROWSER_SITE_URL));
   }
 }

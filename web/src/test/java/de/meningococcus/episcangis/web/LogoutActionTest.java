@@ -37,13 +37,16 @@ public class LogoutActionTest extends AbstractStrutsTestCase
   {
     setRequestPathInfo("/Logout");
     request.setHeader("Referer", GlobalSettings.MAPBROWSER_SITE_URL);
+    
     actionPerform();
-    verifyForward(GlobalSettings.FORWARD_MAPBROWSER);
+    
+    assertTrue(getActualForward().contains(GlobalSettings.MAPBROWSER_SITE_URL));
     
     request.setHeader("Referer", "http://myhost.mockup.org/"
         + GlobalSettings.MAPBROWSER_SITE_URL + "?mockparam=134&dummy=true");
+    
     actionPerform();
-    verifyForward(GlobalSettings.FORWARD_MAPBROWSER);
+    
+    assertTrue(getActualForward().contains(GlobalSettings.MAPBROWSER_SITE_URL));
   }
-
 }
