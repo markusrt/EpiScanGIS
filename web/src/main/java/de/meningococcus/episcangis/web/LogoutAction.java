@@ -29,17 +29,19 @@ public class LogoutAction extends Action
   {
     String forward = GlobalSettings.FORWARD_INDEX;
     HttpSession session = request.getSession();  
-    String referer = request.getHeader("Referer");
     
     session.invalidate();
     session = request.getSession(true);
 
-    // Redirect to referring site or welcome page if not present
+    //  Redirect to referring site or welcome page if not present
+    String referer = request.getHeader("Referer");
     if (referer != null && referer.length() > 0
         && referer.contains(GlobalSettings.MAPBROWSER_SITE_URL))
     {
-      forward = GlobalSettings.FORWARD_MAPBROWSER;
+      return new RedirectingActionForward(referer);
     }
-    return mapping.findForward(forward);
+    else {
+      return mapping.findForward(forward);
+    }
   }
 }

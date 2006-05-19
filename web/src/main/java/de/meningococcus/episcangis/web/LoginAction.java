@@ -64,8 +64,10 @@ public class LoginAction extends Action
     if (referer != null && referer.length() > 0
         && referer.contains(GlobalSettings.MAPBROWSER_SITE_URL))
     {
-      forward = GlobalSettings.FORWARD_MAPBROWSER;
+      return new RedirectingActionForward(referer);
     }
-    return mapping.findForward(forward);
+    else {
+      return mapping.findForward(forward);
+    }
   }
 }
