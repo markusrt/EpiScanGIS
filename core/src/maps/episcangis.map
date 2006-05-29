@@ -1,7 +1,7 @@
 #-------------------------------------------------------------------------------
 # EpiDeGIS Web Surveillance, UMN Mapserver (WMS) MAP file
 #
-# Copyright ©2005 Markus Reinhardt - All Rights Reserved.
+# Copyright ï¿½2005 Markus Reinhardt - All Rights Reserved.
 # Author: Markus Reinhardt <m.reinhardt[at]bitmap-friends.de>
 #-------------------------------------------------------------------------------
 
@@ -114,8 +114,7 @@ MAP
     CONNECTION "user=apache password=DMmnc dbname=epidegis_works host=localhost"
     DATA "the_geom from topography"
     TYPE POLYGON
-	  PROJECTION
-        "init=epsg:4326"
+    PROJECTION "init=epsg:4326"
     END
     METADATA
       "WMS_SRS"    "epsg:4326"
@@ -263,24 +262,11 @@ MAP
     CONNECTIONTYPE postgis
     CONNECTION "user=apache password=DMmnc dbname=epidegis_works host=localhost"
     DATA "the_geom from (
-        SELECT awt.area_id AS oid, awt.the_geom, 
-          count(*)::real/(awt.population::real/100000::real)*
-           ( 12/((%toYear%*12+%toMonth%) - 
-             (%fromYear%*12+%fromMonth%)+1)::real)::real 
-          AS incidence
-        FROM contains_area_case, areas_with_types AS awt, cases
-        WHERE contains_area_case.area_id=awt.area_id 
-          AND contains_area_case.case_id=cases.case_id
-          AND case_type_id = types_with_attributes.case_type_id
-          AND types_with_attributes.attname LIKE 'Serogroup'
-          AND types_with_attributes.attvalue IN (%SEROGROUPS%)
-          AND CAST(to_char(reportdate, 'YYYY') AS int) * 12 
-               + CAST(to_char(reportdate, 'MM') AS int)
-              BETWEEN %fromYear%*12+%fromMonth% 
-                AND %toYear%*12+%toMonth%
-          AND awt.tier=%INCITIER%
-        GROUP BY awt.area_id, awt.the_geom, population
-      ) AS foo USING SRID=4326 USING UNIQUE oid"
+      SELECT * 
+        FROM episcangis_incidence_per_area
+         ( %fromMonth%, %fromYear%, %toMonth%, %toYear%, '{%SEROGROUPS%}', %INCITIER%) 
+          AS (oid int4, the_geom geometry, incidence real)
+    ) AS foo USING SRID=4326 USING UNIQUE oid"
     STATUS ON 
     TYPE POLYGON
     PROJECTION
@@ -404,7 +390,7 @@ MAP
       END
 		END
   END #Layer borders
-  
+
   LAYER #rivers
     METADATA
       "wms_title" "Rivers"
@@ -452,7 +438,7 @@ MAP
     STATUS ON
 #DEBUG ON
    TYPE POINT
-   #kleinerer Wert -> Ebene auch bei größerem Zoom sichtbar
+   #kleinerer Wert -> Ebene auch bei grï¿½ï¿½erem Zoom sichtbar
    MINSCALE 500000
    #kleinerer Wert -> Ebene verschwindet beim rauszoomen eher
    MAXSCALE 4000000
@@ -489,18 +475,12 @@ MAP
     END
     CONNECTIONTYPE postgis
     CONNECTION "user=apache password=DMmnc dbname=epidegis_works host=localhost"
-#SELECT case_id AS oid, setSrid(translate(the_geom,random(),random(),random()),4326) AS the_geom, identifier, attvalue, attname 
-    DATA "the_geom from ( 
-    SELECT case_id AS oid, the_geom, attvalue AS serogroup, reportdate
-        FROM cases_random NATURAL JOIN types_with_attributes
-        WHERE 
-          CAST(to_char(reportdate, 'YYYY') AS int) * 12 
-            + CAST(to_char(reportdate, 'MM') AS int)
-            BETWEEN %fromYear%*12+%fromMonth% 
-              AND %toYear%*12+%toMonth%
-          AND attname='Serogroup' 
-          AND attvalue IN (%SEROGROUPS%)
-          AND age BETWEEN %fromAge% AND %toAge%
+    DATA "the_geom from (
+    SELECT * 
+        FROM episcangis_cases_per_attribute_value
+         ( %fromMonth%, %fromYear%, %toMonth%, %toYear%, %fromAge%, %toAge%, 
+           'Serogroup', '{%SEROGROUPS%}' ) 
+          AS (oid int4, the_geom geometry, serogroup varchar, reportdate date)
     ) AS foo USING SRID=4326 USING UNIQUE oid"
     STATUS ON
    TYPE POINT
@@ -837,7 +817,7 @@ MAP
     END
 
     CLASSITEM "pc"
-    CLASS	#Großstädte
+    CLASS	#Groï¿½stï¿½dte
       EXPRESSION  "10" #('[NAME_TYP]' = '1')	#das gleiche wie EXPRESSION "1"
       MINSCALE 0
       MAXSCALE 50000000
@@ -860,7 +840,7 @@ MAP
       END
     END
 
-  CLASS			#Landeshauptstädte
+  CLASS			#Landeshauptstï¿½dte
      EXPRESSION '1'
      MINSCALE 0
      MAXSCALE 5000000
