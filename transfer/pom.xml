@@ -8,7 +8,7 @@
   <packaging>jar</packaging>
   <description>EpiScanGIS data transfer application</description>
   <parent>
-    <groupId>de.meningococcus</groupId>
+    <groupId>de.meningococcus.episcangis</groupId>
     <artifactId>episcangis</artifactId>
     <version>1.0-SNAPSHOT</version>
     <relativePath>../core/pom.xml</relativePath>
@@ -47,10 +47,6 @@
       <groupId>commons-logging</groupId>
       <artifactId>commons-logging</artifactId>
     </dependency>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-    </dependency>  
     <dependency>
       <groupId>log4j</groupId>
       <artifactId>log4j</artifactId>
