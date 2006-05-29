@@ -1,9 +1,12 @@
 package de.meningococcus.episcangis.web;
 
+import java.util.Locale;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.struts.Globals;
 import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -29,9 +32,14 @@ public class LogoutAction extends Action
   {
     String forward = GlobalSettings.FORWARD_INDEX;
     HttpSession session = request.getSession();  
+    Locale locale = (Locale)session.getAttribute(Globals.LOCALE_KEY);
     
     session.invalidate();
     session = request.getSession(true);
+    
+    if( locale != null ) {
+      session.setAttribute(Globals.LOCALE_KEY, locale);
+    }
 
     //  Redirect to referring site or welcome page if not present
     String referer = request.getHeader("Referer");

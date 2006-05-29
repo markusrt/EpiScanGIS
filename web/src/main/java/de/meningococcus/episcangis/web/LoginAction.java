@@ -1,11 +1,14 @@
 package de.meningococcus.episcangis.web;
 
+import java.util.Locale;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.struts.Globals;
 import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -40,12 +43,17 @@ public class LoginAction extends Action
     
     if (request.isUserInRole("nrzm") || request.isUserInRole("public_health"))
     {
+      Locale locale = (Locale)session.getAttribute(Globals.LOCALE_KEY);
       UserDAO userDao = DaoFactory.getDaoFactory().getUserDAO();
       User user = userDao.getUser(request.getUserPrincipal().getName());
 
       // invalidate session to clear existing data (map bean,...)
       session.invalidate();
       session = request.getSession(true);
+      
+      if( locale != null ) {
+        session.setAttribute(Globals.LOCALE_KEY, locale);
+      }
 
       if (user != null)
       {
