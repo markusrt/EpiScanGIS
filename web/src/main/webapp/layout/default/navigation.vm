@@ -11,6 +11,11 @@
     <li><a href="manual.vm">$msg.page.manual.title</a></li>
     <li><a href="screenshots.vm">$msg.page.screenshots.title</a></li>
   </ul>
+  <h5>$msg.page.navigation.other</h5>
+  <ul>
+    <li><a href="contact.vm">$msg.page.contact.title</a></li>
+    <li><a href="imprint.vm">$msg.page.imprint.title</a></li>
+  </ul>
 
   #if($user)
   #if($user.isInRole("public_health"))
@@ -23,15 +28,15 @@
   #if($user.isInRole("nrzm"))
   <h5>$msg.role.nrzm</h5>
   <ul>
-    <li><a href="http://www.episcangis.org/developer/">Projektdokumentation</a></li>
+    <li><a href="http://www.episcangis.org/developer/"
+      target="_blank" class="newWindow">Dokumentation</a></li>
   </ul>
   <ul>
-  	<li>Beta
-  	 <ul>
-  	   <li><a href="$link.setAction('CountCasesByAttribute').addQueryData('attribute','Serogroup').addQueryData('areaTier','3')"
-  	      >Show all cases by serogroup</a></li>
-  	 </ul>
-  	</li>
+  	<li class="expanded">Beta</li>
+        <ul>
+  	<li><a href="$link.setAction('CountCasesByAttribute').addQueryData('attribute','Serogroup').addQueryData('areaTier','3')"
+  	      >Casecounts by serogroup</a></li>
+        </ul>
   </ul>
   #end
   #end
@@ -40,5 +45,5 @@
         alt="Valid XHTML 1.0 Transitional" height="31" width="88" /></a><br/>
   <a href="http://maven.apache.org/" title="Built by Maven" 
     id="poweredBy"><img alt="Built by Maven" 
-    src="./images/maven-feather.png"></img></a>                                                                                          
+    src="http://132.187.144.10:8080/web/images/maven-feather.png"></img></a>                                                                                          
 </div>

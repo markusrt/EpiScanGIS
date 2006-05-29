@@ -1,7 +1,13 @@
 <!DOCTYPE html 
      PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+#if($request.session.getAttribute('org.apache.struts.action.LOCALE'))
+  #set ($locale=$request.session.getAttribute('org.apache.struts.action.LOCALE'))
+#else  
+  #set($locale=$date.Locale)
+#end
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="$locale.Language" 
+  lang="$locale.Language">
   <head>
     <title>$msg.global.name - $!page_title</title>
     <style type="text/css" media="all">
@@ -18,13 +24,33 @@
     <style type="text/css" media="print">
       @import url("./css/episcangis-print.css");
     </style>
+    <meta name="author" content="Markus Reinhardt" />
+    <meta name="keywords" lang="de" 
+      content="Meningokokken, Frühwarnsystem, Epidemiologie, Überwachung" />
+    <meta name="description" lang="de" 
+      content="Web-basiertes System zur Überwachung von Meningokokken-Erkrankungsfällem in Deutschland" />
+    <meta name="keywords" lang="en-us" 
+      content="meningococcal, meningococci, disease, early, warning, epidemiology, surveillance" />
+    <meta name="description" lang="en-us" 
+      content="Online Monitoring Invasive Meningococcal Disease in Germany" />
+    <meta name="keywords" lang="en" 
+      content="meningococcal, meningococci, disease, early, warning, epidemiology, surveillance" />
+    <meta name="description" lang="en" 
+      content="Online Monitoring Invasive Meningococcal Disease in Germany" />
   </head>
 	<body>
 	  <div id="banner">
 	    <div id="bannerLeft">
-	      <a href="."><img 
+	      <a href="./welcome.vm"><img 
 	        src="images/logo_episcangis.png" alt="$msg.global.title"/></a>
-	    </div>
+	    #if($user && $user.Username=="Johannes")
+       <div style="vertical-align: bottom;">
+        <img style="padding-top:15px;padding-left:15px"
+          src="images/icons/at.png" alt="Austria"/>
+       </div>
+      #end
+      </div>
+      
 	    <div id="bannerRight">
 	      <a href="http://www.meningococcus.de"><img 
 	        src="images/logo_nrzm.png" alt="$msg.global.organization"/></a>
@@ -51,7 +77,10 @@
 	    <hr/>
 	  </div>
 	  <div id="footer">
-	    <div class="xright">$msg.global.copyright</div>
+	    #parse('layout/default/footer.vm')
+	    <div class="clear">
+	      <hr/>
+	    </div>
 	  </div>
 	</body>
 </html>

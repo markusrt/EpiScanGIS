@@ -3,14 +3,17 @@ body {
   background-color: #fff;
   color: #000;
   font-family: Verdana, Helvetica, Arial, sans-serif;
-  font-size: 1em;
+  font-size: 0.9em;
+  text-align: justify;
 }
 code{
   font-family: Courier, monospace;
-  font-size: 1em;
+  font-size: 0.9em;
 }
+
 a {
   text-decoration: underline;
+  text-align: left;
 }
 a:link {
   color:#008;
@@ -44,14 +47,19 @@ a.newWindow, a.newWindow:link, a.newWindow:visited, a.newWindow:active, a.newWin
   background: url(episcangis-theme/newwindow.png) right center no-repeat;
   padding-right: 18px;
 }
- 
+
+td {
+  text-align: left;
+}
+
 h1 {
   padding: 4px 4px 4px 6px;
   color: #060;
   border: 1px solid #585b71;
   background-color: #acb1dc;
   font-weight:900;
-  font-size: 2em;
+  font-size: 1.86em;
+  text-align: left;
 }
 h2 {
   padding: 4px 4px 4px 6px;
@@ -59,7 +67,8 @@ h2 {
   border: 1px solid #585b71;
   background-color: #acb1dc;
   font-weight:500;
-  font-size: 1.73em;
+  font-size: 1.56em;
+  text-align: left;
 }
 h3 {
   padding: 4px 4px 4px 6px;
@@ -67,7 +76,8 @@ h3 {
   border: 1px solid #585b71;
   background-color: #acb1dc;
   font-weight: normal;
-  font-size: 1.44em;
+  font-size: 1.3em;
+  text-align: left;
 }
 h4 {
   padding: 4px 4px 4px 6px;
@@ -75,33 +85,37 @@ h4 {
   border: 1px solid #585b71;
   background-color: #acb1dc;
   font-weight: normal;
-  font-size: 1.2em;
+  font-size: 1.1em;
+  text-align: left;
 }
 h5 {
   padding: 4px 4px 4px 6px;
   color: #060;
   background-color: inherit;
+  font-size: 1em;
   font-weight: bold;
+  text-align: left;
 }
-p {
-}
+
 #breadcrumbs {
-  border-bottom: 0.1em solid #555;
+  border-bottom: 1px solid #555;
   background-image: url(episcangis-theme/breadcrumbs_bg.png);
   background-repeat: repeat-x;
   background-color: #5a5973;
 }
 #leftColumn {
-  margin: 10px 0 0 5px;
-  border: 1px solid #585b71;
+  margin: 10px 0 0px 0;
+  border-color: #585b71;
+  border-style: solid;
+  border-width: 1px 1px 1px 0;
   color: inherit;
   background-color: #acb1dc;
 }
 #navcolumn h5 {
   font-size: 0.8em;
   border-bottom: 1px solid #585b71;
-  padding-top: 0.4em;
-  margin-bottom: 0.3em;
+  padding-top: 8px;
+  margin-bottom: 5px;
   color: #030;
   background-color: inherit;
 }
@@ -110,6 +124,13 @@ p {
 }
 #navcolumn li.collapsed {
   background-image: url(episcangis-theme/collapsed.gif);
+}
+
+#footer {
+  margin-top: 15px;
+  border-bottom: 1px solid #333;
+  border-top: 1px solid #666;
+  background-color: #ddd;
 }
                                                                                                                                                              
 table.bodyTable th {
@@ -120,7 +141,7 @@ table.bodyTable th {
 }
                                                                                                                                                              
 table.bodyTable th, table.bodyTable td {
-  font-size: 1em;
+  font-size: 0.9em;
 }
                                                                                                                                                              
 table.bodyTable tr.a {
@@ -150,7 +171,7 @@ dt {
   margin: 8px;
 }
 #banner {
-  border-bottom: 0.1em solid #555;
+  border-bottom: 1px solid #555;
 }
                                                                                                                                                              
 #mapLegend {
@@ -164,9 +185,9 @@ fieldset {
   background-color: #eee;
   color: inherit;
 }
- 
+
 .error {
-  font-weight: bold;
   color: red;
   background-color: yellow;
+  text-align: left;
 }

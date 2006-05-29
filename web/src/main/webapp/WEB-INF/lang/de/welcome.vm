@@ -1,17 +1,51 @@
 #set ($page_title=$msg.global.title)
 
 <div class="section">
-	<h1>$msg.global.title</h1> 
-	#if( $user )
-	<p>
-	</p>
-	#end
-	<emph>
-	  <a href="#"
-      onclick="window.open('mapbrowser.vm','mapbrowser','status=no,scrollbars=yes,width=1020,height=810')"
-      >$msg.global.name starten (1024x768)</a></emph>
-    <br />
-	<a href="#" 
-      onclick="window.open('mapbrowser.vm?width=796&height=600','mapbrowser','status=no,scrollbars=yes,width=796,height=650')"
-      >$msg.global.name starten (800x600)</a>
+  <h1>$msg.global.title</h1>
+  <h2>Web-basiertes System zur Überwachung von Meningokokken-Erkrankungsfällen in Deutschland</h2>
+  <p>
+    <b>
+    Um die Anzahl der Meningokokken-Infektionen in der Bevökerung so gering wie 
+    möglich halten zu können, ist eine frühzeitige Erkennung von 
+    Erkrankungsfällen besonders wichtig. EpiScanGIS verwendet ein Geografisches 
+    Informationssystem (GIS) zur Darstellung der Verteilung von 
+    der Erkrankungsfälle, die an das
+    <a href="http://www.meningococcus.de" target="_blank" class="newWindow">
+      Nationalen Referenzzentrum für Meningokokken (NRZM)</a> gemeldet wurden.
+    Mittels dieser und noch anderen Methoden soll mit EpiScanGIS ein 
+    Frühwarnsystem aufgebaut werden, dass Erkrankungsausbrüche rechtzeitig 
+    anzeigen kann und somit verhindern hilft.</b><br />
+    <a class="smaller" href="whatis.vm">lesen sie mehr...</a>
+  </p>
+  <p>
+    Verwenden Sie einen der unteren Links um einen Kartenbetrachter zu starten,
+    mit dessen Hilfe Sie die geografische Verteilung der 
+    Meningokokken-Erkrankungsfälle betrachten können, die seit Dezember 2001 in
+    Deutschland aufgetreten sind. EpiScanGIS nutzt den
+    <a target="_blank" class="newWindow"
+      href="http://www.adobe.com/products/flashplayer/">
+      Macromedia Flash® Player</a> (mindestens <b>Version 7</b>) um Ihnen einen unkomplizierten Zugriff auf
+    die epidemiologischen Beobachtungsdaten zu ermöglichen. Für den Fall, dass
+    dieses PlugIn noch nicht mit Ihrem Browser installiert ist, können Sie es
+    <a target="_blank" class="newWindow"
+      href="http://www.adobe.com/go/getflashplayer">
+      hier</a> herunterladen.
+  </p>
+  <p>
+    Die
+    <a href="manual.vm">Anleitung zu EpiScanGIS</a>
+    gibt Ihnen einen kurzen Einblick in die Software und erklärt, wie sie 
+    angewendet wird.
+  </p>
+  <b>
+    <a href="#"
+      onclick="window.open('mapbrowser.vm','mapbrowser','status=no,scrollbars=yes,width=1020,height=820')">
+      EpiScanGIS - Web Surveillance starten
+    </a>
+  </b>
+    ,
+    <a href="#"
+      onclick="window.open('mapbrowser.vm?width=796&amp;height=600','mapbrowser','status=no,scrollbars=yes,width=796,height=670')">
+      Kleine Größe starten (800x600)
+    </a>
 </div>

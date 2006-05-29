@@ -1,0 +1,5 @@
+<div class="xleft">$msg.global.copyright</div>
+<div class="xright">
+  <span>$msg.get('global.latestCase', [$date.format("short_date", $globals.LatestCaseDate)])</span>
+  | <span>$msg.get('global.nocases', [$globals.CaseCount])</span>
+</div>

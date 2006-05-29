@@ -1,5 +1,279 @@
+#set ($page_title=$msg.page.manual.title)
+
 <div class="section">
-	<h1>$msg.page.manual.title</h1> 
-	<p>
-	</p>
+  <h1>$msg.page.manual.title</h1>
+  <p>
+    <b>Quick navigation:</b><br />
+    <a href="#overview">Overview</a>
+    - <a href="#maplayers">Map layers:</a>
+    <a href="#popdensity">$msg.map.layer.popdensity</a>
+    , <a href="#incidence">$msg.map.layer.incidence</a>
+    , <a href="#finetypes">$msg.map.layer.finetypes</a>
+    , <a href="#serogroups">$msg.map.layer.serogroups</a>
+    #if($user.isInRole("public_health") || $user.isInRole("nrzm"))
+    , <a href="#prospective_clusters">$msg.map.layer.prospective_clusters</a>
+    #end      
+  </p>
+  <p>
+    This site provides a brief description of the functionality of EpiScanGIS.
+    Please click 
+    <a href="#"
+      onclick="window.open('mapbrowser.vm','mapbrowser','status=no,scrollbars=yes,width=1020,height=810')">
+      here</a> to launch the web application, which lets you monitoring invasive 
+      meningococcal disease in Germany.
+  </p>
+  <div class="section">
+    <a name="overview"><h2>Overview</h2></a>
+    <p>
+      Using the numbers in the figure below, we will explain which settings
+      may be taken using the respective controls of the application and which
+      information is displayed on the relevant areas.
+    </p>
+    <p class="figure">  
+    <img style="border:1px solid black" width="90%"
+      src="images/manual/screenshot_public_health__nrzm.png"
+      alt="Screenshot of the EpiScanGIS web application" />
+      <br />
+      Screenshot of the EpiScanGIS web application, numbering explained below
+    <p>
+      The interface of the map viewer offers the following settings:
+    </p>
+    <ol>
+      <li>
+        You may display a printable and locally savable version of the
+        current map using this button.
+      </li>
+      <li>
+        Filters, that alter the displayed maps, can be set using these
+        dropdown menus:
+        <ol type="a">
+          #if($user.isInRole("public_health") || $user.isInRole("nrzm"))
+          <li><b>$msg.map.area</b>:
+            Use this control, to zoom the map to different areas
+            (federal territory or federal states)
+          </li>
+          #end
+
+          <li><b>$msg.map.age</b>:
+            Age groups (from, to) where the displayed cases should be
+            contained in. Both boundary values are included. 
+            Therefore a setting from 0 to 0 would show only those
+            cases of meningococcal disease, which are reported for
+            children under one year of age.
+            <br />
+            <i>If you are altering this filter, the
+            serogroup and finetype layer will update automatically.</i>
+          </li>
+          <li><b>$msg.map.observationperiod</b>:
+            Period that limits the generated epidemiological information.
+            <br />
+            The observation period can be set with a precision of
+
+            #if($user.isInRole("public_health") || $user.isInRole("nrzm"))
+            one month
+            #else 
+            one year 
+            #end
+            , again including the boundary values.
+            <br />
+            <i>If you are altering this filter, the
+            serogroup, finetype and incidence layer will update automatically.</i>
+          </li>
+        </ol>
+      </li>
+      <li>
+        This area of the application shows one flag for each map layer.
+        The header includes a check box to enable/disable this layer,
+        the layers name and a progress indicator showing if there is
+        an ongoing refresh. To take detailed settings for the respective
+        layer, you have to click left on this header.
+      </li>
+      <li>
+        The main area of EpiScanGIS shows the current map, which is automatically
+        generated using the current filter settings.
+
+        #if($user.isInRole("public_health") || $user.isInRole("nrzm"))
+        Left clicking and moving the mouse relocates the visible area.
+        #end
+
+        You can superimpose more information on a specific spot of the map by
+        clicking left. This queries all active layers for additional data.
+      </li>
+      <li>
+        The right hand legend explains the meaning of all utilized colors and
+        symbols.
+      </li>
+    </ol>
+  </div>
+  <div class="section">
+    <a name="maplayers"><h2>Map layers</h2></a>
+    <p>
+      Geographical information systems typically organize digital maps
+      using layers.  Information, that belongs together, is thereby grouped in
+      one layer.
+    </p>
+    <p>
+      $msg.global.name uses amongst others the layers $msg.map.layer.popdensity,
+      $msg.map.layer.incidence, $msg.map.layer.serogroups,
+      $msg.map.layer.finetypes and $msg.map.layer.borders.
+    </p>
+    <p>
+      Elements combined in one layer are always of same geometric type.
+      Borders and incidence are planar, cities and cases of disease are
+      are point information. The separate layers generate the overall picture of
+      the map. You can alter the view by enabling or disabling single layers.
+    </p>
+    <p>
+      Below we are going to explain each layer and the settings, that can be 
+      taken respectively:
+    </p>
+    <div class="section">
+      <a name="popdensity"><h3>$msg.map.layer.popdensity</h3></a>
+      <p>
+        Calculates the population density. This can either be done on basis
+        of federal states or counties.
+      </p>
+      <p>
+        The figure below shows two examples for this layer: 
+      </p>
+      <p class="figure">
+        <img style="border:1px solid black" width="90%"
+          src="images/manual/popdensity.gif"
+          alt="Population density on basis of federal states and counties respectiveley" />
+        <br />
+        Population density on basis of federal states and counties respectively,
+        including borders
+      </p>
+    </div>
+    <div class="section">
+      <a name="incidence"><h3>$msg.map.layer.incidence</h3></a>
+      <p>
+        Shows the annual incidence of meningococcal disease for federal states
+        and counties. The calculation refers to all cases of the selected
+        serogroup(s) that occurred during the given period.
+      </p>
+      <p>
+        The number of cases is extrapolated if the period is shorter than one 
+        year and interpolated otherwise.
+      </p>
+      <p>
+        The figure below shows two examples for this layer:
+      </p>
+      <p class="figure">
+        <img style="border:1px solid black" width="90%"
+          src="images/manual/incidence.gif"
+          alt="Annual incidence for 2002, Federal states und counties" />
+        <br />
+        Annual incidence of all cases in 2002 (January-December) 
+        for Federal states and counties.
+      </p>
+    </div>
+    <div class="section">
+      <a name="finetypes"><h3>$msg.map.layer.finetypes</h3></a>
+      <p>
+        Displays the distribution of one meningococcal finetype 
+        (epitope sequence typing of PorA and FetA) on the map. The number of shown cases
+        is contained by age group and period. You can find a specific finetype
+        by using the provided search field.
+      </p>
+      <p>
+        <b>IMPORTANT:</b>
+        You have to enter the finetype exactly as defined below:
+      </p>
+      <p>
+      <tt>{Serogroup} : P1.{PorA} : F{FetA}</tt>,
+      for instance
+      <tt>B : P1.7-2,4 : F1-5</tt>
+      </p>
+      <p>
+        Please mind the spaces to the left and right of the colons.
+      </p>
+      <p>
+        The figure below shows two examples for this layer:
+      </p>
+      <p class="figure">
+        <img style="border:1px solid black" width="90%"
+          src="images/manual/finetypes.gif"
+          alt="Distribution of finetype B : P1.7-2,4 : F1-5 in Germany und North Rhine-Westphalia" />
+        <br />
+         Distribution of finetype B : P1.7-2,4 : F1-5 in Germany and North 
+         Rhine-Westphalia (January to October 2005)
+      </p>
+    </div>
+    <div class="section">
+      <a name="serogroups"><h3>$msg.map.layer.serogroups</h3></a>
+      <p>
+        Visualizes cases of meningococcal disease grouped by serogroup.
+      </p>
+      <p>
+        The number of shown cases is contained by age group and period. 
+        You can display cases of different serogroups at the same time by
+        holding down the <tt>Ctrl</tt>-key while selecting an item from the 
+        list.
+      </p>
+      <p>
+        Different symbols and colors flag the serogroup B, C, Y, W135,
+        29E, A and Z unambiguously.
+      </p>
+      <p>
+        The figure below shows two examples for this layer:
+      </p>
+      <p class="figure">
+        <img style="border:1px solid black" width="90%"
+        src="images/manual/serogroup.gif"
+        alt="Cases of serogroup B and C respectiveley in Germany" />
+        <br/>
+        Cases of serogroup B and C respectively in Germany in 2002
+      </p>
+    </div>
+
+    #if($user.isInRole("public_health") || $user.isInRole("nrzm"))
+    <div class="section">
+      <a name="prospective_clusters"><h3>$msg.map.layer.prospective_clusters</h3></a>
+      <p>
+        You can't change any settings for this layer. It always shows the 
+        result of the most recent prospective cluster analysis run.
+        The date at which the calculation was performed is displayed.
+      </p>
+      <p>
+        The figure below shows two examples for this layer:
+      </p>
+      <p class="figure">  
+      <img style="border:1px solid black" width="90%"
+        src="images/manual/cluster.gif"
+        alt="Cluster, finetype C : P1.7-4,14-6 : F3-9" />
+        <br />
+        A cluster, that was detected at a prospective analysis on 
+        October 24, 2005. Finetype C : P1.7-4,14-6 : F3-9, duration until
+        then  from September 27 to October 24. The right hand figure shows
+        countrywide distribution of this finetype from August to October 2005.
+      </p>
+    </div>
+    <!-- 
+    <div class="section">
+      <h3>Monthly retrospective clusters</h3>
+      <p>
+        Einen historisch rückblickende Darstellung der Clusterlandschaft
+        wird mittels dieser Ebene visualisiert. Über ein Auswahlfeld
+        lässt sich wählen, welche der monatlich durchgeführten
+        Retrospektiven Analysen angezeigt werden soll.
+      </p>
+      <p>
+        Die folgenden Abbildungen zeigen zwei Beispieldarstellungen der
+        Ebene.
+      </p>
+      <p class="figure">  
+      <img style="border:1px solid black" width="400px"
+        src="images/manual/cluster_retro.gif"
+        alt="Historische Cluster vom 1. September 2005" />
+        <br />
+        Durch eine retrospektive Analyse erkannte historische Cluster.
+        Die Berechnung hat vom 1. September 2005 an rückblickend alle
+        Fälle des letzten Jahres eingeschlossen.
+      </p>
+    </div>
+    -->
+    #end
+
+  </div>
 </div>

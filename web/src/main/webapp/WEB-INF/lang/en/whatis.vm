@@ -1,7 +1,98 @@
 #set ($page_title=$msg.page.whatis.title)
 
 <div class="section">
-	<h1>$msg.page.whatis.title</h1> 
-	<p>
-	</p>
+  <h1>$msg.page.whatis.title</h1>
+  <p>
+    <b>
+      Detecting meningococcal disease outbreaks as early as possible is
+      important in order to minimize the number of infections amongst
+      the population. EpiScanGIS uses a Geographical Information System
+      (GIS) to present maps showing the distribution of all cases of
+      meningococcal disease, that have been registered at the
+      <a href="http://www.meningococcus.de" target="_blank" class="newWindow">
+        National Reference Centre for Meningococci (NRZM)</a>
+      in Germany. Thus it acts as an information system, that provides
+      you with easy to access and timely information on meningococcal
+      infections in Germany.
+    </b>
+  </p>
+  <p>
+    EpiScanGIS has been developed at the NRZM in cooperation with the
+    <a href="http://www2.informatik.uni-wuerzburg.de" target="_blank" 
+      class="newWindow">Chair of Computer Science II</a>
+    and the company <a href="http://www.ridom.com" target="_blank" 
+      class="newWindow">Ridom GmbH</a>. It from the diploma thesis
+    of Markus Reinhardt held at the Chair of Computer Science II, University of 
+    Würzburg.
+  </p>
+  <div class="section">
+    <h2>Monitoring Invasive Meningococcal Disease in Germany</h2>
+    <p>
+      One goal of this interdisciplinary project is, to provide a
+      publicly accessible system for computer-aided epidemiological
+      surveillance of meningococcal disease in Germany.
+    </p>
+    <p>
+      EpiScanGIS provides you with weekly updated, dynamically
+      generated maps. The underlying database is a result of the
+      consistent work at the NRZM, which, as a national reference
+      laboratory, types the majority of all meningococcal infections
+      in Germany using microbiological methods.
+    </p>
+    <p>
+      We used several non-commercial software components in this project, 
+      that each apart accomplish bits in the overall process:
+    </p>
+    <ul>
+      <li>
+        The
+        <a href="http://www.postgresql.org" target="_blank" class="newWindow">
+          PostgreSQL</a>
+        object-relational database stores anonymized epidemiological
+        information.
+      </li>
+      <li>
+        <a href="http://www.postgis.org" target="_blank" class="newWindow">
+          PostGIS</a>
+        adds support for geographic objects an queries to PostgreSQL.
+      </li>
+      <li>The
+        <a href="http://mapserver.gis.umn.edu" target="_blank" class="newWindow">
+          UMN Mapserver</a>
+        is responsible for generating maps using the data provided by the
+        database. 
+      </li>
+      <li>
+        <a href="http://www.openlaszlo.org" target="_blank" class="newWindow">
+          OpenLaszlo</a>
+        is used to generate a Flash-based Rich Internet Application,
+        that enable intuitive access to epidemiological data.
+      </li>
+    </ul>
+  </div>
+  <div class="section">
+    <h2>Early Outbreak Detection</h2>
+    <p>
+      The second component of this online system provides the health community
+      with an early warning cluster detection system.
+    </p>
+    <p>
+      The resulting reports and maps are not publicly available, but they help 
+      registered and authorized public health authorities in spotting possible
+      risk areas and taking preventive measures.
+    </p>
+    <p>
+      EpiScanGIS uses the Software
+      <a href="http://www.satscan.org" target="_blank" class="newWindow">SaTScan™</a>
+      for the 'cluster detection' process.
+      The underlying dataset is automatically scanned on a weekly basis to
+      detect potential diseases outbreaks in a timely manner.
+    </p>
+    <p>
+      SaTScan™ is a trademark of Martin Kulldorff. The SaTScan™ software was 
+      developed under the joint auspices of Martin Kulldorff, of the National 
+      Cancer Institute and of Farzad Mostashari at the New York City 
+      Department of Health and Mental Hygiene.
+    </p>
+  </div>
 </div>

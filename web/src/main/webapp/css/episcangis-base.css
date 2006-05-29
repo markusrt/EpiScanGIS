@@ -41,6 +41,10 @@ div.clear hr{
   float:right;
   text-shadow: #7CFC00;
 }
+
+.smaller {
+  font-size: smaller;
+}
 #banner {
   padding: 0px;
   margin-bottom: 0px;
@@ -52,15 +56,19 @@ div.clear hr{
   padding: 3px 10px 3px 10px;
 }
 #leftColumn {
- width: 11.5em;
+ width: 12em;
  float:left;
  overflow: auto;
 }
 #bodyColumn {
-  margin-right: 1.5em;
-  margin-left: 13em;
+  margin-right: 15px;
+  margin-left: 12.5em;
 }
 #contentBox {
+}
+p.figure {
+  font-size: smaller;
+  text-align: center;
 }
 #legend {
   padding: 8px 0 8px 0;
@@ -85,7 +93,7 @@ div.clear hr{
   padding-left: 16px;
   list-style-position: outside;
   line-height: 1.2em;
-  font-size: smaller;
+  font-size: 0.9em;
 }
 #poweredBy {
   text-align: center;
@@ -191,36 +199,12 @@ div.clear hr{
 #registerUser textarea {
   width: 27em;
 }
- 
-ul.verticalFormElements {
-  list-style-type: none;
-  padding: 0.5em 0 0 0;
-}
-ul.verticalFormElements li {
-}
-                                                                                                                                                             
-ul.horizontalFormElements {
-  white-space: nowrap;
-  list-style-type: none;
-  padding: 0.5em 0 0 0;
-}
-ul.horizontalFormElements li {
-  display: inline;
-  margin: 0 1em 0 0;
-}
-ul.horizontalFormElements li ul.verticalFormElements {
-  padding: 0;
-  float:left;
-}
-ul.horizontalFormElements li ul.verticalFormElements li {
-  display:list-item;
-}
 
 /*
 -- Table that is used in forms like registerUser.vm
 */
 table.formBlock {
-  border-spacing:1.5em;
+  border-spacing:5px;
   width: 30em;
 }
 table.formBlock td {

@@ -2,6 +2,7 @@
                                                                                                                                                              
 <div class="section">
   <h1>Error: $error_cause</h1>
+  <!-- 
   <p>
     Error: $stack_trace
   </p>
@@ -14,4 +15,5 @@
     <br />Method name: $invocation_exception.methodName
   </p>
   #end
+   -->
 </div>

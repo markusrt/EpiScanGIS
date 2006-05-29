@@ -1,13 +1,38 @@
 <div class="xleft">
-  <a href="http://www.uni-wuerzburg.de" class="externalLink" target="_blank">
+  ##############################################################################
+  ## Leftmost links
+  ##############################################################################
+  <a href="http://www.uni-wuerzburg.de" target="_blank" class="newWindow">
     $msg.global.university-wuerzburg</a>
-  | <a href="http://www.ridom.de" class="externalLink" target="_blank">
+  | <a href="http://www.ridom.de" target="_blank" class="newWindow">
       Ridom GmbH</a>	
 </div>
 <div class="xright">
+  ##############################################################################
+  ## Login/Register respectively Logout
+  ##############################################################################
   #if ($user)
-  $msg.get('global.logout', [$link.setAction('Logout'),"$user.forename $user.lastname"])
+  $msg.get('global.logout', [$link.setAction('Logout'),"$user.forename.charAt(0). $user.lastname"])
   #else
   $msg.get('global.login_or_register', [$link.setAction('Login'),'registerUser.vm'])
+  #end  
+  ##############################################################################
+  ## Icon to switch locale, disable it by using '#set ($disableNav=true)'
+  ##  on the according velocity page 
+  ##############################################################################
+  #if ( !$disableLocaleSwitcher || $disableLocaleSwitcher == false )
+  |
+  <span style="vertical-align:middle;">
+ 
+  #if ($locale.Language=='en')
+   <a href="$link.setAction('Locale').addQueryData('language','de')"
+     title="$msg.global.switchLangGerman"><img 
+     src="images/icons/de.png" alt="(DE)"/></a>
+  #else
+   <a href="$link.setAction('Locale').addQueryData('language','en')"
+     title="$msg.global.switchLangEnglish"><img 
+     src="images/icons/en.png" alt="(US)" /></a>
+  #end
+  </span>
   #end
 </div>

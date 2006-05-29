@@ -1,0 +1,53 @@
+#set ($page_title=$msg.page.contact.title)
+
+<div class="section">
+  <h1>$msg.page.imprint.title</h1>
+  <table style="border-spacing:10px;width:100%;">
+    <tbody>
+      <tr>
+        <td>
+          <b>Publisher:</b>
+        </td>
+        <td>
+          <b>Technical coordination</b>
+        </td>
+      </tr>
+      <tr style="font-size:smaller;vertical-align:top;">
+        <td>
+          $msg.global.organization
+        </td>
+        <td>
+          Dipl. Inf. Markus Reinhardt<br />
+          Institute for Hygiene and Microbiology<br />
+          University of Würzburg<br />
+          Josef-Schneider-Straße 2<br />
+          D-97080 Würzburg, Germany<br />
+          Phone:  +49 (931) 201-46714<br />
+          E-mail: <span class="nospam">mreinhardt</span><span 
+          class="at"><tt>@</tt></span><span 
+          class="morenospam">hygiene.uni<tt>-</tt>wuerzburg.de</span>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <b>Compilation:</b>
+        </td>
+        <td>
+          <b>Design &amp; production</b>
+        </td>
+      </tr>
+      <tr style="font-size:smaller;vertical-align:top;">
+        <td>
+          Dipl. Inf. Markus Reinhardt<br />
+          Institute for Hygiene and Microbiology<br />
+          University of Würzburg<br />
+        </td>
+        <td>
+          Dipl. Inf. Markus Reinhardt<br />
+          Institute for Hygiene and Microbiology<br />
+          University of Würzburg<br />
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
