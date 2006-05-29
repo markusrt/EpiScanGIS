@@ -1,5 +1,6 @@
 #set ($disableNav=true)
 #set ($disableBanner=true)
+#set ($disableLocaleSwitcher=true)
  
 #set ($big_width="1020")
 #set ($big_height="735")
@@ -17,7 +18,7 @@
  
 <object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"
   codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,79,0"
-  data="mapbrowser.lzx?lzt=swf" width="$width" height="$height">
+  data="mapbrowser.lzx?lzt=swf&lzr=swf7" width="$width" height="$height">
   <param name="movie" value="mapbrowser.lzx?lzt=swf">
  
   <param name="quality" value="high">
@@ -26,7 +27,7 @@
   <param name="menu" value="false">
   <param name="bgcolor" value="#c0c0c0">
  
-  <embed src="mapbrowser.lzx?lzt=swf" quality="high" scale="noscale"
+  <embed src="mapbrowser.lzx?lzt=swf&lzr=swf7" quality="high" scale="noscale"
     salign="lt" width="$width" height="$height"
     bgcolor="#c0c0c0" type="application/x-shockwave-flash"
     pluginspage="http://www.macromedia.com/go/getflashplayer">
