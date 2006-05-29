@@ -226,17 +226,17 @@
   </dependencies>
   <build>
     <defaultGoal>tomcat:deploy</defaultGoal>
-    <plugins>
+    <plugins><!--
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>tomcat-maven-plugin</artifactId>
-        <version>1.0-20051128.172713-1</version>
+        <version>1.0-SNAPSHOT</version>
         <configuration>
           <url>http://132.187.144.10:8080/manager</url>
           <server>tomcat</server>
         </configuration>
       </plugin>
-      <plugin>
+      --><plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-war-plugin</artifactId>
         <version>2.0-beta-2</version>
