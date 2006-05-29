@@ -15,30 +15,39 @@
         <arg0 key="user.password"/>
       </field>
       <field property="confirmPassword" depends="required,validwhen">
-        <arg0 key="user.confirmPassword"/>
-        <arg1 key="user.passwordEqual"/>
+        <arg key="user.confirmPassword"/>
+        <msg name="validwhen" key="errors.passwords.match"/>
         <var>
           <var-name>test</var-name>
           <var-value>(password == *this*)</var-value>
         </var>
       </field>
       <field property="forename" depends="required">
-        <arg0 key="user.forename"/>
+        <arg key="user.forename"/>
       </field>
       <field property="lastname" depends="required">
-        <arg0 key="user.lastname"/>
+        <arg key="user.lastname"/>
       </field>
       <field property="phone" depends="required">
-        <arg0 key="user.phone"/>
+        <arg key="user.phone"/>
       </field>
       <field property="email" depends="required,email">
-        <arg0 key="user.email"/>
+        <arg key="user.email"/>
       </field>
       <field property="domain" depends="required">
-        <arg0 key="user.domain"/>
+        <arg key="user.domain"/>
       </field>
       <field property="message" depends="required">
-        <arg0 key="user.message"/>
+        <arg key="user.message"/>
+      </field>
+      <field property="street" depends="required">
+        <arg key="user.street"/>
+      </field>
+      <field property="zip" depends="required">
+        <arg key="user.zip"/>
+      </field>
+      <field property="city" depends="required">
+        <arg key="user.city"/>
       </field>
     </form>
   </formset>

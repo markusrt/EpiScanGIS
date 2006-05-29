@@ -1,10 +1,16 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <dataset>
-  <users username="mreinhardt" password="e4fa9fdfc917af140968ec90b9441c54a2ead4fa" forename="Markus" email="m.reinhardt@bitmap-friends.de" phone="++49 (931) 9916454" organisation="Universität Würzburg" message="" registrationdate="2006-01-19" lastname="Reinhardt" department="Institut für Hygiene und Mikrobiologie" domain="NRZM"/>
-  <users username="test" password="58d2bb555407c6379e12ef9311c0df741dadca9c" forename="Markus" email="test@mail.de" phone="099482992003" organisation="NRZM" message="Hello Handsome
+  <users username="Johannes" password="dccdd04d48d1497e34fb31707ec79471a8d46104" forename="Johannes" email="jelias@hygiene.uni-wuerzburg.de" phone="+4993120146905" organisation="" message="Servas,
 
-		          " registrationdate="2006-05-03" title="Dr. Phd." lastname="Reinhardt" department="NRMr" domain="Public Health"/>
-  <users username="uvogel" password="6fdfe06cd94b8c6a9fcd618ebf5bc840a325ade8" forename="Ulrich" email="uvogel@hygiene.uni-wuerzburg.de" phone="++49 (931) 20146802 " organisation="Universität Würzburg" registrationdate="2006-04-20" title="Prof. Dr. med." lastname="Vogel" department="Institut für Hygiene und Mikrobiologie" domain="NRZM"/>
+schalt mich bitte frei!
+
+GruÃ,
+
+Johannes" registrationdate="2006-05-19" title="" lastname="Elias" department="" domain="NRZ Meningococci"/>
+  <users username="mreinhardt" password="e4fa9fdfc917af140968ec90b9441c54a2ead4fa" forename="Markus" email="m.reinhardt@bitmap-friends.de" phone="++49 (931) 9916454" organisation="Universität Würzburg" message="" registrationdate="2006-01-19" lastname="Reinhardt" department="Institut für Hygiene und Mikrobiologie" domain="NRZ Meningococci"/>
+  <users username="tester" password="a94a8fe5ccb19ba61c4c0873d391e987982fbbd3" forename="Hans" email="test@mail.de" phone="909823409" organisation="slafÃ¶j" message="Ã¶Ã¶Ã¶Ã¶Ã¶Ã¶Ã¶Ã¶Ã¶Ã¶Ã¶Ã¶Ã¶" registrationdate="2006-05-29" title="Dr. best." lastname="Schmal" department="lksdjaf" domain="Robert Koch-Institute"/>
+  <users username="uvogel" password="6fdfe06cd94b8c6a9fcd618ebf5bc840a325ade8" forename="Ulrich" email="uvogel@hygiene.uni-wuerzburg.de" phone="++49 (931) 20146802 " organisation="Universität Würzburg" registrationdate="2006-04-20" title="Prof. Dr. med." lastname="Vogel" department="Institut für Hygiene und Mikrobiologie" domain="NRZ Meningococci"/>
+  <user_roles username="Johannes" rolename="nrzm"/>
   <user_roles username="mreinhardt" rolename="epidegis_beta"/>
   <user_roles username="mreinhardt" rolename="nrzm"/>
   <user_roles username="uvogel" rolename="nrzm"/>

@@ -29,7 +29,7 @@ public class User
   public static final String passwordDigestAlgorithm = "SHA-1";
 
   private String username, password, title, forename, lastname, email, phone, 
-    organisation, department, domain, message;
+    organisation, department, domain, message, street, zip, city;
 
   private Date registrationDate, lastLogin;
 
@@ -324,5 +324,53 @@ public class User
   public String getPassword()
   {
     return password;
+  }
+
+  /**
+   * @return Returns the city.
+   */
+  public String getCity()
+  {
+    return city;
+  }
+
+  /**
+   * @param city The city to set.
+   */
+  public void setCity(String city)
+  {
+    this.city = city;
+  }
+
+  /**
+   * @return Returns the street.
+   */
+  public String getStreet()
+  {
+    return street;
+  }
+
+  /**
+   * @param street The street to set.
+   */
+  public void setStreet(String street)
+  {
+    this.street = street;
+  }
+
+  /**
+   * @return Returns the zip.
+   */
+  public String getZip()
+  {
+    return zip;
+  }
+
+  /**
+   * @param zip The zip to set.
+   */
+  public void setZip(String zip)
+  {
+    this.zip = zip;
   }
 }

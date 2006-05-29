@@ -41,14 +41,14 @@ final class PgSQLUserDAO extends DbUtilsDAO implements UserDAO
    */
   private static final String UPDATE_USER = "UPDATE users "
       + "SET password = ?, title = ?, forename = ?, lastname = ?, email = ?, "
-      + " phone = ?, organisation = ?, department = ?, domain = ?"
-      + " WHERE username = ?",
+      + " phone = ?, organisation = ?, department = ?, domain = ?, street = ?, "
+      + " zip = ?, city = ? " + " WHERE username = ?",
       GET_USER = "SELECT * FROM users WHERE username=?",
       DELETE_USER = "DELETE FROM users WHERE username=?",
       CREATE_USER = "INSERT INTO users "
           + "(username, password, title, forename, lastname, email, phone, "
-          + "organisation, department, domain, message ) "
-          + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+          + "organisation, department, domain, message, street, zip, city ) "
+          + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
       GET_ROLES = "SELECT rolename FROM user_roles GROUP BY rolename",
       GET_USER_ROLES = "SELECT rolename FROM user_roles WHERE username=?",
       DELETE_USER_ROLES = "DELETE FROM user_roles WHERE username=?",
@@ -92,7 +92,7 @@ final class PgSQLUserDAO extends DbUtilsDAO implements UserDAO
           user.getPassword(), user.getTitle(), user.getForename(),
           user.getLastname(), user.getEmail(), user.getPhone(),
           user.getOrganisation(), user.getDepartment(), user.getDomain(),
-          user.getMessage() });
+          user.getMessage(), user.getStreet(), user.getZip(), user.getCity() });
       updateUserRoles(user);
     }
     catch (SQLException e)
@@ -111,7 +111,8 @@ final class PgSQLUserDAO extends DbUtilsDAO implements UserDAO
       insertCount = run.update(UPDATE_USER, new Object[] { user.getPassword(),
           user.getTitle(), user.getForename(), user.getLastname(),
           user.getEmail(), user.getPhone(), user.getOrganisation(),
-          user.getDepartment(), user.getDomain(), user.getUsername() });
+          user.getDepartment(), user.getDomain(), user.getStreet(),
+          user.getZip(), user.getCity(), user.getUsername() });
       updateUserRoles(user);
     }
     catch (SQLException e)

@@ -18,13 +18,12 @@
 
     <form-bean type="de.meningococcus.episcangis.web.LayerFormBean"
       name="layer" />
-      
+
     <form-bean
       type="de.meningococcus.episcangis.web.CountCasesByAttributeFormBean"
       name="countCasesByAttribute" />
-      
-    <form-bean
-      type="de.meningococcus.episcangis.web.CreateMapFormBean"
+
+    <form-bean type="de.meningococcus.episcangis.web.CreateMapFormBean"
       name="createMap" />
 
     <form-bean
@@ -45,12 +44,21 @@
       <form-property name="lastname" type="java.lang.String" />
       <form-property name="phone" type="java.lang.String" />
       <form-property name="email" type="java.lang.String" />
+      <form-property name="street" type="java.lang.String" />
+      <form-property name="zip" type="java.lang.String" />
+      <form-property name="city" type="java.lang.String" />
       <form-property name="organisation" type="java.lang.String" />
       <form-property name="department" type="java.lang.String" />
       <form-property name="domain" type="java.lang.String" />
       <form-property name="message" type="java.lang.String" />
     </form-bean>
-    
+
+    <form-bean name="localeForm"
+      type="org.apache.struts.action.DynaActionForm">
+      <form-property name="language" type="java.lang.String" />
+      <form-property name="country" type="java.lang.String" />
+    </form-bean>
+
   </form-beans>
 
   <!--  Global Exception Definitions -->
@@ -62,7 +70,7 @@
   <!-- Global Forward Definitions -->
   <global-forwards>
     <!-- index.jsp forwards to this action -->
-    <forward name="success" path="/welcome.vm"/>
+    <forward name="success" path="/welcome.vm" />
     <forward name="index" path="/welcome.vm" />
     <forward name="welcome" path="/welcome.vm" />
     <forward name="mapbrowser" path="/mapbrowser.vm" />
@@ -81,8 +89,8 @@
     <action path="/GetMap"
       type="de.meningococcus.episcangis.web.GetMapAction">
     </action>
-    
-    <action path="/CountCasesByAttribute" 
+
+    <action path="/CountCasesByAttribute"
       type="de.meningococcus.episcangis.web.CountCasesByAttributeAction"
       name="countCasesByAttribute" scope="request">
       <forward name="success" path="/WEB-INF/pages/showCases.vm" />
@@ -149,6 +157,12 @@
         path="/WEB-INF/pages/registerUserSuccess.vm" />
     </action>
 
+    <!-- Locale Action -->
+    <action path="/Locale"
+      type="de.meningococcus.episcangis.web.LocaleAction"
+      name="localeForm" scope="request">
+    </action>
+
   </action-mappings>
 
   <!-- Controller Configuration -->
@@ -170,6 +184,5 @@
       value="/WEB-INF/validator-rules.xml,
         /WEB-INF/validation.xml" />
   </plug-in>
-
 </struts-config>
 
