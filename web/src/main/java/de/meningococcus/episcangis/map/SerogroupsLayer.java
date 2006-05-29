@@ -39,7 +39,7 @@ public class SerogroupsLayer extends MapLayer
       CaseTypeAttribute cta = (CaseTypeAttribute) i.next();
       if (cta.getValue().length() > 0)
       {
-        dbValue.append("'").append(cta.getValue()).append("'");
+        dbValue.append("\"").append(cta.getValue()).append("\"");
         ParameterValue val = new ParameterValue(cta.getValue(), dbValue.toString());
         serogroupSelector.addValue(val);
         allvalues.append(val.getValue());
