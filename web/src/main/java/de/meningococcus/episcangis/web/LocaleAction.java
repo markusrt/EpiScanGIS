@@ -92,7 +92,7 @@ public final class LocaleAction extends Action
     {
       language = (String) PropertyUtils.getSimpleProperty(form, "language");
       country = (String) PropertyUtils.getSimpleProperty(form, "country");
-      page = (String) PropertyUtils.getSimpleProperty(form, "page");
+      //page = (String) PropertyUtils.getSimpleProperty(form, "page");
     }
     catch (Exception e)
     {
@@ -112,12 +112,12 @@ public final class LocaleAction extends Action
     session.setAttribute(Globals.LOCALE_KEY, locale);
     
     //  Redirect
-    String referer = request.getHeader("Referer");
-    if (page != null)
-      return new ActionForward(page);
-    else if (referer != null && referer.length() > 0)
-      return new RedirectingActionForward(referer);
-    else
+//    String referer = request.getHeader("Referer");
+//    if (page != null)
+//      return new ActionForward(page);
+//    else if (referer != null && referer.length() > 0)
+//      return new RedirectingActionForward(referer);
+//    else
       return mapping.findForward(GlobalSettings.FORWARD_SUCCESS);
   }
 }
