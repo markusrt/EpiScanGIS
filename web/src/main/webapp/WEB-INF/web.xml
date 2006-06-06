@@ -113,6 +113,7 @@ PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.2//EN"
 
   <!-- The Usual Welcome File List -->
   <welcome-file-list>
+    <welcome-file>welcome.vm</welcome-file>
     <welcome-file>index.jsp</welcome-file>
     <welcome-file>index.html</welcome-file>
   </welcome-file-list>
