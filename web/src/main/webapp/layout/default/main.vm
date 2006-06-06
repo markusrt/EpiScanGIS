@@ -1,10 +1,10 @@
 <!DOCTYPE html 
-     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 #if($request.session.getAttribute('org.apache.struts.action.LOCALE'))
-  #set ($locale=$request.session.getAttribute('org.apache.struts.action.LOCALE'))
+#set ($locale=$request.session.getAttribute('org.apache.struts.action.LOCALE'))
 #else  
-  #set($locale=$date.Locale)
+#set($locale=$date.Locale)
 #end
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="$locale.Language" 
   lang="$locale.Language">
@@ -13,12 +13,12 @@
     <style type="text/css" media="all">
       @import url("./css/episcangis-base.css");
       @import url("./css/episcangis-theme.css");
-                                                                                          
+
       #if ( $disableNav )
       @import url("./css/episcangis-nonav.css");
       #end
       #if( $disableBanner )
-      @import url("./css/episcangis-nobanner.css");
+      ##@import url("./css/episcangis-nobanner.css");
       #end
     </style>
     <style type="text/css" media="print">
@@ -26,61 +26,66 @@
     </style>
     <meta name="author" content="Markus Reinhardt" />
     <meta name="keywords" lang="de" 
-      content="Meningokokken, Frühwarnsystem, Epidemiologie, Überwachung" />
+    content="Meningokokken, Frühwarnsystem, Epidemiologie, Überwachung" />
     <meta name="description" lang="de" 
-      content="Web-basiertes System zur Überwachung von Meningokokken-Erkrankungsfällem in Deutschland" />
+    content="Web-basiertes System zur Überwachung von Meningokokken-Erkrankungsfällem in Deutschland" />
     <meta name="keywords" lang="en-us" 
-      content="meningococcal, meningococci, disease, early, warning, epidemiology, surveillance" />
+    content="meningococcal, meningococci, disease, early, warning, epidemiology, surveillance" />
     <meta name="description" lang="en-us" 
-      content="Online Monitoring Invasive Meningococcal Disease in Germany" />
+    content="Online Monitoring Invasive Meningococcal Disease in Germany" />
     <meta name="keywords" lang="en" 
-      content="meningococcal, meningococci, disease, early, warning, epidemiology, surveillance" />
+    content="meningococcal, meningococci, disease, early, warning, epidemiology, surveillance" />
     <meta name="description" lang="en" 
-      content="Online Monitoring Invasive Meningococcal Disease in Germany" />
+    content="Online Monitoring Invasive Meningococcal Disease in Germany" />
+    $!headerStuff
   </head>
-	<body>
-	  <div id="banner">
-	    <div id="bannerLeft">
-	      <a href="./welcome.vm"><img 
-	        src="images/logo_episcangis.png" alt="$msg.global.title"/></a>
-	    #if($user && $user.Username=="Johannes")
-       <div style="vertical-align: bottom;">
-        <img style="padding-top:15px;padding-left:15px"
+  <body>
+    #if ( !$disableBanner || $disableBanner==false )
+    <div id="banner">
+      <div id="bannerLeft">
+        <a href="./welcome.vm"><img 
+          src="images/logo_episcangis.png" alt="$msg.global.title"/></a>
+        #if($user && $user.Username=="Johannes")
+        <div style="vertical-align: bottom;">
+          <img style="padding-top:15px;padding-left:15px"
           src="images/icons/at.png" alt="Austria"/>
-       </div>
-      #end
+        </div>
+        #end
       </div>
-      
-	    <div id="bannerRight">
-	      <a href="http://www.meningococcus.de"><img 
-	        src="images/logo_nrzm.png" alt="$msg.global.organization"/></a>
-	    </div>
-	    <div class="clear">
-	      <hr/>
-	    </div>
-	  </div>
-	  <div id="breadcrumbs">
-	    #parse('layout/default/breadcrumbs.vm')
-	    <div class="clear">
-	      <hr/>
-	    </div>
-	  </div>
-	  <div id="leftColumn">
-	  	#parse('layout/default/navigation.vm')
-	  </div>
-	  <div id="bodyColumn">
-	    <div id="contentBox">
-	      $screen_content
-	    </div>
-	  </div>
-	  <div class="clear">
-	    <hr/>
-	  </div>
-	  <div id="footer">
-	    #parse('layout/default/footer.vm')
-	    <div class="clear">
-	      <hr/>
-	    </div>
-	  </div>
-	</body>
+
+      <div id="bannerRight">
+        <a href="http://www.meningococcus.de"><img 
+          src="images/logo_nrzm.png" alt="$msg.global.organization"/></a>
+      </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    #end
+    <div id="breadcrumbs">
+      #parse('layout/default/breadcrumbs.vm')
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    #if ( !$disableNav || $disableNav==false )
+    <div id="leftColumn">
+      #parse('layout/default/navigation.vm')
+    </div>
+    #end
+    <div id="bodyColumn">
+      <div id="contentBox">
+        $screen_content
+      </div>
+    </div>
+    <div class="clear">
+      <hr/>
+    </div>
+    <div id="footer">
+      #parse('layout/default/footer.vm')
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+  </body>
 </html>
