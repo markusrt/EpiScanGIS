@@ -307,6 +307,21 @@
               depends=""
                   msg=""
            jsFunction="org.apache.commons.validator.javascript.validateUtilities"/>
+      
+     <!-- 
+       Checks if the specified username is already taken
+      -->
+     <validator name="username"
+            classname="de.meningococcus.episcangis.web.StrutsValidator"
+               method="validateUsername"
+         methodParams="java.lang.Object,
+                       org.apache.commons.validator.ValidatorAction,
+                       org.apache.commons.validator.Field,
+                       org.apache.struts.action.ActionMessages,
+                       org.apache.commons.validator.Validator,
+                       javax.servlet.http.HttpServletRequest"
+              depends=""
+                  msg="errors.username"/>
 
    </global>
 
