@@ -1,5 +1,5 @@
 <Context path="" 
-  docBase="episcangis-web-1.0-SNAPSHOT" debug="999" reloadable="true">
+  docBase="" debug="0" reloadable="true">
   <Resource name="jdbc/dao" auth="Container"
     type="javax.sql.DataSource"
     driverClassName="org.postgresql.Driver"
