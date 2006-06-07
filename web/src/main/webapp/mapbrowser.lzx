@@ -21,14 +21,19 @@
   <debug y="500" width="600" height="200"/>
   <datasource name="ds">
     <method event="oninit">
-      this.mapserverData.setSrc(getBaseUrl() + 'Map.do');
-      var p=new LzParam();
-      p.addValue("width", canvas.width-4-240-190, true);
-      p.addValue("height", canvas.height-4-40, true);
-      this.mapserverData.setQueryString(p);
-      this.mapserverData.doRequest();
+      if( LzBrowser.getVersion() &lt; 7 ) {
+        canvas.flashVersionAlert.open();
+      }
+      else {
+        this.mapserverData.setSrc(getBaseUrl() + 'Map.do');
+        var p=new LzParam();
+        p.addValue("width", canvas.width-4-240-190, true);
+        p.addValue("height", canvas.height-4-40, true);
+        this.mapserverData.setQueryString(p);
+        this.mapserverData.doRequest();
       
-      this.SetParameter.setSrc(getBaseUrl() + 'SetParameter.do');
+        this.SetParameter.setSrc(getBaseUrl() + 'SetParameter.do');
+      }
     </method>
     <dataset type="http" name="mapserverData"/>
     <dataset type="http" name="SetParameter"/>
@@ -48,7 +53,23 @@
 
   <script src="scripts/global_functions.js"/>
 
-  
+  <alert height="300" width="600" layout="spacing:10" name="flashVersionAlert">
+    <text height="200" visible="${LzBrowser.getVersion() &lt; 7}">
+      <font size='16' color='#ff0000'><b>TIP:</b>
+        Ihr Flash-Player hat die falsche Version.<br />
+        Bitte installieren Sie die neueste Version!
+      </font><br />
+      <font size='16' color='#ff0000'><b>TIP:</b>
+            Your Flash-Player Version is wrong.<br />
+            Please install the latest Flash-Player:
+      </font><br />
+      <font color="#0000ff">
+         <u>
+           <a target="_blank" href="http://www.adobe.com/go/getflashplayer">http://www.adobe.com/go/getflashplayer</a>
+          </u>
+      </font>
+    </text>
+  </alert>
 
   <class name="mapview" bgcolor="0xeeeeee" extends="view">
     <attribute name="maplayerview" type="expression"
@@ -495,7 +516,7 @@
     </view>
   </class>
         
-  <mapview datapath="mapserverData:/map" 
+  <mapview datapath="mapserverData:/map" name="mapviewer"
     width="${parent.width}" height="${parent.height}"/>
-  <errorwindow datapath="mapserverData:/result" width="100%" height="100%"/>
+  <errorwindow name="errorviewer" datapath="mapserverData:/result" width="100%" height="100%"/>
 </canvas>
