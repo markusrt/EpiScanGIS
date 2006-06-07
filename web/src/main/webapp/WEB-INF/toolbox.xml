@@ -6,6 +6,11 @@
     <class>org.apache.velocity.tools.struts.StrutsLinkTool</class>
   </tool>
   <tool>
+    <key>messages</key>
+    <scope>request</scope>
+    <class>org.apache.velocity.tools.struts.ActionMessagesTool</class>
+  </tool>
+  <tool>
     <key>msg</key>
     <scope>request</scope>
     <class>org.apache.velocity.tools.struts.MessageTool</class>
