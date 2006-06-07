@@ -3,7 +3,7 @@
 <div class="section">
   <h1>$msg.page.registerUser.title</h1>
   $msg.page.registerUser.msg
-  <form
+  <form enctype="application/x-www-form-urlencoded; charset=UTF-8" accept-charset="UTF-8"
     action="$link.setAction('ManageUsers').addQueryData('method','register')"
     method="post" style="width:40em;">
     <fieldset style="width:78%;">
@@ -13,7 +13,7 @@
           <td colspan="2">
             $msg.user.username (*):
             <br />
-            <input type="text" name="username"
+            <input type="text" name="username" maxlength="20"
               value="$!registerUser.username" />
             <div class="error">$!errors.getMsgs("username")</div>
           </td>
@@ -22,13 +22,13 @@
           <td>
             $msg.user.password (*):
             <br />
-            <input type="password" name="password" size="26"/>
+            <input type="password" name="password" maxlength="20" size="26"/>
             <div class="error">$!errors.getMsgs("password")</div>
           </td>
           <td>
             $msg.user.confirmPassword (*):
             <br />
-            <input type="password" size="26" name="confirmPassword" />
+            <input type="password" size="26" maxlength="20" name="confirmPassword" />
             <div class="error">$!errors.getMsgs("confirmPassword")</div>
           </td>
         </tr>
@@ -41,21 +41,21 @@
           <td>
             $msg.user.title:
             <br />
-            <input type="text" name="title" size="6"
+            <input type="text" name="title" size="6" maxlength="15"
               value="$!registerUser.title" />
             <div class="error">$!errors.getMsgs("title")</div>
           </td>
           <td>
             $msg.user.forename (*):
             <br />
-            <input type="text" name="forename" size="20"
+            <input type="text" name="forename" size="20" maxlength="30"
               value="$!registerUser.forename" />
             <div class="error">$!errors.getMsgs("forename")</div>
           </td>
           <td>
             $msg.user.lastname (*):
             <br />
-            <input type="text" name="lastname" size="25"
+            <input type="text" name="lastname" size="25"  maxlength="30"
               value="$!registerUser.lastname" />
             <div class="error">$!errors.getMsgs("lastname")</div>
           </td>
@@ -65,14 +65,14 @@
             $msg.user.phone (*):
             <br />
             <input type="text" name="phone" value="$!registerUser.phone"
-              size="35" />
+              size="35" maxlength="40"/>
             <div class="error">$!errors.getMsgs("phone")</div>
           </td>
           <td>
             $msg.user.email (*):
             <br />
             <input type="text" name="email" size="25"
-              value="$!registerUser.email" />
+              value="$!registerUser.email" maxlength="50" />
             <div class="error">$!errors.getMsgs("email")</div>
           </td>
         </tr>
@@ -81,19 +81,19 @@
             $msg.user.street (*):
             <br />
             <input type="text" name="street" value="$!registerUser.street"
-              size="35" />
+              maxlength="50" size="35" />
             <div class="error">$!errors.getMsgs("street")</div>
           </td>
           <td>
             $msg.user.zip (*):
             <br />
-            <input type="text" name="zip" value="$!registerUser.zip"/>
+            <input type="text" name="zip"  maxlength="15" value="$!registerUser.zip"/>
             <div class="error">$!errors.getMsgs("zip")</div>
           </td>
           <td>
             $msg.user.city (*):
             <br />
-            <input type="text" name="city" value="$!registerUser.city" size="25"/>
+            <input type="text" name="city" value="$!registerUser.city" maxlength="40" size="25" />
             <div class="error">$!errors.getMsgs("city")</div>
           </td>
         </tr>
@@ -111,18 +111,18 @@
             <div class="error">$!errors.getMsgs("domain")</div>
           </td>
           <td>
-            $msg.user.department:
+            $msg.user.organisation (*):
             <br />
-            <input type="text" name="department"
-              value="$!registerUser.department" />
-            <div class="error">$!errors.getMsgs("department")</div>
-          </td>
-          <td>
-            $msg.user.organisation:
-            <br />
-            <input type="text" name="organisation" size="25"
+            <input type="text" name="organisation" size="25" maxlength="50"
               value="$!registerUser.organisation" />
             <div class="error">$!errors.getMsgs("organisation")</div>
+          </td>
+          <td>
+            $msg.user.department:
+            <br />
+            <input type="text" name="department" maxlength="50"
+              value="$!registerUser.department" />
+            <div class="error">$!errors.getMsgs("department")</div>
           </td>
         </tr>
         <tr>
