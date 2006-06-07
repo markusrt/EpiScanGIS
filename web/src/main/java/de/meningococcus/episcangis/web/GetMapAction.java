@@ -21,6 +21,16 @@ import de.meningococcus.episcangis.map.exporter.WmsImageExporter;
 
 /**
  * @author Markus Reinhardt
+ * 
+ * @struts.action 
+ *    name="activateUser" 
+ *    path="/ActivateUser"
+ *    scope="request"
+ *    validate="false"
+ *
+ * @struts.action-forward 
+ *    name="success" 
+ *    path="/ListUsers.do"
  */
 public class GetMapAction extends DownloadAction implements
     DownloadAction.StreamInfo

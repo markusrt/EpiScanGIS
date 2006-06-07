@@ -42,7 +42,8 @@ public class MoveMapAction extends Action
         "map");
     User user = (User)session.getAttribute("user");
     
-    if (map != null && (user != null && user.isInRole("nrzm")))
+    if (map != null && (user != null && 
+        (user.isInRole("nrzm") || user.isInRole("public_health"))))
     {
       map.move(move.getXoffset(), move.getYoffset());
       forward = FORWARD_SUCCESS;

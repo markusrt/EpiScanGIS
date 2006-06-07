@@ -5,25 +5,25 @@ package de.meningococcus.episcangis.web;
  * ====================================================================
  */
 
-public class UserNotFoundException extends Exception
+public class ManageUsersException extends Exception
 {
   private static final long serialVersionUID = 1L;
 
-  public UserNotFoundException()
+  public ManageUsersException()
   {
   }
 
-  public UserNotFoundException(String message, Throwable cause)
+  public ManageUsersException(String message, Throwable cause)
   {
     super(message, cause);
   }
 
-  public UserNotFoundException(String message)
+  public ManageUsersException(String message)
   {
     super(message);
   }
 
-  public UserNotFoundException(Throwable cause)
+  public ManageUsersException(Throwable cause)
   {
     super(cause);
   }
