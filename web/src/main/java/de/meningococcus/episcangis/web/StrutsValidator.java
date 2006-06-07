@@ -2,6 +2,8 @@ package de.meningococcus.episcangis.web;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.commons.validator.Field;
 import org.apache.commons.validator.GenericValidator;
 import org.apache.commons.validator.Validator;
@@ -12,10 +14,12 @@ import org.apache.struts.validator.Resources;
 
 import de.meningococcus.episcangis.db.DaoFactory;
 import de.meningococcus.episcangis.db.dao.UserDAO;
+import de.meningococcus.episcangis.db.dao.UserNotFoundException;
 
 public class StrutsValidator
 {
-
+  private static Log log = LogFactory.getLog(StrutsValidator.class);
+  
   public static boolean validateUsername(Object bean, ValidatorAction va,
       Field field, ActionMessages errors, Validator validator,
       HttpServletRequest request)
@@ -26,6 +30,7 @@ public class StrutsValidator
       try
       {
         UserDAO userDao = DaoFactory.getDaoFactory().getUserDAO();
+        log.debug("Get User: " + userDao.getUser(value));
         if (userDao.getUser(value) != null)
         {
           errors.add(field.getKey(), Resources.getActionMessage(validator,
@@ -33,11 +38,9 @@ public class StrutsValidator
           return false;
         }
       }
-      catch (Exception e)
+      catch(UserNotFoundException e) 
       {
-        errors.add(field.getKey(), Resources.getActionMessage(validator,
-            request, va, field));
-        return false;
+        //do nothing as we expect this exception to happen
       }
     }
     return true;
