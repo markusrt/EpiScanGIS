@@ -1,10 +1,13 @@
 #set ($page_title=$msg.page.error_403.title)
-#if( $registeredUser )
-  #set( $username = $request.userPrincipal.name )
-#else
-  #set( $username = $msg.page.error_403.unknown_user )
-#end
 <div class="section">
-  <h1>$msg.page.error_403.title, $msg.user.username: $username</h1>
-  $msg.page.error_403.msg
+  <h1>$msg.page.error_403.title</h1>
+  <p>
+    #if( $user )
+      $msg.user.username: $user.Username
+      $msg.user.role: $user.Roles
+    #end
+  </p>
+  <p>
+    $msg.page.error_403.msg
+  </p>
 </div>

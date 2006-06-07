@@ -1,7 +1,10 @@
 #set ($page_title="Error:$error_cause")
-                                                                                                                                                             
+#set ($error=$request.getAttribute('org.apache.struts.action.EXCEPTION'))                                                                                                                                                             
 <div class="section">
-  <h1>Error: $error_cause</h1>
+  <h1>Error: $error.Class.Name</h1>
+  <p>
+    $error.Message
+  </p>
   <!-- 
   <p>
     Error: $stack_trace
