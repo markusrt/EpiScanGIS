@@ -12,7 +12,7 @@ function getBaseUrl() {
 function getBaseUrl() {
   var url = new LzURL();
   url = LzBrowser.getLoadURLAsLzURL();
-
+  
   return url.protocol + ":" /*+ "//"
     + url.host + ":" + url.port + */;
 }
