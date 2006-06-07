@@ -27,12 +27,27 @@ import de.meningococcus.episcangis.db.dao.ReportedCaseDAO;
 import de.meningococcus.episcangis.db.model.User;
 import de.meningococcus.episcangis.map.AbstractWmsMap;
 import de.meningococcus.episcangis.map.NrzmMap;
+import de.meningococcus.episcangis.map.PublicHealthMap;
 import de.meningococcus.episcangis.map.PublicMap;
 import de.meningococcus.episcangis.map.exporter.XmlExporter;
 
 /**
  * @author Markus Reinhardt
- * TODO change size if map bean already exists
+ * 
+ * @struts.action 
+ *    name="createMap" 
+ *    path="/Map2"
+ *    scope="request"
+ *    validate="false"
+ *    
+ * @struts.action-exception
+ *    type="java.lang.Exception"
+ *    key="error"
+ *    path="/WEB-INF/errors/xmlExceptionResult.jsp"
+ *
+ * @struts.action-forward 
+ *    name="success" 
+ *    path="/ListUsers.do"
  */
 public class CreateMapAction extends DownloadAction implements
     DownloadAction.StreamInfo
@@ -53,7 +68,7 @@ public class CreateMapAction extends DownloadAction implements
     int width = createMap.getWidth();
     int height = createMap.getHeight();
 
-    if (map == null)
+    if (map == null || width != map.getWidth() || height != map.getHeight())
     {
       // Clear cache directory if database has changed
       File cacheDirectory = new File(getServlet().getServletContext()
@@ -75,6 +90,9 @@ public class CreateMapAction extends DownloadAction implements
       User user = (User)session.getAttribute("user");
       if( user != null && user.isInRole("nrzm")) {
         map = new NrzmMap(width,height);
+      }
+      else if( user != null && user.isInRole("public_health")) {
+        map = new PublicHealthMap(width,height);
       }
       else {
         map = new PublicMap(width,height);
