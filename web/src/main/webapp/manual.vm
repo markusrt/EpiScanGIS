@@ -1,1 +1,2 @@
-#parse($msg.page.manual)
+#set($parse=$msg.page.manual)
+#parse($parse)
