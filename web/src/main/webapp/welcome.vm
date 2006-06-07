@@ -1,1 +1,2 @@
-#parse($msg.page.welcome)
+#set($parse=$msg.page.welcome)
+#parse($parse)

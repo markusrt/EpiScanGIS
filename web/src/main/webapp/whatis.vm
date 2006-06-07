@@ -1,1 +1,2 @@
-#parse($msg.page.whatis)
+#set($parse=$msg.page.whatis)
+#parse($parse)
