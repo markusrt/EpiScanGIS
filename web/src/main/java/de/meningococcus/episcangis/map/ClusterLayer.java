@@ -24,10 +24,6 @@ public class ClusterLayer extends MapLayer
         "CLUSTERANALYSISDATE" + jobId, "Date");
     if (isValid())
     {
-      ResourceBundle messages;
-      messages = ResourceBundle.getBundle("MessageResources");
-
-      setDescription(messages.getString(name + ".description"));
       SatScanDAO ssDao = DaoFactory.getDaoFactory().getSatScanDAO();
       SatScanJob ssJob = ssDao.getSatScanJob(jobId);
       Vector<Date> analysisDates = new Vector<Date>(ssDao

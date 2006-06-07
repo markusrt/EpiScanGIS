@@ -15,8 +15,6 @@ import de.meningococcus.episcangis.db.model.AreaType;
  */
 public class IncidenceLayer extends MapLayer
 {
-  private static final String DESCRIPTION = "Displays the yearly incidence of all cases (if applicable with a particular serogroup) within the observation period currently selected, irrespective of age group and/or fine type. The value gets linear inter-/extrapolated depending on the period. Depth sets the area resolution to calculate incidence for.";
-
   IncidenceLayer(String name, String title, boolean hasLegend,
       AbstractWmsMap map)
   {
@@ -33,8 +31,6 @@ public class IncidenceLayer extends MapLayer
         tier.addValue(val);
       }
     }
-
-    this.setDescription(DESCRIPTION);
 
     this.addParameter(tier);
     this.addParameter(new ReferenceParameter("fromMonth"));

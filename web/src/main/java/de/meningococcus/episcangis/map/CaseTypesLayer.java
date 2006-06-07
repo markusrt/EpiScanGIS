@@ -14,8 +14,6 @@ import de.meningococcus.episcangis.db.model.CaseType;
 
 public class CaseTypesLayer extends MapLayer
 {
-  private static final String DESCRIPTION = "Displays all cases of the selected finetype within the observation period and age intervall. Notation: '{serogroup} : P1.{PorA} : F{FetA}'.";
-
   private static Log log = LogFactory.getLog(CaseTypesLayer.class);
 
   CaseTypesLayer(String name, String title, boolean hasLegend,
@@ -40,7 +38,6 @@ public class CaseTypesLayer extends MapLayer
                 + "' is ignored.");
       }
     }
-    this.setDescription(DESCRIPTION);
     this.addParameter(caseTypeSelect);
     this.addParameter(new ReferenceParameter("fromMonth"));
     this.addParameter(new ReferenceParameter("fromYear"));

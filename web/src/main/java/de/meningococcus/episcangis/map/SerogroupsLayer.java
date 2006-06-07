@@ -14,8 +14,6 @@ import de.meningococcus.episcangis.db.model.CaseTypeAttribute;
 
 public class SerogroupsLayer extends MapLayer
 {
-  private static final String DESCRIPTION = "Displays the serogroup of each case within the observation period and age intervall.";
-
   SerogroupsLayer(String name, String title, boolean hasLegend,
       AbstractWmsMap map)
   {
@@ -51,7 +49,6 @@ public class SerogroupsLayer extends MapLayer
     }
     all.setValue(allvalues.toString());
 
-    this.setDescription(DESCRIPTION);
     this.addParameter(serogroupSelector);
     this.addParameter(new ReferenceParameter("fromMonth"));
     this.addParameter(new ReferenceParameter("fromYear"));

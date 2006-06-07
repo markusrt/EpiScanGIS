@@ -2,6 +2,8 @@ package de.meningococcus.episcangis.map;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.MissingResourceException;
+import java.util.ResourceBundle;
 import java.util.Vector;
 
 import org.apache.commons.logging.Log;
@@ -38,12 +40,15 @@ public class MapLayer
     this.title = title;
     this.hasLegend = hasLegend;
     this.addParameter(new ReferenceParameter("areaId"));
-
+    
+    String resourceName = this.name;
+    
     if (!this.name.endsWith("_disabled"))
     {
       if (this.name.endsWith("_default"))
       {
         active = true;
+        resourceName = this.name.substring(0, this.name.indexOf("_default"));
       }
       if (title != null && title.length() == 0)
       {
@@ -58,7 +63,23 @@ public class MapLayer
         this.isValid = true;
       }
     }
-
+    try {
+    ResourceBundle messages;
+    messages = ResourceBundle.getBundle("MessageResources");
+    String i18nTitle = messages.getString("map.layer." + resourceName);
+    if( i18nTitle != null ) {
+      setTitle(i18nTitle);
+    }
+    String description = messages.getString("map.layer." + resourceName + ".description");
+    if( description != null ) {
+      setDescription(description);
+    }
+    }
+    catch(MissingResourceException e) {
+      log.warn("Layer '"+ resourceName + 
+        "': Some resources needed for i18n of map layer description/title are missing:");
+      log.error(e.getMessage());
+    }
   }
 
   public String getTitle()
