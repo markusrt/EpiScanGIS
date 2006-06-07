@@ -44,6 +44,12 @@ public abstract class AbstractWmsMap
 
   private BoundingBox bbox = new BoundingBox();
 
+  /**
+   * @param width
+   * @param height
+   * @throws MapInitializationException
+   * TODO move wmsUrl from map to web (add to constructor)
+   */
   public AbstractWmsMap(int width, int height)
       throws MapInitializationException
   {
@@ -325,5 +331,21 @@ public abstract class AbstractWmsMap
   public void move(double xOffset, double yOffset)
   {
     bbox.move(xOffset, yOffset);
+  }
+
+  /**
+   * @return Returns the height.
+   */
+  public int getHeight()
+  {
+    return height;
+  }
+
+  /**
+   * @return Returns the width.
+   */
+  public int getWidth()
+  {
+    return width;
   }
 }
