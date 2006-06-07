@@ -2,10 +2,10 @@
   ##############################################################################
   ## Leftmost links
   ##############################################################################
-  <a href="http://www.uni-wuerzburg.de" target="_blank" class="newWindow">
-    $msg.global.university-wuerzburg</a>
-  | <a href="http://www.ridom.de" target="_blank" class="newWindow">
-      Ridom GmbH</a>	
+  <a href="http://www.ridom.de" target="_blank" class="newWindow">
+      Ridom GmbH</a>
+  | <a href="http://www2.informatik.uni-wuerzburg.de" target="_blank" class="newWindow">
+    $msg.global.info2.university-wuerzburg</a>
 </div>
 <div class="xright">
   ##############################################################################
@@ -23,16 +23,12 @@
   #if ( !$disableLocaleSwitcher || $disableLocaleSwitcher == false )
   |
   <span style="vertical-align:middle;">
- 
-  #if ($locale.Language=='en')
    <a href="$link.setAction('Locale').addQueryData('language','de')"
      title="$msg.global.switchLangGerman"><img 
      src="images/icons/de.png" alt="(DE)"/></a>
-  #else
    <a href="$link.setAction('Locale').addQueryData('language','en')"
      title="$msg.global.switchLangEnglish"><img 
      src="images/icons/en.png" alt="(US)" /></a>
-  #end
   </span>
   #end
 </div>
