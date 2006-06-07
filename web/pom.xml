@@ -279,10 +279,10 @@
             <containerId>${containerId}</containerId>
             <type>remote</type>
             <!--
-            <zipUrlInstaller>
+              <zipUrlInstaller>
               <url>${url}</url>
               <installDir>${installDir}</installDir>
-            </zipUrlInstaller>
+              </zipUrlInstaller>
             -->
           </container>
           <configuration>
@@ -299,17 +299,52 @@
             </properties>
           </configuration>
           <!-- 
-          <configuration>
+            <configuration>
             <properties>
-              <cargo.servlet.port>8082</cargo.servlet.port>
+            <cargo.servlet.port>8082</cargo.servlet.port>
             </properties>
-          </configuration>
+            </configuration>
           -->
         </configuration>
 
       </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>xdoclet-maven-plugin</artifactId>
+        <executions>
+          <execution>
+            <phase>generate-sources</phase>
+            <goals>
+              <goal>xdoclet</goal>
+            </goals>
+            <configuration>
+              <tasks>
+                <webdoclet force="true"
+                  destDir="${project.build.directory}/generated-sources/xdoclet"
+                  mergeDir="${basedir}/src/main/config/xdoclet/">
+                  <fileset dir="${project.build.sourceDirectory}">
+                    <include name="**/*Action.java" />
+                  </fileset>
+                  <strutsconfigxml
+                    destDir="${project.build.directory}/${project.artifactId}-${project.version}/WEB-INF"
+                    version="1.2" />
+                </webdoclet>
+              </tasks>
+              <goals>
+                <goal>xdoclet</goal>
+              </goals>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
     </plugins>
     <testResources>
+      <testResource>
+        <directory>target/${project.artifactId}-${project.version}/</directory>
+        <includes>
+          <include>WEB-INF/*.xml</include>
+        </includes>
+      </testResource>
       <testResource>
         <directory>src/main/webapp</directory>
         <includes>

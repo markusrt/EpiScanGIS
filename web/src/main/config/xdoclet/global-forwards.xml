@@ -1,0 +1,8 @@
+<global-forwards>
+  <forward name="success" path="/welcome.vm" />
+  <forward name="index" path="/welcome.vm" />
+  <forward name="welcome" path="/welcome.vm" />
+  <forward name="mapbrowser" path="/mapbrowser.vm" />
+  <forward name="error" path="/WEB-INF/errors/error.vm" />
+  <forward name="denied" path="/WEB-INF/errors/error_403.vm" />
+</global-forwards>

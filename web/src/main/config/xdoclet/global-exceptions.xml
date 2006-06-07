@@ -1,0 +1,4 @@
+<global-exceptions>
+  <exception key="error" type="java.lang.Exception"
+    path="/WEB-INF/errors/error.vm" scope="request" />
+</global-exceptions>

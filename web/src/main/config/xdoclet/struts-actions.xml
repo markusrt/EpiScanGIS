@@ -1,0 +1,87 @@
+<action path="/Map"
+  type="de.meningococcus.episcangis.web.CreateMapAction"
+  name="createMap" scope="request">
+  <exception key="error" type="java.lang.Exception"
+    path="/WEB-INF/errors/xmlExceptionResult.jsp" scope="request" />
+</action>
+
+<action path="/GetMap"
+  type="de.meningococcus.episcangis.web.GetMapAction">
+</action>
+
+<action path="/CountCasesByAttribute"
+  type="de.meningococcus.episcangis.web.CountCasesByAttributeAction"
+  name="countCasesByAttribute" scope="request">
+  <forward name="success" path="/WEB-INF/pages/showCases.vm" />
+</action>
+
+<action path="/GetMapLayer"
+  type="de.meningococcus.episcangis.web.GetMapLayerAction" name="layer"
+  scope="request">
+</action>
+
+<action path="/GetLegendGraphic"
+  type="de.meningococcus.episcangis.web.GetLegendGraphicAction"
+  name="layer" scope="request">
+</action>
+
+<action path="/PrintMap"
+  type="de.meningococcus.episcangis.web.PrintMapAction">
+  <forward name="success" path="/WEB-INF/pages/printableMap.vm" />
+</action>
+
+<action path="/MoveMap"
+  type="de.meningococcus.episcangis.web.MoveMapAction" name="move"
+  scope="request">
+  <forward name="success" path="/WEB-INF/results/xmlDefaultSuccess.jsp" />
+  <forward name="error" path="/WEB-INF/errors/xmlDefaultError.jsp" />
+</action>
+
+<action path="/SetParameter"
+  type="de.meningococcus.episcangis.web.SetParameterAction"
+  name="parameter" scope="request">
+  <forward name="success"
+    path="/WEB-INF/results/xmlSetParameterSuccess.jsp" />
+  <forward name="error" path="/WEB-INF/errors/xmlDefaultError.jsp" />
+</action>
+
+<action path="/ToggleLayerState"
+  type="de.meningococcus.episcangis.web.ToggleLayerStateAction"
+  name="layer" scope="request">
+  <forward name="success" path="/WEB-INF/results/xmlDefaultSuccess.jsp" />
+</action>
+
+<action path="/GetFeatureInfo"
+  type="de.meningococcus.episcangis.web.GetFeatureInfoAction"
+  name="info" scope="request">
+  <exception key="error" type="java.lang.Exception"
+    path="/WEB-INF/errors/xmlExceptionResult.jsp" scope="request" />
+</action>
+
+<action path="/Login"
+  type="de.meningococcus.episcangis.web.LoginAction">
+</action>
+
+<action path="/Logout"
+  type="de.meningococcus.episcangis.web.LogoutAction">
+</action>
+
+<action path="/ManageUsers"
+  type="de.meningococcus.episcangis.web.ManageUsersAction"
+  name="registerUser" scope="request" validate="true" parameter="method"
+  input="/registerUser.vm">
+  <forward name="registerUserSuccess"
+    path="/WEB-INF/pages/registerUserSuccess.vm" />
+
+</action>
+
+<!-- Locale Action -->
+<action path="/Locale"
+  type="de.meningococcus.episcangis.web.LocaleAction" name="localeForm"
+  scope="request">
+</action>
+
+<action path="/ListUsers"
+  type="de.meningococcus.episcangis.web.ListUsersAction">
+  <forward name="success" path="/WEB-INF/pages/listUsers.vm" />
+</action>
