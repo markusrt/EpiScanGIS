@@ -27,14 +27,21 @@
           <var-value>20</var-value>
         </var>
       </field>
-      <field property="password" depends="required,minlength">
+
+      <field property="password" depends="required,minlength,maxlength">
         <arg position="0" key="user.password"/>
         <arg position="1" name="minlength" key="${var:minlength}" resource="false"/>
         <var>
           <var-name>minlength</var-name>
           <var-value>5</var-value>
         </var>
+        <arg position="1" name="maxlength" key="${var:maxlength}" resource="false"/>
+        <var>
+          <var-name>maxlength</var-name>
+          <var-value>20</var-value>
+        </var>
       </field>
+
       <field property="confirmPassword" depends="required,validwhen">
         <arg position="0" key="user.confirmPassword"/>
         <msg name="validwhen" key="errors.passwords.match"/>
