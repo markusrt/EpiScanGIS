@@ -2,6 +2,9 @@ package de.meningococcus.episcangis.map;
 
 import java.util.Locale;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 /* ====================================================================
  *   Copyright �2005 Markus Reinhardt - All Rights Reserved.
  * ====================================================================
@@ -9,6 +12,8 @@ import java.util.Locale;
 
 final class PublicMapLayerFactory implements MapLayerFactory
 {
+  private static Log log = LogFactory.getLog(PublicMapLayerFactory.class);
+  
   public MapLayer getMapLayer(String name, String title, boolean hasLegend,
       AbstractWmsMap map)
   {
@@ -43,19 +48,11 @@ final class PublicMapLayerFactory implements MapLayerFactory
     {
       ret = new PopdensityLayer(name, title, hasLegend, map);
     }
-    else if (realName.equals("cluster"))
-    {
-      // Public is not allowed to see this layer
-      ret = null;
-    }
-    else if (realName.equals("clusterretro"))
-    {
-      // Public is not allowed to see this layer
-      ret = null;
-    }
     else
     {
-      ret = new MapLayer(name, title, hasLegend, map);
+      // Public is not allowed to see all layers
+      log.info("Layer " + realName + " is disabled in this factory.");
+      ret = null;
     }
     return ret;
   }
