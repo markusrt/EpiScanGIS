@@ -2,14 +2,13 @@
   <h5>$msg.page.navigation.quicklinks</h5>
   <ul>
     <li><a href="#"
-      onclick="window.open('mapbrowser.vm','mapbrowser','status=no,scrollbars=yes,width=1020,height=810')"
+      onclick="window.open('mapbrowser.vm','mapbrowser','status=no,scrollbars=no,width=1020,height=820')"
       >$msg.page.navigation.launch</a></li>
   </ul>
   <h5>$msg.page.navigation.about</h5>
   <ul>
     <li><a href="whatis.vm">$msg.page.whatis.title</a></li>
     <li><a href="manual.vm">$msg.page.manual.title</a></li>
-    <li><a href="screenshots.vm">$msg.page.screenshots.title</a></li>
   </ul>
   <h5>$msg.page.navigation.other</h5>
   <ul>
@@ -45,5 +44,5 @@
         alt="Valid XHTML 1.0 Transitional" height="31" width="88" /></a><br/>
   <a href="http://maven.apache.org/" title="Built by Maven" 
     id="poweredBy"><img alt="Built by Maven" 
-    src="http://132.187.144.10:8080/web/images/maven-feather.png"></img></a>                                                                                          
+    src="http://132.187.144.10:8080/images/maven-feather.png"></img></a>                                                                                          
 </div>
