@@ -1,0 +1,50 @@
+#set ($page_title="Userlist")
+#set( $rowclass = $alternator.make(true,'a', 'b') )
+                                                                                                                                                             
+<div class="section">
+  <h1>Users</h1>
+  <table class="bodyTable">
+    <thead>
+      <tr>
+        <td>Nr.</td>
+        <td>$msg.user.forename</td>
+        <td>$msg.user.lastname</td>
+        <td>$msg.user.email</td>  
+        <td>$msg.user.phone</td>  
+        <td>$msg.user.registrationDate</td>  
+        <td>$msg.role.public_health</td>
+        <td>$msg.role.nrzm</td>
+      </tr>  
+    </thead>
+    <tbody>
+    #foreach( $u in $allUsers )
+    <tr class="$rowclass">
+      <td>$velocityCount</td>  
+      <td>$u.Forename</td>
+      <td>$u.Lastname</td>
+      <td><a href="mailto:$u.Forename $u.Lastname <$u.Email>">$u.Email</a></td>
+      <td>$u.Phone</td>
+      <td>$date.format("short_date", $u.RegistrationDate)</td>
+      <td>
+        #if($u.isInRole("public_health"))
+          aktiv
+        #elseif($user.isInRole("admin"))
+          <a href="$link.setAction('ActivateUser').addQueryData('username',$u.Username).addQueryData('role','public_health')">aktivieren</a>
+        #else
+          inaktiv
+        #end
+      </td> 
+      <td>
+        #if($u.isInRole("nrzm"))
+          aktiv
+        #elseif($user.isInRole("admin"))
+          <a href="$link.setAction('ActivateUser').addQueryData('username',$u.Username).addQueryData('role','nrzm')">aktivieren</a>
+        #else
+          inaktiv
+        #end
+      </td> 
+    </tr>
+    #end
+    </tbody>
+  </table>
+</div>
