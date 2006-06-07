@@ -68,6 +68,18 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
         <hr/>
       </div>
     </div>
+    #if ($messages.exist())
+    <div>
+      <dl style="font-size:smaller;">
+        <dt>Message/s</dt>
+        <dd>
+          #foreach ($e in $messages.all )
+            $e<br />
+          #end
+        </dd>
+     </dl>
+    </div>
+    #end
     #if ( !$disableNav || $disableNav==false )
     <div id="leftColumn">
       #parse('layout/default/navigation.vm')
