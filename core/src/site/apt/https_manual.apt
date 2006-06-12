@@ -1,0 +1,431 @@
+  ---
+  EpiScanGIS - Absicherung des passwortgeschützten Bereiches mittels SSL
+  ---
+  Markus Reinhardt
+  ---
+  12.06.2006
+  ---
+
+EpiScanGIS - Absicherung des passwortgeschützten Bereiches mittels HTTPS
+
+ Es gibt zwei wichtige Gründe für den
+ Einsatz einer gesicherten Datenübertragung mittels 
+ {{{http://de.wikipedia.org/wiki/Hypertext_Transfer_Protocol_Secure}Hypertext Transfer Protocol Secure (HTTPS)}}
+ in EpiScanGIS:
+ 
+  * Alle vom Benutzer gesendeten Daten (insbesondere Benutzername und Passwort)
+    sind dadurch vor unberechtigtem Zugriff geschützt. Ein Dritter, der den
+    Netzwerkverkehr mitschneidet, ist damit nicht mehr in der Lage sich auf 
+    diesem Wege Zugriff zum System zu verschaffen.
+    
+  * Ebenso sind natürlich auch alle vom Server versendeten Daten verschlüsselt.
+    Das ist insbesondere dann wichtig, wenn über das Netz Daten übertragen 
+    werden, die über den Anonymen Zugang nicht nach an unberechtigte gelangen
+    dürfen. Das HTTPS-Protokoll schafft eine sicheren Kanal zwischen Benutzer
+    und Server.
+    
+ Diese Anleitung dokumentiert alle Schritte, die notwendig sind um die 
+ HTTPS-Verschlüsselung auf den EpiScanGIS-Servern zu installieren.
+ 
+* Einrichtung von HTTPS für den Apache Webservers
+
+ Der Apache Webserver ist der primäre Server mit dem sich alle 
+ EpiScanGIS-Clients verbinden (siehe auch 
+ {{{server_manual.html}Installation und Konfiguration des Servers}}). Daher ist
+ es sinnvoll, die Verschlüsselung ebenfalls direkt im Apache durchzuführen.
+ 
+ Das Modul <mod_ssl> ist eine Erweiterung von Apache, welche dem Server eine
+ direkte Schnittstelle zu der OpenSSL-Bibliothek bietet.
+
+** Generierung von Schlüsseln und Zertifikaten
+ 
+ Für die gesicherte Kommunikation benötigt das HTTPS-Protokoll einen privaten
+ Schlüssel und ein öffentliches Zertifikat. Bevor diese zur Sicherung des 
+ Datenverkehrs eingesetzt werden können, müssen sie erzeugt werden.
+ 
+ Die folgenden Schritte setzen voraus, dass OpenSSL auf dem Server installiert
+ und funktionsfähig ist (überprüfbar durch den Befehl <<<openssl version>>>).
+ Diese Anleitung wurde auf Grundlage der Version <0.9.7f 22 Mar 2005>. 
+ 
+*** Erzeugung eines privater Schlüssels für den Server
+
+ Der Server setzt einen privaten Schlüssel ein um Nachrichten, die an ihn 
+ geschickt werden zu entschlüsseln. Außerdem wird mit diesem Schlüssels
+ ein Zertifikat erzeugt, das die Identität des Servers nach außen gewährleistet.
+ 
+ Folgender Befehl erzeugt einen neuen 1024 Bit Schlüssel in der Datei 
+ <episcangis.hygiene.uni-wuerzburg.de.key>: 
+
++------------------------------------------------------------------------------+
+openssl genrsa -des3 -out episcangis.hygiene.uni-wuerzburg.de.key 1024
++------------------------------------------------------------------------------+
+
+ Um Schlüssel Fremden gegenüber vertrauenswürdiger zu machen, ist es erforderlich
+ diese durch eine externe bzw. eigene Zertifizierungsstelle unterschreiben
+ zu lassen. Da eine offizielle Zertifizierung zu teuer ist, werden wir in diesem
+ Fall den Schlüssel selbst zertifizieren.
+ 
+ In diesem Fall benötigen wir jedoch ebenfalls einen 
+ 'Certificate Signing Request' (CSR), welcher mit folgendem Befehl generiert wird:
+ 
++------------------------------------------------------------------------------+
+openssl req -new -key episcangis.hygiene.uni-wuerzburg.de.key -out episcangis.hygiene.uni-wuerzburg.de.csr -days 1825
++------------------------------------------------------------------------------+
+
+ Es folgt ein Dialog in dem die entsprechenden Daten (siehe unten) eingegeben 
+ werden müssen (<<WICHTIG:>> Common Name muss der qualifizierte Domainname des 
+ zu sichernden Servers sein):
+
++------------------------------------------------------------------------------+ 
+Enter pass phrase for episcangis.hygiene.uni-wuerzburg.de.key:
+You are about to be asked to enter information that will be incorporated
+into your certificate request.
+What you are about to enter is what is called a Distinguished Name or a DN.
+There are quite a few fields but you can leave some blank
+For some fields there will be a default value,
+If you enter '.', the field will be left blank.
+-----
+Country Name (2 letter code) [GB]:DE
+State or Province Name (full name) [Berkshire]:Bavaria
+Locality Name (eg, city) [Newbury]:Wuerzburg
+Organization Name (eg, company) [My Company Ltd]:University of Wuerzburg
+Organizational Unit Name (eg, section) []:Institute for Hygiene and Microbiology
+Common Name (eg, your name or your server's hostname) []:episcangis.hygiene.uni-wuerzburg.de
+Email Address []:admin@hygiene.uni-wuerzburg.de
+
+Please enter the following 'extra' attributes
+to be sent with your certificate request
+A challenge password []:
+An optional company name []:
++------------------------------------------------------------------------------+
+
+ Die Datei <episcangis.hygiene.uni-wuerzburg.de.csr> muss nun entweder an eine
+ externe Zertifizierungsstelle geschickt werden oder im Falle von akutem Geldmangel
+ selbst zertifiziert werden.
+
+*** Erzeugung einer eigene Zertifizierungsstelle
+
+ <<WICHTIG:>> die Befehle in diesem Abschnitt müssen nur einmal durchgeführt
+ werden. Mit Hilfe des hier erzeugten Zertifizierungsschlüssels und Zertifikates
+ lassen sich künfig alle erzeugten Schlüssel (siehe voriger Abschnitt) 
+ zertifizieren (siehe nächster Abschnitt).
+
+ OpenSSL stellt alle Befehle bereit, um selbst Zertifikate ausstellen zu können.
+ Als erstes erstellt der folgende Befehl einen Schlüssel für die 
+ Zertifizierungsstelle:
+ 
++------------------------------------------------------------------------------+ 
+openssl genrsa -des3 -out ca.key 1024
++------------------------------------------------------------------------------+ 
+
+ Mit Hilfe von diesem Schlüssel (und dieser Vorgang ist für die nächsten 25 Jahre 
+ nicht mehr nötig), lässt sich folgendermaßen ein selbst signiertes CA 
+ Zertifikat erzeugen:
+ 
++------------------------------------------------------------------------------+ 
+openssl req -new -x509 -days 18250 -key ca.key -out ca.crt
++------------------------------------------------------------------------------+
+
+ Es ist wieder die Angabe einiger Daten notwendig:
+ 
++------------------------------------------------------------------------------+ 
+Enter pass phrase for ca.key:
+You are about to be asked to enter information that will be incorporated
+into your certificate request.
+What you are about to enter is what is called a Distinguished Name or a DN.
+There are quite a few fields but you can leave some blank
+For some fields there will be a default value,
+If you enter '.', the field will be left blank.
+-----
+Country Name (2 letter code) [GB]:DE
+State or Province Name (full name) [Berkshire]:Bavaria
+Locality Name (eg, city) [Newbury]:Wuerzburg
+Organization Name (eg, company) [My Company Ltd]:University of Wuerzburg
+Organizational Unit Name (eg, section) []:Institute for Hygiene and Microbiology
+Common Name (eg, your name or your server's hostname) []:hygiene.uni-wuerzburg.de
+Email Address []:admin@hygiene.uni-wuerzburg.de
++------------------------------------------------------------------------------+ 
+
+ Dieses Zertifikat dient nun zusammen mit dem privaten Schlüssel dazu, die 
+ Schlüssel CSRs anderer Server 
+ (wie z.B. <episcangis.hygiene.uni-wuerzburg.de.csr>) zu zertifizieren.
+ 
+ <<WICHTIG:>> das eben erzeugte selbst signierte Zertifikat läuft am
+ 6. Juni 2031 um 11.57 Uhr ab. Danach muss der letzte Schritt erneut ausgeführt
+ werden.
+ 
+*** Zertifizierung eines Schlüssels
+  
+ Der Befehl zur Schlüsselzertifizierung ist relativ komplex. Daher gibt es ein
+ entsprechendes Skript, welches die einzelnen Kommandos ausführt. Dieses Skript
+ befindet sich in den Quellpaketen von <mod_ssl> im Unterverzeichnis 
+ <pkg.contrib/> (<sign.sh>).
+ 
+ Die Zertifizierung des Schlüssels 
+ (durch den CSR <episcangis.hygiene.uni-wuerzburg.de.csr>) erledigt der Befehl:
+ 
++------------------------------------------------------------------------------+ 
+./sign.sh episcangis.hygiene.uni-wuerzburg.de.csr
++------------------------------------------------------------------------------+
+
+ In dem Skript <sign.sh> gibt es einen Eintrag <default_days=xxx>, über den 
+ sich die Gültigkeitsdauer des Zertifikates anpassen lässt.
+ 
+ Das Ergebnis einer erfolgreichen Zertifizierung ist die Datei 
+ <episcangis.hygiene.uni-wuerzburg.de.crt>, die im nächsten Schritt auf dem
+ Webserver zusammen mit dem <episcangis.hygiene.uni-wuerzburg.de.key> für die
+ Verschlüsselung eingesetzt wird.
+ 
+** Konfiguration des Apache
+
+ Um die SSL-Funktionalität in Apache nutzen zu können muss <mod_ssl> insalliert 
+ sein. Die {{{www.modssl.org}Website}} hält alle Informationen bereit, wie das
+ bei der jeweiligen Apache-Installation funktioniert.
+ 
+ Die Basiskonfiguration von SSL wird durch die folgenden Zeilen durchgeführt.
+ Auf dem EpiScanGIS Server stehen diese Optionen in der Datei 
+ </etc/httpd/conf.d/ssl.conf>. Grundsätzlich handelt es sich hierbei um die
+ Standard SSL-Konfiguration:
+ 
++------------------------------------------------------------------------------+ 
+#
+# This is the Apache server configuration file providing SSL support.
+# It contains the configuration directives to instruct the server how to
+# serve pages over an https connection. For detailing information about these
+# directives see <URL:http://httpd.apache.org/docs-2.0/mod/mod_ssl.html>
+#
+# Do NOT simply read the instructions in here without understanding
+# what they do.  They're here only as hints or reminders.  If you are unsure
+# consult the online docs. You have been warned.
+#
+
+LoadModule ssl_module modules/mod_ssl.so
+
+#   Until documentation is completed, please check http://www.modssl.org/
+#   for additional config examples and module docmentation.  Directives
+#   and features of mod_ssl are largely unchanged from the mod_ssl project
+#   for Apache 1.3.
+
+#
+# When we also provide SSL we have to listen to the
+# standard HTTP port (see above) and to the HTTPS port
+#
+Listen 443
+
+##
+##  SSL Global Context
+##
+##  All SSL configuration in this context applies both to
+##  the main server and all SSL-enabled virtual hosts.
+##
+
+#
+#   Some MIME-types for downloading Certificates and CRLs
+#
+AddType application/x-x509-ca-cert .crt
+AddType application/x-pkcs7-crl    .crl
+
+#   Pass Phrase Dialog:
+#   Configure the pass phrase gathering process.
+#   The filtering dialog program (`builtin' is a internal
+#   terminal dialog) has to provide the pass phrase on stdout.
+SSLPassPhraseDialog  builtin
+
+#   Inter-Process Session Cache:
+#   Configure the SSL Session Cache: First the mechanism
+#   to use and second the expiring timeout (in seconds).
+#SSLSessionCache        dc:UNIX:/var/cache/mod_ssl/distcache
+SSLSessionCache         shmcb:/var/cache/mod_ssl/scache(512000)
+SSLSessionCacheTimeout  300
+
+#   Semaphore:
+#   Configure the path to the mutual exclusion semaphore the
+#   SSL engine uses internally for inter-process synchronization.
+SSLMutex default
+
+#   Pseudo Random Number Generator (PRNG):
+#   Configure one or more sources to seed the PRNG of the
+#   SSL library. The seed data should be of good random quality.
+#   WARNING! On some platforms /dev/random blocks if not enough entropy
+#   is available. This means you then cannot use the /dev/random device
+#   because it would lead to very long connection times (as long as
+#   it requires to make more entropy available). But usually those
+#   platforms additionally provide a /dev/urandom device which doesn't
+#   block. So, if available, use this one instead. Read the mod_ssl User
+#   Manual for more details.
+SSLRandomSeed startup file:/dev/urandom  256
+SSLRandomSeed connect builtin
+#SSLRandomSeed startup file:/dev/random  512
+#SSLRandomSeed connect file:/dev/random  512
+#SSLRandomSeed connect file:/dev/urandom 512
+
+#
+# Use "SSLCryptoDevice" to enable any supported hardware
+# accelerators. Use "openssl engine -v" to list supported
+# engine names.  NOTE: If you enable an accelerator and the
+# server does not start, consult the error logs and ensure
+# your accelerator is functioning properly.
+#
+SSLCryptoDevice builtin
+#SSLCryptoDevice ubsec
++------------------------------------------------------------------------------+ 
+     
+ Diese Datei regelt die globalen Optionen (wie z.B. das 'Lauschen' des Apache
+ am Port 443). Alle weiteren Host- bzw. Virtual-Host-spezifischen Details sind
+ am besten in einer eigenständigen Konfigurationsdatei aufgehoben.
+ 
+ Im Falle des 'Virtual Host' <episcangis.hygiene.uni-wuerzburg.de> ist das die 
+ Datei </etc/httpd/conf.d/vhost_episcangis.conf>. Im Folgenden ist nur der
+ 'Virtual Host' mit dem Namen *:443, d.h. der für SSL abgedruckt (siehe auch 
+ {{{server_manual.html}Installation und Konfiguration des Servers}}):
+
++------------------------------------------------------------------------------+ 
+##
+## EpiScanGIS SSL Virtual Host Context
+##
+## This virtual host provides a SSL connection to security protected areas of
+## th EpiScanGIS web application. It is easier to let apache handle the SSL
+## encryption channel instead of using tomcats methods.
+##
+NameVirtualHost *:443
+<VirtualHost *:443>
+
+  # Name for this virtual host
+  ServerName episcangis.hygiene.uni-wuerzburg.de
+
+  # Tomcat directory is document root
+  DocumentRoot "/opt/tomcat5.5/webapps"
+
+  # Mount every (*) request to this vhost on worker1
+  # @see APACHE_CONF_DIR/conf/workers.properties
+  JkMount /* worker1
+
+  # Switch on the rewrite engine to enable mod_rewrite (needs to be loaded!)
+  # capabilities
+  RewriteEngine Off
+  # RewriteCond to disable the following rule for every SSL-required page
+  # RewriteCond %{REQUEST_URI} !^/episcangis-web.*?(images/|css/|Login.do|Logout.do|registerUser.vm|ManageUsers.do).*
+  RewriteCond %{REQUEST_URI} !^/episcangis-web.*
+  # RewriteRule to redirect every request on SSL URLs (except the ones matched
+  # by the upper condition) to their non-SSL-equivalent.
+  # @example https://BASEURL/welcome.vm
+  #           -> http://episcangis.hygiene.uni-wuerzburg.de/welcome.vm
+  RewriteRule ^/(.*) http://episcangis.hygiene.uni-wuerzburg.de/$1 [R,NC]
+
+  # Use separate log files for the SSL virtual host; note that LogLevel
+  # is not inherited from httpd.conf.
+  ErrorLog logs/ssl_error_log
+  TransferLog logs/ssl_access_log
+  LogLevel warn
+
+  # Per-Server Logging:
+  # The home of a custom SSL log file. Use this when you want a
+  # compact non-error SSL logfile on a virtual host basis.
+  CustomLog logs/ssl_request_log \
+          "%t %h %{SSL_PROTOCOL}x %{SSL_CIPHER}x \"%r\" %b"
+
+  # SSL Engine Switch:
+  # Enable/Disable SSL for this virtual host.
+  SSLEngine on
+
+  # SSL Cipher Suite:
+  # List the ciphers that the client is permitted to negotiate.
+  # @see the mod_ssl documentation for a complete list.
+  SSLCipherSuite ALL:!ADH:!EXPORT56:RC4+RSA:+HIGH:+MEDIUM:+LOW:+SSLv2:+EXP
+
+  # Server Certificate:
+  # Point SSLCertificateFile at a PEM encoded certificate.  If
+  # the certificate is encrypted, then you will be prompted for a
+  # pass phrase.  Note that a kill -HUP will prompt again.  A new
+  # certificate can be generated using the genkey(1) command.
+  SSLCertificateFile /etc/pki/tls/certs/episcangis.hygiene.uni-wuerzburg.de.crt
+
+  # Server Private Key:
+  # If the key is not combined with the certificate, use this
+  # directive to point at the key file.  Keep in mind that if
+  # you've both a RSA and a DSA private key you can configure
+  # both in parallel (to also allow the use of DSA ciphers, etc.)
+  SSLCertificateKeyFile /etc/pki/tls/private/episcangis.hygiene.uni-wuerzburg.de.key
+
+  SetEnvIf User-Agent ".*MSIE.*" \
+         nokeepalive ssl-unclean-shutdown \
+         downgrade-1.0 force-response-1.0
+
+
+</VirtualHost>
++------------------------------------------------------------------------------+
+
+ Die wichtigsten Direktiven für SSL sind <SSLCertificateFile> und 
+ <SSLCertificateKeyFile>. Hiermit wird definiert unter welchen Pfaden das 
+ Server-Zertifikat und der -Schlüssel zu finden sind. Das sind die Dateien
+ <episcangis.hygiene.uni-wuerzburg.de.crt> und 
+ <episcangis.hygiene.uni-wuerzburg.de.key> auf den vorherigen Schritten.
+ 
+** Apache testen
+
+ Damit die Konfiguration wirksam wird, muss der Apache neu gestartet werden.
+ Hierbei ist es nun erforderlich das Passwort des privaten Schlüssels
+ einzugeben. Das ist von jetzt an aus Sicherheitsgründen bei jedem Neustart
+ nötig. Weiter unten ist noch eine Möglichkeit aufgeführt, den Server ohne
+ Passworteingabe zu starten.
+
+ Wenn alles gut gegangen ist sollte der Webserver jetzt unter dem 
+ URL {{{https://episcangis.hygiene.uni-wuerzburg.de}}} mit einer sicheren 
+ Verbindung antworten. Bei einem selbst zertifizierten Schlüssel erscheint eine
+ entsprechende Warnung vom Browser. 
+ 
+ Hiermit ist der komplette Verkehr zu dem Tomcat Server abgesichert.
+ 
+** Server Schlüssel ohne Passwort betreiben
+
+ <ACHTUNG:> die folgende Vorgehensweise ist nicht empfohlen. Wenn der private
+ Schlüssel des Servers auf diesem ohne Passwort abgelegt ist, so kann jeder, 
+ der die Schlüsseldatei in die Finger bekommt die digitale Identität des 
+ Servers annehmen. 
+  
+ Falls der Server nach außen entsprechend gesichert ist und somit ein 
+ kein unberechtigter Zugriff auf die Schlüsseldatei erfolgen kann, dann
+ kann das Passwort vom privaten Schlüssel entfernt werden. Damit entfällt
+ die Passworteingabe bei Neustart des Apache:
+
++------------------------------------------------------------------------------+ 
+cp episcangis.hygiene.uni-wuerzburg.de.key episcangis.hygiene.uni-wuerzburg.de.key.org
+openssl rsa -in episcangis.hygiene.uni-wuerzburg.de.key.org -out episcangis.hygiene.uni-wuerzburg.de.key
++------------------------------------------------------------------------------+ 
+ 
+ Um anderen Benutzern (außer root) den Zugriff auf diesen Schlüssel zu verwehren 
+ muss noch das Kommando
+  
++------------------------------------------------------------------------------+ 
+chmod 400 episcangis.hygiene.uni-wuerzburg.de.key
++------------------------------------------------------------------------------+ 
+
+ ausgeführt werden.
+ 
+* Zusätzliche Einstellungen für den Tomcat
+
+ Prinzipiell funktioniert mit den obigen Einstellungen bereits alles. Lediglich
+ der Kartenbetrachter, bzw. die OpenLaszlo-Flashanwendung wird noch nicht
+ kooperieren.
+ 
+ Das Problem liegt dabei darin, dass Java unsere 
+ hausgemachte Zertifizierungsstelle nicht als vertrauenswürdig einstuft, da
+ es sie nicht kennt. Die virtuelle Maschine lässt sich zum Glück mit einem
+ kleinen Befehl davon überzeugen, dass die Hygiene eine vertrauenswürdige
+ Stelle ist: 
+ 
++------------------------------------------------------------------------------+ 
+$JAVA_HOME/bin/keytool -import -keystore $JAVA_HOME/jre/lib/security/cacerts -alias hygieneca -file ~/CA/ca.crt
++------------------------------------------------------------------------------+ 
+
+ Der Befehl <keytool> fragt nach einem Passwort. Das hat den vom JRE 
+ festgelgten Standardwert <changeit>. 
+ 
+ Nach einem Neustart des Tomcat-Servers sollte nun auch der Kartenbetrachter
+ über HTTPS wie gewohnt funktionieren.
+ 
+ 
+
+ 
+  
+ 
