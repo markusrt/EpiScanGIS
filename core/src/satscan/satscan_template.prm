@@ -61,7 +61,7 @@ MultipleDataSetsPurposeType=0
 
 [Spatial Window]
 ; maximum geographic cluster size (<=50%)
-MaxGeographicSize=5.000000
+MaxGeographicSize=7.000000
 ; include purely temporal clusters? (y/n)
 IncludePurelyTemporal=n
 ; how max spatial size should be interpretted (0=Percentage, 1=Distance, 2=Percentage of max circle population file)
