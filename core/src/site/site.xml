@@ -17,6 +17,9 @@
 				href="http://www.uni-wuerzburg.de" />
 		</links>
 		<menu name="Dokumente">
+      <item name="HowTo">   
+        <item name="Absicherung des Servers durch HTTPS" href="https_manual.html"/>
+      </item>
       <item name="Entwurf">   
         <item name="R-Komponente" href="r_entwurf.html"/>
       </item>
