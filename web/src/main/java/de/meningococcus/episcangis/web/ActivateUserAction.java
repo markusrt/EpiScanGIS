@@ -62,7 +62,6 @@ public class ActivateUserAction extends Action
       userToChange.addRole(role);
       userDao.updateUser(userToChange);
       SimpleEmail email = new SimpleEmail();
-      email.setCharset(SimpleEmail.ISO_8859_1);
       email.setHostName(GlobalSettings
           .getConfigurationProperty("mailserver.hostname"));
       email.addTo(userToChange.getEmail(), userToChange.getForename() + " "
