@@ -8,12 +8,18 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.sql.Timestamp;
+import java.util.Collection;
+import java.util.Date;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.io.filefilter.PrefixFileFilter;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import de.meningococcus.episcangis.db.DaoFactory;
+import de.meningococcus.episcangis.db.dao.ReportedCaseDAO;
 import de.meningococcus.episcangis.map.LayerNotFoundException;
 
 /* ====================================================================
@@ -39,7 +45,7 @@ public class WmsImageExporter extends AbstractWmsExporter
     {
       this.cacheDir = cacheDirectory;
       // TODO fix bug with file caching
-      //doCaching = true;
+      // doCaching = true;
     }
     else
     {
@@ -132,6 +138,30 @@ public class WmsImageExporter extends AbstractWmsExporter
   protected String getRequest()
   {
     return "&REQUEST=GetMap";
+  }
+
+  @SuppressWarnings("unchecked")
+  public void cleanCache(Date olderThen) throws IOException
+  {
+    if (doCaching)
+    {
+      Collection<File> cachedFiles = FileUtils.listFiles(cacheDir,
+          new PrefixFileFilter("cache"), null);
+      if (olderThen == null)
+      {
+        FileUtils.cleanDirectory(cacheDir);
+      }
+      else
+      {
+        for (File file : cachedFiles)
+        {
+          if (file.lastModified() < olderThen.getTime())
+          {
+            file.delete();
+          }
+        }
+      }
+    }
   }
 
 }
