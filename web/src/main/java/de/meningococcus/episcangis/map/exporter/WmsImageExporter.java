@@ -38,7 +38,8 @@ public class WmsImageExporter extends AbstractWmsExporter
     if (cacheDirectory != null && cacheDirectory.exists())
     {
       this.cacheDir = cacheDirectory;
-      doCaching = true;
+      // TODO fix bug with file caching
+      //doCaching = true;
     }
     else
     {
