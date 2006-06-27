@@ -7,7 +7,7 @@
 <canvas debug="false" width="100%" height="100%" maxtextheight="10000">
   
   <!--<resource name="waitcursor" src="resources/lzwaitcursor_rsc.swf"/>-->
-  <resource name="dragcursor" src="images/drag_cursor.png"/>
+  <resource name="dragcursor" src="images/icons/drag_cursor.png"/>
   <resource name="icon_save" src="images/icons/floppy.png"/>
   <resource name="icon_print" src="images/icons/print.png"/>
   <resource name="icon_drag" src="images/icons/drag.png"/>
