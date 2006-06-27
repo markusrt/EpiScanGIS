@@ -6,6 +6,9 @@ import java.sql.Date;
 import java.util.Collection;
 import java.util.Vector;
 
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
+import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -28,8 +31,8 @@ public class User
    */
   public static final String passwordDigestAlgorithm = "SHA-1";
 
-  private String username, password, title, forename, lastname, email, phone, 
-    organisation, department, domain, message, street, zip, city;
+  private String username, password, title, forename, lastname, email, phone,
+      organisation, department, domain, message, street, zip, city;
 
   private Date registrationDate, lastLogin;
 
@@ -40,6 +43,11 @@ public class User
   public void setPassword(String password)
   {
     this.password = digestPassword(password);
+  }
+
+  public void setDigestedPassword(String password)
+  {
+    this.password = password;
   }
 
   public boolean hasPassword(String password)
@@ -65,6 +73,7 @@ public class User
 
   /**
    * Digest password with specified digest algorithm.
+   * 
    * @param password
    * @return hex encoded digested password
    */
@@ -104,7 +113,7 @@ public class User
     else
       return ((char) (value + '0'));
   }
-  
+
   /**
    * @return Returns the roles.
    */
@@ -115,12 +124,14 @@ public class User
 
   public boolean isInRole(String role)
   {
+    log.info("Is user '" + username + "' in role '" + role + "'? : "
+        + roles.contains(role));
     return roles.contains(role);
   }
 
   public void addRole(String role)
   {
-    if (!roles.contains(role))
+    if (!isInRole(role))
     {
       roles.add(role);
     }
@@ -135,7 +146,8 @@ public class User
   }
 
   /**
-   * @param department The department to set.
+   * @param department
+   *          The department to set.
    */
   public void setDepartment(String department)
   {
@@ -151,7 +163,8 @@ public class User
   }
 
   /**
-   * @param domain The domain to set.
+   * @param domain
+   *          The domain to set.
    */
   public void setDomain(String domain)
   {
@@ -167,7 +180,8 @@ public class User
   }
 
   /**
-   * @param email The email to set.
+   * @param email
+   *          The email to set.
    */
   public void setEmail(String email)
   {
@@ -183,7 +197,8 @@ public class User
   }
 
   /**
-   * @param forename The forename to set.
+   * @param forename
+   *          The forename to set.
    */
   public void setForename(String forename)
   {
@@ -199,7 +214,8 @@ public class User
   }
 
   /**
-   * @param lastLogin The lastLogin to set.
+   * @param lastLogin
+   *          The lastLogin to set.
    */
   public void setLastLogin(Date lastLogin)
   {
@@ -215,7 +231,8 @@ public class User
   }
 
   /**
-   * @param lastname The lastname to set.
+   * @param lastname
+   *          The lastname to set.
    */
   public void setLastname(String lastname)
   {
@@ -231,7 +248,8 @@ public class User
   }
 
   /**
-   * @param message The message to set.
+   * @param message
+   *          The message to set.
    */
   public void setMessage(String message)
   {
@@ -247,7 +265,8 @@ public class User
   }
 
   /**
-   * @param organisation The organisation to set.
+   * @param organisation
+   *          The organisation to set.
    */
   public void setOrganisation(String organisation)
   {
@@ -263,7 +282,8 @@ public class User
   }
 
   /**
-   * @param phone The phone to set.
+   * @param phone
+   *          The phone to set.
    */
   public void setPhone(String phone)
   {
@@ -279,7 +299,8 @@ public class User
   }
 
   /**
-   * @param registrationDate The registrationDate to set.
+   * @param registrationDate
+   *          The registrationDate to set.
    */
   public void setRegistrationDate(Date registrationDate)
   {
@@ -295,7 +316,8 @@ public class User
   }
 
   /**
-   * @param title The title to set.
+   * @param title
+   *          The title to set.
    */
   public void setTitle(String title)
   {
@@ -311,7 +333,8 @@ public class User
   }
 
   /**
-   * @param username The username to set.
+   * @param username
+   *          The username to set.
    */
   public void setUsername(String username)
   {
@@ -335,7 +358,8 @@ public class User
   }
 
   /**
-   * @param city The city to set.
+   * @param city
+   *          The city to set.
    */
   public void setCity(String city)
   {
@@ -351,7 +375,8 @@ public class User
   }
 
   /**
-   * @param street The street to set.
+   * @param street
+   *          The street to set.
    */
   public void setStreet(String street)
   {
@@ -367,10 +392,22 @@ public class User
   }
 
   /**
-   * @param zip The zip to set.
+   * @param zip
+   *          The zip to set.
    */
   public void setZip(String zip)
   {
     this.zip = zip;
   }
+
+  public boolean equals(Object obj)
+  {
+    return EqualsBuilder.reflectionEquals(obj, this);
+  }
+
+  public int hashCode()
+  {
+    return HashCodeBuilder.reflectionHashCode(this);
+  }
+
 }
