@@ -15,10 +15,16 @@ import de.meningococcus.episcangis.db.model.User;
 public interface UserDAO
 {
   /**
-   * @param username search for specific user by name
+   * @param username  search for specific user by name
    * @return User object or null if not found
+   * @throws UserNotFoundException if the user with specified name doesn't exist
    */
-  public User getUser(String username);
+  public User getUser(String username) throws UserNotFoundException;
+  
+  /**
+   * @return collection of all possible users, never null 
+   */
+  public Collection<User> getUsers();
 
   /**
    * @param user User to insert in datastore 
@@ -37,7 +43,7 @@ public interface UserDAO
    * @return number of deleted users
    */
   public int deleteUser(User user);
-
+  
   /**
    * @return collection of all possible roles, never null 
    */

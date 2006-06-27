@@ -14,10 +14,12 @@ import javax.sql.DataSource;
 
 import org.apache.commons.dbutils.handlers.ArrayListHandler;
 import org.apache.commons.dbutils.handlers.BeanHandler;
+import org.apache.commons.dbutils.handlers.BeanListHandler;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import de.meningococcus.episcangis.db.dao.UserDAO;
+import de.meningococcus.episcangis.db.dao.UserNotFoundException;
 import de.meningococcus.episcangis.db.model.User;
 
 /**
@@ -42,8 +44,9 @@ final class PgSQLUserDAO extends DbUtilsDAO implements UserDAO
   private static final String UPDATE_USER = "UPDATE users "
       + "SET password = ?, title = ?, forename = ?, lastname = ?, email = ?, "
       + " phone = ?, organisation = ?, department = ?, domain = ?, street = ?, "
-      + " zip = ?, city = ? " + " WHERE username = ?",
-      GET_USER = "SELECT * FROM users WHERE username=?",
+      + " zip = ?, city = ?, lastlogin = ? " + " WHERE username = ?",
+      GET_USER = "SELECT *, password AS digestedpassword FROM users WHERE username=?",
+      GET_USERS = "SELECT *, password AS digestedpassword FROM users",
       DELETE_USER = "DELETE FROM users WHERE username=?",
       CREATE_USER = "INSERT INTO users "
           + "(username, password, title, forename, lastname, email, phone, "
@@ -57,10 +60,14 @@ final class PgSQLUserDAO extends DbUtilsDAO implements UserDAO
   PgSQLUserDAO(DataSource dataSource)
   {
     super(dataSource);
-    // TODO Auto-generated constructor stub
   }
 
-  public User getUser(String username)
+  /*
+   * (non-Javadoc)
+   * 
+   * @see de.meningococcus.episcangis.db.dao.UserDAO#getUser(java.lang.String)
+   */
+  public User getUser(String username) throws UserNotFoundException
   {
     User result = null;
     try
@@ -73,6 +80,12 @@ final class PgSQLUserDAO extends DbUtilsDAO implements UserDAO
         {
           result.addRole(role);
         }
+        log.debug("Found user '" + result.getUsername() + "' with username '"
+            + username + "'.");
+      }
+      else
+      {
+        log.debug("Found no user with username '" + username + "'.");
       }
     }
     catch (SQLException e)
@@ -80,9 +93,19 @@ final class PgSQLUserDAO extends DbUtilsDAO implements UserDAO
       log.error("SQL Query caused error: " + e.getMessage());
       e.printStackTrace();
     }
+    if (result == null)
+    {
+      throw new UserNotFoundException("The user '" + username
+          + "' was not found in the database.");
+    }
     return result;
   }
 
+  /*
+   * (non-Javadoc)
+   * 
+   * @see de.meningococcus.episcangis.db.dao.UserDAO#createUser(de.meningococcus.episcangis.db.model.User)
+   */
   public int createUser(User user)
   {
     int insertCount = 0;
@@ -103,6 +126,11 @@ final class PgSQLUserDAO extends DbUtilsDAO implements UserDAO
     return insertCount;
   }
 
+  /*
+   * (non-Javadoc)
+   * 
+   * @see de.meningococcus.episcangis.db.dao.UserDAO#updateUser(de.meningococcus.episcangis.db.model.User)
+   */
   public int updateUser(User user)
   {
     int insertCount = 0;
@@ -112,7 +140,7 @@ final class PgSQLUserDAO extends DbUtilsDAO implements UserDAO
           user.getTitle(), user.getForename(), user.getLastname(),
           user.getEmail(), user.getPhone(), user.getOrganisation(),
           user.getDepartment(), user.getDomain(), user.getStreet(),
-          user.getZip(), user.getCity(), user.getUsername() });
+          user.getZip(), user.getCity(), user.getLastLogin(), user.getUsername() });
       updateUserRoles(user);
     }
     catch (SQLException e)
@@ -123,6 +151,11 @@ final class PgSQLUserDAO extends DbUtilsDAO implements UserDAO
     return insertCount;
   }
 
+  /*
+   * (non-Javadoc)
+   * 
+   * @see de.meningococcus.episcangis.db.dao.UserDAO#deleteUser(de.meningococcus.episcangis.db.model.User)
+   */
   public int deleteUser(User user)
   {
     int insertCount = 0;
@@ -140,6 +173,11 @@ final class PgSQLUserDAO extends DbUtilsDAO implements UserDAO
     return insertCount;
   }
 
+  /*
+   * (non-Javadoc)
+   * 
+   * @see de.meningococcus.episcangis.db.dao.UserDAO#getRoles()
+   */
   @SuppressWarnings("unchecked")
   public Collection<String> getRoles()
   {
@@ -160,6 +198,11 @@ final class PgSQLUserDAO extends DbUtilsDAO implements UserDAO
     return result;
   }
 
+  /*
+   * (non-Javadoc)
+   * 
+   * @see de.meningococcus.episcangis.db.dao.UserDAO#getUserRoles(de.meningococcus.episcangis.db.model.User)
+   */
   @SuppressWarnings("unchecked")
   public Collection<String> getUserRoles(User user)
   {
@@ -209,6 +252,32 @@ final class PgSQLUserDAO extends DbUtilsDAO implements UserDAO
       log.error(e);
       throw new DaoRuntimeException(e);
     }
+  }
+
+  @SuppressWarnings("unchecked")
+  public Collection<User> getUsers()
+  {
+    List<User> result = new ArrayList<User>();
+    try
+    {
+      result.addAll((List<User>) run.query(GET_USERS, new BeanListHandler(
+          User.class)));
+      for (User user : result)
+      {
+        if (user != null)
+        {
+          for (String role : getUserRoles(user))
+          {
+            user.addRole(role);
+          }
+        }
+      }
+    }
+    catch (SQLException e)
+    {
+      log.error("SQL Query caused error: " + e.getMessage());
+    }
+    return result;
   }
 
 }
