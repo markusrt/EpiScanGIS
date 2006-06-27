@@ -77,8 +77,4 @@
       <artifactId>log4j</artifactId>
     </dependency>
   </dependencies>
-
-  <reporting>
-
-  </reporting>
 </project>
