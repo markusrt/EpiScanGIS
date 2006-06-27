@@ -9,6 +9,8 @@ import java.sql.Date;
 import java.util.Calendar;
 import java.util.Vector;
 
+import org.apache.commons.lang.time.DateUtils;
+
 /**
  * @author Markus Reinhardt <m.reinhardt[at]bitmap-friends.de>
  */
@@ -184,6 +186,9 @@ public class SatScanJob
   {
     Vector<Date> scheduleDates = new Vector<Date>();
     Calendar from = (Calendar) startDate.clone();
+    Calendar calLastRun = (Calendar) startDate.clone();
+    calLastRun.setTime(lastrun);
+
     boolean invalidSchedule = false;
     int scheduleIntervall = 0;
 
@@ -193,8 +198,10 @@ public class SatScanJob
       scheduleIntervall = Calendar.DAY_OF_YEAR;
       break;
     case JOBTYPE_WEEKLY:
-      from.set(Calendar.DAY_OF_WEEK, from.getFirstDayOfWeek());
       scheduleIntervall = Calendar.WEEK_OF_YEAR;
+      from.set(Calendar.DAY_OF_WEEK, Calendar.FRIDAY);
+
+      // endDate.set(Calendar.DAY_OF_WEEK, Calendar.FRIDAY);
       break;
     case JOBTYPE_MONTHLY:
       from.set(Calendar.DAY_OF_MONTH, from.getMinimum(Calendar.DAY_OF_MONTH));
@@ -212,12 +219,22 @@ public class SatScanJob
 
     if (!invalidSchedule)
     {
-      from.set(scheduleIntervall, from.get(scheduleIntervall) + 1);
+      while (!from.after(calLastRun))
+      {
+        from.add(scheduleIntervall, 1);
+      }
 
       while (from.compareTo(endDate) <= 0)
       {
         scheduleDates.add(new java.sql.Date(from.getTime().getTime()));
         from.add(scheduleIntervall, 1);
+      }
+      if (scheduleDates.isEmpty() ||
+          ( !DateUtils.isSameDay(scheduleDates.lastElement(), endDate.getTime())
+          && !scheduleDates.lastElement().after(endDate.getTime()) 
+          && (jobtype == JOBTYPE_DAILY || jobtype == JOBTYPE_WEEKLY ) ))
+      {
+        scheduleDates.add(new java.sql.Date(endDate.getTime().getTime()));
       }
     }
 
