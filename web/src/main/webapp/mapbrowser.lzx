@@ -8,8 +8,9 @@
   
   <!--<resource name="waitcursor" src="resources/lzwaitcursor_rsc.swf"/>-->
   <resource name="dragcursor" src="images/drag_cursor.png"/>
-  <resource name="icon_save" src="images/floppy.png"/>
-  <resource name="icon_drag" src="images/drag.png"/>
+  <resource name="icon_save" src="images/icons/floppy.png"/>
+  <resource name="icon_print" src="images/icons/print.png"/>
+  <resource name="icon_drag" src="images/icons/drag.png"/>
   
   <include href="includes/parameters.lzx"/>
   <include href="includes/loadbar.lzx"/>
@@ -17,6 +18,9 @@
   <include href="includes/layertabelement.lzx"/>
   <include href="includes/borderview.lzx"/>
   <include href="includes/stableborder.lzx"/>
+  
+  <splash persistent="true">
+  </splash>
 
   <debug y="500" width="600" height="200"/>
   <datasource name="ds">
@@ -164,9 +168,9 @@
       <view x="10" height="100%" align="left">
         <view valign="middle">
           <simplelayout axis="x" spacing="20"/>
-          <button width="32" height="32">
+          <button width="40" height="40">
             <view valign="middle" align="center"
-              resource="icon_save"/>
+              resource="icon_print"/>
             <method event="onclick"><![CDATA[
               var url = classroot.getMapUrl();
               LzBrowser.loadURL(url, "_blank");
