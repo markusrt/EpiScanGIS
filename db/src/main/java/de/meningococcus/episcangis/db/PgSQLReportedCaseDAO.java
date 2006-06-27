@@ -45,7 +45,8 @@ final class PgSQLReportedCaseDAO extends DbUtilsDAO implements ReportedCaseDAO
    * database specific query parts
    */
   private static String SELECT_CASES = "SELECT case_id AS id, CAST( age AS int4),CAST(gender AS varchar),"
-      + "incidencedate,reportdate, case_type_id AS caseTypeId FROM cases ",
+      + "incidencedate,reportdate, case_type_id AS caseTypeId, " +
+         "last_change AS lastChange FROM cases ",
       GET_LAST_CASE = SELECT_CASES + "ORDER BY reportdate DESC LIMIT 1",
       GET_FIRST_CASE = SELECT_CASES + "ORDER BY reportdate ASC LIMIT 1",
       COUNT_CASES = "SELECT count(*) FROM cases",
@@ -53,7 +54,7 @@ final class PgSQLReportedCaseDAO extends DbUtilsDAO implements ReportedCaseDAO
           + "cases.case_id AS id, CAST( age AS int4),CAST(gender AS varchar), "
           + "incidencedate,reportdate, X(Centroid(awt.the_geom)) AS areaLon, "
           + "Y(Centroid(awt.the_geom)) AS areaLat, population AS areaPopulation,"
-          + "case_type_id AS caseTypeId "
+          + "case_type_id AS caseTypeId, last_change AS lastChange "
           + "FROM contains_area_case, areas_with_types AS awt, cases "
           + "WHERE contains_area_case.area_id=awt.area_id AND "
           + "contains_area_case.case_id=cases.case_id "
@@ -177,7 +178,7 @@ final class PgSQLReportedCaseDAO extends DbUtilsDAO implements ReportedCaseDAO
     return result;
   }
 
-  public Timestamp lastChange()
+  public Timestamp getLastChange()
   {
     Timestamp lastChange = null;
     try

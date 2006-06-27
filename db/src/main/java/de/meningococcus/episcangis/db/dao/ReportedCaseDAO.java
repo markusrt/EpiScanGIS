@@ -75,6 +75,6 @@ public interface ReportedCaseDAO
   /**
    * @return last change in case database
    */
-  public Timestamp lastChange();
+  public Timestamp getLastChange();
 
 }

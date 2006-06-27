@@ -6,6 +6,7 @@ package de.meningococcus.episcangis.db.model;
  */
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 /**
  * @author Markus Reinhardt <m.reinhardt[at]bitmap-friends.de>
@@ -27,6 +28,8 @@ public class ReportedCase
   private String gender;
 
   private Date incidenceDate, reportDate;
+  
+  private Timestamp lastChange;
 
   private int caseTypeId;
 
@@ -158,5 +161,21 @@ public class ReportedCase
   public void setId(int id)
   {
     this.id = id;
+  }
+
+  /**
+   * @return Returns the lastChange.
+   */
+  public Timestamp getLastChange()
+  {
+    return lastChange;
+  }
+
+  /**
+   * @param lastChange The lastChange to set.
+   */
+  public void setLastChange(Timestamp lastChange)
+  {
+    this.lastChange = lastChange;
   }
 }
