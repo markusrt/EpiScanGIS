@@ -5,7 +5,8 @@
 <%@ taglib uri="http://jakarta.apache.org/struts/tags-logic" prefix="logic" %>
 
 <result>
-  <logic:iterate id="layerName" name="updatedLayers">
-    <update><bean:write name="layerName"/></update>
+  <logic:iterate id="layer" name="layerstates">
+    <layer name='<bean:write name="layer" property="name"/>'
+      active='<bean:write name="layer" property="active"/>' />
   </logic:iterate>
 </result>

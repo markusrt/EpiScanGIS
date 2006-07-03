@@ -2,6 +2,36 @@
 
 <div class="section">
   <h1>$msg.global.title</h1>
+  <b>Latest Information:</b>
+  <dl style="font-size:smaller;">
+   <dt>Mai 31, 2006 - 15.00 Uhr</dt>
+   <dd>
+     <p>     
+     We weren't able to test the compatibility of EpiScanGIS with all possible
+     browser/operating system combinations prior to the launch. Especially the 
+     use of the Internet Explorer may cause problems.
+     </p>
+     <p>
+       <b>
+         If you are using the Internet Explorer, then make sure that you have
+         installed the latest Flash-Player (<i>version 7</i> at least):
+         <br />
+         <a target="_blank" class="newWindow"
+           href="http://www.adobe.com/go/getflashplayer">
+           http://www.adobe.com/go/getflashplayer</a>
+       </b>
+     </p>
+     <p>
+     By now, we carried out some changes, that should solve most of the difficulties.
+     If the map browser isn't functioning, even after you have restarted your browser,
+     then it would be nice if you sent me an e-mail including the Version and name of
+     your browser and operating system respectively.
+     </p>
+     <p>
+       E-mail to: <a href="mailto:mreinhardt@hygiene.uni-wuerzburg.de">M. Reinhardt</a>
+     </p>
+   </dd>
+  </dl>
   <h2>Online Monitoring Invasive Meningococcal Disease in Germany</h2>
   <p>
     <b>Detecting meningococcal disease outbreaks as early as possible is
@@ -17,7 +47,20 @@
     <a class="smaller" href="whatis.vm">read more...</a>
   </p>
   <p>
-    Just click on the link below, to launch the map browser, that allows
+    <b>
+      <a href="#"
+        onclick="window.open('mapbrowser.vm','mapbrowser','status=no,scrollbars=yes,width=1040,height=820')">
+        Start EpiScanGIS - Web Surveillance
+      </a>
+    </b>
+    ,
+    <a href="#"
+      onclick="window.open('mapbrowser.vm?width=800&amp;height=600','mapbrowser','status=no,scrollbars=yes,width=800,height=670')">
+      Start small size (800x600)
+    </a>
+  </p>
+  <p>
+    Just click on one of the upper links, to launch the map browser, that allows
     you to explore the geographical distribution of all cases of
     meningococcal disease that occurred in Germany since December 2001.
     EpiScanGIS uses
@@ -36,15 +79,4 @@
     gives you a brief introduction on the software and explains how it
     is used.
   </p>
-  <b>
-    <a href="#"
-      onclick="window.open('mapbrowser.vm','mapbrowser','status=no,scrollbars=yes,width=1020,height=820')">
-      Start EpiScanGIS - Web Surveillance
-    </a>
-  </b>
-    ,
-    <a href="#"
-      onclick="window.open('mapbrowser.vm?width=796&amp;height=600','mapbrowser','status=no,scrollbars=yes,width=796,height=670')">
-      Start small size (800x600)
-    </a>
 </div>

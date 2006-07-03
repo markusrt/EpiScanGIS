@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<web-app xmlns="http://java.sun.com/xml/ns/j2ee" 
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
+<web-app xmlns="http://java.sun.com/xml/ns/j2ee"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
+    version="2.4">
+    
   <display-name>EpiScanGIS Web Surveillance</display-name>
 
-    <!-- Example filter to set character encoding on each request.
+  <!-- Filter to set character encoding on each request.
        Uncomment this filter definition and the mapping to use
        the filter to decode post and get parameters -->
-
   <filter>
     <filter-name>Set Character Encoding</filter-name>
     <filter-class>de.meningococcus.episcangis.web.filters.SetCharacterEncodingFilter</filter-class>
@@ -17,9 +18,8 @@
     </init-param>
   </filter>
 
-  <!-- Example filter mapping to apply the "Set Character Encoding" filter
+  <!-- Filter mapping to apply the "Set Character Encoding" filter
        to *all* requests processed by this web application -->
-
   <filter-mapping>
     <filter-name>Set Character Encoding</filter-name>
     <url-pattern>/*</url-pattern>
@@ -141,32 +141,6 @@
     <location>/WEB-INF/errors/error_403.vm</location>
   </error-page>
 
-  <!-- Struts Tag Library Descriptors -->
-  <taglib>
-    <taglib-uri>/tags/struts-bean</taglib-uri>
-    <taglib-location>/WEB-INF/tld/struts-bean.tld</taglib-location>
-  </taglib>
-  <taglib>
-    <taglib-uri>/tags/struts-html</taglib-uri>
-    <taglib-location>/WEB-INF/tld/struts-html.tld</taglib-location>
-  </taglib>
-  <taglib>
-    <taglib-uri>/tags/struts-logic</taglib-uri>
-    <taglib-location>/WEB-INF/tld/struts-logic.tld</taglib-location>
-  </taglib>
-  <taglib>
-    <taglib-uri>/tags/struts-nested</taglib-uri>
-    <taglib-location>/WEB-INF/tld/struts-nested.tld</taglib-location>
-  </taglib>
-  <taglib>
-    <taglib-uri>/tags/struts-tiles</taglib-uri>
-    <taglib-location>/WEB-INF/tld/struts-tiles.tld</taglib-location>
-  </taglib>
-  <taglib>
-    <taglib-uri>epigistaglibs</taglib-uri>
-    <taglib-location>/WEB-INF/tld/taglib.tld</taglib-location>
-  </taglib>
-
   <resource-ref>
     <description>
       Resource reference to a factory for java.sql.Connection instances
@@ -177,42 +151,47 @@
     <res-type>javax.sql.DataSource</res-type>
     <res-auth>Container</res-auth>
   </resource-ref>
-
-  <!--
-    <security-constraint>
-    <web-resource-collection>
-    <web-resource-name>everything
-    </web-resource-name>
-    <url-pattern>*
-    </url-pattern>
-    </web-resource-collection>
-    <auth-constraint>  
-    <!- - NOTE:  This role is not present in the default users file - ->
-    <role-name>epidegis_beta
-    </role-name>
-    </auth-constraint>
-    </security-constraint>
-  -->
+  
   <security-constraint>
     <web-resource-collection>
       <web-resource-name>Special Login</web-resource-name>
       <url-pattern>/Login.do</url-pattern>
+      <http-method>GET</http-method>
+      <http-method>POST</http-method>
     </web-resource-collection>
     <auth-constraint>
-      <!-- NOTE:  This role is not present in the default users file -->
+      <!-- NOTE:  This roles are not present in the default users file -->
+      <role-name>admin</role-name>
       <role-name>nrzm</role-name>
       <role-name>public_health</role-name>
     </auth-constraint>
   </security-constraint>
+  
+  <security-constraint>
+    <web-resource-collection>
+      <web-resource-name>NRZM only</web-resource-name>
+      <url-pattern>/ListUsers.do</url-pattern>
+      <http-method>GET</http-method>
+      <http-method>POST</http-method>
+    </web-resource-collection>
+    <auth-constraint>
+      <!-- NOTE:  This roles are not present in the default users file -->
+      <role-name>admin</role-name>
+      <role-name>nrzm</role-name>
+    </auth-constraint>
+  </security-constraint>
+  
   <login-config>
     <auth-method>BASIC</auth-method>
-    <realm-name>EpiDeGIS Web Surveillance</realm-name>
+    <realm-name>EpiScanGIS</realm-name>
   </login-config>
   <!-- Security roles referenced by this web application -->
+  <!-- 
   <security-role>
-    <description>Every User</description>
-    <role-name>epidegis_beta</role-name>
+    <description>Admin</description>
+    <role-name>admin</role-name>
   </security-role>
+   -->
   <security-role>
     <description>Special NRZM User</description>
     <role-name>nrzm</role-name>

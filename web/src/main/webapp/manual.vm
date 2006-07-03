@@ -1,2 +1,1 @@
-#set($parse=$msg.page.manual)
-#parse($parse)
+#parse ($i18n.findLocalizedResource("manual.vm", "$msg.lang"))

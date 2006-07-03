@@ -1,22 +1,17 @@
-#set ($page_title="Error:$error_cause")
 #set ($error=$request.getAttribute('org.apache.struts.action.EXCEPTION'))                                                                                                                                                             
 <div class="section">
-  <h1>Error: $error.Class.Name</h1>
+  #if( $error )
+  #set ($page_title="Error: $error.Class.Name")
+  <h2>$page_title</h2>
   <p>
     $error.Message
   </p>
-  <!-- 
+  #end
+  #if( $error_cause )
+  #set ($page_title="Error: $error_cause") 
+  <h2>$page_title</h2>
   <p>
     Error: $stack_trace
   </p>
-  #if( $invocation_exception )
-  <p>
-    <br />oh joy! it's a MethodInvocationException!
-    <br />
-    <br />Message: $invocation_exception.message
-    <br />name: $invocation_exception.referenceName
-    <br />Method name: $invocation_exception.methodName
-  </p>
   #end
-   -->
 </div>

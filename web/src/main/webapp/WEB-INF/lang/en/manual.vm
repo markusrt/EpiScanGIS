@@ -8,10 +8,10 @@
     - <a href="#maplayers">Map layers:</a>
     <a href="#popdensity">$msg.map.layer.popdensity</a>
     , <a href="#incidence">$msg.map.layer.incidence</a>
-    , <a href="#finetypes">$msg.map.layer.finetypes</a>
+    , <a href="#casetypes">$msg.map.layer.casetypes</a>
     , <a href="#serogroups">$msg.map.layer.serogroups</a>
-    #if($user.isInRole("public_health") || $user.isInRole("nrzm"))
-    , <a href="#prospective_clusters">$msg.map.layer.prospective_clusters</a>
+    #if($request.isUserInRole("public_health") || $request.isUserInRole("nrzm"))
+    , <a href="#cluster">$msg.map.layer.cluster</a>
     #end      
   </p>
   <p>
@@ -19,11 +19,11 @@
     Please click 
     <a href="#"
       onclick="window.open('mapbrowser.vm','mapbrowser','status=no,scrollbars=yes,width=1020,height=810')">
-      here</a> to launch the web application, which lets you monitoring invasive 
+      here</a> to launch the web application, which lets you monitor invasive 
       meningococcal disease in Germany.
   </p>
   <div class="section">
-    <a name="overview"><h2>Overview</h2></a>
+    <a name="overview"></a><h2>Overview</h2>
     <p>
       Using the numbers in the figure below, we will explain which settings
       may be taken using the respective controls of the application and which
@@ -47,7 +47,7 @@
         Filters, that alter the displayed maps, can be set using these
         dropdown menus:
         <ol type="a">
-          #if($user.isInRole("public_health") || $user.isInRole("nrzm"))
+          #if($request.isUserInRole("public_health") || $request.isUserInRole("nrzm"))
           <li><b>$msg.map.area</b>:
             Use this control, to zoom the map to different areas
             (federal territory or federal states)
@@ -69,7 +69,7 @@
             <br />
             The observation period can be set with a precision of
 
-            #if($user.isInRole("public_health") || $user.isInRole("nrzm"))
+            #if($request.isUserInRole("public_health") || $request.isUserInRole("nrzm"))
             one month
             #else 
             one year 
@@ -92,7 +92,7 @@
         The main area of EpiScanGIS shows the current map, which is automatically
         generated using the current filter settings.
 
-        #if($user.isInRole("public_health") || $user.isInRole("nrzm"))
+        #if($request.isUserInRole("public_health") || $request.isUserInRole("nrzm"))
         Left clicking and moving the mouse relocates the visible area.
         #end
 
@@ -106,7 +106,7 @@
     </ol>
   </div>
   <div class="section">
-    <a name="maplayers"><h2>Map layers</h2></a>
+    <a name="maplayers"></a><h2>Map layers</h2>
     <p>
       Geographical information systems typically organize digital maps
       using layers.  Information, that belongs together, is thereby grouped in
@@ -115,7 +115,7 @@
     <p>
       $msg.global.name uses amongst others the layers $msg.map.layer.popdensity,
       $msg.map.layer.incidence, $msg.map.layer.serogroups,
-      $msg.map.layer.finetypes and $msg.map.layer.borders.
+      $msg.map.layer.casetypes and $msg.map.layer.borders.
     </p>
     <p>
       Elements combined in one layer are always of same geometric type.
@@ -128,7 +128,7 @@
       taken respectively:
     </p>
     <div class="section">
-      <a name="popdensity"><h3>$msg.map.layer.popdensity</h3></a>
+      <a name="popdensity"></a><h3>$msg.map.layer.popdensity</h3>
       <p>
         Calculates the population density. This can either be done on basis
         of federal states or counties.
@@ -146,7 +146,7 @@
       </p>
     </div>
     <div class="section">
-      <a name="incidence"><h3>$msg.map.layer.incidence</h3></a>
+      <a name="incidence"></a><h3>$msg.map.layer.incidence</h3>
       <p>
         Shows the annual incidence of meningococcal disease for federal states
         and counties. The calculation refers to all cases of the selected
@@ -169,7 +169,7 @@
       </p>
     </div>
     <div class="section">
-      <a name="finetypes"><h3>$msg.map.layer.finetypes</h3></a>
+      <a name="casetypes"></a><h3>$msg.map.layer.casetypes</h3>
       <p>
         Displays the distribution of one meningococcal finetype 
         (epitope sequence typing of PorA and FetA) on the map. The number of shown cases
@@ -201,7 +201,7 @@
       </p>
     </div>
     <div class="section">
-      <a name="serogroups"><h3>$msg.map.layer.serogroups</h3></a>
+      <a name="serogroups"></a><h3>$msg.map.layer.serogroups</h3>
       <p>
         Visualizes cases of meningococcal disease grouped by serogroup.
       </p>
@@ -227,9 +227,9 @@
       </p>
     </div>
 
-    #if($user.isInRole("public_health") || $user.isInRole("nrzm"))
+    #if($request.isUserInRole("public_health") || $request.isUserInRole("nrzm"))
     <div class="section">
-      <a name="prospective_clusters"><h3>$msg.map.layer.prospective_clusters</h3></a>
+      <a name="cluster"></a><h3>$msg.map.layer.cluster</h3>
       <p>
         You can't change any settings for this layer. It always shows the 
         result of the most recent prospective cluster analysis run.

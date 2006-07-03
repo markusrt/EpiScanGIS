@@ -1,2 +1,1 @@
-#set($parse=$msg.page.welcome)
-#parse($parse)
+#parse ($i18n.findLocalizedResource("welcome.vm", "$msg.lang"))

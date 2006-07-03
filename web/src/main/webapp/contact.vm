@@ -1,1 +1,1 @@
-#parse($msg.page.contact)
+#parse ($i18n.findLocalizedResource("contact.vm", "$msg.lang"))

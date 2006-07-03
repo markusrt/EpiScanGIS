@@ -2,6 +2,37 @@
 
 <div class="section">
   <h1>$msg.global.title</h1>
+  <b>Aktuelle Meldung:</b>
+  <dl style="font-size:smaller;">
+   <dt>31. Mai 2006 - 15.00 Uhr</dt>
+   <dd>
+     <p>
+     Vor der Einführung von EpiScanGIS konnten wir nicht die Kompatibilität mit 
+     allen verfügbaren Browser/Betriebssystem-Kombinationen prüfen. Besonders die
+     Verwendung des Internet Explorers kann stellenweise zu Problemen führen.
+     </p>
+     <p>
+       <b>
+         Wenn Sie den Internet Explorer verwenden, dann stellen Sie
+         bitte sicher, dass der aktuellste Flash-Player
+         (mindestens <i>Version 7</i>) installiert ist:
+         <br />
+         <a target="_blank" class="newWindow"
+           href="http://www.adobe.com/go/getflashplayer">
+           http://www.adobe.com/go/getflashplayer</a>
+       </b>
+     </p>
+     <p>
+     Aktuell wurde eine Änderung durchgeführt, die einen Großteil der Probleme beheben
+     sollte. Falls der Kartenbetrachter bei Ihnen auch nach einem Neustart Ihres
+     Browsers nicht funktionieren sollte, wäre es nett, wenn Sie mir die Version und
+     den Namen Ihres Browsers bzw. Betriebssystems mitteilen könnten.
+     </p>
+     <p>
+       Email an: <a href="mailto:mreinhardt@hygiene.uni-wuerzburg.de">M. Reinhardt</a>
+     </p>
+   </dd>
+  </dl>
   <h2>Web-basiertes System zur Überwachung von Meningokokken-Erkrankungsfällen in Deutschland</h2>
   <p>
     <b>
@@ -18,7 +49,20 @@
     <a class="smaller" href="whatis.vm">lesen sie mehr...</a>
   </p>
   <p>
-    Verwenden Sie einen der unteren Links um einen Kartenbetrachter zu starten,
+    <b>
+    <a href="#"
+      onclick="window.open('mapbrowser.vm','mapbrowser','status=no,scrollbars=yes,width=1040,height=820')">
+      EpiScanGIS - Web Surveillance starten
+    </a>
+  </b>
+    ,
+    <a href="#"
+      onclick="window.open('mapbrowser.vm?width=800&amp;height=600','mapbrowser','status=no,scrollbars=yes,width=800,height=670')">
+      Kleine Größe starten (800x600)
+    </a>
+  </p>
+  <p>
+    Verwenden Sie einen der oberen Links um einen Kartenbetrachter zu starten,
     mit dessen Hilfe Sie die geografische Verteilung der 
     Meningokokken-Erkrankungsfälle betrachten können, die seit Dezember 2001 in
     Deutschland aufgetreten sind. EpiScanGIS nutzt den
@@ -37,15 +81,4 @@
     gibt Ihnen einen kurzen Einblick in die Software und erklärt, wie sie 
     angewendet wird.
   </p>
-  <b>
-    <a href="#"
-      onclick="window.open('mapbrowser.vm','mapbrowser','status=no,scrollbars=yes,width=1020,height=820')">
-      EpiScanGIS - Web Surveillance starten
-    </a>
-  </b>
-    ,
-    <a href="#"
-      onclick="window.open('mapbrowser.vm?width=796&amp;height=600','mapbrowser','status=no,scrollbars=yes,width=796,height=670')">
-      Kleine Größe starten (800x600)
-    </a>
 </div>

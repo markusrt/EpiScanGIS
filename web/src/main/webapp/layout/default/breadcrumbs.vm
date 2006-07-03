@@ -11,8 +11,8 @@
   ##############################################################################
   ## Login/Register respectively Logout
   ##############################################################################
-  #if ($user)
-  $msg.get('global.logout', [$link.setAction('Logout'),"$user.forename.charAt(0). $user.lastname"])
+  #if ($request.UserPrincipal)
+  $msg.get('global.logout', [$link.setAction('Logout'),"$request.UserPrincipal.Name"])
   #else
   $msg.get('global.login_or_register', [$link.setAction('Login'),'registerUser.vm'])
   #end  

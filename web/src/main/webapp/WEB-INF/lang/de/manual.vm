@@ -8,10 +8,10 @@
     - <a href="#maplayers">Kartenebenen:</a>
     <a href="#popdensity">$msg.map.layer.popdensity</a>
     , <a href="#incidence">$msg.map.layer.incidence</a>
-    , <a href="#finetypes">$msg.map.layer.finetypes</a>
+    , <a href="#casetypes">$msg.map.layer.casetypes</a>
     , <a href="#serogroups">$msg.map.layer.serogroups</a>
-    #if($user.isInRole("public_health") || $user.isInRole("nrzm"))
-    , <a href="#prospective_clusters">$msg.map.layer.prospective_clusters</a>
+    #if($request.isUserInRole("public_health") || $user.isInRole("nrzm"))
+    , <a href="#cluster">$msg.map.layer.cluster</a>
     #end      
   </p>
   <p>
@@ -23,7 +23,7 @@
     Meningokokken-Erkrankungsfällen.
   </p>
   <div class="section">
-    <h2><a name="overview">Gesamtübersicht</a></h2>
+    <a name="overview"></a><h2>Gesamtübersicht</h2>
     <p>
       Wir erklären Ihnen anhand der Nummerierungen in der folgenden Abbildung, 
       was Sie mit den jeweiligen Schaltflächen des Programms
@@ -52,7 +52,7 @@
         welche die angezeigten Karten verändern:
         <ol type="a">
 
-          #if($user.isInRole("public_health") || $user.isInRole("nrzm"))
+          #if($request.isUserInRole("public_health") || $request.isUserInRole("nrzm"))
           <li>
             <b>$msg.map.area</b>:
             Je nach Auswahl ändert sich der Zoombereich des
@@ -81,7 +81,7 @@
             Der Beobachtungszeitraum lässt sich mit der Genauigkeit von
             einem
 
-            #if($user.isInRole("public_health") || $user.isInRole("nrzm")) einem Monat #else Jahr #end
+            #if($request.isUserInRole("public_health") || $request.isUserInRole("nrzm")) einem Monat #else Jahr #end
 
             einstellen, wobei wiederum die Grenzwerte mit eingeschlossen
             sind.
@@ -107,7 +107,7 @@
         Der Hauptbereich von EpiScanGIS zeigt die aktuelle, anhand aller
         Filtereinstellungen generierte Karte.
 
-        #if($user.isInRole("public_health") || $user.isInRole("nrzm"))
+        #if($request.isUserInRole("public_health") || $request.isUserInRole("nrzm"))
         Durch klicken und ziehen der Maus können Sie den
         Kartenausschnitt verschieben.
         #end
@@ -123,7 +123,7 @@
     </ol>
   </div>
   <div class="section">
-    <h2><a name="maplayers">Kartenebenen</a></h2>
+    <a name="maplayers"></a><h2>Kartenebenen</h2>
     <p>
       Geografische Informationssysteme organisieren digitale Karten meistens mittels
       Ebenen. Zusammengehörige Daten sind dabei in einer Ebene gruppiert.
@@ -131,7 +131,7 @@
     <p>
       $msg.global.name nutzt unter anderem die Ebenen $msg.map.layer.popdensity,
       $msg.map.layer.incidence, $msg.map.layer.serogroups,
-      $msg.map.layer.finetypes und $msg.map.layer.borders
+      $msg.map.layer.casetypes und $msg.map.layer.borders
     </p>
     <p>
       In einer Ebene zusammengefasste Elemente sind immer vom gleichen
@@ -147,7 +147,7 @@
       Beispielabbildungen gezeigt:
     </p>
     <div class="section">
-      <h2><a name="popdensity">$msg.map.layer.popdensity</a></h2>
+      <a name="popdensity"></a><h3>$msg.map.layer.popdensity</h3>
       <p>
         Stellt die Bevölkerungsdichte dar. Diese lässt sich entweder auf
         Bundesland- oder Landkreisebene berechnen.
@@ -166,7 +166,7 @@
       </p>
     </div>
     <div class="section">
-      <h2><a name="incidence">$msg.map.layer.incidence</a></h2>
+      <a name="incidence"></a><h3>$msg.map.layer.incidence</h3>
       <p>
         Zeigt die Jahresinzidenz der Erkrankungsfälle für Bundesländer
         bzw. Landkreise an. Die Berechnung bezieht dabei alle Fälle der 
@@ -192,7 +192,7 @@
       </p>
     </div>
     <div class="section">
-      <h2><a name="finetypes">$msg.map.layer.finetypes</a></h2>
+      <a name="casetypes"></a><h3>$msg.map.layer.casetypes</h3>
       <p>
         Stellt die Verteilung eines Meningokokken-Feintyps auf der
         Landkarte dar, wobei die Menge der angezeigten Fälle durch die
@@ -228,7 +228,7 @@
       </p>
     </div>
     <div class="section">
-      <h2><a name="serogroups">$msg.map.layer.serogroups</a></h2>
+      <a name="serogroups"></a><h3>$msg.map.layer.serogroups</h3>
       <p>
         Visualisiert Erkrankungsfälle zusammengefasst nach Serogruppen.
       </p>
@@ -255,9 +255,9 @@
       </p>
     </div>
 
-    #if($user.isInRole("public_health") || $user.isInRole("nrzm"))
+    #if($request.isUserInRole("public_health") || $request.isUserInRole("nrzm"))
     <div class="section">
-      <h2><a name="prospective_clusters">$msg.map.layer.prospective_clusters</a></h2>
+      <a name="cluster"></a><h3>$msg.map.layer.cluster</h3>
       <p>
         Für diese Ebene können Sie keine Einstellungen vornehmen. Sie zeigt
         immer die durch die zuletzt durchgeführte prospektiven Analyse

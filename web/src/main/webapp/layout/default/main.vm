@@ -1,28 +1,30 @@
 <!DOCTYPE html 
 PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-#if($request.session.getAttribute('org.apache.struts.action.LOCALE'))
-#set ($locale=$request.session.getAttribute('org.apache.struts.action.LOCALE'))
-#else  
-#set($locale=$date.Locale)
-#end
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="$locale.Language" 
-  lang="$locale.Language">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="$msg.lang" 
+  lang="$msg.lang">
   <head>
     <title>$msg.global.name - $!page_title</title>
     <style type="text/css" media="all">
-      @import url("./css/episcangis-base.css");
-      @import url("./css/episcangis-theme.css");
+      @import url("css/episcangis-base.css");
+      @import url("css/episcangis-theme.css");
 
       #if ( $disableNav )
-      @import url("./css/episcangis-nonav.css");
+      @import url("css/episcangis-nonav.css");
       #end
       #if( $disableBanner )
-      ##@import url("./css/episcangis-nobanner.css");
+      ##@import url("css/episcangis-nobanner.css");
       #end
+
+      table.bodyTable tr.usergroup td {
+        padding-top: 1em;
+      }
+      td.icons {
+        text-align:center;
+      }
     </style>
     <style type="text/css" media="print">
-      @import url("./css/episcangis-print.css");
+      @import url("css/episcangis-print.css");
     </style>
     <meta name="author" content="Markus Reinhardt" />
     <meta name="keywords" lang="de" 
@@ -43,18 +45,12 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
     #if ( !$disableBanner || $disableBanner==false )
     <div id="banner">
       <div id="bannerLeft">
-        <a href="./welcome.vm"><img 
+        <a href="welcome.vm"><img 
           src="images/logo_episcangis.png" alt="$msg.global.title"/></a>
-        #if($user && $user.Username=="Johannes")
-        <div style="vertical-align: bottom;">
-          <img style="padding-top:15px;padding-left:15px"
-          src="images/icons/at.png" alt="Austria"/>
-        </div>
-        #end
       </div>
 
       <div id="bannerRight">
-        <a href="http://www.meningococcus.de"><img 
+        <a target="_blank" href="http://www.meningococcus.de"><img 
           src="images/logo_nrzm.png" alt="$msg.global.organization"/></a>
       </div>
       <div class="clear">

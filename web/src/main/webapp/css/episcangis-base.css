@@ -17,7 +17,7 @@ acronym {
 }
 table.bodyTable th, table.bodyTable td {
   padding: 2px 4px 2px 4px;
-  vertical-align: top;
+  vertical-align:middle;
 }
 div.clear{
   clear:both;

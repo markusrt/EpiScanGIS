@@ -1,0 +1,10 @@
+#macro( lang )
+ #if(!$locale)
+  #if(!$request.session.getAttribute('org.apache.struts.action.LOCALE'))
+    $request.session.setAttribute('org.apache.struts.action.LOCALE', $date.Locale)
+  #else  
+    #set($locale=$request.session.getAttribute('org.apache.struts.action.LOCALE'))
+  #end
+ #end
+$locale.Country
+#end

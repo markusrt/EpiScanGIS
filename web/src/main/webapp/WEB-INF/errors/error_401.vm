@@ -1,13 +1,13 @@
-#set ($page_title=$msg.page.error_403.title)
+#set ($page_title=$msg.page.error_401.title)
 <div class="section">
-  <h1>$msg.page.error_403.title</h1>
+  <h1>$msg.page.error_401.title</h1>
   <p>
-     #if( $request.UserPrincipal )
+    #if( $request.UserPrincipal )
       $msg.user.username: $request.UserPrincipal.Name
       ## $msg.user.role: $user.Roles
     #end
   </p>
   <p>
-    $msg.page.error_403.msg
+    $msg.page.error_401.msg
   </p>
 </div>
