@@ -41,22 +41,22 @@ public class SatScanExecutor
 {
   private static Log log = LogFactory.getLog(SatScanExecutor.class);
 
-  private static final int GISFILE_TOKENCOUNT = 9, GISFILE_LOCATION_ID = 0,
-      GISFILE_CLUSTER_NUMBER = 1, GISFILE_OBSERVED_CASES = 2,
-      GISFILE_EXPECTED_CASES = 3, GISFILE_OBSERVED_TO_EXPECTED_CASES = 4,
-      GISFILE_CLUSTER_PVALUE = 5, GISFILE_OBSERVED_CASES_LOCATION = 6,
+  private static final int GISFILE_TOKENCOUNT = 11, GISFILE_LOCATION_ID = 0,
+      GISFILE_CLUSTER_NUMBER = 1, GISFILE_OBSERVED_CASES = 4,
+      GISFILE_EXPECTED_CASES = 5, GISFILE_OBSERVED_TO_EXPECTED_CASES = 6,
+      GISFILE_CLUSTER_PVALUE = 3, GISFILE_OBSERVED_CASES_LOCATION = 6,
       GISFILE_EXPECTED_CASES_LOCATION = 7,
       GISFILE_OBSERVED_TO_EXPECTED_CASES_LOCATION = 8;
 
-  private static final int COLFILE_TOKENCOUNT = 13,
-      COLFILE_MOST_CENTRAL_ID = 0, COLFILE_CLUSTER_NUMBER = 1,
+  private static final int COLFILE_TOKENCOUNT = 14,
+      COLFILE_MOST_CENTRAL_ID = 1, COLFILE_CLUSTER_NUMBER = 0,
       COLFILE_LATITUDE = 2, COLFILE_LONGITUDE = 3, COLFILE_CIRCLE_RADIUS = 4,
-      COLFILE_LOCATIONS_IN_CLUSTER = 5, COLFILE_OBSERVED_CASES = 6,
-      COLFILE_EXPECTED_CASES = 7, COLFILE_OBSERVED_TO_EXPECTED_CASES = 8,
-      COLFILE_LLR = 9, COLFILE_PVALUE = 10, COLFILE_CLUSTER_START_DATE = 11,
-      COLFILE_CLUSTER_END_DATE = 12;
+      COLFILE_LOCATIONS_IN_CLUSTER = 7, COLFILE_OBSERVED_CASES = 10,
+      COLFILE_EXPECTED_CASES = 11, COLFILE_OBSERVED_TO_EXPECTED_CASES = 12,
+      COLFILE_LLR = 8, COLFILE_PVALUE = 9, COLFILE_CLUSTER_START_DATE = 5,
+      COLFILE_CLUSTER_END_DATE = 6;
 
-  private static final String VERSION = "v5.1.3.";
+  private static final String VERSION = "v6.1.3.";
 
   private BufferedReader satscan_out, satscan_err;
 
@@ -109,11 +109,11 @@ public class SatScanExecutor
       CaseTypeDAO ctDao = DaoFactory.getDaoFactory().getCaseTypeDAO();
       ReportedCaseDAO rcDao = DaoFactory.getDaoFactory().getReportedCaseDAO();
       SatScanJob job = execution.getJob();
-//      Date observationBegin = job.getObservationBegin(execution
-//          .getPlannedExecution()), observationEnd = job
-//          .getObservationEnd(execution.getPlannedExecution());
-      Date observationBegin = execution.getObservationBegin(), 
-        observationEnd = execution.getObservationEnd();
+      // Date observationBegin = job.getObservationBegin(execution
+      // .getPlannedExecution()), observationEnd = job
+      // .getObservationEnd(execution.getPlannedExecution());
+      Date observationBegin = execution.getObservationBegin(), observationEnd = execution
+          .getObservationEnd();
 
       log.info("Running execution, analysing period " + observationBegin
           + " - " + observationEnd);
@@ -212,107 +212,110 @@ public class SatScanExecutor
       FileUtils.writeStringToFile(geoFile, geoFileBuf.toString(), "latin1");
       FileUtils.writeStringToFile(popFile, popFileBuf.toString(), "latin1");
 
-      startProcess(prmFile.getAbsolutePath());
-      String line;
-      while ((line = satscan_out.readLine()) != null)
+      if (casFileBuf.length() > 0)
       {
-        log.debug(line);
-      }
-      while ((line = satscan_err.readLine()) != null)
-      {
-        log.error(line);
-      }
-
-      if (colOutFile.exists() && gisOutFile.exists())
-      {
-        BufferedReader br = new BufferedReader(new InputStreamReader(
-            new FileInputStream(colOutFile)));
-        try
+        startProcess(prmFile.getAbsolutePath());
+        String line;
+        while ((line = satscan_out.readLine()) != null)
         {
-          while ((line = br.readLine()) != null)
-          {
-            log.info(line);
-            SatScanCluster cluster = createClusterFromResult(execution, line);
+          log.debug(line);
+        }
+        while ((line = satscan_err.readLine()) != null)
+        {
+          log.error(line);
+        }
 
-            BufferedReader gisReader = new BufferedReader(
-                new InputStreamReader(new FileInputStream(gisOutFile)));
-            while ((line = gisReader.readLine()) != null)
+        if (colOutFile.exists() && gisOutFile.exists())
+        {
+          BufferedReader br = new BufferedReader(new InputStreamReader(
+              new FileInputStream(colOutFile)));
+          try
+          {
+            while ((line = br.readLine()) != null)
             {
-              StringTokenizer st = new StringTokenizer(line);
-              if (st.countTokens() != GISFILE_TOKENCOUNT)
+              log.info(line);
+              SatScanCluster cluster = createClusterFromResult(execution, line);
+
+              BufferedReader gisReader = new BufferedReader(
+                  new InputStreamReader(new FileInputStream(gisOutFile)));
+              while ((line = gisReader.readLine()) != null)
               {
-                log.error("Token count in result file line '" + line
-                    + "' is not as expected. Found " + st.countTokens()
-                    + " expected " + GISFILE_TOKENCOUNT + ".");
-              }
-              else
-              {
-                int locationId = 0, clusterNr = 0;
-                for (int token = 0; token < GISFILE_TOKENCOUNT; token++)
+                StringTokenizer st = new StringTokenizer(line);
+                if (st.countTokens() != GISFILE_TOKENCOUNT)
                 {
-                  String tokenValue = st.nextToken();
-                  switch (token)
-                  {
-                  case GISFILE_LOCATION_ID:
-                    locationId = Integer.valueOf(tokenValue);
-                    break;
-                  case GISFILE_CLUSTER_NUMBER:
-                    clusterNr = Integer.valueOf(tokenValue);
-                  default:
-                    break;
-                  }
+                  log.error("Token count in result file line '" + line
+                      + "' is not as expected. Found " + st.countTokens()
+                      + " expected " + GISFILE_TOKENCOUNT + ".");
                 }
-                if (cluster.getNumber() == clusterNr)
+                else
                 {
-                  for (ReportedCase rc : allCases)
+                  int locationId = 0, clusterNr = 0;
+                  for (int token = 0; token < GISFILE_TOKENCOUNT; token++)
                   {
-                    if (rc.getAreaId() == locationId
-                        && cluster.containsDate(rc.getIncidenceDate()))
+                    String tokenValue = st.nextToken();
+                    switch (token)
                     {
-                      cluster.addCase(rc);
+                    case GISFILE_LOCATION_ID:
+                      locationId = Integer.valueOf(tokenValue);
+                      break;
+                    case GISFILE_CLUSTER_NUMBER:
+                      clusterNr = Integer.valueOf(tokenValue);
+                    default:
+                      break;
+                    }
+                  }
+                  if (cluster.getNumber() == clusterNr)
+                  {
+                    for (ReportedCase rc : allCases)
+                    {
+                      if (rc.getAreaId() == locationId
+                          && cluster.containsDate(rc.getIncidenceDate()))
+                      {
+                        cluster.addCase(rc);
+                      }
                     }
                   }
                 }
               }
-            }
 
-            if (cluster.isValid())
-            {
-              log.info("Detected cluster: " + cluster.getNumber());
-              detectedClusters.add(cluster);
-              String clusterInfo = FileUtils
-                  .readFileToString(outFile, "latin1");
-              log.info(clusterInfo);
+              if (cluster.isValid())
+              {
+                log.info("Detected cluster: " + cluster.getNumber());
+                detectedClusters.add(cluster);
+                String clusterInfo = FileUtils.readFileToString(outFile,
+                    "latin1");
+                log.info(clusterInfo);
+              }
             }
           }
+          finally
+          {
+            IOUtils.closeQuietly(br);
+          }
         }
-        finally
+        else
         {
-          IOUtils.closeQuietly(br);
+          log.error("Could not open SatScans 'Cluster Information File' ("
+              + colOutFile.getAbsolutePath() + ").");
+          detectedClusters = null;
         }
       }
-      else
-      {
-        log.error("Could not open SatScans 'Cluster Information File' ("
-            + colOutFile.getAbsolutePath() + ").");
-        detectedClusters = null;
-      }
-      if (detectedClusters == null || detectedClusters.size() == 0)
-      {
-        // Clean up
-        casFile.delete();
-        popFile.delete();
-        geoFile.delete();
-        prmFile.delete();
-        colOutFile.delete();
-        outFile.delete();
-        gisOutFile.delete();
-      }
-      else
-      {
-        colOutFile.delete();
-        gisOutFile.delete();
-      }
+       if (detectedClusters == null || detectedClusters.size() == 0)
+       {
+       // Clean up
+       casFile.delete();
+       popFile.delete();
+       geoFile.delete();
+       prmFile.delete();
+       colOutFile.delete();
+       outFile.delete();
+       gisOutFile.delete();
+       }
+       else
+       {
+       colOutFile.delete();
+       gisOutFile.delete();
+       }
     }
     catch (IOException e)
     {
@@ -344,7 +347,9 @@ public class SatScanExecutor
    * <b>Example line:</b><br/> 9120 1 9.2384 50.0084 27.46 2 2 0.13 15.57
    * 3.733889 0.15500 2001/12/3 2001/12/10
    * </p>
-   * @param job Clusters job
+   * 
+   * @param job
+   *          Clusters job
    * @param resultFileLine
    */
   private SatScanCluster createClusterFromResult(SatScanExecution exe,
