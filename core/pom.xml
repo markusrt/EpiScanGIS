@@ -26,10 +26,7 @@
   </scm>
 
   <organization>
-    <name>
-      National Reference Centre for Meningococci, Institute for Hygiene
-      and Microbiology, Würzburg, Germany
-    </name>
+    <name>National Reference Centre for Meningococci, Institute for Hygiene and Microbiology, Würzburg, Germany</name>
     <url>http://www.meningococcus.de</url>
   </organization>
 
@@ -68,7 +65,7 @@
         <version>2.0-beta-5</version>
         <configuration>
           <inputEncoding>utf-8</inputEncoding>
-          <outputEncoding>utf-8</outputEncoding>
+          <outputEncoding>iso-8859-1</outputEncoding>
           <stagingDirectory>
             /home/mreinhardt/public_html
           </stagingDirectory>
@@ -77,9 +74,7 @@
       <plugin>
         <artifactId>maven-release-plugin</artifactId>
         <configuration>
-          <tagBase>
-            scm:svn:http://132.187.144.10/svn/episcangis/tags
-          </tagBase>
+          <tagBase>scm:svn:http://132.187.144.10/svn/episcangis/tags</tagBase>
         </configuration>
       </plugin>
       <plugin>
@@ -98,7 +93,7 @@
     <resources>
       <resource>
         <directory>src/main/resources</directory>
-        <filtering>true</filtering>
+        <filtering>false</filtering>
       </resource>
     </resources>
     <testResources>
@@ -240,10 +235,12 @@
           <aggregate>true</aggregate>
         </configuration>
       </plugin>
+      <!-- 
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-pmd-plugin</artifactId>
         <configuration>
+          <enable>false</enable>
           <targetjdk>1.5</targetjdk>
         </configuration>
       </plugin>
@@ -253,7 +250,7 @@
         <configuration>
           <minSeverity>info</minSeverity>
         </configuration>
-      </plugin>
+      </plugin> -->
 
 
 
@@ -281,6 +278,12 @@
       <name>IBiblio.org</name>
       <id>ibiblio</id>
       <url>http://www.ibiblio.org/maven2</url>
+    </repository>
+    
+    <repository>
+      <name>Geotools repository</name>
+      <id>maven.geotools.fr</id>
+      <url>http://maven.geotools.fr/repository/</url>
     </repository>
     <!-- 
       <repository>
