@@ -71,7 +71,7 @@ public class SatScanJobScheduler
         {
           startDate.setTime(jobToSchedule.getLastrun());
         }
-        endDate.setTime(lastCase.getReportDate());
+        //endDate.setTime(lastCase.getReportDate());
 
         log.debug("Searching executions from " + fdf.format(startDate) + " to "
             + fdf.format(endDate));
