@@ -1,5 +1,7 @@
 package de.meningococcus.episcangis.web;
 
+import java.sql.Date;
+import java.util.Calendar;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
@@ -43,28 +45,14 @@ public class LoginAction extends Action
     
     if (request.isUserInRole("nrzm") || request.isUserInRole("public_health"))
     {
-      Locale locale = (Locale)session.getAttribute(Globals.LOCALE_KEY);
       UserDAO userDao = DaoFactory.getDaoFactory().getUserDAO();
       User user = userDao.getUser(request.getUserPrincipal().getName());
-
-      // invalidate session to clear existing data (map bean,...)
-      session.invalidate();
-      session = request.getSession(true);
+      user.setLastLogin(new Date(Calendar.getInstance().getTimeInMillis()));
+      userDao.updateUser(user);
       
-      if( locale != null ) {
-        session.setAttribute(Globals.LOCALE_KEY, locale);
-      }
-
-      if (user != null)
-      {
-        session.setAttribute("user", user);
-      }
-      else
-      {
-        throw new UserNotFoundException("The user with login name '"
-            + request.getUserPrincipal().getName()
-            + "' was not found in database.");
-      }
+      // clear existing data (map bean,...)
+      request.getSession().setAttribute("map", null);
+      session.setAttribute("user", user);
     }
     
     //  Redirect to referring site or welcome page if not present
