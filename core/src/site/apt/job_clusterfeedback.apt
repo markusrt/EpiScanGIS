@@ -1,0 +1,34 @@
+  ---
+  EpiScanGIS - Aufgabe: Rückmeldeformular zu Clusterberichten
+  ---
+  Markus Reinhardt
+  ---
+  16.06.2006
+  ---
+
+EpiScanGIS - Aufgabe: Rückmeldeformular zu Clusterberichten
+
+* Aufgabestellung
+
+ Um eine Validierung der vom Referenzzentrum bzw. von EpiScanGIS generierten 
+ Clusterberichte vornehmen zu können ist es notwendig Feedback der
+ Gesundheitsämter zu sammeln, an welche diese Berichte verschickt werden.
+
+ Zu diesem Zweck sind folgende Komponenten zu implementieren:
+
+ * Ein Onlineformular, über das der Anwender bestimmte Fragen zu einem Cluster 
+   beantworten kann. Die Rückmeldung soll mittels eines TAN-Verfahrens 
+   abgesichert werden.
+   
+ * Ein Backend für das NRZM, über welches verschiedenen administrative
+   Aufgaben ausgeführt werden können:
+   
+   * Über- und Einsicht der Rückmeldungen. Sortiert nach Clusterdatum bzw. 
+     bereits abgegebenen und noch offenen Meldungen.
+    
+   * Generierung einer offenen Transaktion und TAN, die eindeutig einem Cluster 
+     und dem angeschriebenen Gesundheitsamt zugeordnet ist.
+     
+ * In einem späteren Schritt soll die Berichtversendung (incl. generierter TAN)
+   halbautomatisch (per Knopfdruck) direkt in EpiScanGIS ausgeführt werden 
+   können. Die API der oben genannten Komponenten muss darauf ausgelegt sein.  
