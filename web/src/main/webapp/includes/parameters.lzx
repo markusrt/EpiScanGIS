@@ -27,15 +27,37 @@
     datapath="selectparameter" width="${parent.width}">
     <attribute name="mapview" type="expression" />
     <method event="oninit">
+      <![CDATA[ 
       if(!(typeof(this.selector.title.text) == "undefined")) {
-      this.selector.subviews[1].setWidth(
-      parent.width-this.selector.title.width-5); }
+        this.selector.subviews[1].setWidth(
+        parent.width-this.selector.title.width-5);
+      }
+      ]]>
     </method>
     <method name="selectValue" args="searchValue">
-      //var query = './value[@name="'+searchValue+'"]'; var query =
-      './value'; var list = this.datapath.xpathQuery(query); for( var i
-      in list ) { if(list[i].getAttr('name') == searchValue ) {
-      selector.subviews[1].selectItemAt(i); break; } }
+      <![CDATA[ 
+      Debug.write("SEARCH HO");
+      //var query = "./value[@name='"+searchValue+"']"; 
+      var query = './value'; 
+      Debug.write(query);
+      var list = this.datapath.xpathQuery(query); 
+      var found = false;
+      for( var i in list ) { 
+        if(list[i].getAttr('name') == searchValue ) {
+          selector.subviews[1].selectItemAt(i); 
+          found = true;
+          break; 
+        }
+      }
+      if(!found) {
+        this.searchBox.heading.setAttribute("bgcolor",0xFF3300);
+        this.searchBox.heading.setAttribute("bgcolor",this.bgcolor);
+        this.searchBox.heading.setAttribute("bgcolor",0xFF3300);
+      }
+      else {
+        this.searchBox.heading.setAttribute("bgcolor",this.bgcolor);
+      }
+      ]]>
     </method>
     <method name="getValue">return this.subviews[1].getValue();</method>
     <simplelayout axis="y" spacing="5" />
@@ -118,7 +140,7 @@
     </view>
     <view width="100%" name="searchBox" visible="false">
       <simplelayout axis="x" spacing="5" />
-      <text width="25%" text="Search" fontstyle="bold" />
+      <text name="heading" width="25%" text="Search" fontstyle="bold" />
       <edittext resizable="false" x="0" y="10" width="100%"
         name="searchBox">
         <method event="onkeydown" args="k">
@@ -140,6 +162,17 @@
         parent.chosen.setText(this.getValue());
         parent.chosen.setVisible(true); } else
         parent.chosen.setVisible(false); parent.onselect.sendEvent();
+        
+        <!--
+        if( this.getValue() != null ) {
+          parent.chosen.setText(this.getValue());
+          parent.chosen.setVisible(true); 
+        } 
+        else {
+          parent.chosen.setVisible(false); 
+          parent.onselect.sendEvent();
+        }
+        -->
       </method>
       <!-- initstage="late" required because otherwise
         parent is initialized after textlistitem -->
