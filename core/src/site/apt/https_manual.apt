@@ -69,7 +69,7 @@ openssl genrsa -des3 -out episcangis.hygiene.uni-wuerzburg.de.key 1024
  'Certificate Signing Request' (CSR), welcher mit folgendem Befehl generiert wird:
  
 +------------------------------------------------------------------------------+
-openssl req -new -key episcangis.hygiene.uni-wuerzburg.de.key -out episcangis.hygiene.uni-wuerzburg.de.csr -days 1825
+openssl req -new -key episcangis.hygiene.uni-wuerzburg.de.key -out episcangis.hygiene.uni-wuerzburg.de.csr
 +------------------------------------------------------------------------------+
 
  Es folgt ein Dialog in dem die entsprechenden Daten (siehe unten) eingegeben 
@@ -123,7 +123,7 @@ openssl genrsa -des3 -out ca.key 1024
  Zertifikat erzeugen:
  
 +------------------------------------------------------------------------------+ 
-openssl req -new -x509 -days 18250 -key ca.key -out ca.crt
+openssl req -new -x509 -days 9125 -key ca.key -out ca.crt
 +------------------------------------------------------------------------------+
 
  Es ist wieder die Angabe einiger Daten notwendig:
@@ -142,7 +142,7 @@ State or Province Name (full name) [Berkshire]:Bavaria
 Locality Name (eg, city) [Newbury]:Wuerzburg
 Organization Name (eg, company) [My Company Ltd]:University of Wuerzburg
 Organizational Unit Name (eg, section) []:Institute for Hygiene and Microbiology
-Common Name (eg, your name or your server's hostname) []:hygiene.uni-wuerzburg.de
+Common Name (eg, your name or your server's hostname) []:www.uni-wuerzburg.de
 Email Address []:admin@hygiene.uni-wuerzburg.de
 +------------------------------------------------------------------------------+ 
 
