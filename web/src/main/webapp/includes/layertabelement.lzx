@@ -39,6 +39,19 @@
       </checkbox>
       <loadbar x="${parent.parent.width-this.width-4}" y="4"
         name="loadbar" height="14" visible="false" />
+      <datapointer name="tls" xpath="ToggleLayerState:/result[1]">
+        <method event="ondata" args="d"><![CDATA[
+         var layer;
+         if (this.getNodeName() == "result")
+            var xp = "ToggleLayerState:/result[1]/layer[@name='" + classroot.layername + "']/@active";
+         var active = this.xpathQuery(xp);
+         var value = parent.classroot.top.header.subviews[1].hider.getAttribute('value');
+         Debug.write("Layer: " + classroot.layername + "=" + active + "<->" + value);
+         if( active == 'false' && value ) {
+           parent.classroot.top.header.subviews[1].hider.onclick.sendEvent();
+         }
+       ]]></method>
+     </datapointer>
     </view>
     <view width="100%" name="paramChoser" layout="spacing:5">
       <selectparameter mapview="${classroot.mapview}" />
