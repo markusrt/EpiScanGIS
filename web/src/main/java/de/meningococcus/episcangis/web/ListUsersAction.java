@@ -26,23 +26,21 @@ import de.meningococcus.episcangis.db.model.User;
 public class ListUsersAction extends Action
 {
   private static Log log = LogFactory.getLog(ListUsersAction.class);
-  
+
   public ActionForward execute(ActionMapping mapping, ActionForm form,
       HttpServletRequest request, HttpServletResponse response)
       throws Exception
   {
     String forward = GlobalSettings.FORWARD_DENIED;
     HttpSession session = request.getSession();
-    User currentUser = (User) session.getAttribute("user");
-    if (currentUser != null && currentUser.isInRole("admin"))
-    {
-      UserDAO userDao = DaoFactory.getDaoFactory().getUserDAO();
-      Collection<User> allUsers = userDao.getUsers();
-      session.setAttribute("allUsers", allUsers);
-      Collection<String> allRoles = userDao.getRoles();
-      session.setAttribute("allRoles", allRoles);
-      forward = GlobalSettings.FORWARD_SUCCESS;
-    }
+    
+    UserDAO userDao = DaoFactory.getDaoFactory().getUserDAO();
+    Collection<User> allUsers = userDao.getUsers();
+    session.setAttribute("allUsers", allUsers);
+    Collection<String> allRoles = userDao.getRoles();
+    session.setAttribute("allRoles", allRoles);
+    forward = GlobalSettings.FORWARD_SUCCESS;
+
     return (mapping.findForward(forward));
   }
 }
