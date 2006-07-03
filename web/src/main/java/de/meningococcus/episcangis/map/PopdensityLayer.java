@@ -15,6 +15,8 @@ public class PopdensityLayer extends MapLayer
       AbstractWmsMap map)
   {
     super(name, title, hasLegend, map);
+    setOpaque(true);
+    
     OLDSelectParameter depthSelector = new OLDSelectParameter("POPDENTIER", "Depth");
 
     DaoFactory daoFactory = DaoFactory.getDaoFactory();

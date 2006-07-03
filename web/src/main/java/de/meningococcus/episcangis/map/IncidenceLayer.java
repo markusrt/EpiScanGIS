@@ -19,6 +19,7 @@ public class IncidenceLayer extends MapLayer
       AbstractWmsMap map)
   {
     super(name, title, hasLegend, map);
+    setOpaque(true);
 
     OLDSelectParameter tier = new OLDSelectParameter("INCITIER", "Depth");
 

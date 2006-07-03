@@ -26,7 +26,7 @@ public class MapLayer
 
   private String title, name, description = "";
 
-  private boolean active, hasLegend, queryable;
+  private boolean active, hasLegend, queryable, opaque;
 
   private Map<String, AbstractParameter> parameters = new HashMap<String, AbstractParameter>();
 
@@ -213,6 +213,22 @@ public class MapLayer
   protected void setTitle(String title)
   {
     this.title = title;
+  }
+
+  /**
+   * @return Returns the opaque.
+   */
+  public boolean isOpaque()
+  {
+    return opaque;
+  }
+
+  /**
+   * @param opaque The opaque to set.
+   */
+  public void setOpaque(boolean opaque)
+  {
+    this.opaque = opaque;
   }
 
 }

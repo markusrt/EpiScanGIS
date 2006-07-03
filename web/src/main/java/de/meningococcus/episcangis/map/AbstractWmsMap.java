@@ -3,6 +3,7 @@ package de.meningococcus.episcangis.map;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
@@ -286,15 +287,26 @@ public abstract class AbstractWmsMap
    * @throws LayerNotFoundException
    *           If a layer with this name does not exist
    */
-  public void toggleLayerState(String layerName, boolean active)
+  public Collection<LayerState> toggleLayerState(String layerName, boolean active)
       throws LayerNotFoundException
   {
+    Collection<LayerState> layerState = new ArrayList<LayerState>();
     MapLayer layer = mapLayers.get(layerName);
     if (layer == null)
     {
       throw new LayerNotFoundException(layerName);
     }
     layer.setActive(active);
+    if(layer.isOpaque() && active ) {
+      for( MapLayer mlb : mapLayers.values() ) {
+        if(mlb.isOpaque() && !mlb.getName().equals(layerName))
+        {
+          mlb.setActive(false);
+        }
+        layerState.add(new LayerState(mlb.isActive(), mlb.getName()));
+      }  
+    }
+    return layerState;
   }
 
   public AbstractParameter getParameter(String name)
