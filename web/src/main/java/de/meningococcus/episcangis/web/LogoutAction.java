@@ -35,8 +35,8 @@ public class LogoutAction extends Action
     Locale locale = (Locale)session.getAttribute(Globals.LOCALE_KEY);
     
     session.invalidate();
-    session = request.getSession(true);
-    
+    session = request.getSession();
+
     if( locale != null ) {
       session.setAttribute(Globals.LOCALE_KEY, locale);
     }
