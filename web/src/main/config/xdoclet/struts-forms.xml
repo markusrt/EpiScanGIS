@@ -47,3 +47,8 @@
     <form-property name="username" type="java.lang.String" />
     <form-property name="role" type="java.lang.String" />
   </form-bean>
+  
+  <form-bean name="deleteUser"
+    type="org.apache.struts.action.DynaActionForm">
+    <form-property name="username" type="java.lang.String" />
+  </form-bean>

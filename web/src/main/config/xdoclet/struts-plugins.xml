@@ -4,3 +4,10 @@
     value="/WEB-INF/validator-rules.xml,
         /WEB-INF/validation.xml" />
 </plug-in>
+
+<!-- sslext plugin
+<plug-in className="org.apache.struts.action.SecurePlugIn"> 
+  <set-property property="httpPort" value="80"/> 
+  <set-property property="httpsPort" value="443"/>  
+  <set-property property="enable" value="true"/>  
+</plug-in>  -->
