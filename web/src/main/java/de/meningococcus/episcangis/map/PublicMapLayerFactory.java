@@ -48,6 +48,10 @@ final class PublicMapLayerFactory implements MapLayerFactory
     {
       ret = new PopdensityLayer(name, title, hasLegend, map);
     }
+    else if (realName.equals("cities"))
+    {
+      ret = new ClusterLayer(name, title, hasLegend, map, 82);
+    }
     else
     {
       // Public is not allowed to see all layers

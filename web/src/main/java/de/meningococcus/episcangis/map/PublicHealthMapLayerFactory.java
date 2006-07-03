@@ -55,6 +55,10 @@ final class PublicHealthMapLayerFactory implements MapLayerFactory
     {
       ret = new ClusterLayer(name, title, hasLegend, map, 82);
     }
+    else if (realName.equals("cities"))
+    {
+      ret = new ClusterLayer(name, title, hasLegend, map, 82);
+    }
     else
     {
       //  Public health is not allowed to see all layers
