@@ -4,7 +4,6 @@ import java.sql.Date;
 import java.util.ResourceBundle;
 import java.util.Vector;
 
-
 import de.meningococcus.episcangis.db.DaoFactory;
 import de.meningococcus.episcangis.db.dao.SatScanDAO;
 import de.meningococcus.episcangis.db.model.SatScanJob;
@@ -17,7 +16,7 @@ import de.meningococcus.episcangis.db.model.SatScanJob;
 public class ClusterLayer extends MapLayer
 {
   ClusterLayer(String name, String title, boolean hasLegend,
-      AbstractWmsMap map, int jobId)
+      boolean hasDateSelector, AbstractWmsMap map, int jobId)
   {
     super(name, title, hasLegend, map);
     OLDSelectParameter clusterDateSelector = new OLDSelectParameter(
@@ -28,13 +27,15 @@ public class ClusterLayer extends MapLayer
       SatScanJob ssJob = ssDao.getSatScanJob(jobId);
       Vector<Date> analysisDates = new Vector<Date>(ssDao
           .getClusterAnalysisDates(ssDao.getSatScanJob(jobId)));
-      if (ssJob.getAnalysistype() == SatScanJob.ANALYSISTYPE_RETROSPECTIVE_SPACE_TIME)
+      if (hasDateSelector)
       {
         for (Date date : analysisDates)
         {
-          ((OLDSelectParameter) clusterDateSelector).addValue(new ParameterValue(date
-              .toString(), date.toString()));
+          ((OLDSelectParameter) clusterDateSelector)
+              .addValue(new ParameterValue(date.toString(), date.toString()));
         }
+        clusterDateSelector.setValue(clusterDateSelector.getValues()
+            .lastElement().getValue());
         addParameter(clusterDateSelector);
       }
       else

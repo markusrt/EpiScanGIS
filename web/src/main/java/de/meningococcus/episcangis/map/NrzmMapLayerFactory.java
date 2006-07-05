@@ -48,16 +48,21 @@ final class NrzmMapLayerFactory implements MapLayerFactory
     }
     else if (realName.equals("cluster"))
     {
-      ret = new ClusterLayer(name, title, hasLegend, map, 82);
+      ret = new ClusterLayer(name, title, hasLegend, true, map, 82);
     }
     else if (realName.equals("clusterretro"))
     {
-      ret = new ClusterLayer(name, title, hasLegend, map, 211);
+      ret = new ClusterLayer(name, title, hasLegend, true, map, 211);
     }
     else
     {
       ret = new MapLayer(name, title, hasLegend, map);
     }
     return ret;
+  }
+
+  public String getMapUrlKeyPrefix()
+  {
+    return "nrzm.";
   }
 }

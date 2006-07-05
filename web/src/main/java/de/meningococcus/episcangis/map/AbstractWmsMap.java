@@ -49,7 +49,7 @@ public abstract class AbstractWmsMap
    * @param width
    * @param height
    * @throws MapInitializationException
-   * TODO move wmsUrl from map to web (add to constructor)
+   *           TODO move wmsUrl from map to web (add to constructor)
    */
   public AbstractWmsMap(int width, int height)
       throws MapInitializationException
@@ -69,7 +69,8 @@ public abstract class AbstractWmsMap
     try
     {
       config = new PropertiesConfiguration(configfile);
-      this.wmsUrl = config.getString("wms.url", "");
+      this.wmsUrl = config.getString(getMapLayerFactory().getMapUrlKeyPrefix()
+          + "wms.url", "");
       initialize();
     }
     catch (ConfigurationException e)
@@ -287,8 +288,8 @@ public abstract class AbstractWmsMap
    * @throws LayerNotFoundException
    *           If a layer with this name does not exist
    */
-  public Collection<LayerState> toggleLayerState(String layerName, boolean active)
-      throws LayerNotFoundException
+  public Collection<LayerState> toggleLayerState(String layerName,
+      boolean active) throws LayerNotFoundException
   {
     Collection<LayerState> layerState = new ArrayList<LayerState>();
     MapLayer layer = mapLayers.get(layerName);
@@ -297,14 +298,16 @@ public abstract class AbstractWmsMap
       throw new LayerNotFoundException(layerName);
     }
     layer.setActive(active);
-    if(layer.isOpaque() && active ) {
-      for( MapLayer mlb : mapLayers.values() ) {
-        if(mlb.isOpaque() && !mlb.getName().equals(layerName))
+    if (layer.isOpaque() && active)
+    {
+      for (MapLayer mlb : mapLayers.values())
+      {
+        if (mlb.isOpaque() && !mlb.getName().equals(layerName))
         {
           mlb.setActive(false);
         }
         layerState.add(new LayerState(mlb.isActive(), mlb.getName()));
-      }  
+      }
     }
     return layerState;
   }
