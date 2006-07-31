@@ -58,7 +58,7 @@ div.clear hr{
 #leftColumn {
  width: 12em;
  float:left;
- overflow: auto;
+ overflow: visible;
 }
 #bodyColumn {
   margin-right: 15px;
@@ -95,13 +95,11 @@ p.figure {
   line-height: 1.2em;
   font-size: 0.9em;
 }
+
 #poweredBy {
   text-align: center;
 }
-#navcolumn img {
-  margin-top: 10px;
-  margin-bottom: 3px;
-}
+
 #poweredBy img {
   display:block;
   margin: -10px 0 10px 17px;
@@ -109,21 +107,48 @@ p.figure {
   width: 90px;
   height: 30px;
 }
+
 #validator img {
   display:block;
-  margin: 20px 0 0px 17px;
+  margin: 10px 0 0px 17px;
 }
-#search img {
-  margin: 0px;
-  display: block;
+
+#nrzm {
+  text-align: center;
 }
-#search #q, #search #btnG {
-  border: 1px solid #999;
-  margin-bottom:10px;
+
+#nrzm img {
+  display:block;
+  margin: 10px 0 0px 17px;
+  width: 80px;
+  height: 65px;
 }
-#search form {
-  margin: 0px;
+
+#info2 {
+  text-align: center;
 }
+
+#info2 img {
+  display:block;
+  background-color: white;
+  border: 1px solid black;
+  margin: 10px 0 0px 17px;
+  width: 59px;
+  height: 45px;
+}
+
+#ridom {
+  text-align: center;
+}
+
+#ridom img {
+  display:block;
+  margin: 10px 0 0 17px;
+  border: 1px solid black;
+  width: 107px;
+  height: 35px;
+}
+
 #lastPublished {
   font-size: x-small;
 }

@@ -58,7 +58,7 @@ h1 {
   border: 1px solid #585b71;
   background-color: #acb1dc;
   font-weight:900;
-  font-size: 1.86em;
+  font-size: 1.56em;
   text-align: left;
 }
 h2 {
@@ -67,7 +67,7 @@ h2 {
   border: 1px solid #585b71;
   background-color: #acb1dc;
   font-weight:500;
-  font-size: 1.56em;
+  font-size: 1.3em;
   text-align: left;
 }
 h3 {
@@ -76,7 +76,7 @@ h3 {
   border: 1px solid #585b71;
   background-color: #acb1dc;
   font-weight: normal;
-  font-size: 1.3em;
+  font-size: 1.1em;
   text-align: left;
 }
 h4 {
@@ -85,14 +85,14 @@ h4 {
   border: 1px solid #585b71;
   background-color: #acb1dc;
   font-weight: normal;
-  font-size: 1.1em;
+  font-size: 1em;
   text-align: left;
 }
 h5 {
   padding: 4px 4px 4px 6px;
   color: #060;
   background-color: inherit;
-  font-size: 1em;
+  font-size: 0.9em;
   font-weight: bold;
   text-align: left;
 }
@@ -190,4 +190,8 @@ fieldset {
   color: red;
   background-color: yellow;
   text-align: left;
+}
+
+span.loginout {
+  font-weight: bold;
 }
