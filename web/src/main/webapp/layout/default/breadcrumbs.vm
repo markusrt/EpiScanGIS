@@ -2,20 +2,18 @@
   ##############################################################################
   ## Leftmost links
   ##############################################################################
-  <a href="http://www.ridom.de" target="_blank" class="newWindow">
-      Ridom GmbH</a>
-  | <a href="http://www2.informatik.uni-wuerzburg.de" target="_blank" class="newWindow">
-    $msg.global.info2.university-wuerzburg</a>
 </div>
 <div class="xright">
   ##############################################################################
   ## Login/Register respectively Logout
   ##############################################################################
-  #if ($request.UserPrincipal)
-  $msg.get('global.logout', [$link.setAction('Logout'),"$request.UserPrincipal.Name"])
+  <span class="loginout">
+  #if ($user)
+  $msg.get('global.logout', [$link.setAction('Logout'),"$user.forename.charAt(0). $user.lastname"])
   #else
   $msg.get('global.login_or_register', [$link.setAction('Login'),'registerUser.vm'])
-  #end  
+  #end
+  </span>  
   ##############################################################################
   ## Icon to switch locale, disable it by using '#set ($disableNav=true)'
   ##  on the according velocity page 

@@ -18,13 +18,15 @@
     <li><a href="imprint.vm">$msg.page.imprint.title</a></li>
   </ul>
 
-  #if($request.isUserInRole("public_health"))
+  #if($user)
+  #if($user.isInRole("public_health"))
+  ## || $user.isInRole("nrzm"))
   <h5>$msg.role.public_health</h5>
   <ul>
   	<li></li>
   </ul>
   #end
-  #if($request.isUserInRole("nrzm"))
+  #if($user.isInRole("nrzm"))
   <h5>$msg.role.nrzm</h5>
   <ul>
     <li><a href="developer/"
@@ -36,14 +38,21 @@
           >Casecounts by serogroup</a></li>
   </ul>
   #end
-  #if($request.isUserInRole("admin"))
+  #if($user.isInRole("admin"))
   <h5>$msg.role.admin</h5>
   <ul>
     <li><a href="$link.setAction('ListUsers')"
           >List users</a></li>
   </ul>
   #end
-
+  #end
+  <h5></h5>
+  <a href="http://www.meningococcus.de" id="nrzm"><img 
+          src="images/logo_nrzm.png" alt="$msg.global.organization"/></a>
+  <a href="http://www2.informatik.uni-wuerzburg.de" id="info2"><img 
+          src="images/logo_info2.gif" alt="$msg.global.info2.university-wuerzburg"/></a>
+  <a href="http://www.ridom.com" id="ridom"><img 
+          src="images/logo_ridom.gif" alt="Ridom GmbH"/></a>
   <a href="http://validator.w3.org/check?uri=referer" id="validator"><img
         src="images/valid-xhtml10.png"
         alt="Valid XHTML 1.0 Transitional" height="31" width="88" /></a><br/>
