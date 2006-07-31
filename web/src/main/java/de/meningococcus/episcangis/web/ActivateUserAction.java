@@ -75,19 +75,16 @@ public class ActivateUserAction extends Action
       email
           .setMsg("Sehr geehrte/r EpiScanGIS Anwender/in,\n"
               + "wir haben Sie für den erweiterten Zugang zu EpiScanGIS freigeschalten.\n\n"
-              + "Benutzername:\t"
+              + "Benutzername:\t\t"
               + userToChange.getUsername()
               + "\n"
-              + "Benutzerrolle/n:\t"
+              + "Benutzerrolle/n:\t\t"
               + userToChange.getRoles()
+              + "\n"
+              + "Passwort:\t\t****** (von Ihnen bei der Registrierung angegeben)"
               + "\n\n"
               + "Sie haben damit die Möglichkeit in Detailbereiche (Bundesländer) der Karte zu zoomen und die Ergebnisse der letzten prospektiven Clusteranalyse zu sehen.\n\n"
-              + "*Aktuelle Meldung*:  31. Mai 2006 - 15.00 Uhr\n\n"
-              + "Vor der Einführung von EpiScanGIS konnten wir nicht die Kompatibilität mit allen verfügbaren Browser/Betriebssystem-Kombinationen prüfen. Besonders die Verwendung des Internet Explorers kann stellenweise zu Problemen führen.\n\n"
-              + "Wenn Sie den Internet Explorer verwenden, dann stellen Sie bitte sicher, dass der aktuellste Flash-Player (mindestens Version 7) installiert ist:\n\n"
-              + "http://www.adobe.com/go/getflashplayer\n\n"
-              + "Aktuell wurde eine Änderung durchgeführt, die einen Großteil der Probleme beheben sollte. Falls der Kartenbetrachter bei Ihnen auch nach einem Neustart Ihres Browsers nicht funktionieren sollte, wäre es nett, wenn Sie mir die Version und den Namen Ihres Browsers bzw. Betriebssystems mitteilen könnten.\n\n"
-              + "Wir freuen uns über jedes Feedback und werden uns darum bemühen, dass das System bei allen Anwendern reibungslos funktioniert.\n\n"
+              + "Bitte teilen Sie uns mit, wenn es Sie beim Anmelden oder beim Ausführen des Kartenbetrachtern Probleme haben. Wir arbeiten ständig an der Verbesserung des Systems.\n\n"
               + "Mit freundlichen Grüßen,\n\n" + currentUser.getForename()
               + " " + currentUser.getLastname());
       email.send();
