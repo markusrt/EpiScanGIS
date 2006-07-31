@@ -10,7 +10,7 @@
     , <a href="#incidence">$msg.map.layer.incidence</a>
     , <a href="#casetypes">$msg.map.layer.casetypes</a>
     , <a href="#serogroups">$msg.map.layer.serogroups</a>
-    #if($request.isUserInRole("public_health") || $user.isInRole("nrzm"))
+    #if($user.isInRole("public_health") || $user.isInRole("nrzm"))
     , <a href="#cluster">$msg.map.layer.cluster</a>
     #end      
   </p>
@@ -52,7 +52,7 @@
         welche die angezeigten Karten verändern:
         <ol type="a">
 
-          #if($request.isUserInRole("public_health") || $request.isUserInRole("nrzm"))
+          #if($user.isInRole("public_health") || $user.isInRole("nrzm"))
           <li>
             <b>$msg.map.area</b>:
             Je nach Auswahl ändert sich der Zoombereich des
@@ -81,7 +81,7 @@
             Der Beobachtungszeitraum lässt sich mit der Genauigkeit von
             einem
 
-            #if($request.isUserInRole("public_health") || $request.isUserInRole("nrzm")) einem Monat #else Jahr #end
+            #if($user.isInRole("public_health") || $user.isInRole("nrzm")) einem Monat #else Jahr #end
 
             einstellen, wobei wiederum die Grenzwerte mit eingeschlossen
             sind.
@@ -107,7 +107,7 @@
         Der Hauptbereich von EpiScanGIS zeigt die aktuelle, anhand aller
         Filtereinstellungen generierte Karte.
 
-        #if($request.isUserInRole("public_health") || $request.isUserInRole("nrzm"))
+        #if($user.isInRole("public_health") || $user.isInRole("nrzm"))
         Durch klicken und ziehen der Maus können Sie den
         Kartenausschnitt verschieben.
         #end
@@ -255,7 +255,7 @@
       </p>
     </div>
 
-    #if($request.isUserInRole("public_health") || $request.isUserInRole("nrzm"))
+    #if($user.isInRole("public_health") || $user.isInRole("nrzm"))
     <div class="section">
       <a name="cluster"></a><h3>$msg.map.layer.cluster</h3>
       <p>

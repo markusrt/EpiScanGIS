@@ -2,6 +2,7 @@
 
 <div class="section">
   <h1>$msg.global.title</h1>
+  <!-- 
   <b>Latest Information:</b>
   <dl style="font-size:smaller;">
    <dt>Mai 31, 2006 - 15.00 Uhr</dt>
@@ -32,9 +33,9 @@
      </p>
    </dd>
   </dl>
-  <h2>Online Monitoring Invasive Meningococcal Disease in Germany</h2>
+   -->
   <p>
-    <b>Detecting meningococcal disease outbreaks as early as possible is
+    Detecting meningococcal disease outbreaks as early as possible is
     important in order to minimize the number of infections amongst the
     population. EpiScanGIS uses a Geographical Information System (GIS)
     to present maps showing the distribution of all cases of
@@ -43,26 +44,24 @@
       National Reference Centre for Meningococci (NRZM)</a> in Germany. 
     Thus it acts as early warning system, that provides you
     with easy to access and timely information on meningococcal diseases
-    in Germany.</b><br />
+    in Germany.<br />
     <a class="smaller" href="whatis.vm">read more...</a>
   </p>
-  <p>
-    <b>
-      <a href="#"
-        onclick="window.open('mapbrowser.vm','mapbrowser','status=no,scrollbars=yes,width=1040,height=820')">
-        Start EpiScanGIS - Web Surveillance
-      </a>
-    </b>
-    ,
+  <p style="text-align:center">
+    <b>Start the map browser!</b><br />
     <a href="#"
+      onclick="window.open('mapbrowser.vm','mapbrowser','status=no,scrollbars=yes,width=1040,height=820')"><img
+        src="images/go_episcangis.png" alt="Start EpiScanGIS - Web Surveillance" />
+    </a>
+    <br />
+    <a style="font-size: smaller" href="#"
       onclick="window.open('mapbrowser.vm?width=800&amp;height=600','mapbrowser','status=no,scrollbars=yes,width=800,height=670')">
       Start small size (800x600)
     </a>
   </p>
-  <p>
-    Just click on one of the upper links, to launch the map browser, that allows
-    you to explore the geographical distribution of all cases of
-    meningococcal disease that occurred in Germany since December 2001.
+  <p style="font-size: smaller">
+    The map browser allows you to explore the geographical distribution of all cases of
+    meningococcal disease, that occurred in Germany since December 2001.
     EpiScanGIS uses
     <a target="_blank" class="newWindow" 
       href="http://www.adobe.com/products/flashplayer/">
@@ -73,7 +72,7 @@
       href="http://www.adobe.com/go/getflashplayer">
       here</a>.
   </p>
-  <p>
+  <p style="font-size: smaller">
     The
     <a href="manual.vm">EpiScanGIS Manual</a>
     gives you a brief introduction on the software and explains how it

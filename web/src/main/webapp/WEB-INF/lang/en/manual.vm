@@ -1,4 +1,4 @@
-#set ($page_title=$msg.page.manual.title)
+logo#set ($page_title=$msg.page.manual.title)
 
 <div class="section">
   <h1>$msg.page.manual.title</h1>
@@ -10,7 +10,7 @@
     , <a href="#incidence">$msg.map.layer.incidence</a>
     , <a href="#casetypes">$msg.map.layer.casetypes</a>
     , <a href="#serogroups">$msg.map.layer.serogroups</a>
-    #if($request.isUserInRole("public_health") || $request.isUserInRole("nrzm"))
+    #if($user.isInRole("public_health") || $user.isInRole("nrzm"))
     , <a href="#cluster">$msg.map.layer.cluster</a>
     #end      
   </p>
@@ -47,7 +47,7 @@
         Filters, that alter the displayed maps, can be set using these
         dropdown menus:
         <ol type="a">
-          #if($request.isUserInRole("public_health") || $request.isUserInRole("nrzm"))
+          #if($user.isInRole("public_health") || $user.isInRole("nrzm"))
           <li><b>$msg.map.area</b>:
             Use this control, to zoom the map to different areas
             (federal territory or federal states)
@@ -69,7 +69,7 @@
             <br />
             The observation period can be set with a precision of
 
-            #if($request.isUserInRole("public_health") || $request.isUserInRole("nrzm"))
+            #if($user.isInRole("public_health") || $user.isInRole("nrzm"))
             one month
             #else 
             one year 
@@ -92,7 +92,7 @@
         The main area of EpiScanGIS shows the current map, which is automatically
         generated using the current filter settings.
 
-        #if($request.isUserInRole("public_health") || $request.isUserInRole("nrzm"))
+        #if($user.isInRole("public_health") || $user.isInRole("nrzm"))
         Left clicking and moving the mouse relocates the visible area.
         #end
 
@@ -227,7 +227,7 @@
       </p>
     </div>
 
-    #if($request.isUserInRole("public_health") || $request.isUserInRole("nrzm"))
+    #if($user.isInRole("public_health") || $user.isInRole("nrzm"))
     <div class="section">
       <a name="cluster"></a><h3>$msg.map.layer.cluster</h3>
       <p>
