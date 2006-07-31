@@ -1,1 +1,1 @@
-#parse ($i18n.findLocalizedResource("imprint.vm", "$msg.lang"))
+#parse ("WEB-INF/lang/$msg.lang/imprint.vm")
