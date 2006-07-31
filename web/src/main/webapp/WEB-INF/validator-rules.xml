@@ -322,6 +322,21 @@
                        javax.servlet.http.HttpServletRequest"
               depends=""
                   msg="errors.username"/>
+                  
+     <!-- 
+       Checks if the email exists
+      -->
+     <validator name="emailexists"
+            classname="de.meningococcus.episcangis.web.StrutsValidator"
+               method="validateEmailExists"
+         methodParams="java.lang.Object,
+                       org.apache.commons.validator.ValidatorAction,
+                       org.apache.commons.validator.Field,
+                       org.apache.struts.action.ActionMessages,
+                       org.apache.commons.validator.Validator,
+                       javax.servlet.http.HttpServletRequest"
+              depends=""
+                  msg="errors.emailexists"/>
 
    </global>
 

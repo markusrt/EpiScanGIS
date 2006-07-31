@@ -134,5 +134,15 @@
         </var>
       </field>
     </form>
+    <form name="forgotPassword">
+      <field property="email" depends="required,email,maxlength,emailexists">
+        <arg position="0" key="user.email"/>
+        <arg position="1" name="maxlength" key="${var:maxlength}" resource="false"/>
+        <var>
+          <var-name>maxlength</var-name>
+          <var-value>50</var-value>
+        </var>
+      </field>
+    </form>
   </formset>
 </form-validation>

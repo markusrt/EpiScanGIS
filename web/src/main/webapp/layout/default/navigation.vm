@@ -16,6 +16,7 @@
   <ul>
     <li><a href="contact.vm">$msg.page.contact.title</a></li>
     <li><a href="imprint.vm">$msg.page.imprint.title</a></li>
+    <li><a href="forgotPassword.vm">$msg.page.forgotPassword.title</a></li>
   </ul>
 
   #if($user)

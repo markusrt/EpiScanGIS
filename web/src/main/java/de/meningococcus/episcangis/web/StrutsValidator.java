@@ -15,11 +15,12 @@ import org.apache.struts.validator.Resources;
 import de.meningococcus.episcangis.db.DaoFactory;
 import de.meningococcus.episcangis.db.dao.UserDAO;
 import de.meningococcus.episcangis.db.dao.UserNotFoundException;
+import de.meningococcus.episcangis.db.model.User;
 
 public class StrutsValidator
 {
   private static Log log = LogFactory.getLog(StrutsValidator.class);
-  
+
   public static boolean validateUsername(Object bean, ValidatorAction va,
       Field field, ActionMessages errors, Validator validator,
       HttpServletRequest request)
@@ -30,7 +31,6 @@ public class StrutsValidator
       try
       {
         UserDAO userDao = DaoFactory.getDaoFactory().getUserDAO();
-        log.debug("Get User: " + userDao.getUser(value));
         if (userDao.getUser(value) != null)
         {
           errors.add(field.getKey(), Resources.getActionMessage(validator,
@@ -38,41 +38,68 @@ public class StrutsValidator
           return false;
         }
       }
-      catch(UserNotFoundException e) 
+      catch (UserNotFoundException e)
       {
-        //do nothing as we expect this exception to happen
+        // do nothing as we expect this exception to happen
       }
     }
     return true;
   }
-  
+
+  public static boolean validateEmailExists(Object bean, ValidatorAction va,
+      Field field, ActionMessages errors, Validator validator,
+      HttpServletRequest request)
+  {
+    String pretendedEmail = evaluateBean(bean, field);
+    if (!GenericValidator.isBlankOrNull(pretendedEmail))
+    {
+      UserDAO userDao = DaoFactory.getDaoFactory().getUserDAO();
+      for (User user : userDao.getUsers())
+      {
+        if (user.getEmail().equals(pretendedEmail))
+        {
+          log.error("HiHi: ich bin pret... " + pretendedEmail);
+          return true;
+        }
+      }
+    }
+    errors.add(field.getKey(), Resources.getActionMessage(validator,
+        request, va, field));
+    return false;
+  }
+
   /**
    * @param bean
    * @param field
    * @return
    */
-  private static String evaluateBean(Object bean, Field field) {
-      String value;
+  private static String evaluateBean(Object bean, Field field)
+  {
+    String value;
 
-      if (isString(bean)) {
-          value = (String) bean;
-      } else {
-          value = ValidatorUtils.getValueAsString(bean, field.getProperty());
-      }
+    if (isString(bean))
+    {
+      value = (String) bean;
+    }
+    else
+    {
+      value = ValidatorUtils.getValueAsString(bean, field.getProperty());
+    }
 
-      return value;
+    return value;
   }
-  
+
   /**
    * Return <code>true</code> if the specified object is a String or a
    * <code>null</code> value.
-   *
-   * @param o Object to be tested
+   * 
+   * @param o
+   *          Object to be tested
    * @return The string value
    */
-  protected static boolean isString(Object o) {
-      return (o == null) ? true : String.class.isInstance(o);
+  protected static boolean isString(Object o)
+  {
+    return (o == null) ? true : String.class.isInstance(o);
   }
-
 
 }
