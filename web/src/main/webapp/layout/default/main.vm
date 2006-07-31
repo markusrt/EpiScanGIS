@@ -28,17 +28,17 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
     </style>
     <meta name="author" content="Markus Reinhardt" />
     <meta name="keywords" lang="de" 
-    content="Meningokokken, Frühwarnsystem, Epidemiologie, Überwachung" />
+    content="Meningokokken,Infektion,Epidemiologie,Frühwarnsystem,Ausbruch,Überwachung,GIS,Geographisches,Informationssystem" />
     <meta name="description" lang="de" 
-    content="Web-basiertes System zur Überwachung von Meningokokken-Erkrankungsfällem in Deutschland" />
+    content="Web-basiertes System zur Überwachung der Meningokokken-Infektionen in Deutschland" />
     <meta name="keywords" lang="en-us" 
-    content="meningococcal, meningococci, disease, early, warning, epidemiology, surveillance" />
+    content="meningococcal,disease,epidemiology,early warning,surveillance,outbreak,GIS,geographical information system" />
     <meta name="description" lang="en-us" 
-    content="Online Monitoring Invasive Meningococcal Disease in Germany" />
+    content="Online meningococcal disease surveillance and outbreak detection in Germany using a web-based geographical information system." />
     <meta name="keywords" lang="en" 
-    content="meningococcal, meningococci, disease, early, warning, epidemiology, surveillance" />
+    content="meningococcal,disease,epidemiology,early warning,surveillance,outbreak,GIS,geographical information system" />
     <meta name="description" lang="en" 
-    content="Online Monitoring Invasive Meningococcal Disease in Germany" />
+    content="Online meningococcal disease surveillance and outbreak detection in Germany using a web-based geographical information system." />
     $!headerStuff
   </head>
   <body>
@@ -50,8 +50,6 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
       </div>
 
       <div id="bannerRight">
-        <a target="_blank" href="http://www.meningococcus.de"><img 
-          src="images/logo_nrzm.png" alt="$msg.global.organization"/></a>
       </div>
       <div class="clear">
         <hr/>
