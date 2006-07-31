@@ -299,6 +299,7 @@
         </configuration>
 
       </plugin>
+      <!-- 
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>xdoclet-maven-plugin</artifactId>
@@ -328,6 +329,7 @@
           </execution>
         </executions>
       </plugin>
+       -->
     </plugins>
     <testResources>
       <testResource>
