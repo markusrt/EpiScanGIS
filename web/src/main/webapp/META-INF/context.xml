@@ -1,5 +1,5 @@
-<Context path="" 
-  docBase="" debug="0" reloadable="true">
+<Context path="" antiResourceLocking="false" antiJARLocking="false"
+  debug="999" reloadable="true">
   <Resource name="jdbc/dao" auth="Container"
     type="javax.sql.DataSource"
     driverClassName="org.postgresql.Driver"
