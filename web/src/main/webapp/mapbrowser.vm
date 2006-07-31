@@ -20,7 +20,7 @@
 
 <script type="text/javascript">
    lzLPSRoot = '';
-      lzCanvasRuntimeVersion = 7 * 1;
+      lzCanvasRuntimeVersion = 6 * 1;
       if (lzCanvasRuntimeVersion == 6) {
         lzCanvasRuntimeVersion = 6.65;
       }

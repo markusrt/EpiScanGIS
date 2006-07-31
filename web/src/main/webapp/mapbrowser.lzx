@@ -25,10 +25,10 @@
   <debug y="500" width="600" height="200"/>
   <datasource name="ds">
     <method event="oninit">
-      if( LzBrowser.getVersion() &lt; 7 ) {
-        canvas.flashVersionAlert.open();
-      }
-      else {
+      // if( LzBrowser.getVersion() &lt; 7 ) {
+      //  canvas.flashVersionAlert.open();
+      // }
+      // else {
         this.mapserverData.setSrc(getBaseUrl() + 'Map.do');
         var p=new LzParam();
         p.addValue("width", canvas.width-4-240-190, true);
@@ -37,7 +37,7 @@
         this.mapserverData.doRequest();
       
         this.SetParameter.setSrc(getBaseUrl() + 'SetParameter.do');
-      }
+      // }
     </method>
     <dataset type="http" name="mapserverData"/>
     <dataset type="http" name="SetParameter"/>
