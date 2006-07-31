@@ -50,7 +50,7 @@ final class PublicMapLayerFactory implements MapLayerFactory
     }
     else if (realName.equals("cities"))
     {
-      ret = new ClusterLayer(name, title, hasLegend, map, 82);
+      ret = new MapLayer(name, title, hasLegend, map);
     }
     else
     {
@@ -59,5 +59,10 @@ final class PublicMapLayerFactory implements MapLayerFactory
       ret = null;
     }
     return ret;
+  }
+
+  public String getMapUrlKeyPrefix()
+  {
+    return "";
   }
 }
