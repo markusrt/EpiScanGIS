@@ -7,7 +7,7 @@
   ##############################################################################
   ## Login/Register respectively Logout
   ##############################################################################
-  <span class="loginout">
+  <span>
   #if ($user)
   $msg.get('global.logout', [$link.setAction('Logout'),"$user.forename.charAt(0). $user.lastname"])
   #else
