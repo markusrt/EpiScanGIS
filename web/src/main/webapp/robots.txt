@@ -1,4 +1,5 @@
 User-agent: *
 Disallow:/Login.do
 Disallow:/registerUser.vm
-Disallow:/Locale.do
+Disallow:/registerUser.vm
+Disallow:/register.vm
