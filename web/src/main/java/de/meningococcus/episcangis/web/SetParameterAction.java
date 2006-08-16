@@ -34,7 +34,6 @@ public class SetParameterAction extends Action
       HttpServletRequest request, HttpServletResponse response)
       throws Exception
   {
-    log.debug("GO!");
     String forward = FORWARD_ERROR;
     ActionMessages messages = new ActionMessages();
     SetParameterFormBean parameter = (SetParameterFormBean) form;
@@ -72,7 +71,6 @@ public class SetParameterAction extends Action
       log.error(msg.toString());
     }
     saveMessages(request, messages);
-    log.debug("FINISH!");
     return (mapping.findForward(forward));
   }
 }
