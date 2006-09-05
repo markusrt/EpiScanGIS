@@ -8,7 +8,7 @@
    <dt>31. Mai 2006 - 15.00 Uhr</dt>
    <dd>
      <p>
-     Vor der Einführung von EpiScanGIS konnten wir nicht die Kompatibilität mit 
+     Vor der Einführung von EpiScanGIS konnten wir nicht die Kompatibilität mit
      allen verfügbaren Browser/Betriebssystem-Kombinationen prüfen. Besonders die
      Verwendung des Internet Explorers kann stellenweise zu Problemen führen.
      </p>
@@ -36,15 +36,15 @@
   </dl>
   -->
   <p>
-    Um die Anzahl der Meningokokken-Infektionen in der Bevökerung so gering wie 
-    möglich halten zu können, ist eine frühzeitige Erkennung von 
-    Erkrankungsfällen besonders wichtig. EpiScanGIS verwendet ein Geografisches 
-    Informationssystem (GIS) zur Darstellung der Verteilung von 
-    der Erkrankungsfälle, die an das
+    Um die Anzahl der Meningokokken-Infektionen in der Bevökerung so gering wie
+    möglich halten zu können, ist eine frühzeitige Erkennung von
+    Erkrankungsfällen besonders wichtig. EpiScanGIS verwendet ein Geografisches
+    Informationssystem (GIS) zur Darstellung der Verteilung von
+    Erkrankungsfällen, die an das
     <a href="http://www.meningococcus.de" target="_blank" class="newWindow">
       Nationalen Referenzzentrum für Meningokokken (NRZM)</a> gemeldet wurden.
-    Mittels dieser und noch anderen Methoden soll mit EpiScanGIS ein 
-    Frühwarnsystem aufgebaut werden, dass Erkrankungsausbrüche rechtzeitig 
+    Mittels dieser und noch anderen Methoden soll mit EpiScanGIS ein
+    Frühwarnsystem aufgebaut werden, dass Erkrankungsausbrüche rechtzeitig
     anzeigen kann und somit verhindern hilft.<br />
     <a class="smaller" href="whatis.vm">lesen sie mehr...</a>
   </p>
@@ -61,8 +61,8 @@
     </a>
   </p>
   <p style="font-size: smaller">
-    Mit dem Kartenbetrachter können Sie die geografische Verteilung der 
-    Meningokokken-Erkrankungsfälle betrachten, die seit Dezember 2001 in
+    Mit dem Kartenbetrachter können Sie die geografische Verteilung der
+    Meningokokken-Erkrankungsfälle anzeigen, die seit Dezember 2001 in
     Deutschland aufgetreten sind. EpiScanGIS nutzt den
     <a target="_blank" class="newWindow"
       href="http://www.adobe.com/products/flashplayer/">
@@ -76,7 +76,7 @@
   <p style="font-size: smaller">
     Die
     <a href="manual.vm">Anleitung zu EpiScanGIS</a>
-    gibt Ihnen einen kurzen Einblick in die Software und erklärt, wie sie 
+    gibt Ihnen einen kurzen Einblick in die Software und erklärt, wie sie
     angewendet wird.
   </p>
 </div>
