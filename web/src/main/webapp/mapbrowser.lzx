@@ -5,20 +5,20 @@
 =============================================================================-->
 <!--<canvas bgcolor="silver" proxied="true" debug="false"-->
 <canvas debug="false" width="100%" height="100%" maxtextheight="10000">
-  
+
   <!--<resource name="waitcursor" src="resources/lzwaitcursor_rsc.swf"/>-->
   <resource name="dragcursor" src="images/icons/drag_cursor.png"/>
   <resource name="icon_save" src="images/icons/floppy.png"/>
   <resource name="icon_print" src="images/icons/print.png"/>
   <resource name="icon_drag" src="images/icons/drag.png"/>
-  
+
   <include href="includes/parameters.lzx"/>
   <include href="includes/loadbar.lzx"/>
   <include href="includes/errorwindow.lzx"/>
   <include href="includes/layertabelement.lzx"/>
   <include href="includes/borderview.lzx"/>
   <include href="includes/stableborder.lzx"/>
-  
+
   <splash persistent="true">
   </splash>
 
@@ -35,7 +35,7 @@
         p.addValue("height", canvas.height-4-40, true);
         this.mapserverData.setQueryString(p);
         this.mapserverData.doRequest();
-      
+
         this.SetParameter.setSrc(getBaseUrl() + 'SetParameter.do');
       // }
     </method>
@@ -82,7 +82,7 @@
       value="${sidebar.content.layers.layerlist}"/>
     <attribute name="mapparams" value="" type="string"/>
     <attribute name="allLayerTabsConstructed" value="false"/>
-    
+
     <method event="oninit">
       this.sessionTimeoutDelegate = new LzDelegate( this, "sessionTimeout" );
       this.updateTimoutTimer();
@@ -121,14 +121,14 @@
       this.updateTimoutTimer();
       var strName = "";
       var strValue = "";
-      if( !(typeof(name) == "undefined") 
-        && !(typeof(value) == undefined) ) 
+      if( !(typeof(name) == "undefined")
+        && !(typeof(value) == undefined) )
       {
         strName = new String(name);
         strValue = new String(value);
       }
       if( strName.length > 0 && strValue.length > 0 ) {
-        Debug.write("Setting Mapparam: " + strName + "=" + strValue); 
+        Debug.write("Setting Mapparam: " + strName + "=" + strValue);
         var d= canvas.ds.SetParameter;
         var p=new LzParam();
         p.addValue("name", strName, true);
@@ -153,10 +153,10 @@
       ]]></method>
 
     <alert name="timeoutAlert">
-      Your session probably timed out due to inactivity during the last 
+      Your session probably timed out due to inactivity during the last
       30 minutes. Press 'OK' to reload the application...
       <method event="onresult">
-        if( this.result ) 
+        if( this.result )
         {
           LzBrowser.loadURL(LzBrowser.getLoadURL());
         }
@@ -187,7 +187,7 @@
           <text x="${classroot.sidebar.width + ((classroot.mainArea.width-this.width)/2)}" height="30">
             <font size="24">EpiScanGIS</font>
           </text>
-          
+
           <!--
           <button width="32" height="32">
             <view valign="middle" align="center"
@@ -221,11 +221,11 @@
             width="${parent.width-5}">
             <view width="100%" layout="spacing:5">
               <selectparameter width="${parent.width}"
-                datapath="mapserverData:/map/selectparameter"
+                datapath="mapserverData:/map/composite[1]/selectparameter"
                 mapview="${classroot}"/>
             </view>
             <periodparameter width="100%"
-              datapath="mapserverData:/map/periodparameter"
+              datapath="mapserverData:/map/composite[1]/periodparameter"
               mapview="${classroot}"/>
           </view>
         </view>
@@ -243,11 +243,11 @@
               layout="spacing:5" mapview="${classroot}" initstage="late">
               <datapath>
                 <method event="onclones"><![CDATA[
-                  if(!this['doneDel']) { 
-                  this.doneDel = 
+                  if(!this['doneDel']) {
+                  this.doneDel =
                   new LzDelegate( this, 'lastCloneInit');
                   this.doneDel.
-                  register(clones[clones.length -1], 'oninit'); 
+                  register(clones[clones.length -1], 'oninit');
                   }
                   ]]></method>
                 <method name="lastCloneInit"><![CDATA[
@@ -298,7 +298,7 @@
                 this.border.content.subviews[view].setVisible(true);
                 }
                this.loadbar.setVisible(false);
-                
+
               ]]>
       </method>
       <animatorgroup name="fadeIn" duration="1000" start="false">
@@ -328,7 +328,7 @@
     <!-- INFO PANEL END -->
 
     <!-- MAINAREA -->
-    <view 
+    <view
       width="${parent.width-parent.sidebar.width-parent.legendbar.width}"
       x="${parent.sidebar.width}" y="${classroot.toolbar.height}"
       height="${parent.height-classroot.toolbar.height}"
@@ -352,7 +352,7 @@
             LzKeys.callOnKeyCombo(del, ["control"]);
             ]]></method>
           <method event="onmousedown"><![CDATA[
-            //if(LzKeys.isKeyDown(['control'])) 
+            //if(LzKeys.isKeyDown(['control']))
             //{
             //setCursor('dragcursor');
             moveMap.apply();
@@ -360,8 +360,8 @@
             ]]></method>
           <method event="onmouseup"><![CDATA[
             var x = Math.round(this.x);
-            var y = Math.round(this.y); 
-            if(moveMap.isapplied && (x != 0 || y != 0) ) 
+            var y = Math.round(this.y);
+            if(moveMap.isapplied && (x != 0 || y != 0) )
             {
               //LzCursor.unlock();
               moveMap.remove();
@@ -429,12 +429,12 @@
               value="true"/>
             <method event="ondata"><![CDATA[
               var title = this.datapath.xpathQuery('@title');
-              this.setAttribute('title',title); 
+              this.setAttribute('title',title);
               this.name = this.datapath.xpathQuery('@name');
               var mapurl = getBaseUrl() + 'GetMapLayer.do';
               mapurl += "?layer=" + this.name;
 
-              this.setAttribute('mapurl',mapurl); 
+              this.setAttribute('mapurl',mapurl);
               var active =  this.datapath.xpathQuery('@active');
               ]]></method>
             <method name="activate"><![CDATA[
@@ -498,16 +498,16 @@
             -->
             <view name="img">
               <method event="oninit">
-                if( parent.parent.datapath.xpathQuery('../@name') != null ) 
+                if( parent.parent.datapath.xpathQuery('../@name') != null )
                 {
-                  setSource(getBaseUrl() + 'GetLegendGraphic.do?layer=' 
+                  setSource(getBaseUrl() + 'GetLegendGraphic.do?layer='
                     + parent.parent.datapath.xpathQuery('../@name'), "both","");
                 }
               </method>
               <!--
               <method event="onload">
                 <![CDATA[
-                parent.parent.title.setText( 
+                parent.parent.title.setText(
                 "<u>" + parent.parent.title.text + "</u>");
                 ]]>
               </method>
@@ -519,7 +519,7 @@
       <vscrollbar/>
     </view>
   </class>
-        
+
   <mapview datapath="mapserverData:/map" name="mapviewer"
     width="${parent.width}" height="${parent.height}"/>
   <errorwindow name="errorviewer" datapath="mapserverData:/result" width="100%" height="100%"/>
