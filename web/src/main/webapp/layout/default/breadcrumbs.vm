@@ -11,22 +11,19 @@
   #if ($user)
   $msg.get('global.logout', [$link.setAction('Logout'),"$user.forename.charAt(0). $user.lastname"])
   #else
-  $msg.get('global.login_or_register', [$link.setAction('Login'),'registerUser.vm'])
+  <img style="vertical-align:middle" src="images/icons/emblem-readonly.png" alt="" /> $msg.get('global.login_or_register', [$link.setAction('Login'),'registerUser.vm'])
   #end
-  </span>  
+  </span> |  
   ##############################################################################
   ## Icon to switch locale, disable it by using '#set ($disableNav=true)'
   ##  on the according velocity page 
   ##############################################################################
   #if ( !$disableLocaleSwitcher || $disableLocaleSwitcher == false )
-  |
-  <span style="vertical-align:middle;">
-   <a href="$link.setAction('Locale').addQueryData('language','de')"
+  <a style="vertical-align:middle;" href="$link.setAction('Locale').addQueryData('language','de')"
      title="$msg.global.switchLangGerman"><img 
      src="images/icons/de.png" alt="(DE)"/></a>
-   <a href="$link.setAction('Locale').addQueryData('language','en')"
+  <a style="vertical-align:middle;" href="$link.setAction('Locale').addQueryData('language','en')"
      title="$msg.global.switchLangEnglish"><img 
      src="images/icons/en.png" alt="(US)" /></a>
-  </span>
   #end
 </div>

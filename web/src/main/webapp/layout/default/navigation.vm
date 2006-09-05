@@ -3,9 +3,7 @@
   <ul>
     <li style="margin-bottom:0.5em">
     #if (!$user)
-      <b><a href="$link.setAction('Login')">$msg.global.login</a> <span 
-            title="$msg.global.infoNoLogout" style="font-size:smaller;cursor:help;text-decoration:none"
-          >(?)</span></b>
+      <b><a style="vertical-align:middle" href="$link.setAction('Login')">$msg.global.login</a></b> <img style="font-size:smaller;cursor:help;text-decoration:none;vertical-align:middle" src="images/icons/help-browser.png" alt="(?)" title="$msg.global.infoNoLogout" />
     #end
     </li>
     <li><a href="#"
