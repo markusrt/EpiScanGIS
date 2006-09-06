@@ -1,4 +1,4 @@
-package de.meningococcus.episcangis.map;
+package de.meningococcus.episcangis.map.layer;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -6,6 +6,10 @@ import org.apache.commons.logging.LogFactory;
 import de.meningococcus.episcangis.db.DaoFactory;
 import de.meningococcus.episcangis.db.dao.CaseTypeDAO;
 import de.meningococcus.episcangis.db.model.CaseType;
+import de.meningococcus.episcangis.map.AbstractWmsMap;
+import de.meningococcus.episcangis.map.ParameterComponent;
+import de.meningococcus.episcangis.map.ParameterValue;
+import de.meningococcus.episcangis.map.SelectParameter;
 
 /* ====================================================================
  *   Copyright �2005 Markus Reinhardt - All Rights Reserved.
@@ -16,7 +20,7 @@ public class CaseTypesLayer extends MapLayer
 {
   private static Log log = LogFactory.getLog(CaseTypesLayer.class);
 
-  CaseTypesLayer(String name, String title, boolean hasLegend,
+  public CaseTypesLayer(String name, String title, boolean hasLegend,
       AbstractWmsMap map)
   {
     super(name, title, hasLegend, map);

@@ -5,6 +5,13 @@ import java.util.Locale;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import de.meningococcus.episcangis.map.layer.BordersLayer;
+import de.meningococcus.episcangis.map.layer.CaseTypesLayer;
+import de.meningococcus.episcangis.map.layer.IncidenceLayer;
+import de.meningococcus.episcangis.map.layer.MapLayer;
+import de.meningococcus.episcangis.map.layer.PopdensityLayer;
+import de.meningococcus.episcangis.map.layer.SerogroupsLayer;
+
 /* ====================================================================
  *   Copyright �2005 Markus Reinhardt - All Rights Reserved.
  * ====================================================================

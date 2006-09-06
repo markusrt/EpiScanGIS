@@ -1,10 +1,14 @@
-package de.meningococcus.episcangis.map;
+package de.meningococcus.episcangis.map.layer;
 
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+
+import de.meningococcus.episcangis.map.AbstractWmsMap;
+import de.meningococcus.episcangis.map.ParameterComponent;
+import de.meningococcus.episcangis.map.ParameterComposite;
 
 /* ====================================================================
  *   Copyright �2005 Markus Reinhardt - All Rights Reserved.
@@ -30,7 +34,7 @@ public class MapLayer
 
   private boolean isValid;
 
-  MapLayer(String name, String title, boolean hasLegend, AbstractWmsMap map)
+  public MapLayer(String name, String title, boolean hasLegend, AbstractWmsMap map)
   {
     isValid = false;
     this.map = map;

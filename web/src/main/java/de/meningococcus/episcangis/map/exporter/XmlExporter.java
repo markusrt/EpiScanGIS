@@ -9,8 +9,8 @@ import org.apache.commons.lang.StringEscapeUtils;
 
 import de.meningococcus.episcangis.db.model.BoundingBox;
 import de.meningococcus.episcangis.map.AbstractWmsMap;
-import de.meningococcus.episcangis.map.MapLayer;
 import de.meningococcus.episcangis.map.ParameterComponent;
+import de.meningococcus.episcangis.map.layer.MapLayer;
 
 /* ====================================================================
  *   Copyright �2005 Markus Reinhardt - All Rights Reserved.

@@ -1,10 +1,14 @@
-package de.meningococcus.episcangis.map;
+package de.meningococcus.episcangis.map.layer;
 
 import java.util.Iterator;
 
 import de.meningococcus.episcangis.db.DaoFactory;
 import de.meningococcus.episcangis.db.dao.CaseTypeAttributeDAO;
 import de.meningococcus.episcangis.db.model.CaseTypeAttribute;
+import de.meningococcus.episcangis.map.AbstractWmsMap;
+import de.meningococcus.episcangis.map.ParameterComponent;
+import de.meningococcus.episcangis.map.ParameterValue;
+import de.meningococcus.episcangis.map.SelectParameter;
 
 /* ====================================================================
  *   Copyright �2005 Markus Reinhardt - All Rights Reserved.
@@ -13,7 +17,7 @@ import de.meningococcus.episcangis.db.model.CaseTypeAttribute;
 
 public class SerogroupsLayer extends MapLayer
 {
-  SerogroupsLayer(String name, String title, boolean hasLegend,
+  public SerogroupsLayer(String name, String title, boolean hasLegend,
       AbstractWmsMap map)
   {
     super(name, title, hasLegend, map);

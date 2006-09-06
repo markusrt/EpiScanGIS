@@ -22,6 +22,7 @@ import org.geotools.data.wms.WebMapServer;
 import org.xml.sax.SAXException;
 
 import de.meningococcus.episcangis.db.model.BoundingBox;
+import de.meningococcus.episcangis.map.layer.MapLayer;
 
 /* ====================================================================
  *   Copyright �2005 Markus Reinhardt - All Rights Reserved.

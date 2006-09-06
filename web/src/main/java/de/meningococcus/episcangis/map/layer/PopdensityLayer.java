@@ -1,7 +1,11 @@
-package de.meningococcus.episcangis.map;
+package de.meningococcus.episcangis.map.layer;
 
 import de.meningococcus.episcangis.db.DaoFactory;
 import de.meningococcus.episcangis.db.model.AreaType;
+import de.meningococcus.episcangis.map.AbstractWmsMap;
+import de.meningococcus.episcangis.map.ParameterComponent;
+import de.meningococcus.episcangis.map.ParameterValue;
+import de.meningococcus.episcangis.map.SelectParameter;
 
 /* ====================================================================
  *   Copyright �2005 Markus Reinhardt - All Rights Reserved.
@@ -10,7 +14,7 @@ import de.meningococcus.episcangis.db.model.AreaType;
 
 public class PopdensityLayer extends MapLayer
 {
-  PopdensityLayer(String name, String title, boolean hasLegend,
+  public PopdensityLayer(String name, String title, boolean hasLegend,
       AbstractWmsMap map)
   {
     super(name, title, hasLegend, map);

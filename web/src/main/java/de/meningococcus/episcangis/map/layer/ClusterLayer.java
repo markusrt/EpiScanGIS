@@ -1,4 +1,4 @@
-package de.meningococcus.episcangis.map;
+package de.meningococcus.episcangis.map.layer;
 
 import java.sql.Date;
 import java.util.Vector;
@@ -6,6 +6,11 @@ import java.util.Vector;
 import de.meningococcus.episcangis.db.DaoFactory;
 import de.meningococcus.episcangis.db.dao.SatScanDAO;
 import de.meningococcus.episcangis.db.model.SatScanJob;
+import de.meningococcus.episcangis.map.AbstractWmsMap;
+import de.meningococcus.episcangis.map.InvalidParameterValueException;
+import de.meningococcus.episcangis.map.ParameterComponent;
+import de.meningococcus.episcangis.map.ParameterValue;
+import de.meningococcus.episcangis.map.SelectParameter;
 
 /* ====================================================================
  *   Copyright �2005 Markus Reinhardt - All Rights Reserved.
@@ -14,7 +19,7 @@ import de.meningococcus.episcangis.db.model.SatScanJob;
 
 public class ClusterLayer extends MapLayer
 {
-  ClusterLayer(String name, String title, boolean hasLegend,
+  public ClusterLayer(String name, String title, boolean hasLegend,
       boolean hasDateSelector, AbstractWmsMap map, int jobId)
   {
     super(name, title, hasLegend, map);

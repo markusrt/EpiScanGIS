@@ -12,7 +12,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import de.meningococcus.episcangis.map.LayerNotFoundException;
-import de.meningococcus.episcangis.map.MapLayer;
+import de.meningococcus.episcangis.map.layer.MapLayer;
 
 /* ====================================================================
  *   Copyright �2005 Markus Reinhardt - All Rights Reserved.
