@@ -13,7 +13,8 @@
     <method event="ondata">
       this.layer = this.mapview.getLayer(this.layername);
       if(this.top.header.subviews[1].hider.getValue(true) ) {
-      layer.activate(); }
+        layer.activate();
+      }
     </method>
     <view placement="header">
       <checkbox x="4" y="4" name="hider" datapath="."
@@ -54,9 +55,8 @@
      </datapointer>
     </view>
     <view width="100%" name="paramChoser" layout="spacing:5">
-      <selectparameter mapview="${classroot.mapview}" />
-      <multiselectparameter
-        onselect="classroot.mapview.setMapparam(this.name, this.getValue())"
+      <selectparameter datapath="composite[1]/selectparameter" mapview="${classroot.mapview}" />
+      <multiselectparameter datapath="composite[1]/multiselectparameter"  mapview="${classroot.mapview}"
         width="100%" />
       <text text="$path{'@description'}" width="100%" multiline="true" />
     </view>

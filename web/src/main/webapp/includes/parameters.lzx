@@ -27,7 +27,7 @@
     datapath="selectparameter" width="${parent.width}">
     <attribute name="mapview" type="expression" />
     <method event="oninit">
-      <![CDATA[ 
+      <![CDATA[
       if(!(typeof(this.selector.title.text) == "undefined")) {
         this.selector.subviews[1].setWidth(
         parent.width-this.selector.title.width-5);
@@ -35,18 +35,17 @@
       ]]>
     </method>
     <method name="selectValue" args="searchValue">
-      <![CDATA[ 
-      Debug.write("SEARCH HO");
-      //var query = "./value[@name='"+searchValue+"']"; 
-      var query = './value'; 
+      <![CDATA[
+      //var query = "./value[@name='"+searchValue+"']";
+      var query = './value';
       Debug.write(query);
-      var list = this.datapath.xpathQuery(query); 
+      var list = this.datapath.xpathQuery(query);
       var found = false;
-      for( var i in list ) { 
+      for( var i in list ) {
         if(list[i].getAttr('name') == searchValue ) {
-          selector.subviews[1].selectItemAt(i); 
+          selector.subviews[1].selectItemAt(i);
           found = true;
-          break; 
+          break;
         }
       }
       if(!found) {
@@ -68,9 +67,16 @@
       <combobox oninit="classroot.setName(this.name)" shownitems="12"
         datapath="." name="$path{'./@name'}" editable="false"
         width="${parent.width}" text_width="200" dataoption="lazy">
-        <method event="onselect">
+        <method event="onselect"><![CDATA[
+          var layer = classroot.mapview.getLayer(classroot.parent.parent.getAttribute("layername"));
+          if( typeof(layer) != "undefined"
+              && !layer.getAttribute("visible")
+              && classroot.mapview.getAttribute("allLayerTabsConstructed"))
+          {
+            classroot.parent.parent.top.header.subviews[1].hider.onclick.sendEvent();
+          }
           classroot.mapview.setMapparam(this.name, this.getValue());
-        </method>
+        ]]></method>
         <textlistitem datapath="./value" text="$path{'@name'}"
           value="$path{'text()'}">
           <!--
@@ -86,20 +92,20 @@
               Datareplication lazy safes a lot of memory, but it's tricky
               to select an item from the list. The obvious solution
               ... textlistitem selected="$path{'@selected'} ... doesn't work.
-              
+
               The onnodes event is fired before any clone is created. This code
               just searches the index of the selected node and stores it inside
-              this datapath. The delegate lastCloneInit gets called, when the 
+              this datapath. The delegate lastCloneInit gets called, when the
               last dataelement is replicated, this is the right time to call
               combobox.selectItemAt(...).
             -->
             <attribute name="selectedItem" value="0" />
             <method event="onnodes">
-              <![CDATA[ 
+              <![CDATA[
               for (var i in this.nodes ) {
               var selected = this.nodes[i].getAttr('selected')
               if( selected == 'true' ) {
-              this.selectedItem = i; 
+              this.selectedItem = i;
               }
               }
               if( this.nodes.length > 100 ) {
@@ -108,21 +114,21 @@
               ]]>
             </method>
             <method event="onclones">
-              <![CDATA[ 
+              <![CDATA[
               var lastclone = this.clones[ this.clones.length - 1 ];
 
               if( typeof this.del == "undefined" ) {
-              this.del = new LzDelegate( this, "lastCloneInit") 
-              } 
+              this.del = new LzDelegate( this, "lastCloneInit")
+              }
               else {
               this.del.ungregisterAll();
               }
-              this.del.register( lastclone, "oninit"); 
+              this.del.register( lastclone, "oninit");
 
               // !! DIRTY BUGFIX !!
-              // If there are only two replicated views, lastCloneInit isn't 
+              // If there are only two replicated views, lastCloneInit isn't
               // called. This seems to be a Laszlo bug or misunderstanding.
-              if( this.clones.length <= 2 && this.clones.length > 0 ) 
+              if( this.clones.length <= 2 && this.clones.length > 0 )
               {
               Debug.write("DIRTY BUGFIX 1, parameters.lzx");
               this.lastCloneInit();
@@ -130,7 +136,7 @@
               ]]>
             </method>
             <method name="lastCloneInit">
-              <![CDATA[ 
+              <![CDATA[
               parent.selectItemAt(this.selectedItem);
               ]]>
             </method>
@@ -152,24 +158,30 @@
 
   <class name="multiselectparameter" layout="spacing:5"
     datapath="multiselectparameter">
+    <attribute name="mapview" type="expression" />
+    <method event="onselect"><![CDATA[
+      classroot.mapview.setMapparam(this.name, this.getValue());
+    ]]></method>
     <method name="getValue">return this.subviews[1].getValue();</method>
-    <text name="chosen" visible="false" />
+    <text name="chosen" visible="false" width="100%"/>
     <list width="${parent.width}" multiselect="true" datapath="."
       name="$path{'./@name'}" scrollable="true" shownitems="7"
       oninit="parent.setName(this.name)">
       <method event="onselect">
         if( this.getValue() != null ) {
-        parent.chosen.setText(this.getValue());
-        parent.chosen.setVisible(true); } else
-        parent.chosen.setVisible(false); parent.onselect.sendEvent();
-        
+          parent.chosen.setText(this.getValue());
+          parent.chosen.setVisible(true);
+        }
+        else parent.chosen.setVisible(false);
+        parent.onselect.sendEvent();
+
         <!--
         if( this.getValue() != null ) {
           parent.chosen.setText(this.getValue());
-          parent.chosen.setVisible(true); 
-        } 
+          parent.chosen.setVisible(true);
+        }
         else {
-          parent.chosen.setVisible(false); 
+          parent.chosen.setVisible(false);
           parent.onselect.sendEvent();
         }
         -->
