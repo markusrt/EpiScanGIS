@@ -5,10 +5,10 @@ package de.meningococcus.episcangis.map;
  * ====================================================================
  */
 
-public class ReferenceParameter extends AbstractParameter
+public class ReferenceParameter extends ParameterReference
 {
   protected ReferenceParameter(String name)
   {
-    super(name);
+    super(name, new ParameterComposite("j"));
   }
 }

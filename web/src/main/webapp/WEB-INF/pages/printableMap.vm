@@ -1,7 +1,7 @@
 #set ($page_title=$msg.page.printableMap.title)
 #set ($disableNav=true)
 #set( $rowclass = $alternator.make(true,'a', 'b') )
-                                                                                                                                                             
+
 <div class="section">
   <h1>$msg.page.printableMap.title</h1>
   <table class="bodyTable">
@@ -15,7 +15,7 @@
         <td>
           <div id="legend">
             <b>$msg.page.printableMap.legend</b><br/>
-                                                                                                                                                             
+
             #foreach( $layer in $printMap.ActiveLayers )
             #if ($layer.hasLegend())
             <img src="GetLegendGraphic.do?layer=$layer.name"
@@ -23,7 +23,7 @@
             <br/>
             #end
             #end
-                                                                                                                                                             
+
           </div>
         </td>
       </tr>
@@ -31,7 +31,7 @@
   </table>
   <div class="section">
     <h2>$msg.page.printableMap.general_settings</h2>
-    <table class="bodyTable">
+    <table  style="padding-left:1em;width:auto" class="bodyTable">
       <thead>
         <tr>
           <th>$msg.page.printableMap.parameter</th>
@@ -39,20 +39,16 @@
         </tr>
       </thead>
       <tbody>
-        #if( $printMap.Mapparameters.size() > 0 )
-        #foreach( $param in $printMap.Mapparameters )
-        #if ( $param.value && $param.value != "")
+        ###if( $printMap.Mapparameters.size() > 0 )
+        #foreach( $param in $printMap.Mapparameters.topLevelIterator() )
+        #if ( $param.Value && $param.Value != "")
         <tr class="$rowclass">
           <td>$param.title</td>
           <td>
-            #foreach( $value in $param.values )
-            #if ( $value.isSelected() )
-            $value.title<br/>
-            #end
-            #end
+            $param.AliasValue
           </td>
         </tr>
-        #end
+        ###end
         #end
         #end
         </tody>
@@ -61,12 +57,14 @@
     <div class="section">
       <h2>$msg.page.printableMap.layerInformation</h2>
       #foreach( $layer in $printMap.ActiveLayers )
+      #if($layer.Parameters.size()>1 || $layer.description != "")
+      <div class="section">
       <h3>$layer.title</h3>
-      <p>
+      <p style="padding-left:1em;">
       $layer.description
       </p>
-      #if( $layer.getParameters(false).size() > 1 )
-      <table class="bodyTable">
+      #if($layer.Parameters.size()>1)
+      <table style="padding-left:1em;width:auto;" class="bodyTable">
         <thead>
           <tr>
             <th>$msg.page.printableMap.parameter</th>
@@ -74,22 +72,20 @@
           </tr>
         </thead>
         <tbody>
-          #foreach( $param in $layer.getParameters(false) )
-          #if ( $param.value && $param.value != "")
+          #foreach( $param in $layer.Parameters.topLevelIterator() )
+          #if ( $param.Value.length()>0 && $param.Title.length()>0)
           <tr class="$rowclass">
-            <td>$param.title</td>
+            <td>$param.Title</td>
             <td>
-              #foreach( $value in $param.values )
-              #if ( $value.isSelected() )
-              $value.title<br/>
-              #end
-              #end
+               $param.AliasValue
             </td>
           </tr>
           #end
           #end
         </tbody>
       </table>
+      #end
+      </div>
       #end
       #end
     </div>

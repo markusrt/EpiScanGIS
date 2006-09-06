@@ -13,15 +13,17 @@ import org.apache.commons.logging.LogFactory;
  * ====================================================================
  */
 
-public class PeriodParameter extends GroupedParameter
+public class PeriodParameter extends ParameterComposite
 {
-  private static Log log = LogFactory.getLog(GroupedParameter.class);
+  private static Log log = LogFactory.getLog(PeriodParameter.class);
 
-  private OLDSelectParameter fromMonth, fromYear, toMonth, toYear;
+  // private SelectParameter fromMonth, fromYear, toMonth, toYear;
 
   public PeriodParameter(String name, Date from, Date to, String title)
   {
     super(name, title);
+    this.elementName = "periodparameter";
+    SelectParameter fromMonth, fromYear, toMonth, toYear;
     SimpleDateFormat dfLongMonth = new SimpleDateFormat("MMMMM", Locale.ENGLISH);
     SimpleDateFormat dfShortMonth = new SimpleDateFormat("MM", Locale.ENGLISH);
     Calendar cal = Calendar.getInstance();
@@ -31,16 +33,16 @@ public class PeriodParameter extends GroupedParameter
         Calendar.AUGUST, Calendar.SEPTEMBER, Calendar.OCTOBER,
         Calendar.NOVEMBER, Calendar.DECEMBER };
 
-    fromMonth = new OLDSelectParameter("fromMonth");
-    toMonth = new OLDSelectParameter("toMonth");
+    fromMonth = new SelectParameter("fromMonth");
+    toMonth = new SelectParameter("toMonth");
 
     for (int i = 0; i < months.length; i++)
     {
       cal.set(Calendar.MONTH, months[i]);
 
-      fromMonth.addValue(new ParameterValue(dfLongMonth.format(cal.getTime()),
+      fromMonth.add(new ParameterValue(dfLongMonth.format(cal.getTime()),
           dfShortMonth.format(cal.getTime())));
-      toMonth.addValue(new ParameterValue(dfLongMonth.format(cal.getTime()),
+      toMonth.add(new ParameterValue(dfLongMonth.format(cal.getTime()),
           dfShortMonth.format(cal.getTime())));
       log.debug("Added Month: " + dfLongMonth.format(cal.getTime()) + " - "
           + dfShortMonth.format(cal.getTime()));
@@ -55,24 +57,24 @@ public class PeriodParameter extends GroupedParameter
     cal.setTime(to);
     int endYear = cal.get(Calendar.YEAR);
 
-    fromYear = new OLDSelectParameter("fromYear");
-    toYear = new OLDSelectParameter("toYear");
+    fromYear = new SelectParameter("fromYear");
+    toYear = new SelectParameter("toYear");
 
     for (int i = beginYear; i <= endYear; i++)
     {
       cal.set(Calendar.YEAR, i);
 
-      fromYear.addValue(new ParameterValue(dfEnglishYear.format(cal.getTime()),
+      fromYear.add(new ParameterValue(dfEnglishYear.format(cal.getTime()),
           dfEnglishYear.format(cal.getTime())));
-      toYear.addValue(new ParameterValue(dfEnglishYear.format(cal.getTime()),
+      toYear.add(new ParameterValue(dfEnglishYear.format(cal.getTime()),
           dfEnglishYear.format(cal.getTime())));
       log.debug("Added Year: " + dfEnglishYear.format(cal.getTime()));
     }
 
-    addParameter(fromMonth);
-    addParameter(fromYear);
-    addParameter(toMonth);
-    addParameter(toYear);
+    add(fromMonth);
+    add(fromYear);
+    add(toMonth);
+    add(toYear);
   }
 
   public PeriodParameter(String name, Date from, Date to)
@@ -95,30 +97,50 @@ public class PeriodParameter extends GroupedParameter
 
     log.debug(fromMonth + fromYear + toMonth + toYear);
 
-    this.fromMonth.setValue(fromMonth);
-    this.fromYear.setValue(fromYear);
-    this.toMonth.setValue(toMonth);
-    this.toYear.setValue(toYear);
+    try
+    {
+      selectValue("fromMonth", fromMonth);
+
+      selectValue("fromYear", fromYear);
+      selectValue("toMonth", toMonth);
+      selectValue("toYear", toYear);
+    }
+    catch (ParameterNotFoundException e)
+    {
+      log.error(e.getMessage());
+    }
+    catch (InvalidParameterValueException e)
+    {
+      log.error(e.getMessage());
+    }
   }
 
-  public OLDSelectParameter getFromMonth()
+  @Override
+  public String getAliasValue()
   {
-    return fromMonth;
+    return get("fromMonth").getAliasValue() + " "
+        + get("fromYear").getAliasValue() + " - "
+        + get("toMonth").getAliasValue() + " " + get("toYear").getAliasValue();
   }
 
-  public OLDSelectParameter getFromYear()
+  public ParameterComponent getFromMonth()
   {
-    return fromYear;
+    return get("fromMonth");
   }
 
-  public OLDSelectParameter getToMonth()
+  public ParameterComponent getToMonth()
   {
-    return toMonth;
+    return get("toMonth");
   }
 
-  public OLDSelectParameter getToYear()
+  public ParameterComponent getFromYear()
   {
-    return toYear;
+    return get("fromYear");
+  }
+
+  public ParameterComponent getToYear()
+  {
+    return get("toYear");
   }
 
 }

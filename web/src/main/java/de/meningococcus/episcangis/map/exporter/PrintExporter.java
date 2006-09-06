@@ -1,23 +1,12 @@
 package de.meningococcus.episcangis.map.exporter;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Collection;
 import java.util.Map;
 import java.util.Vector;
 
-import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang.StringEscapeUtils;
-
 import de.meningococcus.episcangis.db.model.BoundingBox;
-import de.meningococcus.episcangis.map.AbstractParameter;
 import de.meningococcus.episcangis.map.AbstractWmsMap;
-import de.meningococcus.episcangis.map.CheckboxParameter;
 import de.meningococcus.episcangis.map.MapLayer;
-import de.meningococcus.episcangis.map.MultiSelectParameter;
-import de.meningococcus.episcangis.map.OLDSelectParameter;
-import de.meningococcus.episcangis.map.ParameterValue;
-import de.meningococcus.episcangis.map.PeriodParameter;
+import de.meningococcus.episcangis.map.ParameterComponent;
 
 /* ====================================================================
  *   Copyright �2005 Markus Reinhardt - All Rights Reserved.
@@ -28,7 +17,7 @@ public class PrintExporter implements AbstractWmsMap.Exporter
 {
   private Map<String, MapLayer> layers = null;
 
-  private Vector<AbstractParameter> mapParameters = null;
+  private ParameterComponent mapParameters = null;
 
   private int width, height;
 
@@ -72,11 +61,11 @@ public class PrintExporter implements AbstractWmsMap.Exporter
     this.layers = layers;
   }
 
-  public void addMapparameters(Vector<AbstractParameter> parameters)
+  public void addMapparameters(ParameterComponent parameters)
   {
     this.mapParameters = parameters;
   }
-  
+
   public Vector<MapLayer> getActiveLayers() {
     Vector<MapLayer> activeLayers = new Vector<MapLayer>();
     for( MapLayer layer : layers.values() ) {
@@ -86,8 +75,8 @@ public class PrintExporter implements AbstractWmsMap.Exporter
     }
     return activeLayers;
   }
-  
-  public Vector<AbstractParameter> getMapparameters() {
+
+  public ParameterComponent getMapparameters() {
     return mapParameters;
   }
 

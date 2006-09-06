@@ -25,6 +25,8 @@ public abstract class ParameterComponent
    */
   private String name;
 
+  protected String elementName = "composite";
+
   /**
    * <p>
    * The title represents a human readable ParameterComponent description or
@@ -34,7 +36,8 @@ public abstract class ParameterComponent
   private String title;
 
   /**
-   * @param name this components name
+   * @param name
+   *          this components name
    */
   public ParameterComponent(String name)
   {
@@ -42,8 +45,10 @@ public abstract class ParameterComponent
   }
 
   /**
-   * @param name this components name
-   * @param title this components title
+   * @param name
+   *          this components name
+   * @param title
+   *          this components title
    */
   public ParameterComponent(String name, String title)
   {
@@ -54,65 +59,57 @@ public abstract class ParameterComponent
   /**
    * <p>
    * Adds a new sub-ParameterComponent for this ParameterComponent. This method
-   * calls the template method addElement in case that the template method
-   * getElement(element.getName()) returns null.
+   * is not supported for the base ParameterComponent because it does not hold
+   * any other components
    * </p>
-   * @param element ParameterComponent to add
+   *
+   * @param element
+   *          ParameterComponent to add
    */
-  public final void add(ParameterComponent element)
+  public void add(ParameterComponent element)
   {
-    if (getElement(element.getName()) == null)
-    {
-      addElement(element);
-    }
+    throw new UnsupportedOperationException(this.getClass().getSimpleName()
+        + " must not contain ParameterComponents");
   }
-
-  /**
-   * <p>
-   * Set a value by name. Calls the template method setValue(String) in case
-   * that the template method getElement(element.getName()) does not return null
-   * </p>
-   * @param name name of ParameterComponent to change value for
-   * @param value new value for named ParameterComponent
-   * @see ParameterComponent#setValue(String)
-   * @see ParameterComponent#getElement(String)
-   */
-  public final void setValue(String name, String value)
-  {
-    ParameterComponent element = getElement(name);
-    if (element != null)
-    {
-      element.setValue(value);
-    }
-  }
-
-  /**
-   * <p>
-   * Template method. Called by setValue(String name, String value)
-   * </p>
-   * @param value new value for this ParameterComponent
-   */
-  abstract public void setValue(String value);
 
   /**
    * <p>
    * Template method. Called by setValue(String name, String value) and
    * add(ParameterComponent element)
    * </p>
-   * @param name name of the ParameterComponent that should be returned
+   *
+   * @param elementName
+   *          name of the ParameterComponent that should be returned
    * @return resulting component or null if not found
+   * @throws ParameterNotFoundException
    * @see ParameterComponent#setValue(String)
    * @see ParameterComponent#add(ParameterComponent)
    */
-  protected abstract ParameterComponent getElement(String name);
-
-  /**
-   * <p>
-   * Template method. Called by add(ParameterComponent element)
-   * </p>
-   * @param element
-   */
-  protected abstract void addElement(ParameterComponent element);
+  public ParameterComponent get(String elementName)
+  {
+    if (getName() != null
+        && getName().equals(elementName))
+    {
+      return this;
+    }
+    else
+    {
+      Iterator<ParameterComponent> iterator = topLevelIterator();
+      while (iterator.hasNext())
+      {
+        ParameterComponent next = iterator.next();
+        if (true)
+        {
+          ParameterComponent result = next.get(elementName);
+          if (result != null && !(result instanceof ParameterReference))
+          {
+            return result;
+          }
+        }
+      }
+    }
+    return null;
+  }
 
   /**
    * @return this ParameterElements value as String
@@ -120,11 +117,84 @@ public abstract class ParameterComponent
   public abstract String getValue();
 
   /**
-   * Selects or unselects a value depending on selection
-   * @param value value to mark
-   * @param selection true=select, false=unselect
+   * @param parameterName
+   * @return the value of the named Parameter as String
+   * @throws ParameterNotFoundException
+   *           if named Parameter is not found
    */
-  public abstract void selectValue(String value, boolean selection);
+  public String getValue(String parameterName)
+      throws ParameterNotFoundException
+  {
+    return get(parameterName).getValue();
+  }
+
+  /**
+   * @return this ParameterElements aliasvalue as String
+   */
+  public abstract String getAliasValue();
+
+  /**
+   * @param parameterName
+   * @return the aliasvalue of the named Parameter as String
+   * @throws ParameterNotFoundException
+   *           if named Parameter is not found
+   */
+  public String getAliasValue(String parameterName)
+      throws ParameterNotFoundException
+  {
+    return get(parameterName).getAliasValue();
+  }
+
+  /**
+   * <p>
+   * Template method. Called by selectValue(String name, String value)
+   * </p>
+   *
+   * @param value
+   *          new value for this ParameterComponent
+   */
+  public void selectValue(String value) throws InvalidParameterValueException
+  {
+    this.selectValue(value, true);
+  }
+
+  /**
+   * Selects or unselects a value depending on selection
+   *
+   * @param value
+   *          value to mark
+   * @param selection
+   *          true=select, false=unselect
+   */
+  public abstract void selectValue(String value, boolean selection)
+      throws InvalidParameterValueException;
+
+  /**
+   * <p>
+   * Select a value by name. Calls the template method selectValue(String) in
+   * case that the template method getElement(element.getName()) does not return
+   * null
+   * </p>
+   *
+   * @param parameterName
+   *          name of ParameterComponent to change value for
+   * @param selectedValue
+   *          new value for named ParameterComponent
+   * @throws ParameterNotFoundException
+   * @see ParameterComponent#setValue(String)
+   * @see ParameterComponent#get(String)
+   */
+  public final void selectValue(String parameterName, String selectedValue)
+      throws ParameterNotFoundException, InvalidParameterValueException
+  {
+    ParameterComponent element = get(parameterName);
+    if (element != null)
+    {
+      element.selectValue(selectedValue);
+    }
+    else
+      throw new ParameterNotFoundException();
+  }
 
   public abstract boolean isSelected();
 
@@ -132,12 +202,21 @@ public abstract class ParameterComponent
 
   public abstract Iterator<ParameterComponent> iterator();
 
+  public abstract Iterator<ParameterComponent> topLevelIterator();
+
   /**
    * @return this ParameterComponents name
    */
   public String getName()
   {
-    return name;
+    if (name != null && name.length() > 0)
+    {
+      return name;
+    }
+    else
+    {
+      return "<unnamed " + this.getClass().getSimpleName() + ">";
+    }
   }
 
   /**
@@ -147,4 +226,6 @@ public abstract class ParameterComponent
   {
     return title;
   }
+
+  abstract public String toXML();
 }

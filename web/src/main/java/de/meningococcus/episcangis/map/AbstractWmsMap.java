@@ -8,9 +8,7 @@ import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
-import java.util.Vector;
 
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.ConfigurationException;
@@ -39,7 +37,7 @@ public abstract class AbstractWmsMap
 
   private Map<String, MapLayer> mapLayers = new LinkedHashMap<String, MapLayer>();
 
-  private Vector<AbstractParameter> mapParameters = new Vector<AbstractParameter>();
+  private ParameterComponent parameters, mapParameters, layerParameters;
 
   private int width, height;
 
@@ -54,6 +52,12 @@ public abstract class AbstractWmsMap
   public AbstractWmsMap(int width, int height)
       throws MapInitializationException
   {
+    parameters = new ParameterComposite("parameters");
+    mapParameters = new ParameterComposite("mapparameters");
+    layerParameters = new ParameterComposite("layerparameters");
+    parameters.add(mapParameters);
+    parameters.add(layerParameters);
+
     if ((width >= 1 && width <= 2048) && (height >= 1 && height <= 2048))
     {
       this.width = width;
@@ -83,7 +87,7 @@ public abstract class AbstractWmsMap
    * Classes which extend AbstractWmsMap need to provide a MapLayerFactory
    * implementation. The initialize() function calls this method to retrieve
    * specific layer objects.
-   * 
+   *
    * @return MapLayerFactory to create MapLayers
    */
   protected abstract MapLayerFactory getMapLayerFactory();
@@ -102,7 +106,7 @@ public abstract class AbstractWmsMap
 
     void addLayers(Map<String, MapLayer> layers);
 
-    void addMapparameters(Vector<AbstractParameter> parameters);
+    void addMapparameters(ParameterComponent parameters);
   }
 
   public synchronized void export(Exporter e)
@@ -129,7 +133,7 @@ public abstract class AbstractWmsMap
    * implementation provides MapLayer objects for every layer. The queryable
    * flag is set if appropriate.
    * </p>
-   * 
+   *
    * @throws MapInitializationException
    */
   protected void initialize() throws MapInitializationException
@@ -201,19 +205,20 @@ public abstract class AbstractWmsMap
 
   /**
    * Adds a new layer to this map. TODO Check for duplicates
-   * 
+   *
    * @param layer
    */
   public void addLayer(MapLayer layer)
   {
     mapLayers.put(layer.getName(), layer);
+    layerParameters.add(layer.getParameters());
   }
 
   /**
    * Sets the parameter with given name (either layer- or mapparameter) to the
    * specified value. Also accepts two predefined parameters called <b>width</b>
    * and <b>height</b> which accept Integer values from 1 to 2048.
-   * 
+   *
    * @param name
    *          parameter to change
    * @param value
@@ -226,34 +231,15 @@ public abstract class AbstractWmsMap
   public Collection<String> setParameter(String name, String value)
       throws ParameterNotFoundException, InvalidParameterValueException
   {
-    Collection<String> updateLayers = new Vector<String>();
     log.debug("Set parameter " + name + "=" + value);
-
-    AbstractParameter p = getParameter(name);
-    if (p == null)
-    {
-      throw new ParameterNotFoundException();
-    }
-    if (p instanceof ValueParameter)
-    {
-      String oldValue = ((ValueParameter) p).getValue();
-      ((ValueParameter) p).setValue(value);
-      if (!((ValueParameter) p).getValue().equals(value))
-      {
-        ((ValueParameter) p).setValue(oldValue);
-        throw new InvalidParameterValueException("Parameter value '" + value
-            + "' is invalid for the parameter '" + name + "'");
-      }
-    }
-    updateLayers.addAll(findLayersWithParameter(name));
-
-    return updateLayers;
+    parameters.selectValue(name, value);
+    return findLayersWithParameter(name);
   }
 
   /**
    * Searches all layers, that either have a parameter with the provided name
    * defined, or reference such a parameter
-   * 
+   *
    * @param parameterName
    *          Paramter to search
    * @return Collection containing all found layernames
@@ -265,14 +251,7 @@ public abstract class AbstractWmsMap
     {
       if (/* mlb.isActive() && */mlb.dependsOnParameter(parameterName))
       {
-        if (mlb.isActive())
-        {
-          dependentLayers.add(0, mlb.getName());
-        }
-        else
-        {
-          dependentLayers.add(dependentLayers.size(), mlb.getName());
-        }
+        dependentLayers.add(mlb.getName());
       }
     }
     return dependentLayers;
@@ -280,7 +259,7 @@ public abstract class AbstractWmsMap
 
   /**
    * Toggles the active state of the layer with specified name
-   * 
+   *
    * @param layerName
    *          layer to activate/deactivate
    * @param active
@@ -312,33 +291,16 @@ public abstract class AbstractWmsMap
     return layerState;
   }
 
-  public AbstractParameter getParameter(String name)
+  public ParameterComponent getParameter(String name)
   {
-    AbstractParameter para = null;
-    for (AbstractParameter p : mapParameters)
-    {
-      para = p.getNamedParameter(name);
-      if (para != null)
-      {
-        return para;
-      }
-    }
-    for (MapLayer mlb : mapLayers.values())
-    {
-      for (AbstractParameter p : mlb.getParameters(false))
-      {
-        if (p != null && p.getName().equals(name)
-            && !(p instanceof ReferenceParameter))
-        {
-          para = p;
-          break;
-        }
-      }
-    }
-    return para;
+    return parameters.get(name);
   }
 
-  protected void addMapParameter(AbstractParameter p)
+  public ParameterReference getParameterReference(String name){
+    return new ParameterReference(name, parameters );
+  }
+
+  protected void addMapParameter(ParameterComponent p)
   {
     mapParameters.add(p);
   }

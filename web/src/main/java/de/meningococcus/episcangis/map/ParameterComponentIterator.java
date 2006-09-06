@@ -10,8 +10,7 @@ import java.util.Stack;
 
 public class ParameterComponentIterator implements Iterator<ParameterComponent>
 {
-  Stack<Iterator<ParameterComponent>> stack = 
-    new Stack<Iterator<ParameterComponent>>();
+  private Stack<Iterator<ParameterComponent>> stack = new Stack<Iterator<ParameterComponent>>();
 
   public ParameterComponentIterator(Iterator<ParameterComponent> iterator)
   {
@@ -20,15 +19,19 @@ public class ParameterComponentIterator implements Iterator<ParameterComponent>
 
   public boolean hasNext()
   {
-    if(stack.isEmpty()) {
+    if (stack.isEmpty())
+    {
       return false;
     }
-    else {
-      if( !stack.peek().hasNext() ) {
+    else
+    {
+      if (!stack.peek().hasNext())
+      {
         stack.pop();
         return hasNext();
       }
-      else {
+      else
+      {
         return true;
       }
     }
@@ -39,10 +42,14 @@ public class ParameterComponentIterator implements Iterator<ParameterComponent>
     if (hasNext())
     {
       ParameterComponent parameterComponent = stack.peek().next();
-      stack.push(parameterComponent.iterator());
+      if (parameterComponent instanceof ParameterComposite)
+      {
+        stack.push(((ParameterComposite)parameterComponent).topLevelIterator());
+      }
       return parameterComponent;
     }
-    else {
+    else
+    {
       return null;
     }
   }

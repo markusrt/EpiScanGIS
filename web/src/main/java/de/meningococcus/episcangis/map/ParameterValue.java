@@ -2,6 +2,8 @@ package de.meningococcus.episcangis.map;
 
 import java.util.Iterator;
 
+import org.apache.commons.lang.StringEscapeUtils;
+
 /* ====================================================================
  *   Copyright �2005 Markus Reinhardt - All Rights Reserved.
  * ====================================================================
@@ -14,40 +16,36 @@ public class ParameterValue extends ParameterComponent
 
   private boolean selected = false;
 
+  public ParameterValue(String value)
+  {
+    this(value, value);
+  }
+
   public ParameterValue(String title, String value)
   {
     super(null, title);
     this.value = value;
   }
 
-  @Override
   public void setValue(String value)
   {
     this.value = value;
 
   }
 
-  /**
-   * Implementation of the template method getElement. ParameterValues are not
-   * named, as they are the leafs of our tree. Therefore this method returns
-   * this component irrespective of the given name.
-   * @see ParameterComponent#getElement(java.lang.String)
-   */
-  @Override
-  protected ParameterComponent getElement(String name)
-  {
-    return this;
-  }
-
-  /**
-   * @see ParameterComponent#addElement(ParameterComponent)
-   */
-  @Override
-  protected void addElement(ParameterComponent element)
-  {
-    throw new UnsupportedOperationException(this.getClass().getSimpleName()
-        + " must not contain ParameterComponents");
-  }
+//  /**
+//   * Implementation of the template method getElement. ParameterValues are not
+//   * named, as they are the leafs of our tree. Therefore this method returns
+//   * this component irrespective of the given name.
+//   *
+//   * @see ParameterComponent#get(java.lang.String)
+//   */
+//  @Override
+//  public ParameterComponent get(String name)
+//  {
+//    if( this.getName().equals(name))return this;
+//    else return null;
+//  }
 
   @Override
   public String getValue()
@@ -101,5 +99,36 @@ public class ParameterValue extends ParameterComponent
   public Iterator<ParameterComponent> iterator()
   {
     return new NullIterator<ParameterComponent>();
+  }
+
+  @Override
+  public void selectValue(String value)
+  {
+    if (getValue().equals(value))
+    {
+      setSelected(true);
+    }
+  }
+
+  @Override
+  public String toXML()
+  {
+    StringBuilder b = new StringBuilder(800);
+    b.append("<value selected=\"").append(isSelected()).append("\" name=\"")
+        .append(StringEscapeUtils.escapeXml(getTitle())).append("\">").append(
+            StringEscapeUtils.escapeXml(getValue())).append("</value>");
+    return b.toString();
+  }
+
+  @Override
+  public Iterator<ParameterComponent> topLevelIterator()
+  {
+    return new NullIterator<ParameterComponent>();
+  }
+
+  @Override
+  public String getAliasValue()
+  {
+    return getTitle();
   }
 }

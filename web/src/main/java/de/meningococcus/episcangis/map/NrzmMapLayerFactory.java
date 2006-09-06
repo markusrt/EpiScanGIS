@@ -48,10 +48,12 @@ final class NrzmMapLayerFactory implements MapLayerFactory
     }
     else if (realName.equals("cluster"))
     {
+      //TODO remove ids (82)
       ret = new ClusterLayer(name, title, hasLegend, true, map, 82);
     }
     else if (realName.equals("clusterretro"))
     {
+      //TODO remove ids (211)
       ret = new ClusterLayer(name, title, hasLegend, true, map, 211);
     }
     else

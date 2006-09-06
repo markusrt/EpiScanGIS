@@ -32,7 +32,7 @@ import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.apache.struts.action.RedirectingActionForward;
+import org.apache.struts.action.DynaActionForm;
 
 /**
  * Implementation of <strong>Action</strong> that changes the user's

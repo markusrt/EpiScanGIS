@@ -3,51 +3,88 @@ package de.meningococcus.episcangis.map;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import org.apache.commons.lang.StringEscapeUtils;
+
 /* ====================================================================
  *   Copyright �2006 Markus Reinhardt - All Rights Reserved.
  * ====================================================================
  */
 
-public abstract class ParameterComposite extends ParameterComponent
+public class ParameterComposite extends ParameterComponent
 {
-  ArrayList<ParameterComponent> parameterComponents;
+  private ArrayList<ParameterComponent> elements;
+
+  public ParameterComposite(String name)
+  {
+    this(name, "");
+  }
 
   public ParameterComposite(String name, String title)
   {
     super(name, title);
-    parameterComponents = new ArrayList<ParameterComponent>();
+    elements = new ArrayList<ParameterComponent>();
   }
 
-  @Override
-  protected ParameterComponent getElement(String name)
+  public void add(ParameterComponent element)
   {
-    ParameterComponent parameterComponent;
-    Iterator<ParameterComponent> iterator = iterator();
-    while (iterator.hasNext())
+    if (get(element.getName()) == null || element instanceof ParameterValue)
     {
-      parameterComponent = iterator.next();
-      if (parameterComponent.getName() != null
-          && parameterComponent.getName().equals(name))
-      {
-        return parameterComponent;
-      }
+      elements.add(element);
     }
-    return null;
   }
 
-  @Override
-  protected final void addElement(ParameterComponent element)
+//  @Override
+//  public ParameterComponent get(String elementName)
+//  {
+//    ParameterComponent result = super.get(elementName);
+//    if (result != null)
+//    {
+//      return result;
+//    }
+//    else
+//    {
+//      Iterator<ParameterComponent> iterator = topLevelIterator();
+//      while (iterator.hasNext())
+//      {
+//        result = iterator.next();
+//        if (result != null)
+//        {
+//          return result;
+//        }
+//      }
+//    }
+//    return null;
+//  }
+
+  public int size()
   {
-    parameterComponents.add(element);
+    return elements.size();
   }
 
   @Override
   public void selectValue(String value, boolean selection)
+      throws InvalidParameterValueException
   {
-    Iterator<ParameterComponent> iterator = iterator();
+    boolean changedValue = false;
+    Iterator<ParameterComponent> iterator = topLevelIterator();
     while (iterator.hasNext())
     {
-      iterator.next().selectValue(value, selection);
+      ParameterComponent next = iterator.next();
+      next.selectValue(value, selection);
+      if (next.getValue().equals(value) && next.isSelected() != selection)
+      {
+        throw new InvalidParameterValueException("Parameter value '" + value
+            + "' is invalid for the parameter '" + getName() + "'");
+      }
+      else if (next.getValue().equals(value) && next.isSelected() == selection)
+      {
+        changedValue = true;
+      }
+    }
+    if (!changedValue)
+    {
+      throw new InvalidParameterValueException("Parameter value '" + value
+          + "' is invalid for the parameter '" + getName() + "'");
     }
   }
 
@@ -66,17 +103,62 @@ public abstract class ParameterComposite extends ParameterComponent
   @Override
   public Iterator<ParameterComponent> iterator()
   {
-    return new ParameterComponentIterator(parameterComponents.iterator());
+    return new ParameterComponentIterator(elements.iterator());
   }
 
-  public void setValue(String value)
+  public Iterator<ParameterComponent> topLevelIterator()
   {
-    Iterator<ParameterComponent> iterator = iterator();
+    return elements.iterator();
+  }
+
+  @Override
+  public String getValue()
+  {
+    StringBuffer value = new StringBuffer();
+    value.append("{");
+    Iterator<ParameterComponent> iterator = topLevelIterator();
     while (iterator.hasNext())
     {
-      iterator.next().setValue(value);
+      ParameterComponent parameterComponent = iterator.next();
+      if (parameterComponent instanceof ParameterComposite)
+      {
+        value.append(parameterComponent.getName()).append("=");
+      }
+      value.append(parameterComponent.getValue());
+      if (iterator.hasNext())
+      {
+        value.append(',');
+      }
     }
+    value.append("}");
+    return value.toString();
   }
 
-  public abstract String getValue();
+  @Override
+  public String getAliasValue()
+  {
+     return getValue();
+  }
+
+  @Override
+  public String toXML()
+  {
+    StringBuilder b = new StringBuilder();
+    b.append("<").append(elementName).append(" name=\"").append(
+        StringEscapeUtils.escapeXml(getName())).append("\">");
+    if (getTitle().length() > 0)
+    {
+      b.append("<title>").append(StringEscapeUtils.escapeXml(getTitle()))
+          .append("</title>");
+    }
+    Iterator<ParameterComponent> iterator = topLevelIterator();
+    while (iterator.hasNext())
+    {
+      ParameterComponent parameterComponent = iterator.next();
+      b.append(parameterComponent.toXML());
+    }
+    b.append("</").append(elementName).append(">");
+    return b.toString();
+  }
+
 }

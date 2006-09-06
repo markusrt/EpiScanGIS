@@ -15,8 +15,6 @@ import org.apache.struts.action.ActionMessages;
 
 import de.meningococcus.episcangis.db.model.User;
 import de.meningococcus.episcangis.map.AbstractWmsMap;
-import de.meningococcus.episcangis.map.NrzmMap;
-import de.meningococcus.episcangis.map.PublicMap;
 
 /* ====================================================================
  *   Copyright �2005 Markus Reinhardt - All Rights Reserved.

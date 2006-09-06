@@ -20,7 +20,7 @@ public class CaseTypesLayer extends MapLayer
       AbstractWmsMap map)
   {
     super(name, title, hasLegend, map);
-    OLDSelectParameter caseTypeSelect = new OLDSelectParameter("CASETYPES",
+    ParameterComponent caseTypeSelect = new SelectParameter("CASETYPES",
         "Finetype");
 
     CaseTypeDAO ctDao = DaoFactory.getDaoFactory().getCaseTypeDAO();
@@ -28,7 +28,7 @@ public class CaseTypesLayer extends MapLayer
     {
       if (ct.isComplete())
       {
-        caseTypeSelect.addValue(new ParameterValue(ct.getFormattedIdentifier(), "'"
+        caseTypeSelect.add(new ParameterValue(ct.getFormattedIdentifier(), "'"
             + ct.getIdentifier() + "'"));
       }
       else
@@ -39,12 +39,12 @@ public class CaseTypesLayer extends MapLayer
       }
     }
     this.addParameter(caseTypeSelect);
-    this.addParameter(new ReferenceParameter("fromMonth"));
-    this.addParameter(new ReferenceParameter("fromYear"));
-    this.addParameter(new ReferenceParameter("toMonth"));
-    this.addParameter(new ReferenceParameter("toYear"));
-    this.addParameter(new ReferenceParameter("fromAge"));
-    this.addParameter(new ReferenceParameter("toAge"));
-    this.addParameter(new ReferenceParameter("incUAge"));
+    registerReference("fromMonth");
+    registerReference("fromYear");
+    registerReference("toMonth");
+    registerReference("toYear");
+    registerReference("fromAge");
+    registerReference("toAge");
+    //  registerReference("incUAge");
   }
 }

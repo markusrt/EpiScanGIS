@@ -25,10 +25,11 @@ public class PublicHealthMap extends AbstractWmsMap
 
   private AreaDAO aDao;
 
-  AbstractParameter fromAge, toAge, areaSelector, includeUnknownAge,
+  ParameterComponent fromAge, toAge, areaSelector, includeUnknownAge,
       observationPeriod;
 
-  public PublicHealthMap(int width, int height) throws MapInitializationException
+  public PublicHealthMap(int width, int height)
+      throws MapInitializationException
   {
     super(width, height);
     // Get DAOs for db access
@@ -39,7 +40,7 @@ public class PublicHealthMap extends AbstractWmsMap
 
     // Create AREA SelectParameter. Fill it with all areas, that are stored
     // in db and are active
-    areaSelector = new OLDSelectParameter("areaId", "Area");
+    areaSelector = new SelectParameter("areaId", "Area");
     for (AreaType at : atDao.getAreaTypes())
     {
       if (at.isActive())
@@ -93,18 +94,18 @@ public class PublicHealthMap extends AbstractWmsMap
         {
           ParameterValue val = new ParameterValue(area.getIdentifier(), String
               .valueOf(area.getId()));
-          ((MultiValueParameter) areaSelector).addValue(val);
+          areaSelector.add(val);
         }
       }
     }
     addMapParameter(areaSelector);
 
     // Create age range SelectParameters.
-    fromAge = new OLDSelectParameter("fromAge", "Age from");
-    toAge = new OLDSelectParameter("toAge", "to");
+    fromAge = new SelectParameter("fromAge", "Age from");
+    toAge = new SelectParameter("toAge", "to");
     for (int age = 0; age <= 90; age++)
     {
-      ((MultiValueParameter) fromAge).addValue(new ParameterValue(String
+      fromAge.add(new ParameterValue(String
           .valueOf(age), String.valueOf(age)));
       ParameterValue toValue = new ParameterValue(String.valueOf(age), String
           .valueOf(age));
@@ -113,13 +114,16 @@ public class PublicHealthMap extends AbstractWmsMap
         toValue = new ParameterValue("90+", String.valueOf(1000));
         toValue.setSelected(true);
       }
-      ((MultiValueParameter) toAge).addValue(toValue);
+      toAge.add(toValue);
     }
-    includeUnknownAge = new CheckboxParameter("incUAge", "include unknown age",
-        new ParameterValue("yes", "-1"), new ParameterValue("no", "-2"));
+    // TODO refactor
+    // includeUnknownAge = new CheckboxParameter("incUAge", "include unknown
+    // age",
+    // new ParameterValue("yes", "-1"), new ParameterValue("no", "-2"));
+    // addMapParameter(includeUnknownAge);
+
     addMapParameter(fromAge);
     addMapParameter(toAge);
-    addMapParameter(includeUnknownAge);
 
     // Get first and last case. Construct PeriodParameter to select this
     // time range. Set from selection on last year, first month and to

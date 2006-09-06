@@ -1,10 +1,7 @@
 package de.meningococcus.episcangis.map;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
-import java.util.Vector;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -16,6 +13,7 @@ import org.apache.commons.logging.LogFactory;
 
 /**
  * This is ht
+ *
  * @author Markus Reinhardt
  */
 public class MapLayer
@@ -28,7 +26,7 @@ public class MapLayer
 
   private boolean active, hasLegend, queryable, opaque;
 
-  private Map<String, AbstractParameter> parameters = new HashMap<String, AbstractParameter>();
+  private ParameterComponent parameters;
 
   private boolean isValid;
 
@@ -39,10 +37,11 @@ public class MapLayer
     this.name = name;
     this.title = title;
     this.hasLegend = hasLegend;
-    this.addParameter(new ReferenceParameter("areaId"));
-    
+    parameters = new ParameterComposite("layerparameters_" + this.name);
+
     String resourceName = this.name;
-    
+    registerReference("areaId");
+
     if (!this.name.endsWith("_disabled"))
     {
       if (this.name.endsWith("_default"))
@@ -63,28 +62,49 @@ public class MapLayer
         this.isValid = true;
       }
     }
-    try {
-    ResourceBundle messages;
-    messages = ResourceBundle.getBundle("MessageResources");
-    String i18nTitle = messages.getString("map.layer." + resourceName);
-    if( i18nTitle != null ) {
-      setTitle(i18nTitle);
+    try
+    {
+      ResourceBundle messages;
+      messages = ResourceBundle.getBundle("MessageResources");
+      String i18nTitle = messages.getString("map.layer." + resourceName);
+      if (i18nTitle != null)
+      {
+        setTitle(i18nTitle);
+      }
+      String description = messages.getString("map.layer." + resourceName
+          + ".description");
+      if (description != null)
+      {
+        setDescription(description);
+      }
     }
-    String description = messages.getString("map.layer." + resourceName + ".description");
-    if( description != null ) {
-      setDescription(description);
-    }
-    }
-    catch(MissingResourceException e) {
-      log.warn("Layer '"+ resourceName + 
-        "': Some resources needed for i18n of map layer description/title are missing:");
+    catch (MissingResourceException e)
+    {
+      log
+          .warn("Layer '"
+              + resourceName
+              + "': Some resources needed for i18n of map layer description/title are missing:");
       log.error(e.getMessage());
     }
   }
 
-  public String getTitle()
+  protected void registerReference(String refId ) {
+    this.addParameter(map.getParameterReference(refId));
+  }
+
+  public boolean dependsOnParameter(String name)
   {
-    return title;
+    return parameters.get(name) != null;
+  }
+
+  public boolean hasLegend()
+  {
+    return hasLegend;
+  }
+
+  public String getName()
+  {
+    return name;
   }
 
   public boolean isActive()
@@ -95,11 +115,6 @@ public class MapLayer
   public void setActive(boolean isdefault)
   {
     this.active = isdefault;
-  }
-
-  public boolean hasLegend()
-  {
-    return hasLegend;
   }
 
   public boolean isValid()
@@ -114,85 +129,19 @@ public class MapLayer
         + this.getClass().getName() + nl;
   }
 
-  public Vector<AbstractParameter> getParameters(boolean resolveReferences)
+  public ParameterComponent getParameters()
   {
-    Vector<AbstractParameter> params = new Vector<AbstractParameter>();
-    if (resolveReferences)
-    {
-      for (AbstractParameter p : parameters.values())
-      {
-        params.add(getParameter(p.getName()));
-      }
-    }
-    else
-    {
-      params.addAll(parameters.values());
-    }
-    return params;
+    return parameters;
   }
 
-  public Map<String, ValueParameter> getValueParameters()
+  public ParameterComponent getParameter(String name)
   {
-    Map<String, ValueParameter> valueParameters = new HashMap<String, ValueParameter>();
-    for (AbstractParameter p : getParameters(true))
-    {
-      if (p != null && p instanceof ValueParameter)
-      {
-        valueParameters.put(p.getName(), (ValueParameter) p);
-      }
-    }
-    return valueParameters;
+    return parameters.get(name);
   }
 
-  public boolean dependsOnParameter(String name)
+  protected void addParameter(ParameterComponent p)
   {
-    AbstractParameter p = parameters.get(name);
-    return p != null;
-  }
-
-  public AbstractParameter getParameter(String name)
-  {
-    AbstractParameter p = parameters.get(name);
-    if (p != null)
-    {
-      if (p instanceof ReferenceParameter)
-      {
-        p = map.getParameter(name);
-      }
-    }
-    return p;
-  }
-
-  public void updateParameter(String name, Object value)
-  {
-    AbstractParameter p = getParameter(name);
-    if (p != null && p instanceof ValueParameter)
-    {
-      log.debug("Get Parameter: " + p.getName() + " arg: " + name);
-      ((ValueParameter) p).setValue((String) value);
-    }
-  }
-
-  public String getName()
-  {
-    return name;
-  }
-
-  protected void addParameter(AbstractParameter p)
-  {
-    if (this.parameters.get(p.getName()) == null)
-    {
-      this.parameters.put(p.getName(), p);
-    }
-    else
-    {
-      log.error("Layerparameter '" + p.getName() + "' already exists.");
-    }
-  }
-
-  public String getDescription()
-  {
-    return description;
+    parameters.add(p);
   }
 
   public boolean isQueryable()
@@ -205,9 +154,19 @@ public class MapLayer
     this.queryable = queryable;
   }
 
+  public String getDescription()
+  {
+    return description;
+  }
+
   protected void setDescription(String description)
   {
     this.description = description;
+  }
+
+  public String getTitle()
+  {
+    return title;
   }
 
   protected void setTitle(String title)
@@ -224,11 +183,13 @@ public class MapLayer
   }
 
   /**
-   * @param opaque The opaque to set.
+   * @param opaque
+   *          The opaque to set.
    */
   public void setOpaque(boolean opaque)
   {
     this.opaque = opaque;
   }
+
 
 }

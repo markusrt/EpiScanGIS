@@ -1,7 +1,6 @@
 package de.meningococcus.episcangis.map;
 
 import java.sql.Date;
-import java.util.ResourceBundle;
 import java.util.Vector;
 
 import de.meningococcus.episcangis.db.DaoFactory;
@@ -19,23 +18,28 @@ public class ClusterLayer extends MapLayer
       boolean hasDateSelector, AbstractWmsMap map, int jobId)
   {
     super(name, title, hasLegend, map);
-    OLDSelectParameter clusterDateSelector = new OLDSelectParameter(
+    ParameterComponent clusterDateSelector = new SelectParameter(
         "CLUSTERANALYSISDATE" + jobId, "Date");
     if (isValid())
     {
       SatScanDAO ssDao = DaoFactory.getDaoFactory().getSatScanDAO();
       SatScanJob ssJob = ssDao.getSatScanJob(jobId);
       Vector<Date> analysisDates = new Vector<Date>(ssDao
-          .getClusterAnalysisDates(ssDao.getSatScanJob(jobId)));
+          .getClusterAnalysisDates(ssJob));
       if (hasDateSelector)
       {
         for (Date date : analysisDates)
         {
-          ((OLDSelectParameter) clusterDateSelector)
-              .addValue(new ParameterValue(date.toString(), date.toString()));
+          clusterDateSelector.add(new ParameterValue(date.toString(), date.toString()));
         }
-        clusterDateSelector.setValue(clusterDateSelector.getValues()
-            .lastElement().getValue());
+        try
+        {
+          clusterDateSelector.selectValue(analysisDates.lastElement().toString());
+        }
+        catch (InvalidParameterValueException e)
+        {
+          e.printStackTrace();
+        }
         addParameter(clusterDateSelector);
       }
       else

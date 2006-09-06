@@ -8,7 +8,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.sql.Timestamp;
 import java.util.Collection;
 import java.util.Date;
 
@@ -18,8 +17,6 @@ import org.apache.commons.io.filefilter.PrefixFileFilter;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import de.meningococcus.episcangis.db.DaoFactory;
-import de.meningococcus.episcangis.db.dao.ReportedCaseDAO;
 import de.meningococcus.episcangis.map.LayerNotFoundException;
 
 /* ====================================================================

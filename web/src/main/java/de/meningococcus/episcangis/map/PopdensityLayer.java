@@ -1,6 +1,5 @@
 package de.meningococcus.episcangis.map;
 
-
 import de.meningococcus.episcangis.db.DaoFactory;
 import de.meningococcus.episcangis.db.model.AreaType;
 
@@ -16,20 +15,21 @@ public class PopdensityLayer extends MapLayer
   {
     super(name, title, hasLegend, map);
     setOpaque(true);
-    
-    OLDSelectParameter depthSelector = new OLDSelectParameter("POPDENTIER", "Depth");
+
+    ParameterComponent depthSelector = new SelectParameter("POPDENTIER",
+        "Depth");
 
     DaoFactory daoFactory = DaoFactory.getDaoFactory();
     for (AreaType at : daoFactory.getAreaTypeDAO().getAreaTypes())
     {
       if (at.isGroup())
       {
-        ParameterValue val = new ParameterValue(at.getDescription(), String.valueOf(at.getTier()));
-        depthSelector.addValue(val);
+        depthSelector.add(new ParameterValue(at.getDescription(), String
+            .valueOf(at.getTier())));
       }
     }
 
     addParameter(depthSelector);
-    addParameter(new ReferenceParameter("fromYear"));
+    registerReference("fromYear");
   }
 }

@@ -2,7 +2,6 @@ package de.meningococcus.episcangis.map;
 
 import java.util.Iterator;
 
-
 import de.meningococcus.episcangis.db.DaoFactory;
 import de.meningococcus.episcangis.db.dao.CaseTypeAttributeDAO;
 import de.meningococcus.episcangis.db.model.CaseTypeAttribute;
@@ -19,16 +18,15 @@ public class SerogroupsLayer extends MapLayer
   {
     super(name, title, hasLegend, map);
 
-    OLDSelectParameter serogroupSelector = new MultiSelectParameter("SEROGROUPS",
-        "Serogroup(s)");
+    ParameterComponent serogroupSelector = new SelectParameter("SEROGROUPS",
+        "Serogroup(s)", true);
 
     DaoFactory daoFactory = DaoFactory.getDaoFactory();
     CaseTypeAttributeDAO ctaDao = daoFactory.getCaseTypeAttributeDAO();
 
     ParameterValue all = new ParameterValue("all", "");
-    all.setSelected(true);
     StringBuilder allvalues = new StringBuilder();
-    serogroupSelector.addValue(all);
+    serogroupSelector.add(all);
 
     for (Iterator i = ctaDao.selectDistinctCaseTypeAttributesByCount(
         "Serogroups").iterator(); i.hasNext();)
@@ -38,8 +36,8 @@ public class SerogroupsLayer extends MapLayer
       if (cta.getValue().length() > 0)
       {
         dbValue.append("\"").append(cta.getValue()).append("\"");
-        ParameterValue val = new ParameterValue(cta.getValue(), dbValue.toString());
-        serogroupSelector.addValue(val);
+        ParameterComponent val = new ParameterValue(cta.getValue(), dbValue.toString());
+        serogroupSelector.add(val);
         allvalues.append(val.getValue());
         if (i.hasNext())
         {
@@ -50,13 +48,13 @@ public class SerogroupsLayer extends MapLayer
     all.setValue(allvalues.toString());
 
     this.addParameter(serogroupSelector);
-    this.addParameter(new ReferenceParameter("fromMonth"));
-    this.addParameter(new ReferenceParameter("fromYear"));
-    this.addParameter(new ReferenceParameter("toMonth"));
-    this.addParameter(new ReferenceParameter("toYear"));
-    this.addParameter(new ReferenceParameter("fromAge"));
-    this.addParameter(new ReferenceParameter("toAge"));
-    this.addParameter(new ReferenceParameter("incUAge"));
+    registerReference("fromMonth");
+    registerReference("fromYear");
+    registerReference("toMonth");
+    registerReference("toYear");
+    registerReference("fromAge");
+    registerReference("toAge");
+    //registerReference("incUAge");
   }
 
 }

@@ -1,7 +1,6 @@
 package de.meningococcus.episcangis.web;
 
 import java.sql.Date;
-import java.sql.Timestamp;
 
 import de.meningococcus.episcangis.db.DaoFactory;
 import de.meningococcus.episcangis.db.dao.ReportedCaseDAO;

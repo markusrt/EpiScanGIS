@@ -9,8 +9,6 @@ import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.apache.struts.action.ActionMessage;
-import org.apache.struts.action.ActionMessages;
 
 import de.meningococcus.episcangis.map.AbstractWmsMap;
 import de.meningococcus.episcangis.map.exporter.PrintExporter;

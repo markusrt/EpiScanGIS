@@ -21,23 +21,23 @@ public class IncidenceLayer extends MapLayer
     super(name, title, hasLegend, map);
     setOpaque(true);
 
-    OLDSelectParameter tier = new OLDSelectParameter("INCITIER", "Depth");
+    ParameterComponent tier = new SelectParameter("INCITIER", "Depth");
 
     AreaTypeDAO atDao = DaoFactory.getDaoFactory().getAreaTypeDAO();
     for (AreaType at : atDao.getAreaTypes())
     {
       if (at.isGroup())
       {
-        ParameterValue val = new ParameterValue(at.getDescription(), String.valueOf(at.getTier()));
-        tier.addValue(val);
+        ParameterComponent val = new ParameterValue(at.getDescription(), String.valueOf(at.getTier()));
+        tier.add(val);
       }
     }
 
     this.addParameter(tier);
-    this.addParameter(new ReferenceParameter("fromMonth"));
-    this.addParameter(new ReferenceParameter("fromYear"));
-    this.addParameter(new ReferenceParameter("toMonth"));
-    this.addParameter(new ReferenceParameter("toYear"));
-    this.addParameter(new ReferenceParameter("SEROGROUPS"));
+    registerReference("fromMonth");
+    registerReference("fromYear");
+    registerReference("toMonth");
+    registerReference("toYear");
+    registerReference("SEROGROUPS");
   }
 }

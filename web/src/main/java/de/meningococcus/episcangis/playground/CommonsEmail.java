@@ -1,13 +1,7 @@
 package de.meningococcus.episcangis.playground;
 
-import javax.mail.URLName;
-
-import org.apache.commons.beanutils.ConvertUtils;
-import org.apache.commons.io.IOUtils;
 import org.apache.commons.mail.EmailException;
 import org.apache.commons.mail.SimpleEmail;
-
-import com.sun.mail.smtp.SMTPSSLTransport;
 
 public class CommonsEmail
 {

@@ -2,7 +2,6 @@ package de.meningococcus.episcangis.web;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -10,12 +9,9 @@ import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.apache.struts.action.RedirectingActionForward;
 
 import de.meningococcus.episcangis.db.DaoFactory;
 import de.meningococcus.episcangis.db.dao.ReportedCaseDAO;
-import de.meningococcus.episcangis.db.dao.UserDAO;
-import de.meningococcus.episcangis.db.model.User;
 
 /* ====================================================================
  *   Copyright © 2005 Markus Reinhardt - All Rights Reserved.

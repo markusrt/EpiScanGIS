@@ -12,10 +12,8 @@ import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.apache.struts.action.RedirectingActionForward;
 
 import de.meningococcus.episcangis.db.DaoFactory;
-import de.meningococcus.episcangis.db.dao.ReportedCaseDAO;
 import de.meningococcus.episcangis.db.dao.UserDAO;
 import de.meningococcus.episcangis.db.model.User;
 

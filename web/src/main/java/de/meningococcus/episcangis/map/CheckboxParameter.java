@@ -11,32 +11,20 @@ import org.apache.commons.logging.LogFactory;
 /**
  * @author Markus Reinhardt <m.reinhardt[at]bitmap-friends.de>
  */
-public class CheckboxParameter extends OLDSelectParameter
+public class CheckboxParameter extends SelectParameter
 {
   private static Log log = LogFactory.getLog(CheckboxParameter.class);
 
   CheckboxParameter(String name, String title, ParameterValue on, ParameterValue off)
   {
     super(name, title);
-    values.setSize(2);
-    values.set(0, on);
-    values.set(1, off);
+    add(on);
+    add(off);
   }
 
   public void addValue(ParameterValue value)
   {
-    log.warn("Method addValue(Value value) is disabled, use constructor, "
-        + "setOnValue or setOffValue.");
-  }
-
-  public void setOnValue(ParameterValue on)
-  {
-    values.set(0, on);
-  }
-
-  public void setOffValue(ParameterValue off)
-  {
-    values.set(1, off);
+    log.warn("Method addValue(Value value) is disabled, use constructor.");
   }
 
 }

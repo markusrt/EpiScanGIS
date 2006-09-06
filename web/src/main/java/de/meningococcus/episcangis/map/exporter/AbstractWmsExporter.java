@@ -5,13 +5,11 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Vector;
 
-
 import de.meningococcus.episcangis.db.model.BoundingBox;
-import de.meningococcus.episcangis.map.AbstractParameter;
 import de.meningococcus.episcangis.map.AbstractWmsMap;
 import de.meningococcus.episcangis.map.LayerNotFoundException;
 import de.meningococcus.episcangis.map.MapLayer;
-import de.meningococcus.episcangis.map.ValueParameter;
+import de.meningococcus.episcangis.map.ParameterComponent;
 
 /* ====================================================================
  *   Copyright �2005 Markus Reinhardt - All Rights Reserved.
@@ -42,7 +40,7 @@ abstract class AbstractWmsExporter implements AbstractWmsMap.Exporter
     urlBuilder.append("&WIDTH=").append(width);
     urlBuilder.append("&HEIGHT=").append(height);
 
-    Map<String, ValueParameter> usedParameters = new HashMap<String, ValueParameter>();
+    Map<String, String> usedParameters = new HashMap<String, String>();
 
     /*
      * Collect all paramameters from used layers
@@ -56,12 +54,16 @@ abstract class AbstractWmsExporter implements AbstractWmsMap.Exporter
       {
         urlBuilder.append(",");
       }
-      usedParameters.putAll(mlb.getValueParameters());
+      Iterator<ParameterComponent> layerParameters = mlb.getParameters().topLevelIterator();
+      while(layerParameters.hasNext()) {
+        ParameterComponent next = layerParameters.next();
+        usedParameters.put(next.getName(), next.getValue());
+      }
     }
     for (String parameterName : usedParameters.keySet())
     {
       urlBuilder.append("&").append(parameterName).append("=").append(
-          usedParameters.get(parameterName).getValue());
+          usedParameters.get(parameterName));
     }
     return urlBuilder.toString();
 
@@ -132,7 +134,7 @@ abstract class AbstractWmsExporter implements AbstractWmsMap.Exporter
     this.layers = layers;
   }
 
-  public void addMapparameters(Vector<AbstractParameter> parameters)
+  public void addMapparameters(ParameterComponent parameters)
   {
     // not used
   }

@@ -2,22 +2,15 @@ package de.meningococcus.episcangis.map.exporter;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Collection;
 import java.util.Map;
-import java.util.Vector;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringEscapeUtils;
 
 import de.meningococcus.episcangis.db.model.BoundingBox;
-import de.meningococcus.episcangis.map.AbstractParameter;
 import de.meningococcus.episcangis.map.AbstractWmsMap;
-import de.meningococcus.episcangis.map.CheckboxParameter;
 import de.meningococcus.episcangis.map.MapLayer;
-import de.meningococcus.episcangis.map.MultiSelectParameter;
-import de.meningococcus.episcangis.map.OLDSelectParameter;
-import de.meningococcus.episcangis.map.ParameterValue;
-import de.meningococcus.episcangis.map.PeriodParameter;
+import de.meningococcus.episcangis.map.ParameterComponent;
 
 /* ====================================================================
  *   Copyright �2005 Markus Reinhardt - All Rights Reserved.
@@ -28,7 +21,7 @@ public class XmlExporter implements AbstractWmsMap.Exporter
 {
   private Map<String, MapLayer> layers = null;
 
-  private Vector<AbstractParameter> mapParameters = null;
+  private ParameterComponent mapParameters = null;
 
   private int width, height;
 
@@ -42,7 +35,7 @@ public class XmlExporter implements AbstractWmsMap.Exporter
     b.append("<map>");
     b.append("<size width=\"").append(width).append("\" height=\"").append(
         height).append("\"/>");
-    b.append(parametersToXML(mapParameters));
+    b.append(mapParameters.toXML());
 
     for (MapLayer mlb : layers.values())
     {
@@ -56,86 +49,11 @@ public class XmlExporter implements AbstractWmsMap.Exporter
       {
         b.append("<legend />");
       }
-      b.append(parametersToXML(mlb.getParameters(false)));
+      b.append(mlb.getParameters().toXML());
       b.append("</layer>");
     }
     b.append("</map>");
 
-    return b.toString();
-  }
-
-  private String parametersToXML(Collection<AbstractParameter> parameters)
-  {
-    StringBuilder b = new StringBuilder(1000);
-    for (AbstractParameter p : parameters)
-    {
-      b.append(parameterToXML(p));
-    }
-    return b.toString();
-  }
-
-  private String parameterToXML(AbstractParameter p)
-  {
-    StringBuilder b = new StringBuilder(1000);
-    if (p instanceof PeriodParameter)
-    {
-      b.append("<periodparameter name=\"").append(
-          StringEscapeUtils.escapeXml(p.getName())).append("\">");
-      if (p.getTitle().length() > 0)
-      {
-        b.append("<title>").append(StringEscapeUtils.escapeXml(p.getTitle()))
-            .append("</title>");
-      }
-      b.append(parameterToXML(((PeriodParameter) p).getFromMonth()));
-      b.append(parameterToXML(((PeriodParameter) p).getFromYear()));
-      b.append(parameterToXML(((PeriodParameter) p).getToMonth()));
-      b.append(parameterToXML(((PeriodParameter) p).getToYear()));
-      b.append("</periodparameter>");
-    }
-    else if (p instanceof MultiSelectParameter)
-    {
-      b.append("<multiselectparameter name=\"").append(
-          StringEscapeUtils.escapeXml(p.getName())).append("\">");
-      b.append(valuesToXML(((MultiSelectParameter) p).getValues()));
-      b.append("</multiselectparameter>");
-    }
-    else if (p instanceof CheckboxParameter)
-    {
-      b.append("<checkboxparameter name=\"").append(
-          StringEscapeUtils.escapeXml(p.getName())).append("\">");
-      if (p.getTitle().length() > 0)
-      {
-        b.append("<title>").append(StringEscapeUtils.escapeXml(p.getTitle()))
-            .append("</title>");
-      }
-      b.append(valuesToXML(((OLDSelectParameter) p).getValues()));
-      b.append("</checkboxparameter>");
-    }
-    else if (p instanceof OLDSelectParameter)
-    {
-      b.append("<selectparameter name=\"").append(
-          StringEscapeUtils.escapeXml(p.getName())).append("\">");
-      if (p.getTitle().length() > 0)
-      {
-        b.append("<title>").append(StringEscapeUtils.escapeXml(p.getTitle()))
-            .append("</title>");
-      }
-      b.append(valuesToXML(((OLDSelectParameter) p).getValues()));
-      b.append("</selectparameter>");
-    }
-    return b.toString();
-  }
-
-  private String valuesToXML(Collection<ParameterValue> values)
-  {
-    StringBuilder b = new StringBuilder(800);
-    for (ParameterValue value : values)
-    {
-      b.append("<value selected=\"").append(value.isSelected()).append(
-          "\" name=\"").append(StringEscapeUtils.escapeXml(value.getTitle()))
-          .append("\">").append(StringEscapeUtils.escapeXml(value.getValue()))
-          .append("</value>");
-    }
     return b.toString();
   }
 
@@ -179,7 +97,7 @@ public class XmlExporter implements AbstractWmsMap.Exporter
     this.layers = layers;
   }
 
-  public void addMapparameters(Vector<AbstractParameter> parameters)
+  public void addMapparameters(ParameterComponent parameters)
   {
     this.mapParameters = parameters;
   }

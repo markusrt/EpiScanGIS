@@ -14,33 +14,83 @@ public class SelectParameter extends ParameterComposite
 {
   private static Log log = LogFactory.getLog(SelectParameter.class);
 
-  boolean singleSelect = false;
+  private boolean multiSelect = false;
 
-  public SelectParameter(String name, String title, boolean singleSelect)
+  public SelectParameter(String uniqueName)
   {
-    super(name, title);
-    this.singleSelect = singleSelect;
+    this(uniqueName, "");
   }
 
-  @Override
-  public void selectValue(String value, boolean selection)
+  public SelectParameter(String uniqueName, String longTitle)
   {
-    if (singleSelect)
+    this(uniqueName, longTitle, false);
+  }
+
+  public SelectParameter(String uniqueName, String longTitle,
+      boolean isMultiSelect)
+  {
+    super(uniqueName, longTitle);
+    this.multiSelect = isMultiSelect;
+    if(isMultiSelect){
+      this.elementName="multiselectparameter";
+    }
+    else {
+      this.elementName="selectparameter";
+    }
+  }
+
+  /*
+   * (non-Javadoc)
+   *
+   * @see de.meningococcus.episcangis.map.ParameterComponent#add(de.meningococcus.episcangis.map.ParameterComponent)
+   */
+  public void add(ParameterComponent newElement)
+  {
+    if (!(newElement instanceof ParameterComposite))
     {
-      Iterator<ParameterComponent> iterator = iterator();
-      while (iterator.hasNext())
-      {
-        iterator.next().setSelected(false);
+      super.add(newElement);
+      if(getValue().equals("")) {
+        newElement.setSelected(true);
       }
     }
-    super.selectValue(value, selection);
+  }
+
+  /*
+   * (non-Javadoc)
+   *
+   * @see de.meningococcus.episcangis.map.ParameterComponent#selectValue(java.lang.String,
+   *      boolean)
+   */
+  @Override
+  public void selectValue(String selectedValue, boolean isSelected)
+      throws InvalidParameterValueException
+  {
+    String[] subValues;
+    Iterator<ParameterComponent> iterator = topLevelIterator();
+    while (iterator.hasNext())
+    {
+      iterator.next().setSelected(false);
+    }
+
+    if (!multiSelect)
+    {
+      super.selectValue(selectedValue, isSelected);
+    }
+    else if ((subValues = selectedValue.split(",")).length > 0)
+    {
+      for (int i = 0; i < subValues.length; i++)
+      {
+        super.selectValue(subValues[i], isSelected);
+      }
+    }
+
   }
 
   @Override
   public String getValue()
   {
     StringBuffer value = new StringBuffer();
-    Iterator<ParameterComponent> iterator = iterator();
+    Iterator<ParameterComponent> iterator = topLevelIterator();
     while (iterator.hasNext())
     {
       ParameterComponent parameterComponent = iterator.next();
@@ -63,9 +113,36 @@ public class SelectParameter extends ParameterComposite
     return value.toString();
   }
 
-  public boolean isSingleSelect()
+  @Override
+  public String getAliasValue()
   {
-    return singleSelect;
+    StringBuffer value = new StringBuffer();
+    Iterator<ParameterComponent> iterator = topLevelIterator();
+    while (iterator.hasNext())
+    {
+      ParameterComponent parameterComponent = iterator.next();
+      try
+      {
+        if (parameterComponent.isSelected())
+        {
+          value.append(parameterComponent.getTitle()).append(',');
+        }
+      }
+      catch (UnsupportedOperationException exception)
+      {
+        log.warn("SelectParameter supports only ParameterValue components");
+      }
+    }
+    if (value.length() > 0 && value.charAt(value.length() - 1) == ',')
+    {
+      value.deleteCharAt(value.length() - 1);
+    }
+    return value.toString();
+  }
+
+  public boolean isMultiSelect()
+  {
+    return multiSelect;
   }
 
 }

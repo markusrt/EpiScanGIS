@@ -1,9 +1,5 @@
 package de.meningococcus.episcangis.web;
 
-import java.sql.Date;
-import java.util.Calendar;
-import java.util.Locale;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -12,7 +8,6 @@ import org.apache.commons.lang.RandomStringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.commons.mail.SimpleEmail;
-import org.apache.struts.Globals;
 import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -20,7 +15,6 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 import org.apache.struts.action.DynaActionForm;
-import org.apache.struts.action.RedirectingActionForward;
 
 import de.meningococcus.episcangis.db.DaoFactory;
 import de.meningococcus.episcangis.db.dao.UserDAO;
