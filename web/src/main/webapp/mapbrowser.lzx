@@ -4,7 +4,7 @@
  *
 =============================================================================-->
 <!--<canvas bgcolor="silver" proxied="true" debug="false"-->
-<canvas debug="true" width="100%" height="100%" maxtextheight="10000">
+<canvas debug="false" width="100%" height="100%" maxtextheight="10000">
 
   <!--<resource name="waitcursor" src="resources/lzwaitcursor_rsc.swf"/>-->
   <resource name="dragcursor" src="images/icons/drag_cursor.png"/>

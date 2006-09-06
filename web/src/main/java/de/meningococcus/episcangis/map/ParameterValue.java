@@ -96,7 +96,7 @@ public class ParameterValue extends ParameterComponent
   }
 
   @Override
-  public Iterator<ParameterComponent> iterator()
+  public Iterator<ParameterComponent> oldIterator()
   {
     return new NullIterator<ParameterComponent>();
   }
@@ -121,7 +121,7 @@ public class ParameterValue extends ParameterComponent
   }
 
   @Override
-  public Iterator<ParameterComponent> topLevelIterator()
+  public Iterator<ParameterComponent> iterator()
   {
     return new NullIterator<ParameterComponent>();
   }

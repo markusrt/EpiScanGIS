@@ -112,10 +112,14 @@ public class PublicHealthMap extends AbstractWmsMap
       if (age == 90)
       {
         toValue = new ParameterValue("90+", String.valueOf(1000));
-        toValue.setSelected(true);
       }
       toAge.add(toValue);
     }
+    try
+    {
+      toAge.selectValue("1000");
+    }
+    catch (InvalidParameterValueException e){}
     // TODO refactor
     // includeUnknownAge = new CheckboxParameter("incUAge", "include unknown
     // age",

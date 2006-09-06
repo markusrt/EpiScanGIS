@@ -29,7 +29,8 @@ public class PublicMap extends AbstractWmsMap
     AreaTypeDAO atDao = daoFactory.getAreaTypeDAO();
     ReportedCaseDAO rcDao = daoFactory.getReportedCaseDAO();
 
-    areaSelector = new ParameterComposite("areaId", "Dummy Area");
+    areaSelector = new ParameterComposite("areaId", "Area");
+    areaSelector.add(new ParameterValue("Germany", "Germany"));
     addMapParameter(areaSelector);
     // Create age range SelectParameters.
     fromAge = new SelectParameter("fromAge", "Age from");

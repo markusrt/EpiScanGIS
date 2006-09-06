@@ -54,10 +54,8 @@ abstract class AbstractWmsExporter implements AbstractWmsMap.Exporter
       {
         urlBuilder.append(",");
       }
-      Iterator<ParameterComponent> layerParameters = mlb.getParameters().topLevelIterator();
-      while(layerParameters.hasNext()) {
-        ParameterComponent next = layerParameters.next();
-        usedParameters.put(next.getName(), next.getValue());
+      for(ParameterComponent pc : mlb.getParameters() ) {
+        usedParameters.put(pc.getName(), pc.getValue());
       }
     }
     for (String parameterName : usedParameters.keySet())

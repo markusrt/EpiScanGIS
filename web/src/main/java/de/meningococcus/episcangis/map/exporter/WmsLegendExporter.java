@@ -19,7 +19,7 @@ public class WmsLegendExporter extends AbstractWmsExporter
 {
   private static Log log = LogFactory.getLog(WmsLegendExporter.class);
 
-  private String format = "image/png", layer;
+  private String format = "image/gif", layer;
 
   public WmsLegendExporter(String layerName)
   {

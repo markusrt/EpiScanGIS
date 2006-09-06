@@ -40,7 +40,7 @@
       </thead>
       <tbody>
         ###if( $printMap.Mapparameters.size() > 0 )
-        #foreach( $param in $printMap.Mapparameters.topLevelIterator() )
+        #foreach( $param in $printMap.Mapparameters.Elements )
         #if ( $param.Value && $param.Value != "")
         <tr class="$rowclass">
           <td>$param.title</td>
@@ -72,7 +72,7 @@
           </tr>
         </thead>
         <tbody>
-          #foreach( $param in $layer.Parameters.topLevelIterator() )
+          #foreach( $param in $layer.Parameters.Elements )
           #if ( $param.Value.length()>0 && $param.Title.length()>0)
           <tr class="$rowclass">
             <td>$param.Title</td>

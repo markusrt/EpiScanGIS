@@ -14,7 +14,8 @@ import java.util.Iterator;
  * formed by ParameterComponent, ParameterValue, ParameterComposite
  * </p>
  */
-public abstract class ParameterComponent
+public abstract class ParameterComponent implements
+    Iterable<ParameterComponent>
 {
 
   /**
@@ -87,21 +88,18 @@ public abstract class ParameterComponent
    */
   public ParameterComponent get(String elementName)
   {
-    if (getName() != null
-        && getName().equals(elementName))
+    if (getName() != null && getName().equals(elementName))
     {
       return this;
     }
     else
     {
-      Iterator<ParameterComponent> iterator = topLevelIterator();
-      while (iterator.hasNext())
+      for (ParameterComponent next : this)
       {
-        ParameterComponent next = iterator.next();
-        if (true)
+        if (!(next instanceof ParameterValue))
         {
           ParameterComponent result = next.get(elementName);
-          if (result != null && !(result instanceof ParameterReference))
+          if (result != null)
           {
             return result;
           }
@@ -200,9 +198,9 @@ public abstract class ParameterComponent
 
   public abstract void setSelected(boolean selection);
 
-  public abstract Iterator<ParameterComponent> iterator();
+  public abstract Iterator<ParameterComponent> oldIterator();
 
-  public abstract Iterator<ParameterComponent> topLevelIterator();
+  public abstract Iterator<ParameterComponent> iterator();
 
   /**
    * @return this ParameterComponents name

@@ -44,7 +44,7 @@ public class ParameterComponentIterator implements Iterator<ParameterComponent>
       ParameterComponent parameterComponent = stack.peek().next();
       if (parameterComponent instanceof ParameterComposite)
       {
-        stack.push(((ParameterComposite)parameterComponent).topLevelIterator());
+        stack.push(((ParameterComposite)parameterComponent).iterator());
       }
       return parameterComponent;
     }

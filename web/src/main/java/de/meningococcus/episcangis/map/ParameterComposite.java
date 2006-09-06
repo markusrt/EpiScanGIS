@@ -33,29 +33,6 @@ public class ParameterComposite extends ParameterComponent
     }
   }
 
-//  @Override
-//  public ParameterComponent get(String elementName)
-//  {
-//    ParameterComponent result = super.get(elementName);
-//    if (result != null)
-//    {
-//      return result;
-//    }
-//    else
-//    {
-//      Iterator<ParameterComponent> iterator = topLevelIterator();
-//      while (iterator.hasNext())
-//      {
-//        result = iterator.next();
-//        if (result != null)
-//        {
-//          return result;
-//        }
-//      }
-//    }
-//    return null;
-//  }
-
   public int size()
   {
     return elements.size();
@@ -66,17 +43,15 @@ public class ParameterComposite extends ParameterComponent
       throws InvalidParameterValueException
   {
     boolean changedValue = false;
-    Iterator<ParameterComponent> iterator = topLevelIterator();
-    while (iterator.hasNext())
+    for (ParameterComponent pc : this)
     {
-      ParameterComponent next = iterator.next();
-      next.selectValue(value, selection);
-      if (next.getValue().equals(value) && next.isSelected() != selection)
+      pc.selectValue(value, selection);
+      if (pc.getValue().equals(value) && pc.isSelected() != selection)
       {
         throw new InvalidParameterValueException("Parameter value '" + value
             + "' is invalid for the parameter '" + getName() + "'");
       }
-      else if (next.getValue().equals(value) && next.isSelected() == selection)
+      else if (pc.getValue().equals(value) && pc.isSelected() == selection)
       {
         changedValue = true;
       }
@@ -101,12 +76,12 @@ public class ParameterComposite extends ParameterComponent
   }
 
   @Override
-  public Iterator<ParameterComponent> iterator()
+  public Iterator<ParameterComponent> oldIterator()
   {
     return new ParameterComponentIterator(elements.iterator());
   }
 
-  public Iterator<ParameterComponent> topLevelIterator()
+  public Iterator<ParameterComponent> iterator()
   {
     return elements.iterator();
   }
@@ -116,7 +91,7 @@ public class ParameterComposite extends ParameterComponent
   {
     StringBuffer value = new StringBuffer();
     value.append("{");
-    Iterator<ParameterComponent> iterator = topLevelIterator();
+    Iterator<ParameterComponent> iterator = iterator();
     while (iterator.hasNext())
     {
       ParameterComponent parameterComponent = iterator.next();
@@ -137,7 +112,7 @@ public class ParameterComposite extends ParameterComponent
   @Override
   public String getAliasValue()
   {
-     return getValue();
+    return getValue();
   }
 
   @Override
@@ -151,14 +126,19 @@ public class ParameterComposite extends ParameterComponent
       b.append("<title>").append(StringEscapeUtils.escapeXml(getTitle()))
           .append("</title>");
     }
-    Iterator<ParameterComponent> iterator = topLevelIterator();
-    while (iterator.hasNext())
+    for (ParameterComponent pc : this)
     {
-      ParameterComponent parameterComponent = iterator.next();
-      b.append(parameterComponent.toXML());
+      b.append(pc.toXML());
     }
     b.append("</").append(elementName).append(">");
     return b.toString();
   }
 
+  /**
+   * @return the elements
+   */
+  public ArrayList<ParameterComponent> getElements()
+  {
+    return elements;
+  }
 }

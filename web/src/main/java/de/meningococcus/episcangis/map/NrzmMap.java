@@ -110,10 +110,14 @@ public class NrzmMap extends AbstractWmsMap
       if (age == 90)
       {
         toValue = new ParameterValue("90+", String.valueOf(1000));
-        toValue.setSelected(true);
       }
       toAge.add(toValue);
     }
+    try
+    {
+      toAge.selectValue("1000");
+    }
+    catch (InvalidParameterValueException e){}
 
     // TODO refactor this
     // includeUnknownAge = new CheckboxParameter("incUAge", "include unknown

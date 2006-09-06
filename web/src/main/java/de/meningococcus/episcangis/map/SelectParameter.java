@@ -66,10 +66,9 @@ public class SelectParameter extends ParameterComposite
       throws InvalidParameterValueException
   {
     String[] subValues;
-    Iterator<ParameterComponent> iterator = topLevelIterator();
-    while (iterator.hasNext())
+    for (ParameterComponent pc : this)
     {
-      iterator.next().setSelected(false);
+      pc.setSelected(false);
     }
 
     if (!multiSelect)
@@ -90,15 +89,13 @@ public class SelectParameter extends ParameterComposite
   public String getValue()
   {
     StringBuffer value = new StringBuffer();
-    Iterator<ParameterComponent> iterator = topLevelIterator();
-    while (iterator.hasNext())
+    for (ParameterComponent pc : this)
     {
-      ParameterComponent parameterComponent = iterator.next();
       try
       {
-        if (parameterComponent.isSelected())
+        if (pc.isSelected())
         {
-          value.append(parameterComponent.getValue()).append(',');
+          value.append(pc.getValue()).append(',');
         }
       }
       catch (UnsupportedOperationException exception)
@@ -117,15 +114,13 @@ public class SelectParameter extends ParameterComposite
   public String getAliasValue()
   {
     StringBuffer value = new StringBuffer();
-    Iterator<ParameterComponent> iterator = topLevelIterator();
-    while (iterator.hasNext())
+    for (ParameterComponent pc : this)
     {
-      ParameterComponent parameterComponent = iterator.next();
       try
       {
-        if (parameterComponent.isSelected())
+        if (pc.isSelected())
         {
-          value.append(parameterComponent.getTitle()).append(',');
+          value.append(pc.getTitle()).append(',');
         }
       }
       catch (UnsupportedOperationException exception)

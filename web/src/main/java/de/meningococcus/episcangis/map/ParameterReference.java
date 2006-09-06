@@ -1,5 +1,6 @@
 package de.meningococcus.episcangis.map;
 
+import java.util.Date;
 import java.util.Iterator;
 
 import org.apache.commons.logging.Log;
@@ -30,7 +31,7 @@ public class ParameterReference extends ParameterComponent
     if (myReference == null)
     {
       //myReference = referencedParameter.get(getName());
-      Iterator<ParameterComponent> i = new ParameterComponentIterator(referencedParameter.iterator());
+      Iterator<ParameterComponent> i = new ParameterComponentIterator(referencedParameter.oldIterator());
       while(i.hasNext()) {
         ParameterComponent hit = i.next();
         if( !(hit instanceof ParameterReference) && hit.getName().equals(getName())) {
@@ -45,12 +46,6 @@ public class ParameterReference extends ParameterComponent
       }
     }
     return myReference;
-  }
-
-  @Override
-  public ParameterComponent get(String elementName)
-  {
-    return getMyReference().get(elementName);
   }
 
   @Override
@@ -78,9 +73,9 @@ public class ParameterReference extends ParameterComponent
   }
 
   @Override
-  public Iterator<ParameterComponent> iterator()
+  public Iterator<ParameterComponent> oldIterator()
   {
-    return getMyReference().iterator();
+    return getMyReference().oldIterator();
   }
 
   @Override
@@ -90,9 +85,9 @@ public class ParameterReference extends ParameterComponent
   }
 
   @Override
-  public Iterator<ParameterComponent> topLevelIterator()
+  public Iterator<ParameterComponent> iterator()
   {
-    return getMyReference().topLevelIterator();
+    return getMyReference().iterator();
   }
 
   @Override
