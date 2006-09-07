@@ -31,11 +31,13 @@ public class SelectParameter extends ParameterComposite
   {
     super(uniqueName, longTitle);
     this.multiSelect = isMultiSelect;
-    if(isMultiSelect){
-      this.elementName="multiselectparameter";
+    if (isMultiSelect)
+    {
+      this.elementName = "multiselectparameter";
     }
-    else {
-      this.elementName="selectparameter";
+    else
+    {
+      this.elementName = "selectparameter";
     }
   }
 
@@ -49,7 +51,8 @@ public class SelectParameter extends ParameterComposite
     if (!(newElement instanceof ParameterComposite))
     {
       super.add(newElement);
-      if(getValue().equals("")) {
+      if (getValue().equals(""))
+      {
         newElement.setSelected(true);
       }
     }
@@ -71,11 +74,9 @@ public class SelectParameter extends ParameterComposite
       pc.setSelected(false);
     }
 
-    if (!multiSelect)
-    {
-      super.selectValue(selectedValue, isSelected);
-    }
-    else if ((subValues = selectedValue.split(",")).length > 0)
+    super.selectValue(selectedValue, isSelected);
+    if (isMultiSelect() && !getValue().equals(selectedValue)
+        && (subValues = selectedValue.split(",")).length > 0)
     {
       for (int i = 0; i < subValues.length; i++)
       {
