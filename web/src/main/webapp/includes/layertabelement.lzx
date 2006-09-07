@@ -38,8 +38,9 @@
           ]]>
         </method>
       </checkbox>
-      <loadbar x="${parent.parent.width-this.width-4}" y="4"
-        name="loadbar" height="14" visible="false" />
+      <loadstar x="$once{parent.parent.width-this.width-4}"
+        y="$once{(parent.parent.height-this.height)/2}"
+        name="loadbar" visible="false" />
       <datapointer name="tls" xpath="ToggleLayerState:/result[1]">
         <method event="ondata" args="d"><![CDATA[
          var layer;
@@ -55,8 +56,8 @@
      </datapointer>
     </view>
     <view width="100%" name="paramChoser" layout="spacing:5">
-      <selectparameter datapath="composite[1]/selectparameter" mapview="${classroot.mapview}" />
-      <multiselectparameter datapath="composite[1]/multiselectparameter"  mapview="${classroot.mapview}"
+      <selectparameter datapath="composite[1]/selectparameter" mapview="$once{classroot.mapview}" />
+      <multiselectparameter datapath="composite[1]/multiselectparameter"  mapview="$once{classroot.mapview}"
         width="100%" />
       <text text="$path{'@description'}" width="100%" multiline="true" />
     </view>

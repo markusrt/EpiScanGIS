@@ -12,10 +12,12 @@
   <resource name="icon_print" src="images/icons/print.png"/>
   <resource name="icon_drag" src="images/icons/drag.png"/>
 
-  <include href="includes/parameters.lzx"/>
   <include href="includes/loadbar.lzx"/>
+
+  <include href="includes/parameters.lzx"/>
   <include href="includes/errorwindow.lzx"/>
   <include href="includes/layertabelement.lzx"/>
+
   <include href="includes/borderview.lzx"/>
   <include href="includes/stableborder.lzx"/>
 
@@ -58,7 +60,7 @@
   <script src="scripts/global_functions.js"/>
 
   <alert height="300" width="600" layout="spacing:10" name="flashVersionAlert">
-    <text height="200" visible="${LzBrowser.getVersion() &lt; 7}">
+    <text height="200" visible="$once{LzBrowser.getVersion() &lt; 7}">
       <font size='16' color='#ff0000'><b>TIP:</b>
         Ihr Flash-Player hat die falsche Version.<br />
         Bitte installieren Sie die neueste Version!
@@ -77,9 +79,9 @@
 
   <class name="mapview" bgcolor="0xeeeeee" extends="view">
     <attribute name="maplayerview" type="expression"
-      value="${mainArea.mapview.layers}"/>
+      value="$once{mainArea.mapview.layers}"/>
     <attribute name="maplayersettings"
-      value="${sidebar.content.layers.layerlist}"/>
+      value="$once{sidebar.content.layers.layerlist}"/>
     <attribute name="mapparams" value="" type="string"/>
     <attribute name="allLayerTabsConstructed" value="false"/>
 
@@ -212,9 +214,17 @@
       </view>
     </view>
     <!-- SIDEBAR -->
+    <view name="loadsidebar" width="240" height="60"
+      y="${(parent.height-classroot.toolbar.height-32)/2}"
+      visible="${!classroot.sidebar.visible}">
+      <simplelayout axis="y" spacing="20"/>
+      <text x="$once{(240-this.width)/2}">Loading...</text>
+      <loadwheel width="32" height="32" x="104" />
+    </view>
+
     <view y="${classroot.toolbar.height}" width="240"
       height="${parent.height-classroot.toolbar.height}"
-      name="sidebar">
+      name="sidebar" visible="false">
       <stableborderlayout axis="x"/>
       <!-- left border -->
       <view width="5" height="100%"/>
@@ -263,6 +273,7 @@
                   ]]></method>
                 <method name="lastCloneInit"><![CDATA[
                   Debug.write("ALL DONE");
+                  parent.classroot.sidebar.setAttribute("visible", true);
                   parent.selectItemAt(0);
                   parent.classroot.setAttribute(
                   "allLayerTabsConstructed",true);
@@ -333,8 +344,6 @@
           </view>
         </view>
       </stableborder>
-      <loadbar x="${parent.width-this.width-5}" y="5" name="loadbar"
-        visible="false" height="15" />
     </view>
     <!-- INFO PANEL END -->
 

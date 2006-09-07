@@ -1,21 +1,38 @@
 <library>
-  <class name="loadbar" extends="view" visible="false" width="60"
-    bgcolor="silver">
+  <resource name="loadstar" src="../animations/loadstar.swf"/>
+  <resource name="loadwheel" src="../animations/loadwheel.swf"/>
+
+  <class name="loadstar" width="16" height="16" extends="view" resource="loadstar">
     <method event="onvisible"><![CDATA[
+      Debug.write(classroot);
       if(this.visible)
       {
-        this.anim.move.doStart();
+        Debug.write("START");
+        this.play();
+        Debug.write(this);
+      }
+      else {
+        Debug.write("STOP");
+        this.stop();
+        Debug.write(this);
       }
       ]]></method>
-    <view name="anim" y="1" x="1" height="${parent.height-2}"
-      width="10" bgcolor="navy">
-      <animatorgroup name="move" process="sequential" start="false"
-        duration="1000" repeat="4" motion="easeboth">
-        <animator attribute="x"
-          to="${parent.parent.parent.width-1-parent.parent.width}"/>
-        <animator attribute="x" to="1"/>
-      </animatorgroup>
-    </view>
-    <text align="center" fgcolor="white" text="refresh"/>
+  </class>
+
+  <class name="loadwheel" width="32" height="32" extends="view" resource="loadwheel">
+    <method event="onvisible"><![CDATA[
+      Debug.write(classroot);
+      if(this.visible)
+      {
+        Debug.write("START");
+        this.play();
+        Debug.write(this);
+      }
+      else {
+        Debug.write("STOP");
+        this.stop();
+        Debug.write(this);
+      }
+      ]]></method>
   </class>
 </library>
