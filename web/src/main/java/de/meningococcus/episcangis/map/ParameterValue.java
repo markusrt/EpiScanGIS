@@ -23,7 +23,7 @@ public class ParameterValue extends ParameterComponent
 
   public ParameterValue(String title, String value)
   {
-    super(null, title);
+    super(value, title);
     this.value = value;
   }
 
@@ -32,20 +32,6 @@ public class ParameterValue extends ParameterComponent
     this.value = value;
 
   }
-
-//  /**
-//   * Implementation of the template method getElement. ParameterValues are not
-//   * named, as they are the leafs of our tree. Therefore this method returns
-//   * this component irrespective of the given name.
-//   *
-//   * @see ParameterComponent#get(java.lang.String)
-//   */
-//  @Override
-//  public ParameterComponent get(String name)
-//  {
-//    if( this.getName().equals(name))return this;
-//    else return null;
-//  }
 
   @Override
   public String getValue()

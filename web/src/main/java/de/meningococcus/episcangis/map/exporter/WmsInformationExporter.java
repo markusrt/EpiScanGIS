@@ -6,6 +6,9 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.List;
 
+import org.apache.commons.httpclient.HttpClient;
+import org.apache.commons.httpclient.MultiThreadedHttpConnectionManager;
+import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.commons.logging.Log;
@@ -49,8 +52,10 @@ public class WmsInformationExporter extends AbstractWmsExporter
   private String parseGetFeatureInfoResult(URL queryUrl) throws IOException
   {
     StringBuilder trimmedResult = new StringBuilder(500);
-    HttpURLConnection conn = (HttpURLConnection) queryUrl.openConnection();
-    List<String> lines = IOUtils.readLines(conn.getInputStream());
+    HttpClient client = new HttpClient(new MultiThreadedHttpConnectionManager());
+    GetMethod get = new GetMethod(queryUrl.toString());
+    client.executeMethod(get);
+    List<String> lines = IOUtils.readLines(get.getResponseBodyAsStream());
     for (String line : lines)
     {
       if (line.startsWith("    ") && !line.startsWith("    oid"))

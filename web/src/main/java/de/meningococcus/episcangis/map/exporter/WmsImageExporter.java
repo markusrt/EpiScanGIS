@@ -11,6 +11,10 @@ import java.net.URL;
 import java.util.Collection;
 import java.util.Date;
 
+import org.apache.commons.httpclient.HttpClient;
+import org.apache.commons.httpclient.MultiThreadedHttpConnectionManager;
+import org.apache.commons.httpclient.URI;
+import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.io.filefilter.PrefixFileFilter;
@@ -86,12 +90,16 @@ public class WmsImageExporter extends AbstractWmsExporter
     }
     else
     {
-      HttpURLConnection conn = (HttpURLConnection) imageUrl.openConnection();
-      return conn.getInputStream();
+      HttpClient client = new HttpClient(new MultiThreadedHttpConnectionManager());
+      GetMethod get = new GetMethod(imageUrl.toString());
+      client.executeMethod(get);
+
+      //HttpURLConnection conn = (HttpURLConnection) imageUrl.openConnection();
+      return get.getResponseBodyAsStream();
     }
   }
 
-  private FileInputStream getCachedFileInputStream(URL imageUrl)
+  private synchronized FileInputStream getCachedFileInputStream(URL imageUrl)
       throws IOException
   {
     File cacheFile = new File(cacheDir + System.getProperty("file.separator")

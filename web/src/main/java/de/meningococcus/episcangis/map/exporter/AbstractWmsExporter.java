@@ -24,6 +24,8 @@ abstract class AbstractWmsExporter implements AbstractWmsMap.Exporter
 
   protected Map<String, MapLayer> layers;
 
+  private ParameterComponent mapParameters = null;
+
   private int width, height;
 
   private String wmsUrl;
@@ -54,7 +56,7 @@ abstract class AbstractWmsExporter implements AbstractWmsMap.Exporter
       {
         urlBuilder.append(",");
       }
-      for(ParameterComponent pc : mlb.getParameters() ) {
+      for(ParameterComponent pc : mlb.getParametersWithReferences() ) {
         usedParameters.put(pc.getName(), pc.getValue());
       }
     }
@@ -134,7 +136,7 @@ abstract class AbstractWmsExporter implements AbstractWmsMap.Exporter
 
   public void addMapparameters(ParameterComponent parameters)
   {
-    // not used
+    mapParameters = parameters;
   }
 
   protected String getWmsUrl()

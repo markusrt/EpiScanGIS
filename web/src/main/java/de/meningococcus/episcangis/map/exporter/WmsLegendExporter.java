@@ -5,6 +5,9 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import org.apache.commons.httpclient.HttpClient;
+import org.apache.commons.httpclient.MultiThreadedHttpConnectionManager;
+import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -44,10 +47,14 @@ public class WmsLegendExporter extends AbstractWmsExporter
     urlBuilder.append("&REQUEST=GetLegendGraphic&FORMAT=").append(format)
         .append("&LAYER=").append(layer);
 
-    URL imageUrl = new URL(urlBuilder.toString());
-    log.debug("Legend URL: " + imageUrl.toString());
-    HttpURLConnection conn = (HttpURLConnection) imageUrl.openConnection();
-    return conn.getInputStream();
+    HttpClient client = new HttpClient(new MultiThreadedHttpConnectionManager());
+    GetMethod get = new GetMethod(urlBuilder.toString());
+    client.executeMethod(get);
+
+    //HttpURLConnection conn = (HttpURLConnection) imageUrl.openConnection();
+    return get.getResponseBodyAsStream();
+    //HttpURLConnection conn = (HttpURLConnection) imageUrl.openConnection();
+    //return conn.getInputStream();
   }
 
   @Override

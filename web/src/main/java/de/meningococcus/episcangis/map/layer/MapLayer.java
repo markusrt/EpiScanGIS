@@ -1,5 +1,7 @@
 package de.meningococcus.episcangis.map.layer;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
@@ -9,6 +11,7 @@ import org.apache.commons.logging.LogFactory;
 import de.meningococcus.episcangis.map.AbstractWmsMap;
 import de.meningococcus.episcangis.map.ParameterComponent;
 import de.meningococcus.episcangis.map.ParameterComposite;
+import de.meningococcus.episcangis.map.ParameterReference;
 
 /* ====================================================================
  *   Copyright �2005 Markus Reinhardt - All Rights Reserved.
@@ -34,7 +37,10 @@ public class MapLayer
 
   private boolean isValid;
 
-  public MapLayer(String name, String title, boolean hasLegend, AbstractWmsMap map)
+  private HashMap<String,ParameterComponent> references = new HashMap<String,ParameterComponent>();
+
+  public MapLayer(String name, String title, boolean hasLegend,
+      AbstractWmsMap map)
   {
     isValid = false;
     this.map = map;
@@ -92,13 +98,14 @@ public class MapLayer
     }
   }
 
-  protected void registerReference(String refId ) {
-    this.addParameter(map.getParameterReference(refId));
+  protected void registerReference(String refId)
+  {
+    references.put(refId,null);
   }
 
   public boolean dependsOnParameter(String name)
   {
-    return parameters.get(name) != null;
+    return parameters.get(name) != null || references.containsKey(name);
   }
 
   public boolean hasLegend()
@@ -136,6 +143,26 @@ public class MapLayer
   public ParameterComponent getParameters()
   {
     return parameters;
+  }
+
+  public ParameterComponent getParametersWithReferences() {
+    ParameterComponent ret = new ParameterComposite("layerparameters_" + this.name);
+    for(ParameterComponent pc : parameters ) {
+      ret.add(pc);
+    }
+    for(String refName : references.keySet()) {
+      ParameterComponent ref = references.get(refName);
+      if(ref == null ) {
+        ref=map.getParameter(refName);
+      }
+      if( ref == null ) {
+        log.warn("Reference '" + getName() + "' could not be resolved");
+      }
+      else {
+        ret.add(ref);
+      }
+    }
+    return ret;
   }
 
   public ParameterComponent getParameter(String name)
@@ -194,6 +221,5 @@ public class MapLayer
   {
     this.opaque = opaque;
   }
-
 
 }

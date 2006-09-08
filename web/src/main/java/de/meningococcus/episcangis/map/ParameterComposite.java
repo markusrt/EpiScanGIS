@@ -1,8 +1,10 @@
 package de.meningococcus.episcangis.map;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 
+import org.apache.commons.collections.map.LinkedMap;
 import org.apache.commons.lang.StringEscapeUtils;
 
 /* ====================================================================
@@ -12,7 +14,8 @@ import org.apache.commons.lang.StringEscapeUtils;
 
 public class ParameterComposite extends ParameterComponent
 {
-  private ArrayList<ParameterComponent> elements;
+  private LinkedMap elements;
+  protected String elementName = "composite";
 
   public ParameterComposite(String name)
   {
@@ -22,45 +25,17 @@ public class ParameterComposite extends ParameterComponent
   public ParameterComposite(String name, String title)
   {
     super(name, title);
-    elements = new ArrayList<ParameterComponent>();
+    elements = new LinkedMap();
   }
 
   public void add(ParameterComponent element)
   {
-    if (get(element.getName()) == null || element instanceof ParameterValue)
-    {
-      elements.add(element);
-    }
+    elements.put(element.getName(), element);
   }
 
   public int size()
   {
     return elements.size();
-  }
-
-  @Override
-  public void selectValue(String value, boolean selection)
-      throws InvalidParameterValueException
-  {
-    boolean changedValue = false;
-    for (ParameterComponent pc : this)
-    {
-      pc.selectValue(value, selection);
-      if (pc.getValue().equals(value) && pc.isSelected() != selection)
-      {
-        throw new InvalidParameterValueException("Parameter value '" + value
-            + "' is invalid for the parameter '" + getName() + "'");
-      }
-      else if (pc.getValue().equals(value) && pc.isSelected() == selection)
-      {
-        changedValue = true;
-      }
-    }
-    if (!changedValue)
-    {
-      throw new InvalidParameterValueException("Parameter value '" + value
-          + "' is invalid for the parameter '" + getName() + "'");
-    }
   }
 
   @Override
@@ -78,12 +53,12 @@ public class ParameterComposite extends ParameterComponent
   @Override
   public Iterator<ParameterComponent> oldIterator()
   {
-    return new ParameterComponentIterator(elements.iterator());
+    return elements.values().iterator();
   }
 
   public Iterator<ParameterComponent> iterator()
   {
-    return elements.iterator();
+    return elements.values().iterator();
   }
 
   @Override
@@ -137,8 +112,19 @@ public class ParameterComposite extends ParameterComponent
   /**
    * @return the elements
    */
-  public ArrayList<ParameterComponent> getElements()
+  public Collection<ParameterComponent> getElements()
   {
-    return elements;
+    return elements.values();
+  }
+
+  @Override
+  public ParameterComponent get(String elementName)
+  {
+    ParameterComponent pc = (ParameterComponent) elements.get(elementName);
+    if (pc == null)
+    {
+      pc = super.get(elementName);
+    }
+    return pc;
   }
 }

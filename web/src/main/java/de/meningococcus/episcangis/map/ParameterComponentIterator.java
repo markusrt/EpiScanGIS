@@ -42,7 +42,7 @@ public class ParameterComponentIterator implements Iterator<ParameterComponent>
     if (hasNext())
     {
       ParameterComponent parameterComponent = stack.peek().next();
-      if (parameterComponent instanceof ParameterComposite)
+      if (parameterComponent instanceof ParameterComposite && !(parameterComponent instanceof SelectParameter))
       {
         stack.push(((ParameterComposite)parameterComponent).iterator());
       }

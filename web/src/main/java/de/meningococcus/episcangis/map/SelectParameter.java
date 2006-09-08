@@ -1,7 +1,5 @@
 package de.meningococcus.episcangis.map;
 
-import java.util.Iterator;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -48,7 +46,7 @@ public class SelectParameter extends ParameterComposite
    */
   public void add(ParameterComponent newElement)
   {
-    if (!(newElement instanceof ParameterComposite))
+    if (newElement instanceof ParameterValue)
     {
       super.add(newElement);
       if (getValue().equals(""))
@@ -74,13 +72,19 @@ public class SelectParameter extends ParameterComposite
       pc.setSelected(false);
     }
 
-    super.selectValue(selectedValue, isSelected);
+    ParameterComponent value = super.get(selectedValue);
+    if(value != null ){
+      value.setSelected(isSelected);
+    }
     if (isMultiSelect() && !getValue().equals(selectedValue)
         && (subValues = selectedValue.split(",")).length > 0)
     {
       for (int i = 0; i < subValues.length; i++)
       {
-        super.selectValue(subValues[i], isSelected);
+        ParameterComponent v = super.get(subValues[i]);
+        if(v != null ){
+          v.setSelected(isSelected);
+        }
       }
     }
 

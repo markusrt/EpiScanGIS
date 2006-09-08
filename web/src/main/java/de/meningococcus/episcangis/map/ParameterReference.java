@@ -15,67 +15,65 @@ public class ParameterReference extends ParameterComponent
 {
   private static Log log = LogFactory.getLog(ParameterReference.class);
 
-  private ParameterComponent referencedParameter;
+  private ParameterComponent referencedComponent;
 
-  private ParameterComponent myReference;
-
-  public ParameterReference(String name,
-      ParameterComponent parameterToReference)
+  public ParameterReference(String name)
   {
     super(name);
-    referencedParameter = parameterToReference;
   }
 
-  private ParameterComponent getMyReference()
+  public ParameterReference(String name, ParameterComponent referenence)
   {
-    if (myReference == null)
-    {
-      //myReference = referencedParameter.get(getName());
-      Iterator<ParameterComponent> i = new ParameterComponentIterator(referencedParameter.oldIterator());
-      while(i.hasNext()) {
-        ParameterComponent hit = i.next();
-        if( !(hit instanceof ParameterReference) && hit.getName().equals(getName())) {
-          myReference = hit;
-          break;
-        }
-      }
-      if ( myReference == null )
-      {
-        log.warn("reference '" + getName() + "' could not be resolved");
-        return new ParameterValue("reference_to_" + getName(), "<<unresolved>>");
-      }
-    }
-    return myReference;
+    this(name);
+    referencedComponent = referenence;
   }
+
+  private ParameterComponent getReference()
+  {
+    if (referencedComponent == null)
+    {
+     log.warn("Reference '" + getName() + "' could not be resolved");
+     return new ParameterValue("reference_to_" + getName(), "<<unresolved>>");
+    }
+    else {
+      return referencedComponent;
+    }
+  }
+
+  public void setReference(ParameterComponent parameterComponent) {
+     referencedComponent = parameterComponent;
+  }
+
 
   @Override
-  public void selectValue(String value, boolean selection) throws InvalidParameterValueException
+  public void selectValue(String value, boolean selection)
+      throws InvalidParameterValueException
   {
-    getMyReference().selectValue(value, selection);
+    getReference().selectValue(value, selection);
   }
 
   @Override
   public boolean isSelected()
   {
-    return getMyReference().isSelected();
+    return getReference().isSelected();
   }
 
   @Override
   public void setSelected(boolean selection)
   {
-    getMyReference().setSelected(selection);
+    getReference().setSelected(selection);
   }
 
   @Override
   public String getValue()
   {
-    return getMyReference().getValue();
+    return getReference().getValue();
   }
 
   @Override
   public Iterator<ParameterComponent> oldIterator()
   {
-    return getMyReference().oldIterator();
+    return getReference().oldIterator();
   }
 
   @Override
@@ -87,13 +85,19 @@ public class ParameterReference extends ParameterComponent
   @Override
   public Iterator<ParameterComponent> iterator()
   {
-    return getMyReference().iterator();
+    return getReference().iterator();
   }
 
   @Override
   public String getAliasValue()
   {
-    return getMyReference().getAliasValue();
+    return getReference().getAliasValue();
   }
+
+  public ParameterComponent get(String elementName)
+  {
+    return getReference().get(elementName);
+  }
+
 
 }

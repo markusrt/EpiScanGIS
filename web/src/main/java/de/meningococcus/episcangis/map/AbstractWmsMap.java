@@ -5,6 +5,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -295,10 +296,6 @@ public abstract class AbstractWmsMap
   public ParameterComponent getParameter(String name)
   {
     return parameters.get(name);
-  }
-
-  public ParameterReference getParameterReference(String name){
-    return new ParameterReference(name, parameters );
   }
 
   protected void addMapParameter(ParameterComponent p)

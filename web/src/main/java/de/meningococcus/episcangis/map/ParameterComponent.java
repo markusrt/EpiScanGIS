@@ -1,5 +1,6 @@
 package de.meningococcus.episcangis.map;
 
+import java.util.Collection;
 import java.util.Iterator;
 
 /**
@@ -26,7 +27,7 @@ public abstract class ParameterComponent implements
    */
   private String name;
 
-  protected String elementName = "composite";
+  protected String elementName = "component";
 
   /**
    * <p>
@@ -88,7 +89,7 @@ public abstract class ParameterComponent implements
    */
   public ParameterComponent get(String elementName)
   {
-    if (getName() != null && getName().equals(elementName))
+    if (getName().equals(elementName))
     {
       return this;
     }
@@ -164,8 +165,13 @@ public abstract class ParameterComponent implements
    * @param selection
    *          true=select, false=unselect
    */
-  public abstract void selectValue(String value, boolean selection)
-      throws InvalidParameterValueException;
+  public void selectValue(String value, boolean selection)
+      throws InvalidParameterValueException {
+    for (ParameterComponent pc : this)
+    {
+      pc.selectValue(value, selection);
+    }
+  }
 
   /**
    * <p>
@@ -207,14 +213,7 @@ public abstract class ParameterComponent implements
    */
   public String getName()
   {
-    if (name != null && name.length() > 0)
-    {
-      return name;
-    }
-    else
-    {
-      return "<unnamed " + this.getClass().getSimpleName() + ">";
-    }
+    return name;
   }
 
   /**
