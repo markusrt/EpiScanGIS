@@ -1,13 +1,13 @@
 <library>
   <class name="errorwindow">
-    <window clip="true" width="800" height="400" 
+    <window clip="true" width="800" height="400"
       resizable="true">
       <view width="100%" layout="spacing:10">
         <text>
-          <font size='12' color='#ff0000'>Error(s) occured, feel free to report 
+          <font size='12' color='#ff0000'>Error(s) occured, feel free to report
             <font color="#0000ff">
               <u>
-                <a target="_blank" href="http://www.episcangis.org/contact.vm#technical">here</a>
+                <a target="_blank" href="http://episcangis.hygiene.uni-wuerzburg.de/contact.vm">here</a>
               </u>
             </font>
           </font>
@@ -16,9 +16,9 @@
           <text width="760" multiline="false">
             <b>Error:</b>
           </text>
-          <text width="760" multiline="true" 
+          <text width="760" multiline="true"
             text="$path{'message/text()'}" selectable="true"/>
-          <button x="10" text="Show more..."> 
+          <button x="10" text="Show more...">
             <method event="onclick"><![CDATA[
               parent.stacktrace.setVisible(!parent.stacktrace.visible);
               if(parent.stacktrace.visible) {
@@ -29,12 +29,12 @@
               }
               ]]></method>
           </button>
-          <view name="stacktrace" x="10" width="${parent.width-30}" 
+          <view name="stacktrace" x="10" width="${parent.width-30}"
             height="250" bgcolor="red" visible="false">
-            <view name="stacktrace" y="5" x="5" width="${parent.width-10}" 
+            <view name="stacktrace" y="5" x="5" width="${parent.width-10}"
               height="${parent.height-10}" clip="true" bgcolor="white">
-              <text 
-                width="${parent.width}" multiline="true" 
+              <text
+                width="${parent.width}" multiline="true"
                 text="$path{'stacktrace/text()'}" selectable="true"/>
               <vscrollbar/>
             </view>
@@ -43,5 +43,5 @@
       </view>
       <vscrollbar/>
     </window>
-  </class> 
+  </class>
 </library>
