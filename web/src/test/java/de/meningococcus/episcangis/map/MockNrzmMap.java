@@ -7,6 +7,7 @@ import org.geotools.data.ows.CRSEnvelope;
 import org.geotools.data.ows.Layer;
 
 import de.meningococcus.episcangis.db.model.BoundingBox;
+import de.meningococcus.episcangis.map.layer.MapLayer;
 
 public class MockNrzmMap extends NrzmMap
 {

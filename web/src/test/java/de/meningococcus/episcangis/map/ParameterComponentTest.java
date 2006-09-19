@@ -42,9 +42,17 @@ public class ParameterComponentTest extends AbstractTestCase
       if (age == 90)
       {
         toValue = new ParameterValue("90+", String.valueOf(1000));
-        toValue.setSelected(true);
       }
       fromAge.add(toValue);
+    }
+    try
+    {
+      fromAge.selectValue(String.valueOf(1000));
+    }
+    catch (InvalidParameterValueException e)
+    {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
     }
   }
 
@@ -96,13 +104,7 @@ public class ParameterComponentTest extends AbstractTestCase
         count++;
         ParameterComponent p = i.next();
       }
-      assertEquals(106, count);
-      ParameterReference ref = new ParameterReference("123", testParameters);
-      sel123.add(ref);
-      System.err.println(ref.getValue());
-      letsFireAnException = true;
-      testParameters.selectValue("s123", "noValue");
-      fail("Awaited exception did not occur");
+      assertEquals(4, count);
     }
     catch (InvalidParameterValueException e)
     {
@@ -139,6 +141,7 @@ public class ParameterComponentTest extends AbstractTestCase
       p.selectValue("'B','C','Y','W135','29E','A'");
       assertEquals("Value selected.", "'B','C','Y','W135','29E','A'", p
           .getValue());
+
       p.selectValue("'29E'");
       assertEquals("Value selected.", "'29E'", p.getValue());
       p.selectValue("'A'");
@@ -170,6 +173,14 @@ public class ParameterComponentTest extends AbstractTestCase
       assertEquals("Adding of values works", 7, p.size());
 
       p.selectValue("'B','C','Y','W135','29E','A'");
+      //Bug on 2006-07-09
+      assertEquals("Value selected.", "'B','C','Y','W135','29E','A'", p
+          .getValue());
+      int selectCount = 0;
+      for(ParameterComponent value : p ) {
+        if(value.isSelected())selectCount++;
+      }
+      assertEquals(1, selectCount);
       p.selectValue("'C','B','Y'");
       assertEquals("Values 'C' selected.", "'B','C','Y'", p.getValue());
     }
@@ -238,9 +249,8 @@ public class ParameterComponentTest extends AbstractTestCase
     mapParameters.add(observationPeriod);
     mapParameters.add(fromAge);
 
-    ParameterComponent para = null;
     String name = "fromMonth";
-
+    ParameterComponent para = observationPeriod.get(name);
     assertEquals("fromMonth", para.getName());
     assertTrue(serogroups instanceof SelectParameter);
   }
