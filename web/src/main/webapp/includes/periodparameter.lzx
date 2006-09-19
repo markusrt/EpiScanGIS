@@ -1,0 +1,131 @@
+<library>
+  <resource name="skipbw" src="../images/icons/media-skip-backward.png" />
+  <resource name="seekbw" src="../images/icons/media-seek-backward.png" />
+  <resource name="skipfw" src="../images/icons/media-skip-forward.png" />
+  <resource name="seekfw" src="../images/icons/media-seek-forward.png" />
+  <resource name="stop" src="../images/icons/media-playback-stop.png" />
+
+  <include href="parameters.lzx" />
+  <include href="iconbutton.lzx" />
+  <class name="periodparameter" width="100%"
+    datapath="periodparameter">
+    <attribute name="mapview" type="expression" />
+    <method event="oninit">
+      this.fromMonth=from.subviews[1];
+      this.fromYear=from.subviews[2];
+      this.toMonth=to.subviews[1];
+      this.toYear=to.subviews[2];
+    </method>
+
+    <simplelayout axis="y" spacing="3" />
+    <view width="100%">
+      <simplelayout axis="x" spacing="3" />
+      <text datapath="./title" name="heading" fontstyle="bold"
+        text="$path{'text()'}" width="54%" />
+      <view width="40%" name="stepper" align="right">
+        <attribute name="seekSpeed" type="number" value="2500" />
+
+        <method event="oninit">
+          this.seekerDelegate = new LzDelegate( this, "seekDelegate" );
+        </method>
+        <method name="changeMonth" args="direction">
+          <![CDATA[
+          var fromMonthIndex = classroot.fromMonth.getIndex();
+          var fromYearIndex = classroot.fromYear.getIndex();
+          var toMonthIndex = classroot.toMonth.getIndex();
+          var toYearIndex = classroot.toYear.getIndex();
+
+          amount = direction*((toYearIndex-fromYearIndex)*12+(toMonthIndex-fromMonthIndex)+1);
+
+          fromYearIndex += Math.floor((fromMonthIndex+amount)/12);
+          toYearIndex += Math.floor((toMonthIndex+amount)/12);
+          fromMonthIndex = (12 + fromMonthIndex + amount)%12;
+          toMonthIndex = (12 + toMonthIndex + amount)%12;
+
+          if( (toYearIndex-fromYearIndex)*12+(toMonthIndex-fromMonthIndex)+1 > 0
+            && ( fromYearIndex >= 0 && fromYearIndex < classroot.fromYear.getSize() &&
+                 toYearIndex >= 0 && toYearIndex < classroot.fromYear.getSize()
+                 && fromYearIndex <= toYearIndex ) )
+          {
+            classroot.fromMonth.selectItemAt(fromMonthIndex);
+            classroot.toMonth.selectItemAt(toMonthIndex);
+            classroot.fromYear.selectItemAt(fromYearIndex);
+            classroot.toYear.selectItemAt(toYearIndex);
+            return true;
+          }
+          else {
+            return false;
+          }
+         ]]>
+        </method>
+
+        <method name="seek" args="direction">
+          <![CDATA[
+          LzTimer.removeTimer(seekerDelegate);
+          seekAmount = direction;
+          seek_forward_button.setAttribute("enabled",false);
+          seek_backward_button.setAttribute("enabled",false);
+          skip_forward_button.setAttribute("enabled",false);
+          skip_backward_button.setAttribute("enabled",false);
+          stop_button.setAttribute("enabled",true);
+          LzTimer.addTimer( seekerDelegate, 0 );
+        ]]>
+        </method>
+
+        <method name="stop_seek">
+          <![CDATA[
+          LzTimer.removeTimer(seekerDelegate);
+          seekAmount = 0;
+          seek_forward_button.setAttribute("enabled",true);
+          seek_backward_button.setAttribute("enabled",true);
+          skip_backward_button.setAttribute("enabled",true);
+          skip_forward_button.setAttribute("enabled",true);
+          stop_button.setAttribute("enabled",false);
+        ]]>
+        </method>
+
+        <method name="seekDelegate">
+          <![CDATA[
+          if( changeMonth(seekAmount) ) {
+            LzTimer.addTimer( this.seekerDelegate, seekSpeed );
+          }
+          else {
+            stop_seek();
+          }
+        ]]>
+        </method>
+        <simplelayout axis="x" spacing="0" />
+        <iconbutton icon_resource="skipbw" onclick="parent.changeMonth(-1);"
+          name="skip_backward_button" width="20" height="20" />>
+        <iconbutton icon_resource="seekbw" onclick="parent.seek(-1);"
+          name="seek_backward_button" width="20" height="20" />
+        <iconbutton icon_resource="stop" onclick="parent.stop_seek();"
+          name="stop_button" width="20" height="20" />
+        <iconbutton icon_resource="seekfw" onclick="parent.seek(1);"
+          name="seek_forward_button" width="20" height="20" />
+        <iconbutton icon_resource="skipfw"
+          onclick="parent.changeMonth(1);" name="skip_forward_button"
+          width="20" height="20" />
+      </view>
+    </view>
+    <view name="from" width="100%">
+      <simplelayout axis="x" spacing="3" />
+      <text width="${(parent.width-6)*0.2}" text="from" />
+      <selectparameter width="${(parent.width-6)*0.5}"
+        mapview="${classroot.mapview}" datapath="./selectparameter[1]" />
+      <selectparameter width="${(parent.width-6)*0.3}"
+        mapview="$once{classroot.mapview}"
+        datapath="./selectparameter[2]" />
+    </view>
+    <view name="to">
+      <simplelayout axis="x" spacing="3" />
+      <text width="${(parent.parent.width-6)*0.2}" text="to" />
+      <selectparameter width="${(parent.parent.width-6)*0.5}"
+        mapview="$once{classroot.mapview}"
+        datapath="./selectparameter[3]" />
+      <selectparameter width="${(parent.parent.width-6)*0.3}"
+        mapview="$once{classroot.mapview}"
+        datapath="./selectparameter[4]" />
+    </view>
+  </class>
+</library>
