@@ -42,16 +42,19 @@ public class WmsImageExporter extends AbstractWmsExporter
 
   public WmsImageExporter(File cacheDirectory)
   {
-    if (cacheDirectory != null && cacheDirectory.exists())
+    if (cacheDirectory != null)
     {
-      this.cacheDir = cacheDirectory;
-      // TODO fix bug with file caching
-      doCaching = true;
-    }
-    else
-    {
-      log.warn("Cache directory '" + cacheDirectory.getName()
-          + "' does not exits, caching disabled");
+      if (cacheDirectory.exists())
+      {
+        this.cacheDir = cacheDirectory;
+        // TODO fix bug with file caching
+        doCaching = true;
+      }
+      else
+      {
+        log.warn("Cache directory '" + cacheDirectory.getName()
+            + "' does not exits, caching disabled");
+      }
     }
   }
 
@@ -90,11 +93,10 @@ public class WmsImageExporter extends AbstractWmsExporter
     }
     else
     {
-      HttpClient client = new HttpClient(new MultiThreadedHttpConnectionManager());
+      HttpClient client = new HttpClient(
+          new MultiThreadedHttpConnectionManager());
       GetMethod get = new GetMethod(imageUrl.toString());
       client.executeMethod(get);
-
-      //HttpURLConnection conn = (HttpURLConnection) imageUrl.openConnection();
       return get.getResponseBodyAsStream();
     }
   }
