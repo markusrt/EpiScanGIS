@@ -4,34 +4,24 @@
 
   <class name="loadstar" width="16" height="16" extends="view" resource="loadstar">
     <method event="onvisible"><![CDATA[
-      Debug.write(classroot);
       if(this.visible)
       {
-        Debug.write("START");
         this.play();
-        Debug.write(this);
       }
       else {
-        Debug.write("STOP");
         this.stop();
-        Debug.write(this);
       }
       ]]></method>
   </class>
 
   <class name="loadwheel" width="32" height="32" extends="view" resource="loadwheel">
     <method event="onvisible"><![CDATA[
-      Debug.write(classroot);
       if(this.visible)
       {
-        Debug.write("START");
         this.play();
-        Debug.write(this);
       }
       else {
-        Debug.write("STOP");
         this.stop();
-        Debug.write(this);
       }
       ]]></method>
   </class>
