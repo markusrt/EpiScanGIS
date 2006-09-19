@@ -44,8 +44,6 @@ public class PeriodParameter extends ParameterComposite
           dfShortMonth.format(cal.getTime())));
       toMonth.add(new ParameterValue(dfLongMonth.format(cal.getTime()),
           dfShortMonth.format(cal.getTime())));
-      log.debug("Added Month: " + dfLongMonth.format(cal.getTime()) + " - "
-          + dfShortMonth.format(cal.getTime()));
     }
 
     SimpleDateFormat dfEnglishYear = new SimpleDateFormat("yyyy",
@@ -68,7 +66,6 @@ public class PeriodParameter extends ParameterComposite
           dfEnglishYear.format(cal.getTime())));
       toYear.add(new ParameterValue(dfEnglishYear.format(cal.getTime()),
           dfEnglishYear.format(cal.getTime())));
-      log.debug("Added Year: " + dfEnglishYear.format(cal.getTime()));
     }
 
     add(fromMonth);
@@ -94,8 +91,6 @@ public class PeriodParameter extends ParameterComposite
     cal.setTime(to);
     String toMonth = dfMonth.format(cal.getTime());
     String toYear = dfYear.format(cal.getTime());
-
-    log.debug(fromMonth + fromYear + toMonth + toYear);
 
     try
     {
