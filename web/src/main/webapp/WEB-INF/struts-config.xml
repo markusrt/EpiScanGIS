@@ -65,6 +65,10 @@
       type="org.apache.struts.validator.DynaValidatorForm">
       <form-property name="email" type="java.lang.String" />
     </form-bean>
+    <form-bean name="clusterInformation"
+      type="org.apache.struts.validator.DynaValidatorForm">
+      <form-property name="clusterId" type="java.lang.Integer" />
+    </form-bean>
   </form-beans>
 
   <!-- ========== Global Exceptions Definitions =================================== -->
@@ -187,13 +191,19 @@
       <forward name="success" path="/WEB-INF/pages/listUsers.vm" />
     </action>
 
-    <!-- Locale Action -->
     <action path="/ForgotPassword"
       type="de.meningococcus.episcangis.web.ForgotPasswordAction"
       scope="request" name="forgotPassword" input="/forgotPassword.vm"
       validate="true">
       <forward name="success" path="/forgotPassword.vm" />
     </action>
+
+    <action path="/ClusterInformation"
+      type="de.meningococcus.episcangis.web.ClusterInformationAction"
+      scope="request" name="clusterInformation">
+      <forward name="success" path="/WEB-INF/pages/clusterInformation.vm" />
+    </action>
+
 
   </action-mappings>
 
@@ -210,10 +220,10 @@
   </plug-in>
 
   <!-- sslext plugin
-    <plug-in className="org.apache.struts.action.SecurePlugIn"> 
-    <set-property property="httpPort" value="80"/> 
-    <set-property property="httpsPort" value="443"/>  
-    <set-property property="enable" value="true"/>  
+    <plug-in className="org.apache.struts.action.SecurePlugIn">
+    <set-property property="httpPort" value="80"/>
+    <set-property property="httpsPort" value="443"/>
+    <set-property property="enable" value="true"/>
     </plug-in>  -->
 
 </struts-config>

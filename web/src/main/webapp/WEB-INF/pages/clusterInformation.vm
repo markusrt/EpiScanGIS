@@ -1,0 +1,41 @@
+#set ($page_title="Clusterinformation")
+#set( $rowclass = $alternator.make(true,'a', 'b') )
+
+<div class="section">
+  <h1>Cluster Information (No. $cluster.Id, $date.format("short_date", $cluster.AnalysisDate) )</h1>
+  <p>
+    <b>Finetype: <u>$cluster.CaseType.FormattedIdentifier</u></b><br />
+    <dl>
+      <dt>Period</dt>
+      <dd>$date.format("short_date", $cluster.StartDate) - $date.format("short_date", $cluster.EndDate)</dd>
+      <dt>Circle Radius</dt>
+      <dd>$cluster.CircleRadius km</dd>
+      <dt>Expected/Observed Cases</dt>
+      <dd>$cluster.ExpectedCases/$cluster.ObservedCases</dd>
+      <dt>P-Value</dt>
+      <dd>$cluster.PValue</dd>
+    </dl>
+  </p>
+  <table class="bodyTable">
+    <thead>
+      <tr>
+        <td>Case id</td>
+        <td>Incidence date</td>
+        <td>Report date</td>
+        <td>Age</td>
+        <td>Last change</td>
+      </tr>
+    </thead>
+    <tbody>
+    #foreach($c in $cluster.Cases)
+    <tr class="$rowclass">
+      <td>$c.Id</td>
+      <td>$date.format("short_date", $c.IncidenceDate)</td>
+      <td>$date.format("short_date", $c.ReportDate)</td>
+      <td>$c.Age</td>
+      <td>$date.format("short_date",$c.LastChange), $date.format("short_time",$c.LastChange)</td>
+    </tr>
+    #end
+    </tbody>
+ </table>
+</div>
