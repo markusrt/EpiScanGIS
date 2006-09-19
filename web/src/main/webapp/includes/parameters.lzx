@@ -1,30 +1,6 @@
 <library>
-  <class name="periodparameter" width="100%"
-    datapath="periodparameter">
-    <attribute name="mapview" type="expression" />
-    <simplelayout axis="y" spacing="3" />
-    <text datapath="./title" name="heading" fontstyle="bold"
-      text="$path{'text()'}" width="100%" />
-    <view width="100%">
-      <simplelayout axis="x" spacing="3" />
-      <text width="${(parent.width-6)*0.2}" text="from" />
-      <selectparameter width="${(parent.width-6)*0.5}"
-        mapview="${classroot.mapview}" datapath="./selectparameter[1]" />
-      <selectparameter width="${(parent.width-6)*0.3}"
-        mapview="${classroot.mapview}" datapath="./selectparameter[2]" />
-    </view>
-    <view>
-      <simplelayout axis="x" spacing="3" />
-      <text width="${(parent.parent.width-6)*0.2}" text="to" />
-      <selectparameter width="${(parent.parent.width-6)*0.5}"
-        mapview="${classroot.mapview}" datapath="./selectparameter[3]" />
-      <selectparameter width="${(parent.parent.width-6)*0.3}"
-        mapview="${classroot.mapview}" datapath="./selectparameter[4]" />
-    </view>
-  </class>
-
   <class name="selectparameter" extends="view"
-    datapath="selectparameter" width="${parent.width}">
+    datapath="selectparameter" width="100%">
     <attribute name="mapview" type="expression" />
     <method event="oninit">
       <![CDATA[
@@ -38,7 +14,6 @@
       <![CDATA[
       //var query = "./value[@name='"+searchValue+"']";
       var query = './value';
-      Debug.write(query);
       var list = this.datapath.xpathQuery(query);
       var found = false;
       for( var i in list ) {
@@ -58,7 +33,27 @@
       }
       ]]>
     </method>
-    <method name="getValue">return this.subviews[1].getValue();</method>
+    <method name="getValue">
+      return selector.subviews[1].getValue();
+    </method>
+    <method name="selectItemAt" args="index">
+      if(getIndex() != index) {
+        selector.subviews[1].selectItemAt(index);
+      }
+    </method>
+    <method name="getIndex"><![CDATA[
+      var value = getValue();
+      var values = datapath.xpathQuery("./value/text()");
+      for(var i=0; i<values.length; i++) {
+        if(values[i]==value) {
+          break;
+        }
+      }
+      return i;
+    ]]></method>
+    <method name="getSize"><![CDATA[
+      return datapath.xpathQuery("./value/text()").length;
+    ]]></method>
     <simplelayout axis="y" spacing="5" />
     <view width="100%" name="selector">
       <simplelayout axis="x" spacing="5" />
