@@ -1,0 +1,7 @@
+<library>
+  <class name="iconbutton" extends="button">
+    <attribute name="icon_resource" type="string" value=""/>
+    <view valign="middle" align="center"
+      oninit="setResource(classroot.icon_resource)" />
+  </class>
+</library>
