@@ -4,7 +4,7 @@
  *
 =============================================================================-->
 <!--<canvas bgcolor="silver" proxied="true" debug="false"-->
-<canvas debug="false" width="100%" height="100%" maxtextheight="10000">
+<canvas debug="true" width="100%" height="100%" maxtextheight="10000">
 
   <!--<resource name="waitcursor" src="resources/lzwaitcursor_rsc.swf"/>-->
   <resource name="dragcursor" src="images/icons/drag_cursor.png"/>
@@ -15,6 +15,7 @@
   <include href="includes/loadbar.lzx"/>
 
   <include href="includes/parameters.lzx"/>
+  <include href="includes/periodparameter.lzx"/>
   <include href="includes/errorwindow.lzx"/>
   <include href="includes/layertabelement.lzx"/>
 
@@ -27,10 +28,10 @@
   <debug y="500" width="600" height="200"/>
   <datasource name="ds">
     <method event="oninit">
-      // if( LzBrowser.getVersion() &lt; 7 ) {
-      //  canvas.flashVersionAlert.open();
-      // }
-      // else {
+      if( LzBrowser.getVersion() &lt; 7 ) {
+        canvas.flashVersionAlert.open();
+      }
+      else {
         this.mapserverData.setSrc(getBaseUrl() + 'Map.do');
         var p=new LzParam();
         p.addValue("width", canvas.width-4-240-190, true);
@@ -39,7 +40,7 @@
         this.mapserverData.doRequest();
 
         this.SetParameter.setSrc(getBaseUrl() + 'SetParameter.do');
-      // }
+      }
     </method>
     <dataset type="http" name="mapserverData"/>
     <dataset type="http" name="SetParameter"/>
@@ -86,6 +87,8 @@
     <attribute name="allLayerTabsConstructed" value="false"/>
 
     <method event="oninit">
+      this.pendingSPs = new Array();
+      this.setParameterDelegate = new LzDelegate( this, "processSPs" );
       this.sessionTimeoutDelegate = new LzDelegate( this, "sessionTimeout" );
       this.updateTimoutTimer();
     </method>
@@ -142,16 +145,26 @@
       if( strName.length > 0 && strValue.length > 0 && needsUpdate ) {
         Debug.write("Setting Mapparam: " + strName + "=" + strValue);
 
-        var d= canvas.ds.SetParameter;
         var p=new LzParam();
         p.addValue("name", strName, true);
         p.addValue("value", strValue, true);
-        d.setQueryString(p);
-        Debug.write(d.getQueryString());
-        d.doRequest();
+        this.pendingSPs.push(p);
+        if( pendingSPs.length > 3 ) {
+          LzTimer.addTimer( setParameterDelegate, 200 );
+        }
+        else {
+          LzTimer.addTimer( setParameterDelegate, 0 );
+        }
       }
       ]]></method>
-
+    <method name="processSPs"><![CDATA[
+      var d= canvas.ds.SetParameter;
+      d.setQueryString(this.pendingSPs.pop());
+      d.doRequest();
+      if( pendingSPs.length == 0 ) {
+        LzTimer.removeTimer( setParameterDelegate );
+      }
+    ]]></method>
     <method name="refreshAllLayers"><![CDATA[
       this.updateTimoutTimer();
       for ( var layer in this.maplayerview.subviews )
@@ -181,35 +194,15 @@
       <view x="10" height="100%" align="left">
         <view valign="middle">
           <simplelayout axis="x" spacing="20"/>
-          <button width="40" height="40">
-            <view valign="middle" align="center"
-              resource="icon_print"/>
+          <iconbutton icon_resource="icon_print" width="40" height="40">
             <method event="onclick"><![CDATA[
               var url = classroot.getMapUrl();
               LzBrowser.loadURL(url, "_blank");
             ]]></method>
-          </button>
-          <!--
-          <button width="32" height="32">
-            <text valign="middle" align="center">Test</text>
-            <method event="onclick"><![CDATA[
-              canvas.ds.mapserverData.doRequest();
-              ]]></method>
-          </button>
-          -->
+          </iconbutton>
           <text x="${classroot.sidebar.width + ((classroot.mainArea.width-this.width)/2)}" height="30">
             <font size="24">EpiScanGIS</font>
           </text>
-
-          <!--
-          <button width="32" height="32">
-            <view valign="middle" align="center"
-              resource="icon_drag"/>
-            <method event="onclick">
-              LzCursor.setCursorGlobal('dragcursor');
-            </method>
-          </button>
-          -->
         </view>
       </view>
     </view>
@@ -323,6 +316,7 @@
 
               ]]>
       </method>
+      <loadstar x="10" y="10" name="loadbar"/>
       <animatorgroup name="fadeIn" duration="1000" start="false">
         <animator attribute="opacity" to="1" />
       </animatorgroup>
@@ -368,22 +362,17 @@
             this.mouseOver = false;
             ]]></method>
           <method event="oninit"><![CDATA[
-            del = new LzDelegate(this, "pressCtrl");
-            LzKeys.callOnKeyCombo(del, ["control"]);
+            //del = new LzDelegate(this, "pressCtrl");
+            //LzKeys.callOnKeyCombo(del, ["control"]);
             ]]></method>
           <method event="onmousedown"><![CDATA[
-            //if(LzKeys.isKeyDown(['control']))
-            //{
-            //setCursor('dragcursor');
             moveMap.apply();
-            //}
-            ]]></method>
+          ]]></method>
           <method event="onmouseup"><![CDATA[
             var x = Math.round(this.x);
             var y = Math.round(this.y);
-            if(moveMap.isapplied && (x != 0 || y != 0) )
+            if(moveMap.isapplied && (Math.abs(x) > 3 || Math.abs(y) > 3) )
             {
-              //LzCursor.unlock();
               moveMap.remove();
               var d=canvas.mm.MoveMap;
               var p=new LzParam();
@@ -393,6 +382,13 @@
               d.doRequest();
               this.mapJustMoved=true;
             }
+            else {
+              moveMap.remove();
+              setX(0);
+              setY(0);
+            }
+
+
             ]]></method>
           <method event="onclick"><![CDATA[
             if( this.mouseOver && !this.mapJustMoved ) {
@@ -414,14 +410,14 @@
           <datapointer id="mydp" xpath="SetParameter:/result">
             <method event="ondata" args="d"><![CDATA[
               if(classroot.allLayerTabsConstructed) {
-              var upd;
-              var childs = d.childNodes;
-              for( upd=0; upd < childs.length; upd++ ) {
-              if(childs[upd].nodeName == "update") {
-              var updateLayer = childs[upd].childNodes[0].data;
-              parent.searchSubviews("name",updateLayer).refresh();
-              }
-              }
+                var upd;
+                var childs = d.childNodes;
+                for( upd=0; upd < childs.length; upd++ ) {
+                  if(childs[upd].nodeName == "update") {
+                    var updateLayer = childs[upd].childNodes[0].data;
+                    parent.searchSubviews("name",updateLayer).refresh();
+                  }
+                }
               }
               ]]></method>
           </datapointer>
@@ -438,11 +434,13 @@
             drag_max_x="$once{width-width/10}"
             drag_min_y="$once{-height+height/10}"
             drag_max_y="$once{height-height/10}"/>
-          <!-- MAP LAYER -->
+          <!-- MAPLAYER -->
           <view visible="false" width="100%" height="100%"
             datapath="mapserverData:/map[1]/layer/">
             <attribute name="title" type="string"/>
             <attribute name="mapurl" type="string"/>
+            <attribute name="currentBuffer" type="number" value="0"/>
+            <attribute name="nextBuffer" type="number" value="1"/>
             <attribute name="isloading" type="boolean"
               value="false"/>
             <attribute name="changed" type="boolean"
@@ -470,7 +468,7 @@
               ]]></method>
             <method name="refresh">
               if( this.visible ) {
-                setSource(mapurl, "none","");
+                subviews[nextBuffer].setSource(mapurl, "none","");
                 this.isloading = "true";
                 classroot.maplayersettings.showLoadBar(this.name,true);
               }
@@ -479,11 +477,37 @@
                 this.changed = true;
               }
             </method>
-            <method event="onload">
+            <method name="bufferLoaded">
               Debug.write("LOADED " + this.title);
               this.isloading = false;
               classroot.maplayersettings.showLoadBar(this.name,false);
+              subviews[currentBuffer].hide.doStart();
+              subviews[nextBuffer].show.doStart();
+              currentBuffer = (currentBuffer+1)%2;
+              nextBuffer = (nextBuffer+1)%2;
             </method>
+
+            <view name="buffer1" visible="true" opacity="0"
+              width="100%" height="100%">
+              <animator name="show"
+                 attribute="opacity" to="1"  duration="300" start="false"/>
+              <animator name="hide"
+                 attribute="opacity" to="0"  duration="300" start="false"/>
+              <method event="onload">
+                parent.bufferLoaded();
+              </method>
+            </view>
+            <view name="buffer2" visible="true" opacity="0"
+              width="100%" height="100%">
+              <animator name="show"
+                 attribute="opacity" to="1"  duration="300" start="false"/>
+              <animator name="hide"
+                 attribute="opacity" to="0"  duration="300" start="false"/>
+              <method event="onload">
+                parent.bufferLoaded();
+              </method>
+            </view>
+
           </view>
         </view>
         <!--<scrollbar axis="x"/>-->
