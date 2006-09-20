@@ -9,14 +9,15 @@ import org.apache.commons.logging.LogFactory;
 public final class GlobalSettings
 {
   private static Log log = LogFactory.getLog(GlobalSettings.class);
-  
+
   public static final String FORWARD_ERROR = "error",
-  FORWARD_SUCCESS = "success", FORWARD_INDEX = "index", 
+  FORWARD_SUCCESS = "success", FORWARD_INDEX = "index",
   FORWARD_MAPBROWSER = "mapbrowser", MAPBROWSER_SITE_URL="mapbrowser.vm",
-  FORWARD_DENIED="denied";
-  
+  FORWARD_DENIED="denied", ROLE_ADMIN="admin", ROLE_NRZM="nrzm",
+  ROLE_PUBLIC_HEALTH="public_health";
+
   public static final String CONFIGFILE = "conf/epidegis-web.properties";
-  
+
   public static String getConfigurationProperty(String property)
       throws ConfigurationException
   {
