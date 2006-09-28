@@ -38,20 +38,18 @@
           <th>$msg.page.printableMap.value</th>
         </tr>
       </thead>
-      <tbody>
-        ###if( $printMap.Mapparameters.size() > 0 )
-        #foreach( $param in $printMap.Mapparameters.Elements )
-        #if ( $param.Value && $param.Value != "")
-        <tr class="$rowclass">
-          <td>$param.title</td>
-          <td>
-            $param.AliasValue
-          </td>
-        </tr>
-        ###end
-        #end
-        #end
-        </tody>
+        <tbody>
+          #foreach( $param in $printMap.Mapparameters.Elements )
+          #if ( $param.Value && $param.Value != "")
+          <tr class="$rowclass">
+            <td>$param.title</td>
+            <td>
+              $param.AliasValue
+            </td>
+          </tr>
+          #end
+          #end
+        </tbody>
       </table>
     </div>
     <div class="section">
@@ -59,32 +57,32 @@
       #foreach( $layer in $printMap.ActiveLayers )
       #if($layer.Parameters.size()>1 || $layer.description != "")
       <div class="section">
-      <h3>$layer.title</h3>
-      <p style="padding-left:1em;">
-      $layer.description
-      </p>
-      #if($layer.Parameters.size()>1)
-      <table style="padding-left:1em;width:auto;" class="bodyTable">
-        <thead>
-          <tr>
-            <th>$msg.page.printableMap.parameter</th>
-            <th>$msg.page.printableMap.value</th>
-          </tr>
-        </thead>
-        <tbody>
-          #foreach( $param in $layer.Parameters.Elements )
-          #if ( $param.Value.length()>0 && $param.Title.length()>0)
-          <tr class="$rowclass">
-            <td>$param.Title</td>
-            <td>
-               $param.AliasValue
-            </td>
-          </tr>
-          #end
-          #end
-        </tbody>
-      </table>
-      #end
+        <h3>$layer.title</h3>
+        <p style="padding-left:1em;">
+        $layer.description
+        </p>
+        #if($layer.Parameters.size()>0)
+        <table style="padding-left:1em;width:auto;" class="bodyTable">
+          <thead>
+            <tr>
+              <th>$msg.page.printableMap.parameter</th>
+              <th>$msg.page.printableMap.value</th>
+            </tr>
+          </thead>
+          <tbody>
+            #foreach( $param in $layer.Parameters.Elements )
+            #if ( $param.Value.length()>0 && $param.Title.length()>0)
+            <tr class="$rowclass">
+              <td>$param.Title</td>
+              <td>
+                 $param.AliasValue
+              </td>
+            </tr>
+            #end
+            #end
+          </tbody>
+        </table>
+        #end
       </div>
       #end
       #end
