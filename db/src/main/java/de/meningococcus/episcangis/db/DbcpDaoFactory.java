@@ -19,7 +19,7 @@ import org.apache.commons.logging.LogFactory;
 
 /**
  * This is a concrete factory which extends the abstract class DaoFactory. It
- * uses the Jakarte Commons DBCP library (<a
+ * uses the Jakarta Commons DBCP library (<a
  * href="http://jakarta.apache.org/commons/dbcp">
  * http://jakarta.apache.org/commons/dbcp</a>) to create a datasource.
  * @author Markus Reinhardt <m.reinhardt[at]bitmap-friends.de>
@@ -35,7 +35,7 @@ final class DbcpDaoFactory extends DataSourceDaoFactory
    * One static datasource for all instances
    */
   private static DataSource dataSource = null;
-  
+
   /**
    * The constructor establishes a database connection. The configuration
    * parameters are read from the config file epidegis-db.properties. A new
