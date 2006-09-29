@@ -17,7 +17,10 @@ public class NRZMCaseType extends CaseType
 
   private static final long serialVersionUID = 1L;
 
-  private String serogroup, vr1, vr2, fetA;
+  private StringBuffer serogroup = new StringBuffer(1);
+  private StringBuffer vr1 = new StringBuffer(4);
+  private StringBuffer vr2 = new StringBuffer(4);
+  private StringBuffer fetA = new StringBuffer(4);
 
   public NRZMCaseType()
   {
@@ -34,17 +37,17 @@ public class NRZMCaseType extends CaseType
     String[] parts = this.identifier.split(";", -1);
     if (parts.length == 4)
     {
-      serogroup = parts[0];
-      vr1 = parts[1];
-      vr2 = parts[2];
-      fetA = parts[3];
+      serogroup.append(parts[0]);
+      vr1.append(parts[1]);
+      vr2.append(parts[2]);
+      fetA.append(parts[3]);
     }
     else
     {
-      serogroup = "ER!";
-      vr1 = "ER!";
-      vr2 = "ER!";
-      fetA = "ER!";
+      serogroup.append("ER!");
+      vr1.append("ER!");
+      vr2.append("ER!");
+      fetA.append("ER!");
       log.error("Invalid NRZM finetype identifier: " + this.identifier);
     }
   }
@@ -56,13 +59,13 @@ public class NRZMCaseType extends CaseType
     if (ct instanceof NRZMCaseType)
     {
       NRZMCaseType nct = (NRZMCaseType) ct;
-      similar &= (serogroup.equals(nct.getSerogroup())
-          || serogroup.length() == 0 || nct.getSerogroup().length() == 0);
-      similar &= (vr1.equals(nct.getVr1()) || vr1.length() == 0 || nct.getVr1()
+      similar &= (getSerogroup().equals(nct.getSerogroup())
+          || getSerogroup().length() == 0 || nct.getSerogroup().length() == 0);
+      similar &= (getVr1().equals(nct.getVr1()) || getVr1().length() == 0 || nct.getVr1()
           .length() == 0);
-      similar &= (vr2.equals(nct.getVr2()) || vr2.length() == 0 || nct.getVr2()
+      similar &= (getVr2().equals(nct.getVr2()) || getVr2().length() == 0 || nct.getVr2()
           .length() == 0);
-      similar &= (fetA.equals(nct.getFetA()) || fetA.length() == 0 || nct
+      similar &= (getFetA().equals(nct.getFetA()) || getFetA().length() == 0 || nct
           .getFetA().length() == 0);
     }
     else
@@ -74,7 +77,7 @@ public class NRZMCaseType extends CaseType
 
   public String getFetA()
   {
-    return fetA;
+    return fetA.toString();
   }
 
   public String getPorA()
@@ -86,7 +89,7 @@ public class NRZMCaseType extends CaseType
 
   public String getSerogroup()
   {
-    return serogroup;
+    return serogroup.toString();
   }
 
   public String getFormattedIdentifier()
@@ -99,11 +102,11 @@ public class NRZMCaseType extends CaseType
 
   public String getVr1()
   {
-    return vr1;
+    return vr1.toString();
   }
 
   public String getVr2()
   {
-    return vr2;
+    return vr2.toString();
   }
 }
