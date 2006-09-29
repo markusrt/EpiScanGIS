@@ -46,7 +46,7 @@ public interface SatScanDAO
   public SatScanExecution getEarliestSatScanExecution();
 
   /**
-   * @param execution SatScanExecution to remove from datastore 
+   * @param execution SatScanExecution to remove from datastore
    * @return number of deleted executions
    */
   public int deleteSatScanExecution(SatScanExecution execution);
@@ -63,8 +63,15 @@ public interface SatScanDAO
    */
   public int createSatScanCluster(SatScanCluster cluster);
 
+
   /**
-   * @param job SatScanJob for which to search analysis dates 
+   * @param id SatScanCluster id to retrieve
+   * @return cluster
+   */
+  public SatScanCluster getSatScanCluster(int id);
+
+  /**
+   * @param job SatScanJob for which to search analysis dates
    * @return collection of all matching Dates in datastore, never null
    */
   public Collection<Date> getClusterAnalysisDates(SatScanJob job);

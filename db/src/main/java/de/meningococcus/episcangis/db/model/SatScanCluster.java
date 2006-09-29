@@ -23,6 +23,7 @@ public class SatScanCluster
   private Date startDate, endDate, analysisDate;
 
   private Vector<ReportedCase> cases = new Vector<ReportedCase>();
+  private CaseType caseType;
 
   private SatScanExecution execution;
 
@@ -190,5 +191,21 @@ public class SatScanCluster
   public void setAnalysisDate(Date analysisDate)
   {
     this.analysisDate = analysisDate;
+  }
+
+  /**
+   * @return the caseType
+   */
+  public CaseType getCaseType()
+  {
+    return caseType;
+  }
+
+  /**
+   * @param caseType the caseType to set
+   */
+  public void setCaseType(CaseType caseType)
+  {
+    this.caseType = caseType;
   }
 }
