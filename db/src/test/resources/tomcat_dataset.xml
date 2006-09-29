@@ -7,7 +7,7 @@ schalt mich bitte frei!
 Gruß,
 
 Johannes" registrationdate="2006-05-19" title="" lastname="Elias" department="" domain="NRZ Meningococci"/>
-  <users username="mreinhardt" password="e4fa9fdfc917af140968ec90b9441c54a2ead4fa" forename="Markus" email="m.reinhardt@bitmap-friends.de" phone="++49 (931) 9916454" organisation="Universität Würzburg" message="" registrationdate="2006-01-19" lastname="Reinhardt" department="Institut für Hygiene und Mikrobiologie" domain="NRZ Meningococci"/>
+  <users username="mreinhardt" password="906072001efddf3e11e6d2b5782f4777fe038739" forename="Markus" email="m.reinhardt@bitmap-friends.de" phone="++49 (931) 9916454" organisation="Universität Würzburg" message="" registrationdate="2006-01-19" lastname="Reinhardt" department="Institut für Hygiene und Mikrobiologie" domain="NRZ Meningococci"/>
   <users username="uvogel" password="6fdfe06cd94b8c6a9fcd618ebf5bc840a325ade8" forename="Ulrich" email="uvogel@hygiene.uni-wuerzburg.de" phone="++49 (931) 20146802 " organisation="Universität Würzburg" registrationdate="2006-04-20" title="Prof. Dr. med." lastname="Vogel" department="Institut für Hygiene und Mikrobiologie" domain="NRZ Meningococci"/>
   <user_roles username="Johannes" rolename="nrzm"/>
   <user_roles username="mreinhardt" rolename="epidegis_beta"/>
