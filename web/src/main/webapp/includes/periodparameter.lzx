@@ -96,7 +96,7 @@
         </method>
         <simplelayout axis="x" spacing="0" />
         <iconbutton icon_resource="skipbw" onclick="parent.changeMonth(-1);"
-          name="skip_backward_button" width="20" height="20" />>
+          name="skip_backward_button" width="20" height="20" />
         <iconbutton icon_resource="seekbw" onclick="parent.seek(-1);"
           name="seek_backward_button" width="20" height="20" />
         <iconbutton icon_resource="stop" onclick="parent.stop_seek();"
