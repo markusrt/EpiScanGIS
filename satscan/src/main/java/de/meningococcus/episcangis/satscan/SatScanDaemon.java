@@ -36,7 +36,7 @@ public class SatScanDaemon
     String satScanExecutable, prmTemplateFile;
 
     Configuration config;
-    String configfile = "conf/epidegis-satscan.properties";
+    String configfile = "epidegis-satscan.properties";
 
     config = new PropertiesConfiguration(configfile);
     if (config.containsKey("satscan.executable"))
