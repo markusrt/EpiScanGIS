@@ -155,6 +155,7 @@
     datapath="multiselectparameter">
     <attribute name="mapview" type="expression" />
     <method event="onselect"><![CDATA[
+      Debug.write("I AM MULTI, DO MY COMMAND: " + this.getValue());
       classroot.mapview.setMapparam(this.name, this.getValue());
     ]]></method>
     <method name="getValue">return this.subviews[1].getValue();</method>
@@ -168,18 +169,7 @@
           parent.chosen.setVisible(true);
         }
         else parent.chosen.setVisible(false);
-        parent.onselect.sendEvent();
-
-        <!--
-        if( this.getValue() != null ) {
-          parent.chosen.setText(this.getValue());
-          parent.chosen.setVisible(true);
-        }
-        else {
-          parent.chosen.setVisible(false);
-          parent.onselect.sendEvent();
-        }
-        -->
+        parent.onselect.sendEvent();      
       </method>
       <!-- initstage="late" required because otherwise
         parent is initialized after textlistitem -->
