@@ -259,7 +259,13 @@
         <artifactId>maven-jetty-plugin</artifactId>
         <configuration>
           <scanIntervalSeconds>10</scanIntervalSeconds>
-          <jettyConfig>/etc/jetty-plus.xml</jettyConfig>
+          <jettyConfig>src/main/config/jetty/jetty-plus.xml</jettyConfig>
+          <userRealms>
+            <userRealm implementation="org.mortbay.jetty.security.HashUserRealm">
+              <name>EpiScanGIS</name>
+              <config>src/main/config/jetty/realm.properties</config>
+            </userRealm>
+          </userRealms>
         </configuration>
       </plugin>
       <plugin>
@@ -289,8 +295,8 @@
               </cargo.remote.password>
             </properties>
           </configuration>
-          <jvmargs>-Xmx512m</jvmargs>
-          <!-- 
+          <jvmargs>-Xmx512M</jvmargs>
+          <!--
             <configuration>
             <properties>
             <cargo.servlet.port>8082</cargo.servlet.port>
@@ -300,7 +306,7 @@
         </configuration>
 
       </plugin>
-      <!-- 
+      <!--
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>xdoclet-maven-plugin</artifactId>
