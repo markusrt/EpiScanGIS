@@ -223,19 +223,18 @@ public class SatScanJob
       {
         from.add(scheduleIntervall, 1);
       }
-
       while (from.compareTo(endDate) <= 0)
       {
         scheduleDates.add(new java.sql.Date(from.getTime().getTime()));
         from.add(scheduleIntervall, 1);
       }
-      if (scheduleDates.isEmpty() ||
-          ( !DateUtils.isSameDay(scheduleDates.lastElement(), endDate.getTime())
-          && !scheduleDates.lastElement().after(endDate.getTime()) 
-          && (jobtype == JOBTYPE_DAILY || jobtype == JOBTYPE_WEEKLY ) ))
-      {
-        scheduleDates.add(new java.sql.Date(endDate.getTime().getTime()));
-      }
+//      if (scheduleDates.isEmpty() ||
+//          ( !DateUtils.isSameDay(scheduleDates.lastElement(), endDate.getTime())
+//          && !scheduleDates.lastElement().after(endDate.getTime()) 
+//          && (jobtype == JOBTYPE_DAILY || jobtype == JOBTYPE_WEEKLY ) ))
+//      {
+//        scheduleDates.add(new java.sql.Date(endDate.getTime().getTime()));
+//      }
     }
 
     return scheduleDates;
