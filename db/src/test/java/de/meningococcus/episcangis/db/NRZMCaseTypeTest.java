@@ -16,7 +16,7 @@ import de.meningococcus.episcangis.db.model.NRZMCaseType;
 public class NRZMCaseTypeTest extends AbstractTestCase
 {
   /**
-   *  
+   *
    */
   public NRZMCaseTypeTest(String testName)
   {
@@ -57,5 +57,11 @@ public class NRZMCaseTypeTest extends AbstractTestCase
           + "' is not similar to '" + incomplete_ns[i].getIdentifier() + "'",
           complete.isSimilarTo(incomplete_ns[i]));
     }
+  }
+
+  public void testNullpointerBug_20060911() {
+    NRZMCaseType ct = new NRZMCaseType("B;5-1;2-2;5-8");
+    assertNotNull(ct.getFormattedIdentifier());
+    System.err.println(ct.getFormattedIdentifier());
   }
 }
