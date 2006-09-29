@@ -10,6 +10,7 @@ import java.sql.Timestamp;
 import java.util.Collection;
 
 import de.meningococcus.episcangis.db.model.ReportedCase;
+import de.meningococcus.episcangis.db.model.SatScanCluster;
 
 /**
  * @author Markus Reinhardt <m.reinhardt[at]bitmap-friends.de>
@@ -40,6 +41,12 @@ public interface ReportedCaseDAO
    * @return Collection of matching cases, never null
    */
   public Collection<ReportedCase> getCases(int areaTier, Date from, Date to);
+  
+  /**
+   * @param cluster 
+   * @return
+   */
+  public Collection<ReportedCase> getCasesInCluster(SatScanCluster cluster);
 
   /**
    * Executes a crosstable query to count the number of cases, that occured at

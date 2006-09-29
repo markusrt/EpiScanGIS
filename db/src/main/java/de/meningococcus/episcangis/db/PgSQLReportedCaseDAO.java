@@ -24,13 +24,14 @@ import org.apache.commons.logging.LogFactory;
 import de.meningococcus.episcangis.db.dao.ReportedCaseDAO;
 import de.meningococcus.episcangis.db.model.CaseType;
 import de.meningococcus.episcangis.db.model.ReportedCase;
+import de.meningococcus.episcangis.db.model.SatScanCluster;
 
 /**
  * Implementation of the DAO ReportedCaseDAO. This class uses Jakarta Commons
  * Dbutils (<a href="http://jakarta.apache.org/commons/dbutils/">
  * http://jakarta.apache.org/commons/dbutils/</a>) to run queries on the
  * database and fill beans with the results.
- * 
+ *
  * @author Markus Reinhardt <m.reinhardt[at]bitmap-friends.de>
  */
 final class PgSQLReportedCaseDAO extends DbUtilsDAO implements ReportedCaseDAO
@@ -45,8 +46,8 @@ final class PgSQLReportedCaseDAO extends DbUtilsDAO implements ReportedCaseDAO
    * database specific query parts
    */
   private static String SELECT_CASES = "SELECT case_id AS id, CAST( age AS int4),CAST(gender AS varchar),"
-      + "incidencedate,reportdate, case_type_id AS caseTypeId, " +
-         "last_change AS lastChange FROM cases ",
+      + "incidencedate,reportdate, case_type_id AS caseTypeId, "
+      + "last_change AS lastChange FROM cases ",
       GET_LAST_CASE = SELECT_CASES + "ORDER BY reportdate DESC LIMIT 1",
       GET_FIRST_CASE = SELECT_CASES + "ORDER BY reportdate ASC LIMIT 1",
       COUNT_CASES = "SELECT count(*) FROM cases",
@@ -65,7 +66,10 @@ final class PgSQLReportedCaseDAO extends DbUtilsDAO implements ReportedCaseDAO
       LAST_CHANGE = "SELECT last_change FROM cases ORDER BY last_change DESC LIMIT 1",
       COUNT_CASES_PER_AREA_GROUPED_BY_ATTRIBUTE = "SELECT * FROM "
           + "episcangis_count_cases_per_area_attribute(?, ?) AS "
-          + "(count bigint, Serogroup varchar, location varchar);";
+          + "(count bigint, Serogroup varchar, location varchar);",
+      GET_CASES_CLUSTER = SELECT_CASES
+          + " WHERE case_id IN (SELECT case_id FROM "
+          + " satscan_cluster_cases WHERE satscan_cluster_id=?)";
 
   PgSQLReportedCaseDAO(DataSource dataSource)
   {
@@ -74,7 +78,7 @@ final class PgSQLReportedCaseDAO extends DbUtilsDAO implements ReportedCaseDAO
 
   /*
    * (non-Javadoc)
-   * 
+   *
    * @see de.meningococcus.episcangis.db.dao.ReportedCaseDAO#getFirstCase()
    */
   public ReportedCase getEarliestCase()
@@ -94,7 +98,7 @@ final class PgSQLReportedCaseDAO extends DbUtilsDAO implements ReportedCaseDAO
 
   /*
    * (non-Javadoc)
-   * 
+   *
    * @see de.meningococcus.episcangis.db.dao.ReportedCaseDAO#getLastCase()
    */
   public ReportedCase getLatestCase()
@@ -114,7 +118,7 @@ final class PgSQLReportedCaseDAO extends DbUtilsDAO implements ReportedCaseDAO
 
   /*
    * (non-Javadoc)
-   * 
+   *
    * @see de.meningococcus.episcangis.db.dao.ReportedCaseDAO#countCases()
    */
   public long countCases()
@@ -133,7 +137,7 @@ final class PgSQLReportedCaseDAO extends DbUtilsDAO implements ReportedCaseDAO
 
   /*
    * (non-Javadoc)
-   * 
+   *
    * @see de.meningococcus.episcangis.db.dao.ReportedCaseDAO#getCases(int, int,
    *      java.sql.Date, java.sql.Date)
    */
@@ -144,9 +148,9 @@ final class PgSQLReportedCaseDAO extends DbUtilsDAO implements ReportedCaseDAO
     List<ReportedCase> result = new ArrayList<ReportedCase>();
     try
     {
-      result.addAll((List<ReportedCase>) run.query(GET_CASES_AREA_FROM_TO_CASETYPE,
-          new Object[] { areaTier, from, to, caseTypeId }, new BeanListHandler(
-              ReportedCase.class)));
+      result.addAll((List<ReportedCase>) run.query(
+          GET_CASES_AREA_FROM_TO_CASETYPE, new Object[] { areaTier, from, to,
+              caseTypeId }, new BeanListHandler(ReportedCase.class)));
     }
     catch (SQLException e)
     {
@@ -157,7 +161,7 @@ final class PgSQLReportedCaseDAO extends DbUtilsDAO implements ReportedCaseDAO
 
   /*
    * (non-Javadoc)
-   * 
+   *
    * @see de.meningococcus.episcangis.db.dao.ReportedCaseDAO#getCases(int,
    *      java.sql.Date, java.sql.Date)
    */
@@ -169,6 +173,23 @@ final class PgSQLReportedCaseDAO extends DbUtilsDAO implements ReportedCaseDAO
     {
       result.addAll((List<ReportedCase>) run.query(GET_CASES_AREA_FROM_TO,
           new Object[] { areaTier, from, to }, new BeanListHandler(
+              ReportedCase.class)));
+    }
+    catch (SQLException e)
+    {
+      log.error("SQL Query caused error: " + e.getMessage());
+    }
+    return result;
+  }
+
+  @SuppressWarnings("unchecked")
+  public Collection<ReportedCase> getCasesInCluster(SatScanCluster cluster)
+  {
+    List<ReportedCase> result = new ArrayList<ReportedCase>();
+    try
+    {
+      result.addAll((List<ReportedCase>) run.query(GET_CASES_CLUSTER,
+          new Object[] { cluster.getId() }, new BeanListHandler(
               ReportedCase.class)));
     }
     catch (SQLException e)
@@ -199,8 +220,9 @@ final class PgSQLReportedCaseDAO extends DbUtilsDAO implements ReportedCaseDAO
     List<Object[]> result = new ArrayList<Object[]>();
     try
     {
-      result.addAll((List<Object[]>) run.query(COUNT_CASES_PER_AREA_GROUPED_BY_ATTRIBUTE,
-          new Object[] { attribute, (short)areaTier }, new ArrayListHandler()));
+      result.addAll((List<Object[]>) run.query(
+          COUNT_CASES_PER_AREA_GROUPED_BY_ATTRIBUTE, new Object[] { attribute,
+              (short) areaTier }, new ArrayListHandler()));
     }
     catch (SQLException e)
     {
