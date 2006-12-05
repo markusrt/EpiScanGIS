@@ -17,7 +17,7 @@ public abstract class AbstractDbunitTestCase extends DatabaseTestCase
   {
     super(testName);
     DaoFactory
-        .setConfigFile("/home/mreinhardt/episcangis/db/src/test/resources/epidegis-db.properties");
+        .setConfigFile("src/test/resources/epidegis-db.properties");
   }
 
   @Override
@@ -33,7 +33,7 @@ public abstract class AbstractDbunitTestCase extends DatabaseTestCase
   protected IDataSet getDataSet() throws Exception
   {
     return new FlatXmlDataSet(new FileInputStream(
-        "/home/mreinhardt/episcangis/db/src/test/resources/tomcat_dataset.xml"));
+        "src/test/resources/tomcat_dataset.xml"));
   }
 
 }
