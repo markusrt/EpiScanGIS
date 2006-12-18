@@ -48,7 +48,6 @@
             var xp = "ToggleLayerState:/result[1]/layer[@name='" + classroot.layername + "']/@active";
          var active = this.xpathQuery(xp);
          var value = parent.classroot.top.header.subviews[1].hider.getAttribute('value');
-         Debug.write("Layer: " + classroot.layername + "=" + active + "<->" + value);
          if( active == 'false' && value ) {
            parent.classroot.top.header.subviews[1].hider.onclick.sendEvent();
          }
