@@ -1,0 +1,25 @@
+#set ($page_title=$msg.page.feedbackLogin.title)
+
+<div class="section">
+  <h1>$msg.page.feedbackLogin.title</h1>
+  $msg.page.feedbackLogin.msg
+  <form enctype="application/x-www-form-urlencoded; charset=UTF-8"
+    accept-charset="UTF-8"
+    action="$link.setAction('ClusterFeedback').addQueryData('method','edit')"
+    method="post" style="width:40em;">
+    <fieldset style="width:78%;">
+      <table class="formBlock">
+        <tr>
+          <td>
+            $msg.page.feedbackLogin.tan:
+            <br />
+            <input type="text" name="tan" size="20"
+              value="$!feedbackLogin.tan" maxlength="20" />
+            <button type="submit">$msg.page.feedbackLogin.submit</button>
+            <div class="error">$!errors.getMsgs()</div>
+          </td>
+        </tr>
+      </table>
+    </fieldset>
+  </form>
+</div>

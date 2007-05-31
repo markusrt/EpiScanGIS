@@ -26,7 +26,7 @@ import de.meningococcus.episcangis.db.model.User;
 /**
  * @struts.action name="activateUser" path="/DeleteUser" scope="request"
  *                validate="false" roles="admin"
- * 
+ *
  * @struts.action-forward name="success" path="/ListUsers.do"
  */
 public class DeleteUserAction extends Action
@@ -43,7 +43,7 @@ public class DeleteUserAction extends Action
     ActionMessages messages = new ActionMessages();
 
     String username = (String) dynaForm.get("username");
-    UserDAO userDao = DaoFactory.getDaoFactory().getUserDAO();
+    UserDAO userDao = ContextAttributes.getUserDAO();
     User userToChange = userDao.getUser(username);
 
     User currentUser = (User) session.getAttribute("user");

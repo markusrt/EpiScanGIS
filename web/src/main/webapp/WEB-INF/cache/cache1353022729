@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding="ISO-8859-1" standalone="no" ?>
+<!DOCTYPE ServiceExceptionReport SYSTEM "http://schemas.opengeospatial.net/wms/1.1.1/exception_1_1_1.dtd">
+<ServiceExceptionReport version="1.1.1">
+<ServiceException>
+msDrawMap(): Image handling error. Failed to draw layer named &#39;singlecluster_cases_disabled&#39;.
+prepare_database(): Query error. Error executing POSTGIS DECLARE (the actual query) statement: &#39;DECLARE mycursor BINARY CURSOR FOR SELECT color::text,asbinary(force_collection(force_2d(the_geom)),&#39;NDR&#39;),oid::text from ( 
+     SELECT c.case_id AS oid, c.the_geom, ct.identifier, 
+       ct.case_type_id%4 AS color
+      FROM cases_random AS c, satscan_clusters AS sc, satscan_cluster_cases AS scc, 
+        case_types AS ct
+      WHERE c.case_type_id = ct.case_type_id AND
+        sc.satscan_cluster_id = scc.satscan_cluster_id AND
+        c.case_id = scc.case_id    
+        AND satscan_cluster_id=&#39;338&#39;
+    ) AS foo WHERE the_geom &amp;&amp; setSRID(&#39;BOX3D(5.51009227251515 47.1497674056342,15.6195005726967 55.052013170948)&#39;::BOX3D, 4326 )&#39; &lt;br&gt;&lt;br&gt;
+
+Postgresql reports the error as &#39;FEHLER:  Spaltenverweis »satscan_cluster_id« ist nicht eindeutig
+&#39;&lt;br&gt;&lt;br&gt;
+
+More Help:&lt;br&gt;&lt;br&gt;
+
+Error with POSTGIS data variable. You specified &#39;&amp;lt;check your .map file&amp;gt;&#39;.&lt;br&gt;
+Standard ways of specifiying are : &lt;br&gt;
+(1) &#39;geometry_column from geometry_table&#39; &lt;br&gt;
+(2) &#39;geometry_column from (&amp;lt;sub query&amp;gt;) as foo using unique &amp;lt;column name&amp;gt; using SRID=&amp;lt;srid#&amp;gt;&#39; &lt;br&gt;&lt;br&gt;
+
+Make sure you put in the &#39;using unique  &amp;lt;column name&amp;gt;&#39; and &#39;using SRID=#&#39; clauses in.
+
+&lt;br&gt;&lt;br&gt;For more help, please see http://postgis.refractions.net/documentation/ 
+
+&lt;br&gt;&lt;br&gt;Mappostgis.c - version of Jan 23/2004.
+
+</ServiceException>
+</ServiceExceptionReport>

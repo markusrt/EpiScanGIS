@@ -1,0 +1,1 @@
+http://132.187.144.10/cgi-bin/mapserv?map=../maps/episcangis-snapshot.map&version=1.1.1&service=WMS&REQUEST=GetMap&SRS=epsg:31467&BBOX=3233873.2054992765,5238020.0,3967636.7945007235,6103260.0&WIDTH=586&HEIGHT=691&layers=popdensity&POPDENTIER=3&fromYear=2007&areaId={Germany}&TRANSPARENT=true&FORMAT=image/gif

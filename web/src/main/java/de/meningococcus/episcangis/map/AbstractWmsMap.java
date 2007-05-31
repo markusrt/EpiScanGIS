@@ -293,6 +293,13 @@ public abstract class AbstractWmsMap
     return layerState;
   }
 
+  public void setAllLayerState( boolean active ) {
+    for (MapLayer layer : mapLayers.values())
+    {
+      layer.setActive(active);
+    }
+  }
+
   public ParameterComponent getParameter(String name)
   {
     return parameters.get(name);

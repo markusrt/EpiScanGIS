@@ -6,6 +6,7 @@ import de.meningococcus.episcangis.db.DaoFactory;
 import de.meningococcus.episcangis.db.dao.CaseTypeAttributeDAO;
 import de.meningococcus.episcangis.db.model.CaseTypeAttribute;
 import de.meningococcus.episcangis.map.AbstractWmsMap;
+import de.meningococcus.episcangis.map.InvalidParameterValueException;
 import de.meningococcus.episcangis.map.ParameterComponent;
 import de.meningococcus.episcangis.map.ParameterValue;
 import de.meningococcus.episcangis.map.SelectParameter;
@@ -28,7 +29,7 @@ public class SerogroupsLayer extends MapLayer
     DaoFactory daoFactory = DaoFactory.getDaoFactory();
     CaseTypeAttributeDAO ctaDao = daoFactory.getCaseTypeAttributeDAO();
 
-    ParameterValue all = new ParameterValue("all", "");
+    ParameterValue all = new ParameterValue("all", "dummy");
     StringBuilder allvalues = new StringBuilder();
     serogroupSelector.add(all);
 
@@ -50,7 +51,14 @@ public class SerogroupsLayer extends MapLayer
       }
     }
     all.setValue(allvalues.toString());
-
+    try
+    {
+      serogroupSelector.selectValue(all.getValue());
+    }
+    catch (InvalidParameterValueException e)
+    {
+      e.printStackTrace();
+    }
     this.addParameter(serogroupSelector);
     registerReference("fromMonth");
     registerReference("fromYear");

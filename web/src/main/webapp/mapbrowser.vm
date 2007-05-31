@@ -20,7 +20,8 @@
  #set( $height=$big_height )
 #end
 
-#set ($headerStuff='<script language="JavaScript1.1" src="lps/includes/vbembed.js" type="text/javascript"></script><script src="lps/includes/embed.js" type="text/javascript"></script>')
+<script language="JavaScript1.1" src="lps/includes/vbembed.js" type="text/javascript"></script>
+<script src="lps/includes/embed.js" type="text/javascript"></script>
 
 <script type="text/javascript">
    lzLPSRoot = '';

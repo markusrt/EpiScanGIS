@@ -1,0 +1,8 @@
+#set ($page_title="Clusterinformation")
+
+<div class="section">
+  <h1>Clusterinformation</h1>
+  <div class="section">
+  #parse("/WEB-INF/views/inlineClusterInformation.vm")
+  </div>
+</div>

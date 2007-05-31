@@ -11,7 +11,7 @@ public final class GlobalSettings
   private static Log log = LogFactory.getLog(GlobalSettings.class);
 
   public static final String FORWARD_ERROR = "error",
-  FORWARD_SUCCESS = "success", FORWARD_INDEX = "index",
+  FORWARD_SUCCESS = "success", FORWARD_INDEX = "index", FORWARD_INPUT = "input", FORWARD_LIST="list",
   FORWARD_MAPBROWSER = "mapbrowser", MAPBROWSER_SITE_URL="mapbrowser.vm",
   FORWARD_DENIED="denied", ROLE_ADMIN="admin", ROLE_NRZM="nrzm",
   ROLE_PUBLIC_HEALTH="public_health";
@@ -35,5 +35,4 @@ public final class GlobalSettings
     }
     return propertyValue;
   }
-
 }

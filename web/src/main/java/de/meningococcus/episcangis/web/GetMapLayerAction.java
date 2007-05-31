@@ -16,6 +16,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionMapping;
+import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.actions.DownloadAction;
 
 import de.meningococcus.episcangis.map.AbstractWmsMap;
@@ -37,20 +38,24 @@ public class GetMapLayerAction extends DownloadAction implements
       HttpServletRequest request, HttpServletResponse response)
       throws Exception
   {
-    AbstractWmsMap map = (AbstractWmsMap) request.getSession().getAttribute(
-        "map");
-    if (map == null)
-    {
-      throw new SessionBeanNotFoundException(
-          "The session bean 'map' was not found.");
-    }
-    WmsImageExporter imageExporter = new WmsImageExporter(new File(getServlet()
-        .getServletContext().getRealPath("/WEB-INF/cache/")), ((LayerFormBean) form)
-        .getLayer());
-    map.export(imageExporter);
-    imageInputStream = imageExporter.getInputStream();
-    imageContentType = imageExporter.getContentType();
+    DynaActionForm dynaForm = (DynaActionForm) form;
 
+    if (dynaForm.get("layer") != null)
+    {
+      AbstractWmsMap map = (AbstractWmsMap) request.getSession().getAttribute(
+          "map");
+      if (map == null)
+      {
+        throw new SessionBeanNotFoundException(
+            "The session bean 'map' was not found.");
+      }
+      WmsImageExporter imageExporter = new WmsImageExporter(new File(
+          getServlet().getServletContext().getRealPath("/WEB-INF/cache/")),
+          (String) dynaForm.get("layer"));
+      map.export(imageExporter);
+      imageInputStream = imageExporter.getInputStream();
+      imageContentType = imageExporter.getContentType();
+    }
     return this;
   }
 

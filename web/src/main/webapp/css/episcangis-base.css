@@ -35,11 +35,9 @@ div.clear hr{
 }
 .xleft, #bannerLeft img {
   float:left;
-  text-shadow: #7CFC00;
 }
 .xright, #bannerRight img {
   float:right;
-  text-shadow: #7CFC00;
 }
 
 .smaller {
@@ -177,7 +175,7 @@ p.figure {
   padding: 0;
   white-space: nowrap;
  }
-                                                                                                                                                             
+
 #breadcrumbs li {
   display: inline;
   list-style-type: none;
@@ -197,16 +195,16 @@ p.figure {
 #map img {
   max-width:600px;
 }
-                                                                                                                                                             
+
 #mapLegend {
   margin: 0px 0 0 15px;
   padding: 8px 4px 0 8px;
 }
- 
+
 #mapLegend img {
   max-width: 11em;
 }
- 
+
 #registerUser {
   border-collapse:collapse;
   width: 40em;
@@ -235,3 +233,23 @@ table.formBlock {
 table.formBlock td {
   vertical-align:top;
 }
+
+#clusterFeedback {
+  width: 50em;
+}
+#clusterFeedback table {
+  border-spacing:0.5em;
+  width: 100%;
+}
+#clusterFeedback td {
+  vertical-align:top;
+}
+#clusterFeedback td.answer {
+  width: 8em;
+}
+#clusterFeedback td.detail {
+  border-left: 5px solid #cccccc;
+  padding-left: 1em;
+  padding-bottom: 1em;
+}
+

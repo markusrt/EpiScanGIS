@@ -8,7 +8,7 @@
 <form-validation>
   <formset>
     <form name="registerUser">
-      <field property="username" 
+      <field property="username"
         depends="required,minlength,mask,maxlength,username">
         <arg position="0" key="user.username"/>
         <arg position="1" name="minlength" key="${var:minlength}" resource="false"/>
@@ -141,6 +141,116 @@
         <var>
           <var-name>maxlength</var-name>
           <var-value>50</var-value>
+        </var>
+      </field>
+    </form>
+    <form name="clusterFeedback">
+      <field property="workContact" depends="validwhen,maxlength">
+        <arg position="0" key="page.clusterFeedback.detail"/>
+        <arg position="1" name="maxlength" key="${var:maxlength}" resource="false"/>
+        <var>
+          <var-name>test</var-name>
+          <var-value>((workContactQuestion == "false") or (*this* != null))</var-value>
+        </var>
+        <var>
+          <var-name>maxlength</var-name>
+          <var-value>200</var-value>
+        </var>
+      </field>
+      <field property="schoolContact" depends="validwhen,maxlength">
+        <arg position="0" key="page.clusterFeedback.detail"/>
+        <arg position="1" name="maxlength" key="${var:maxlength}" resource="false"/>
+        <var>
+          <var-name>test</var-name>
+          <var-value>((schoolContactQuestion == "false") or (*this* != null))</var-value>
+        </var>
+        <var>
+          <var-name>maxlength</var-name>
+          <var-value>200</var-value>
+        </var>
+      </field>
+      <field property="relationship" depends="validwhen,maxlength">
+        <arg position="0" key="page.clusterFeedback.detail"/>
+        <arg position="1" name="maxlength" key="${var:maxlength}" resource="false"/>
+        <var>
+          <var-name>test</var-name>
+          <var-value>((relationshipQuestion == "false") or (*this* != null))</var-value>
+        </var>
+        <var>
+          <var-name>maxlength</var-name>
+          <var-value>200</var-value>
+        </var>
+      </field>
+      <field property="relationshipByMarriage" depends="validwhen,maxlength">
+        <arg position="0" key="page.clusterFeedback.detail"/>
+        <arg position="1" name="maxlength" key="${var:maxlength}" resource="false"/>
+        <var>
+          <var-name>test</var-name>
+          <var-value>((relationshipByMarriageQuestion == "false") or (*this* != null))</var-value>
+        </var>
+        <var>
+          <var-name>maxlength</var-name>
+          <var-value>200</var-value>
+        </var>
+      </field>
+      <field property="leisureContact" depends="validwhen,maxlength">
+        <arg position="0" key="page.clusterFeedback.detail"/>
+        <arg position="1" name="maxlength" key="${var:maxlength}" resource="false"/>
+        <var>
+          <var-name>test</var-name>
+          <var-value>((leisureContactQuestion == "false") or (*this* != null))</var-value>
+        </var>
+        <var>
+          <var-name>maxlength</var-name>
+          <var-value>200</var-value>
+        </var>
+      </field>
+      <field property="miscContact" depends="validwhen,maxlength">
+        <arg position="0" key="page.clusterFeedback.detail"/>
+        <arg position="1" name="maxlength" key="${var:maxlength}" resource="false"/>
+        <var>
+          <var-name>test</var-name>
+          <var-value>((miscContactQuestion == "false") or (*this* != null))</var-value>
+        </var>
+        <var>
+          <var-name>maxlength</var-name>
+          <var-value>200</var-value>
+        </var>
+      </field>
+      <field property="massEvent" depends="validwhen,maxlength">
+        <arg position="0" key="page.clusterFeedback.detail"/>
+        <arg position="1" name="maxlength" key="${var:maxlength}" resource="false"/>
+        <var>
+          <var-name>test</var-name>
+          <var-value>((massEventQuestion == "false") or (*this* != null))</var-value>
+        </var>
+        <var>
+          <var-name>maxlength</var-name>
+          <var-value>200</var-value>
+        </var>
+      </field>
+      <field property="discoPub" depends="validwhen,maxlength">
+        <arg position="0" key="page.clusterFeedback.detail"/>
+        <arg position="1" name="maxlength" key="${var:maxlength}" resource="false"/>
+        <var>
+          <var-name>test</var-name>
+          <var-value>((discoPubQuestion == "false") or (*this* != null))</var-value>
+        </var>
+        <var>
+          <var-name>maxlength</var-name>
+          <var-value>200</var-value>
+        </var>
+      </field>
+      <field property="knownAcquaintanceCase" depends="validwhen,maxlength">
+        <arg position="0" key="page.clusterFeedback.detail"/>
+        <arg position="1" name="maxlength" key="${var:maxlength}" resource="false"/>
+        <var>
+          <var-name>test</var-name>
+          <var-value>((knownAcquaintanceCaseQuestion == "false") or (*this* != null))</var-value>
+        </var>
+        <var>
+          <var-name>maxlength</var-name>
+          <var-value>200</var-value>
         </var>
       </field>
     </form>

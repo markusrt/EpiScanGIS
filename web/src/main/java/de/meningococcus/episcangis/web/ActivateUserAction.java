@@ -25,14 +25,14 @@ import de.meningococcus.episcangis.db.model.User;
  */
 
 /**
- * @struts.action 
- *    name="activateUser" 
+ * @struts.action
+ *    name="activateUser"
  *    path="/ActivateUser"
  *    scope="request"
  *    validate="false"
  *
- * @struts.action-forward 
- *    name="success" 
+ * @struts.action-forward
+ *    name="success"
  *    path="/ListUsers.do"
  */
 public class ActivateUserAction extends Action
@@ -51,7 +51,7 @@ public class ActivateUserAction extends Action
     User currentUser = (User) session.getAttribute("user");
     String username = (String) dynaForm.get("username");
     String role = (String) dynaForm.get("role");
-    UserDAO userDao = DaoFactory.getDaoFactory().getUserDAO();
+    UserDAO userDao = ContextAttributes.getUserDAO();
     User userToChange = userDao.getUser(username);
 
     if (currentUser != null && currentUser.isInRole("admin")

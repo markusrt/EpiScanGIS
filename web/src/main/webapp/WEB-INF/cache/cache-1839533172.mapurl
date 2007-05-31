@@ -1,0 +1,1 @@
+http://132.187.144.10/cgi-bin/mapserv?map=../maps/cluster.map&version=1.1.1&service=WMS&REQUEST=GetMap&SRS=epsg:31467&BBOX=3276290.0,5238020.0,3925220.0,6103260.0&WIDTH=480&HEIGHT=640&layers=borders_default,singlecluster&BORDERTIER=3&CLUSTERID=500&FORMAT=image/gif

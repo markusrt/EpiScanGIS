@@ -1,0 +1,110 @@
+#set ($page_title=$msg.page.clusterFeedback.title)
+#set ($page_onload="checkDetail()")
+
+<script src="scripts/prototype.js" language="JavaScript" type="text/javascript"></script>
+<script src="scripts/clusterFeedback.js" language="JavaScript" type="text/javascript" />
+
+#macro( question $field )
+#set( $detail="${field}" )
+#set( $question="${field}Question" )
+#set( $answer=$!clusterFeedback.get("${field}Question") )
+  <tr>
+    <td class="question">
+      $msg.get("form.clusterFeedback.${question}")
+    </td>
+    <td class="answer">
+      <input type="radio" name="$question" value="true"
+        onclick="checkDetail();"
+         #if ($answer)
+          checked="checked"
+        #end
+        /> Ja
+      <input type="radio" name="$question" value="false"
+        onclick="checkDetail();"
+         #if (!$answer)
+          checked="checked"
+        #end
+        /> Nein
+    </td>
+  </tr>
+  <tr
+    #if ( !$answer )
+      style="display:none"
+    #end
+    id="$detail" colspan="2">
+    <td class="detail">
+      (*) $msg.get("form.clusterFeedback.${detail}")
+      <br />
+      <input type="text" name="$field" size="87" maxlength="200"
+        value='$!clusterFeedback.get("$field")' />
+      <div class="error">$!errors.getMsgs("$field")</div>
+    </td>
+  </tr>
+#end
+
+#macro( simpleQuestion $field )
+#set( $answer=$!clusterFeedback.get("${field}") )
+  <tr>
+    <td class="question">
+      $msg.get("form.clusterFeedback.${field}"):
+    </td>
+    <td class="answer">
+      <input type="radio" name="${field}" value="true"
+        #if ($answer)
+          checked="checked"
+        #end
+        /> Ja
+      <input type="radio" name="${field}" value="false"
+        #if (!$answer)
+          checked="checked"
+        #end
+        /> Nein
+    </td>
+  </tr>
+#end
+
+<div class="section">
+  <h1>$msg.page.clusterFeedback.title</h1>
+  <a target="_blank" href="$link.setAction('ClusterInformation').addQueryData('clusterId',$clusterFeedback.clusterId).addQueryData('disableNav',true)" title="Clusterkarte">Clusterinformation anzeigen</a>
+  <div class="section" id="detailInformation"></div>
+  <div class="section">
+  <h2>Fragen zum Cluster</h2>
+  $msg.page.clusterFeedback.msg
+  <form id="clusterFeedback" enctype="application/x-www-form-urlencoded; charset=UTF-8" accept-charset="UTF-8"
+    action="$link.setAction('ClusterFeedback').addQueryData('method','update')"
+    method="post">
+    #if ( $errors.size > 0 )
+      <p class="error">$msg.page.clusterFeedback.errors</p>
+    #end
+    <input type="hidden" name="id" value="$!clusterFeedback.id" />
+    <input type="hidden" name="tan" value="$!clusterFeedback.tan" />
+    <fieldset>
+      <legend>$msg.form.clusterFeedback.direkter_kontakt</legend>
+      <table>
+        #question( "workContact" )
+        #question( "schoolContact" )
+        #question( "relationship" )
+        #question( "relationshipByMarriage" )
+        #question( "leisureContact" )
+        #question( "miscContact" )
+      </table>
+    </fieldset>
+    <fieldset style="display:none" id="clusterbekannt">
+      <legend>$msg.form.clusterFeedback.clusterbekannt</legend>
+      <table class="formBlock">
+        #simpleQuestion( "infoByReport" )
+      </table>
+    </fieldset>
+    <fieldset>
+      <legend>$msg.form.clusterFeedback.indirekter_kontakt</legend>
+      <table>
+        #question( "massEvent" )
+        #question( "discoPub" )
+        #question( "knownAcquaintanceCase" )
+      </table>
+    <br />
+    <button type="submit">$msg.form.clusterFeedback.submit</button>
+    </fieldset>
+  </form>
+  </div>
+</div>

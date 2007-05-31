@@ -40,6 +40,11 @@ public class WmsImageExporter extends AbstractWmsExporter
 
   private File cacheDir;
 
+  public WmsImageExporter()
+  {
+    this(null);
+  }
+
   public WmsImageExporter(File cacheDirectory)
   {
     if (cacheDirectory != null)
@@ -47,7 +52,6 @@ public class WmsImageExporter extends AbstractWmsExporter
       if (cacheDirectory.exists())
       {
         this.cacheDir = cacheDirectory;
-        // TODO fix bug with file caching
         doCaching = true;
       }
       else
@@ -69,8 +73,7 @@ public class WmsImageExporter extends AbstractWmsExporter
     return format;
   }
 
-  public InputStream getInputStream() throws IOException,
-      LayerNotFoundException
+  private URL getImageURL() throws IOException, LayerNotFoundException
   {
     StringBuilder urlBuilder = new StringBuilder(100);
     if (singleLayer != null)
@@ -83,10 +86,16 @@ public class WmsImageExporter extends AbstractWmsExporter
       urlBuilder.append(buildMapUrl());
     }
     urlBuilder.append("&FORMAT=").append(format);
+    URL url = new URL(urlBuilder.toString());
+    log.debug("Map URL: " + url.toString());
 
-    URL imageUrl = new URL(urlBuilder.toString());
+    return url;
+  }
 
-    log.debug("Map URL: " + imageUrl.toString());
+  public InputStream getInputStream() throws IOException,
+      LayerNotFoundException
+  {
+    URL imageUrl = getImageURL();
     if (doCaching)
     {
       return getCachedFileInputStream(imageUrl);

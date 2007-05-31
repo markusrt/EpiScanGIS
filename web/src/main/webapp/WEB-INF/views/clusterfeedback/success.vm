@@ -1,0 +1,6 @@
+#set ($page_title=$msg.page.clusterFeedbackSuccess.title)
+
+<div class="section">
+  <h1>$msg.page.clusterFeedbackSuccess.title</h1>
+  $msg.page.clusterFeedbackSuccess.msg
+</div>

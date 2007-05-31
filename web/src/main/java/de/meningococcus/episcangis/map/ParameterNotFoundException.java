@@ -5,7 +5,7 @@ package de.meningococcus.episcangis.map;
  * ====================================================================
  */
 
-public class ParameterNotFoundException extends Throwable
+public class ParameterNotFoundException extends Exception
 {
   private static final long serialVersionUID = 1L;
 

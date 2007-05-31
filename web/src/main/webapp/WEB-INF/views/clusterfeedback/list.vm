@@ -1,0 +1,29 @@
+#set ($page_title="Feedback Liste")
+
+#set( $rowclass = $alternator.make(true,'a', 'b') )
+
+<div class="section">
+  <h1>Feedback Liste</h1>
+  <table class="bodyTable">
+    <thead>
+      <tr>
+        <td>Cluster Nr.</td>
+        <td>Fall Nr.</td>
+        <td>Änderungsdatum</td>
+        <td>Gültig bis</td>
+        <td>$msg.page.feedbackLogin.tan</td>
+       </tr>
+    </thead>
+    <tbody>
+    #foreach( $f in $feedback )
+    <tr class="user $rowclass">
+      <td><a target="_blank" href="$link.setAction('ClusterInformation').addQueryData('clusterId',$f.clusterId).addQueryData('disableNav',true)" title="Clusterkarte">$f.clusterId</a></td>
+      <td>$f.caseId</td>
+      <td>$date.format("short_time", $f.lastChange)</td>
+      <td>$date.format("short_date", $f.expirationDate)</td>
+      <td>$f.tan</td>
+    </tr>
+    #end
+    </tbody>
+  </table>
+</div>

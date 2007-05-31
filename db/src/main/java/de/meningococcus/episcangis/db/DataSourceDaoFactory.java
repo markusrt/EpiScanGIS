@@ -11,6 +11,7 @@ import de.meningococcus.episcangis.db.dao.AreaDAO;
 import de.meningococcus.episcangis.db.dao.AreaTypeDAO;
 import de.meningococcus.episcangis.db.dao.CaseTypeAttributeDAO;
 import de.meningococcus.episcangis.db.dao.CaseTypeDAO;
+import de.meningococcus.episcangis.db.dao.ClusterFeedbackDAO;
 import de.meningococcus.episcangis.db.dao.ImportDAO;
 import de.meningococcus.episcangis.db.dao.ReportedCaseDAO;
 import de.meningococcus.episcangis.db.dao.SatScanDAO;
@@ -109,4 +110,15 @@ abstract class DataSourceDaoFactory extends DaoFactory
   {
     return new PgSQLUserDAO(getDataSource());
   }
+
+  /*
+   * (non-Javadoc)
+   * @see de.meningococcus.episcangis.db.DaoFactory#getImportDAO()
+   */
+  @Override
+  public ClusterFeedbackDAO getClusterFeedbackDAO()
+  {
+    return new PgSQLClusterFeedbackDAO();
+  }
+
 }

@@ -13,8 +13,10 @@ import java.util.Vector;
  */
 public class SatScanCluster
 {
-  private int id, mostCentralLocation, number, observedCases, caseTypeId,
+  private int id, mostCentralLocation, number, caseTypeId,
       jobId;
+
+  private long observedCases;
 
   private float circleRadius, expectedCases;
 
@@ -124,12 +126,12 @@ public class SatScanCluster
     this.mostCentralLocation = mostCentralLocation;
   }
 
-  public int getObservedCases()
+  public long getObservedCases()
   {
     return observedCases;
   }
 
-  public void setObservedCases(int observedCases)
+  public void setObservedCases(long observedCases)
   {
     this.observedCases = observedCases;
   }

@@ -28,12 +28,12 @@ import de.meningococcus.episcangis.map.exporter.XmlExporter;
 
 /**
  * @author Markus Reinhardt
- * 
+ *
  * @struts.action name="createMap" path="/Map2" scope="request" validate="false"
- * 
+ *
  * @struts.action-exception type="java.lang.Exception" key="error"
  *                          path="/WEB-INF/errors/xmlExceptionResult.jsp"
- * 
+ *
  * @struts.action-forward name="success" path="/ListUsers.do"
  */
 public class CreateMapAction extends DownloadAction implements
@@ -60,8 +60,7 @@ public class CreateMapAction extends DownloadAction implements
       // Clean cache files older then the last change
       WmsImageExporter exporter = new WmsImageExporter(new File(getServlet()
           .getServletContext().getRealPath("/WEB-INF/cache/")));
-      exporter.cleanCache(DaoFactory.getDaoFactory().getReportedCaseDAO()
-          .getLastChange());
+      exporter.cleanCache(ContextAttributes.getReportedCaseDAO().getLastChange());
 
       // Create a map bean according to the users role
       User user = (User) session.getAttribute("user");

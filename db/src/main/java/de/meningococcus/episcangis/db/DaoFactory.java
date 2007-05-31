@@ -14,6 +14,7 @@ import de.meningococcus.episcangis.db.dao.AreaDAO;
 import de.meningococcus.episcangis.db.dao.AreaTypeDAO;
 import de.meningococcus.episcangis.db.dao.CaseTypeAttributeDAO;
 import de.meningococcus.episcangis.db.dao.CaseTypeDAO;
+import de.meningococcus.episcangis.db.dao.ClusterFeedbackDAO;
 import de.meningococcus.episcangis.db.dao.ImportDAO;
 import de.meningococcus.episcangis.db.dao.ReportedCaseDAO;
 import de.meningococcus.episcangis.db.dao.SatScanDAO;
@@ -27,7 +28,7 @@ import de.meningococcus.episcangis.db.dao.UserDAO;
  * rewriting db dependent code. Each supported datastore type is defined by one
  * constant. There will be a get-method for each DAO that can be created. The
  * concrete factories will have to implement these methods.
- * 
+ *
  * @author Markus Reinhardt <m.reinhardt[at]bitmap-friends.de>
  */
 public abstract class DaoFactory
@@ -46,7 +47,7 @@ public abstract class DaoFactory
 
   /**
    * Creates a new DAOFactory of specified type.
-   * 
+   *
    * @param whichFactory
    *          possible values DaoFactoryType.PGSQL, DaoFactoryType.JNDI
    * @return DAO factory extending this class
@@ -70,7 +71,7 @@ public abstract class DaoFactory
   /**
    * Creates a new DAOFactory of the default type specified in
    * epidegis-db.properties. TODO Improve error handling
-   * 
+   *
    * @return DAO factory extending this class
    */
   public static synchronized DaoFactory getDaoFactory()
@@ -99,7 +100,7 @@ public abstract class DaoFactory
   /**
    * This method needs to be overwritten by subclasses. It constructs a concrete
    * DAO which implements the ReportedCaseDAO interface.
-   * 
+   *
    * @return A DAO implementing the interface ReportedCaseDAO
    */
   public abstract ReportedCaseDAO getReportedCaseDAO();
@@ -107,7 +108,7 @@ public abstract class DaoFactory
   /**
    * This method needs to be overwritten by subclasses. It constructs a concrete
    * DAO which implements the AreaTypeDAO interface.
-   * 
+   *
    * @return A DAO implementing the interface AreaTypeDAO
    */
   public abstract AreaTypeDAO getAreaTypeDAO();
@@ -115,7 +116,7 @@ public abstract class DaoFactory
   /**
    * This method needs to be overwritten by subclasses. It constructs a concrete
    * DAO which implements the CaseTypeDAO interface.
-   * 
+   *
    * @return A DAO implementing the interface CaseTypeDAO
    */
   public abstract CaseTypeDAO getCaseTypeDAO();
@@ -123,7 +124,7 @@ public abstract class DaoFactory
   /**
    * This method needs to be overwritten by subclasses. It constructs a concrete
    * DAO which implements the CaseTypeAttributeDAO interface.
-   * 
+   *
    * @return A DAO implementing the interface CaseTypeAttributeDAO
    */
   public abstract CaseTypeAttributeDAO getCaseTypeAttributeDAO();
@@ -131,7 +132,7 @@ public abstract class DaoFactory
   /**
    * This method needs to be overwritten by subclasses. It constructs a concrete
    * DAO which implements the SatScanDAO interface.
-   * 
+   *
    * @return A DAO implementing the interface SatScanDAO
    */
   public abstract SatScanDAO getSatScanDAO();
@@ -139,7 +140,7 @@ public abstract class DaoFactory
   /**
    * This method needs to be overwritten by subclasses. It constructs a concrete
    * DAO which implements the AreaDAO interface.
-   * 
+   *
    * @return A DAO implementing the interface AreaDAO
    */
   public abstract AreaDAO getAreaDAO();
@@ -147,7 +148,7 @@ public abstract class DaoFactory
   /**
    * This method needs to be overwritten by subclasses. It constructs a concrete
    * DAO which implements the ImportDAO interface.
-   * 
+   *
    * @return A DAO implementing the interface ImportDAO
    */
   public abstract ImportDAO getImportDAO();
@@ -155,10 +156,18 @@ public abstract class DaoFactory
   /**
    * This method needs to be overwritten by subclasses. It constructs a concrete
    * DAO which implements the UserDAO interface.
-   * 
+   *
    * @return A DAO implementing the interface ImportDAO
    */
   public abstract UserDAO getUserDAO();
+
+  /**
+   * This method needs to be overwritten by subclasses. It constructs a concrete
+   * DAO which implements the ClusterFeedbackDAO interface.
+   *
+   * @return A DAO implementing the interface ClusterFeedbackDAO
+   */
+  public abstract ClusterFeedbackDAO getClusterFeedbackDAO();
 
   /**
    * @param configFile

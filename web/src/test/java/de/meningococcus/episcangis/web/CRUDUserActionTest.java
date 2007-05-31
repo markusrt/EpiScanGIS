@@ -40,7 +40,7 @@ public class CRUDUserActionTest extends AbstractStrutsTestCase
     catch (UserNotFoundException e)
     {
     }
-    
+
     setRequestPathInfo("/ManageUsers");
 
     addRequestParameter("method", "register");
@@ -140,7 +140,7 @@ public class CRUDUserActionTest extends AbstractStrutsTestCase
 //
 //    addRequestParameter("username", "strutstest");
 //    actionPerform();
-//    
+//
 //
 //    try
 //    {

@@ -10,16 +10,14 @@ logo#set ($page_title=$msg.page.manual.title)
     , <a href="#incidence">$msg.map.layer.incidence</a>
     , <a href="#casetypes">$msg.map.layer.casetypes</a>
     , <a href="#serogroups">$msg.map.layer.serogroups</a>
-    #if($user.isInRole("public_health") || $user.isInRole("nrzm"))
     , <a href="#cluster">$msg.map.layer.cluster</a>
-    #end      
   </p>
   <p>
     This site provides a brief description of the functionality of EpiScanGIS.
-    Please click 
+    Please click
     <a href="#"
       onclick="window.open('mapbrowser.vm','mapbrowser','status=no,scrollbars=yes,width=1020,height=810')">
-      here</a> to launch the web application, which lets you monitor invasive 
+      here</a> to launch the web application, which lets you monitor invasive
       meningococcal disease in Germany.
   </p>
   <div class="section">
@@ -29,7 +27,7 @@ logo#set ($page_title=$msg.page.manual.title)
       may be taken using the respective controls of the application and which
       information is displayed on the relevant areas.
     </p>
-    <p class="figure">  
+    <p class="figure">
     <img style="border:1px solid black" width="90%"
       src="images/manual/screenshot_public_health__nrzm.png"
       alt="Screenshot of the EpiScanGIS web application" />
@@ -56,7 +54,7 @@ logo#set ($page_title=$msg.page.manual.title)
 
           <li><b>$msg.map.age</b>:
             Age groups (from, to) where the displayed cases should be
-            contained in. Both boundary values are included. 
+            contained in. Both boundary values are included.
             Therefore a setting from 0 to 0 would show only those
             cases of meningococcal disease, which are reported for
             children under one year of age.
@@ -71,8 +69,8 @@ logo#set ($page_title=$msg.page.manual.title)
 
             #if($user.isInRole("public_health") || $user.isInRole("nrzm"))
             one month
-            #else 
-            one year 
+            #else
+            one year
             #end
             , again including the boundary values.
             <br />
@@ -124,7 +122,7 @@ logo#set ($page_title=$msg.page.manual.title)
       the map. You can alter the view by enabling or disabling single layers.
     </p>
     <p>
-      Below we are going to explain each layer and the settings, that can be 
+      Below we are going to explain each layer and the settings, that can be
       taken respectively:
     </p>
     <div class="section">
@@ -134,7 +132,7 @@ logo#set ($page_title=$msg.page.manual.title)
         of federal states or counties.
       </p>
       <p>
-        The figure below shows two examples for this layer: 
+        The figure below shows two examples for this layer:
       </p>
       <p class="figure">
         <img style="border:1px solid black" width="90%"
@@ -153,7 +151,7 @@ logo#set ($page_title=$msg.page.manual.title)
         serogroup(s) that occurred during the given period.
       </p>
       <p>
-        The number of cases is extrapolated if the period is shorter than one 
+        The number of cases is extrapolated if the period is shorter than one
         year and interpolated otherwise.
       </p>
       <p>
@@ -164,14 +162,14 @@ logo#set ($page_title=$msg.page.manual.title)
           src="images/manual/incidence.gif"
           alt="Annual incidence for 2002, Federal states und counties" />
         <br />
-        Annual incidence of all cases in 2002 (January-December) 
+        Annual incidence of all cases in 2002 (January-December)
         for Federal states and counties.
       </p>
     </div>
     <div class="section">
       <a name="casetypes"></a><h3>$msg.map.layer.casetypes</h3>
       <p>
-        Displays the distribution of one meningococcal finetype 
+        Displays the distribution of one meningococcal finetype
         (epitope sequence typing of PorA and FetA) on the map. The number of shown cases
         is contained by age group and period. You can find a specific finetype
         by using the provided search field.
@@ -196,7 +194,7 @@ logo#set ($page_title=$msg.page.manual.title)
           src="images/manual/finetypes.gif"
           alt="Distribution of finetype B : P1.7-2,4 : F1-5 in Germany und North Rhine-Westphalia" />
         <br />
-         Distribution of finetype B : P1.7-2,4 : F1-5 in Germany and North 
+         Distribution of finetype B : P1.7-2,4 : F1-5 in Germany and North
          Rhine-Westphalia (January to October 2005)
       </p>
     </div>
@@ -206,9 +204,9 @@ logo#set ($page_title=$msg.page.manual.title)
         Visualizes cases of meningococcal disease grouped by serogroup.
       </p>
       <p>
-        The number of shown cases is contained by age group and period. 
+        The number of shown cases is contained by age group and period.
         You can display cases of different serogroups at the same time by
-        holding down the <tt>Ctrl</tt>-key while selecting an item from the 
+        holding down the <tt>Ctrl</tt>-key while selecting an item from the
         list.
       </p>
       <p>
@@ -227,29 +225,28 @@ logo#set ($page_title=$msg.page.manual.title)
       </p>
     </div>
 
-    #if($user.isInRole("public_health") || $user.isInRole("nrzm"))
     <div class="section">
       <a name="cluster"></a><h3>$msg.map.layer.cluster</h3>
       <p>
-        You can't change any settings for this layer. It always shows the 
+        You can't change any settings for this layer. It always shows the
         result of the most recent prospective cluster analysis run.
         The date at which the calculation was performed is displayed.
       </p>
       <p>
         The figure below shows two examples for this layer:
       </p>
-      <p class="figure">  
+      <p class="figure">
       <img style="border:1px solid black" width="90%"
         src="images/manual/cluster.gif"
         alt="Cluster, finetype C : P1.7-4,14-6 : F3-9" />
         <br />
-        A cluster, that was detected at a prospective analysis on 
+        A cluster, that was detected at a prospective analysis on
         October 24, 2005. Finetype C : P1.7-4,14-6 : F3-9, duration until
         then  from September 27 to October 24. The right hand figure shows
         countrywide distribution of this finetype from August to October 2005.
       </p>
     </div>
-    <!-- 
+    <!--
     <div class="section">
       <h3>Monthly retrospective clusters</h3>
       <p>
@@ -262,7 +259,7 @@ logo#set ($page_title=$msg.page.manual.title)
         Die folgenden Abbildungen zeigen zwei Beispieldarstellungen der
         Ebene.
       </p>
-      <p class="figure">  
+      <p class="figure">
       <img style="border:1px solid black" width="400px"
         src="images/manual/cluster_retro.gif"
         alt="Historische Cluster vom 1. September 2005" />
@@ -273,7 +270,6 @@ logo#set ($page_title=$msg.page.manual.title)
       </p>
     </div>
     -->
-    #end
 
   </div>
 </div>

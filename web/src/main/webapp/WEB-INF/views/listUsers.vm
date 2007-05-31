@@ -1,0 +1,130 @@
+#set ($page_title="Userlist")
+#set( $rowclass = $alternator.make(true,'a', 'b') )
+
+#macro( roleswitch $role )
+ #if($u.isInRole("$role"))
+   <img src="images/icons/on.png" alt="$msg.global.active" />
+ #elseif($user.isInRole("admin"))
+   <a href="$link.setAction('ActivateUser').addQueryData('username',$u.Username).addQueryData('role',$role)"><img
+      src="images/icons/off.png" alt="$msg.global.inactive"
+      title="$msg.get('global.action.activateRole', [$msg.get("role.$role"), $u.Username])" /></a>
+ #else
+   <img src="images/icons/off.png" alt="$msg.global.inactive" />
+ #end
+#end
+
+#macro( userrow $u )
+    <tr class="user $rowclass">
+      <td>$velocityCount</td>
+      <td>$u.Forename</td>
+      <td>$u.Lastname</td>
+      <td>$u.Phone</td>
+      <td>
+      #if( $u.LastLogin )
+       $date.format("short_date", $u.LastLogin)
+      #else
+       -
+      #end
+      </td>
+      <td>$date.format("short_date", $u.RegistrationDate)</td>
+      <td class="icons">
+        #roleswitch( "public_health" )
+      </td>
+      <td class="icons">
+        #roleswitch( "nrzm" )
+      </td>
+      <td class="icons">
+        #roleswitch( "admin" )
+      </td>
+      <td class="icons">
+        <a href="mailto:$u.Forename $u.Lastname <$u.Email>"><img
+           src="images/icons/mail-message-new.png" alt="$msg.user.email"
+           title="$msg.get('global.action.emailToUser.description', [$u.Email])"/></a>
+        #if($user.isInRole("admin"))
+          <!--
+          <a href="$link.setAction('EditUser').addQueryData('username',$u.Username)"><img
+             src="images/icons/edit.png" alt="$msg.global.action.edit"
+             title="$msg.get('global.action.editUser.description', [$u.Username])"/></a>
+          -->
+          <a href="$link.setAction('DeleteUser').addQueryData('username',$u.Username)"><img
+             src="images/icons/user-trash.png" alt="$msg.global.action.delete"
+             title="$msg.get('global.action.deleteUser.description', [$u.Username])"/></a>
+        #end
+      </td>
+    </tr>
+#end
+
+#macro( userswithnoroles )
+    <thead>
+      <tr class="usergroup">
+        <td colspan="3"><u>$msg.page.listUsers.norole</u></td>
+      </tr>
+    </thead>
+    <tbody>
+    #foreach( $u in $allUsers )
+    #if( $u.Roles.size() <= 0 )
+      #userrow( $u )
+    #end
+    #end
+    </tbody>
+#end
+
+#macro( userswithrole $role )
+    <thead>
+      <tr class="usergroup">
+        <td colspan="3">
+          <u>$msg.get('page.listUsers.withrole', [$msg.get("role.$role")])</u>
+        </td>
+      </tr>
+    </thead>
+    <tbody>
+    #foreach( $u in $allUsers )
+    #if( $u.Roles.size() == 1 && $u.Roles.contains("$role") )
+      #userrow( $u )
+    #end
+    #end
+    </tbody>
+#end
+
+#macro( userswithmultipleroles )
+    <thead>
+      <tr class="usergroup">
+        <td colspan="3">
+          <u>$msg.page.listUsers.withmultipleroles</u>
+        </td>
+      </tr>
+    </thead>
+    <tbody>
+    #foreach( $u in $allUsers )
+    #if( $u.Roles.size() >= 2 )
+      #userrow( $u )
+    #end
+    #end
+    </tbody>
+#end
+
+<div class="section">
+  <h1>Users</h1>
+  <table class="bodyTable">
+    <thead>
+      <tr>
+        <td>Nr.</td>
+        <td>$msg.user.forename</td>
+        <td>$msg.user.lastname</td>
+        <td>$msg.user.phone</td>
+        <td>$msg.user.lastLogin</td>
+        <td>$msg.user.registrationDate</td>
+        <td>$msg.role.public_health</td>
+        <td>$msg.role.nrzm</td>
+        <td>$msg.role.admin</td>
+        <td>$msg.global.actions</td>
+      </tr>
+    </thead>
+
+    #userswithnoroles()
+    #userswithrole( "nrzm" )
+    #userswithrole( "public_health" )
+    #userswithrole( "admin" )
+    #userswithmultipleroles()
+  </table>
+</div>

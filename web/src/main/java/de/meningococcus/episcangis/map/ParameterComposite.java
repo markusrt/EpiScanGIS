@@ -3,6 +3,7 @@ package de.meningococcus.episcangis.map;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 
 import org.apache.commons.collections.map.LinkedMap;
 import org.apache.commons.lang.StringEscapeUtils;
@@ -14,7 +15,7 @@ import org.apache.commons.lang.StringEscapeUtils;
 
 public class ParameterComposite extends ParameterComponent
 {
-  private LinkedMap elements;
+  private LinkedHashMap<String,ParameterComponent> elements;
   protected String elementName = "composite";
 
   public ParameterComposite(String name)
@@ -25,7 +26,7 @@ public class ParameterComposite extends ParameterComponent
   public ParameterComposite(String name, String title)
   {
     super(name, title);
-    elements = new LinkedMap();
+    elements = new LinkedHashMap<String,ParameterComponent>();
   }
 
   public void add(ParameterComponent element)

@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionMapping;
+import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.actions.DownloadAction;
 
 import de.meningococcus.episcangis.map.AbstractWmsMap;
@@ -32,6 +33,10 @@ public class GetLegendGraphicAction extends DownloadAction implements
       HttpServletRequest request, HttpServletResponse response)
       throws Exception
   {
+    DynaActionForm dynaForm = (DynaActionForm) form;
+
+    if (dynaForm.get("layer") != null)
+    {
     AbstractWmsMap map = (AbstractWmsMap) request.getSession().getAttribute(
         "map");
     if (map == null)
@@ -40,10 +45,11 @@ public class GetLegendGraphicAction extends DownloadAction implements
           "The session bean 'map' was not found.");
     }
     WmsLegendExporter legendExporter = new WmsLegendExporter(
-        ((LayerFormBean) form).getLayer());
+        (String)dynaForm.get("layer"));
     map.export(legendExporter);
     imageInputStream = legendExporter.getInputStream();
     imageContentType = legendExporter.getContentType();
+    }
     return this;
   }
 

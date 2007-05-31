@@ -12,10 +12,6 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 import de.meningococcus.episcangis.web.AbstractTestCase;
 
-/**
- * @author rzxp001 TODO To change the template for this generated type comment
- *         go to Window - Preferences - Java - Code Style - Code Templates
- */
 public class ParameterComponentTest extends AbstractTestCase
 {
   private SelectParameter serogroups, fromAge;
@@ -142,6 +138,7 @@ public class ParameterComponentTest extends AbstractTestCase
       assertEquals("Value selected.", "'B','C','Y','W135','29E','A'", p
           .getValue());
 
+      System.err.println(p.getValue());
       p.selectValue("'29E'");
       assertEquals("Value selected.", "'29E'", p.getValue());
       p.selectValue("'A'");
@@ -162,27 +159,27 @@ public class ParameterComponentTest extends AbstractTestCase
     {
       SelectParameter p = new SelectParameter("testparam", "Test parameter",
           true);
-      p.add(new ParameterValue("all", "'B','C','Y','W135','29E','A'"));
-      p.add(new ParameterValue("B", "'B'"));
-      p.add(new ParameterValue("C", "'C'"));
-      p.add(new ParameterValue("Y", "'Y'"));
-      p.add(new ParameterValue("W135", "'W135'"));
-      p.add(new ParameterValue("29E", "'29E'"));
-      p.add(new ParameterValue("A", "'A'"));
+      p.add(new ParameterValue("all", "\"B\",\"C\",\"Y\",\"W135\",\"29E\",\"A\""));
+      p.add(new ParameterValue("B", "\"B\""));
+      p.add(new ParameterValue("C", "\"C\""));
+      p.add(new ParameterValue("Y", "\"Y\""));
+      p.add(new ParameterValue("W135", "\"W135\""));
+      p.add(new ParameterValue("29E", "\"29E\""));
+      p.add(new ParameterValue("A", "\"A\""));
 
       assertEquals("Adding of values works", 7, p.size());
 
-      p.selectValue("'B','C','Y','W135','29E','A'");
+      p.selectValue("\"B\",\"C\",\"Y\",\"W135\",\"29E\",\"A\"");
       //Bug on 2006-07-09
-      assertEquals("Value selected.", "'B','C','Y','W135','29E','A'", p
+      assertEquals("Value selected.", "\"B\",\"C\",\"Y\",\"W135\",\"29E\",\"A\"", p
           .getValue());
       int selectCount = 0;
       for(ParameterComponent value : p ) {
         if(value.isSelected())selectCount++;
       }
       assertEquals(1, selectCount);
-      p.selectValue("'C','B','Y'");
-      assertEquals("Values 'C' selected.", "'B','C','Y'", p.getValue());
+      p.selectValue("\"C\",\"B\",\"Y\"");
+      assertEquals("Values \"C\" selected.", "\"B\",\"C\",\"Y\"", p.getValue());
     }
     catch (InvalidParameterValueException e)
     {

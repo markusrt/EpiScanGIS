@@ -1,0 +1,1 @@
+http://132.187.144.10/cgi-bin/mapserv?map=../maps/episcangis-nrzm-snapshot.map&version=1.1.1&service=WMS&REQUEST=GetMap&SRS=epsg:31467&BBOX=3023928.3333333335,5238020.0,4177581.6666666665,6103260.0&WIDTH=640&HEIGHT=480&layers=borders_default,cluster&BORDERTIER=3&areaId=9470&CLUSTERANALYSISDATE82=2005-10-17&FORMAT=image/gif

@@ -143,8 +143,6 @@
         strValue = new String(value);
       }
       if( strName.length > 0 && strValue.length > 0 && needsUpdate ) {
-        Debug.write("Setting Mapparam: " + strName + "=" + strValue);
-
         var p=new LzParam();
         p.addValue("name", strName, true);
         p.addValue("value", strValue, true);
@@ -171,11 +169,6 @@
       {
         this.maplayerview.subviews[layer].refresh();
       }
-      //var set = this.maplayersettings.content.subviews;
-      //var smp = 0;
-      //for(smp=0; smp < set.length; smp++) {
-      //set[smp].refreshLayer();
-      //}
       ]]></method>
 
     <alert name="timeoutAlert">
@@ -265,13 +258,14 @@
                   }
                   ]]></method>
                 <method name="lastCloneInit"><![CDATA[
-                  Debug.write("ALL DONE");
+                  this.doneDel = new LzDelegate( this, "allDone" );
+                  LzTimer.addTimer( this.doneDel, 3000 );
+                  ]]></method>
+                <method name="allDone"><![CDATA[
                   parent.classroot.sidebar.setAttribute("visible", true);
                   parent.selectItemAt(0);
-                  parent.classroot.setAttribute(
-                  "allLayerTabsConstructed",true);
-                  //parent.classroot.refreshAllLayers();
-                  ]]></method>
+                  parent.classroot.setAttribute("allLayerTabsConstructed",true);
+                ]]></method>
               </datapath>
             </layertabelement>
           </tabslider>
@@ -387,8 +381,6 @@
               setX(0);
               setY(0);
             }
-
-
             ]]></method>
           <method event="onclick"><![CDATA[
             if( this.mouseOver && !this.mapJustMoved ) {
@@ -423,7 +415,6 @@
           </datapointer>
           <datapointer id="moveMapPtr" xpath="MoveMap:/result">
             <method event="ondata" args="d"><![CDATA[
-              //TODO check for result success
               classroot.refreshAllLayers();
               parent.setX(0);
               parent.setY(0);
@@ -434,7 +425,7 @@
             drag_max_x="$once{width-width/10}"
             drag_min_y="$once{-height+height/10}"
             drag_max_y="$once{height-height/10}"/>
-          <!-- MAPLAYER -->
+          <!-- SINGLE MAP LAYER -->
           <view visible="false" width="100%" height="100%"
             datapath="mapserverData:/map[1]/layer/">
             <attribute name="title" type="string"/>
@@ -473,12 +464,10 @@
                 classroot.maplayersettings.showLoadBar(this.name,true);
               }
               else {
-                Debug.write( 'Layer ' + this.title + ' not refreshed (invisible)');
                 this.changed = true;
               }
             </method>
             <method name="bufferLoaded">
-              Debug.write("LOADED " + this.title);
               this.isloading = false;
               classroot.maplayersettings.showLoadBar(this.name,false);
               subviews[currentBuffer].hide.doStart();
@@ -490,9 +479,9 @@
             <view name="buffer1" visible="true" opacity="0"
               width="100%" height="100%">
               <animator name="show"
-                 attribute="opacity" to="1"  duration="300" start="false"/>
+                 attribute="opacity" to="1"  duration="100" start="false"/>
               <animator name="hide"
-                 attribute="opacity" to="0"  duration="300" start="false"/>
+                 attribute="opacity" to="0"  duration="100" start="false"/>
               <method event="onload">
                 parent.bufferLoaded();
               </method>
@@ -513,7 +502,6 @@
         <!--<scrollbar axis="x"/>-->
         <!--<scrollbar axis="y"/>-->
       </borderview>
-
     </view>
     <view width="190"
       x="${parent.sidebar.width+parent.mainArea.width}"

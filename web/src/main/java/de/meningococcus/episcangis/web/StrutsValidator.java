@@ -58,13 +58,12 @@ public class StrutsValidator
       {
         if (user.getEmail().equals(pretendedEmail))
         {
-          log.error("HiHi: ich bin pret... " + pretendedEmail);
           return true;
         }
       }
     }
-    errors.add(field.getKey(), Resources.getActionMessage(validator,
-        request, va, field));
+    errors.add(field.getKey(), Resources.getActionMessage(validator, request,
+        va, field));
     return false;
   }
 
@@ -92,7 +91,7 @@ public class StrutsValidator
   /**
    * Return <code>true</code> if the specified object is a String or a
    * <code>null</code> value.
-   * 
+   *
    * @param o
    *          Object to be tested
    * @return The string value

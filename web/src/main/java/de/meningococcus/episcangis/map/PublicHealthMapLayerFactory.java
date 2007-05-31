@@ -8,6 +8,7 @@ import org.apache.commons.logging.LogFactory;
 import de.meningococcus.episcangis.map.layer.BordersLayer;
 import de.meningococcus.episcangis.map.layer.CaseTypesLayer;
 import de.meningococcus.episcangis.map.layer.ClusterLayer;
+import de.meningococcus.episcangis.map.layer.IncidenceFinetypeLayer;
 import de.meningococcus.episcangis.map.layer.IncidenceLayer;
 import de.meningococcus.episcangis.map.layer.MapLayer;
 import de.meningococcus.episcangis.map.layer.PopdensityLayer;
@@ -21,7 +22,7 @@ import de.meningococcus.episcangis.map.layer.SerogroupsLayer;
 final class PublicHealthMapLayerFactory implements MapLayerFactory
 {
   private static Log log = LogFactory.getLog(PublicMapLayerFactory.class);
-  
+
   public MapLayer getMapLayer(String name, String title, boolean hasLegend,
       AbstractWmsMap map)
   {
@@ -50,6 +51,10 @@ final class PublicHealthMapLayerFactory implements MapLayerFactory
     else if (realName.equals("incidence"))
     {
       ret = new IncidenceLayer(name, title, hasLegend, map);
+    }
+    else if (realName.equals("incidenceft"))
+    {
+      ret = new IncidenceFinetypeLayer(name, title, hasLegend, map);
     }
     else if (realName.equals("borders"))
     {

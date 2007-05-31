@@ -12,79 +12,115 @@
 
   <!-- ========== Form Bean Definitions =================================== -->
   <form-beans>
-
-    <form-bean type="de.meningococcus.episcangis.web.MoveMapFormBean"
-      name="move" />
-
-    <form-bean type="de.meningococcus.episcangis.web.LayerFormBean"
-      name="layer" />
-    <form-bean
-      type="de.meningococcus.episcangis.web.CountCasesByAttributeFormBean"
-      name="countCasesByAttribute" />
     <form-bean type="de.meningococcus.episcangis.web.CreateMapFormBean"
-      name="createMap" />
-    <form-bean
-      type="de.meningococcus.episcangis.web.SetParameterFormBean"
-      name="parameter" />
-    <form-bean
-      type="de.meningococcus.episcangis.web.GetFeatureInfoFormBean"
-      name="info" />
-    <form-bean name="registerUser"
-      type="org.apache.struts.validator.DynaValidatorForm">
-      <form-property name="username" type="java.lang.String" />
-      <form-property name="password" type="java.lang.String" />
-      <form-property name="confirmPassword" type="java.lang.String" />
-      <form-property name="title" type="java.lang.String" />
-      <form-property name="forename" type="java.lang.String" />
-      <form-property name="lastname" type="java.lang.String" />
-      <form-property name="phone" type="java.lang.String" />
-      <form-property name="email" type="java.lang.String" />
-      <form-property name="street" type="java.lang.String" />
-      <form-property name="zip" type="java.lang.String" />
-      <form-property name="city" type="java.lang.String" />
-      <form-property name="organisation" type="java.lang.String" />
-      <form-property name="department" type="java.lang.String" />
-      <form-property name="domain" type="java.lang.String" />
-      <form-property name="message" type="java.lang.String" />
+      name="createMap"/>
+    <form-bean type="de.meningococcus.episcangis.web.SetParameterFormBean"
+      name="parameter"/>
+    <form-bean type="de.meningococcus.episcangis.web.GetFeatureInfoFormBean"
+      name="info"/>
+
+    <form-bean type="org.apache.struts.action.DynaActionForm"
+      name="mapLayerForm">
+      <form-property name="layer" type="java.lang.String"/>
+      <form-property name="active" type="java.lang.Boolean"/>
     </form-bean>
-    <form-bean name="localeForm"
-      type="org.apache.struts.action.DynaActionForm">
-      <form-property name="language" type="java.lang.String" />
-      <form-property name="country" type="java.lang.String" />
+    <form-bean name="localeForm" type="org.apache.struts.action.DynaActionForm">
+      <form-property name="language" type="java.lang.String"/>
+      <form-property name="country" type="java.lang.String"/>
     </form-bean>
     <form-bean name="activateUser"
       type="org.apache.struts.action.DynaActionForm">
-      <form-property name="username" type="java.lang.String" />
-      <form-property name="role" type="java.lang.String" />
+      <form-property name="username" type="java.lang.String"/>
+      <form-property name="role" type="java.lang.String"/>
     </form-bean>
-    <form-bean name="deleteUser"
+    <form-bean name="deleteUser" type="org.apache.struts.action.DynaActionForm">
+      <form-property name="username" type="java.lang.String"/>
+    </form-bean>
+    <form-bean name="countCasesByAttribute"
       type="org.apache.struts.action.DynaActionForm">
-      <form-property name="username" type="java.lang.String" />
+      <form-property name="areaTier" type="java.lang.Integer"/>
+      <form-property name="attribute" type="java.lang.String"/>
     </form-bean>
+    <form-bean type="org.apache.struts.action.DynaActionForm" name="moveMap">
+      <form-property name="xoffset" type="java.lang.Double"/>
+      <form-property name="yoffset" type="java.lang.Double"/>
+    </form-bean>
+
+    <form-bean name="registerUser"
+      type="org.apache.struts.validator.DynaValidatorForm">
+      <form-property name="username" type="java.lang.String"/>
+      <form-property name="password" type="java.lang.String"/>
+      <form-property name="confirmPassword" type="java.lang.String"/>
+      <form-property name="title" type="java.lang.String"/>
+      <form-property name="forename" type="java.lang.String"/>
+      <form-property name="lastname" type="java.lang.String"/>
+      <form-property name="phone" type="java.lang.String"/>
+      <form-property name="email" type="java.lang.String"/>
+      <form-property name="street" type="java.lang.String"/>
+      <form-property name="zip" type="java.lang.String"/>
+      <form-property name="city" type="java.lang.String"/>
+      <form-property name="organisation" type="java.lang.String"/>
+      <form-property name="department" type="java.lang.String"/>
+      <form-property name="domain" type="java.lang.String"/>
+      <form-property name="message" type="java.lang.String"/>
+    </form-bean>
+
     <form-bean name="forgotPassword"
       type="org.apache.struts.validator.DynaValidatorForm">
-      <form-property name="email" type="java.lang.String" />
+      <form-property name="email" type="java.lang.String"/>
     </form-bean>
     <form-bean name="clusterInformation"
       type="org.apache.struts.validator.DynaValidatorForm">
-      <form-property name="clusterId" type="java.lang.Integer" />
+      <form-property name="clusterId" type="java.lang.Integer"/>
     </form-bean>
+
+    <form-bean name="clusterFeedback"
+      type="org.apache.struts.validator.DynaValidatorForm">
+      <form-property name="id" type="java.lang.Integer"/>
+      <form-property name="caseId" type="java.lang.Integer"/>
+      <form-property name="clusterId" type="java.lang.Integer"/>
+
+      <form-property name="tan" type="java.lang.String"/>
+
+      <form-property name="workContact" type="java.lang.String" />
+      <form-property name="schoolContact" type="java.lang.String" />
+      <form-property name="relationship" type="java.lang.String" />
+      <form-property name="relationshipByMarriage" type="java.lang.String" />
+      <form-property name="leisureContact" type="java.lang.String" />
+      <form-property name="miscContact" type="java.lang.String" />
+      <form-property name="massEvent" type="java.lang.String" />
+      <form-property name="discoPub" type="java.lang.String" />
+      <form-property name="knownAcquaintanceCase" type="java.lang.String" />
+
+      <form-property name="workContactQuestion" initial="false" type="java.lang.Boolean" />
+      <form-property name="schoolContactQuestion" initial="false" type="java.lang.Boolean" />
+      <form-property name="relationshipQuestion" initial="false" type="java.lang.Boolean" />
+      <form-property name="relationshipByMarriageQuestion" initial="false" type="java.lang.Boolean" />
+      <form-property name="leisureContactQuestion" initial="false" type="java.lang.Boolean" />
+      <form-property name="miscContactQuestion" initial="false" type="java.lang.Boolean" />
+      <form-property name="massEventQuestion" initial="false" type="java.lang.Boolean" />
+      <form-property name="discoPubQuestion" initial="false" type="java.lang.Boolean" />
+      <form-property name="knownAcquaintanceCaseQuestion" initial="false" type="java.lang.Boolean" />
+
+      <form-property name="infoByReport" type="java.lang.Boolean" initial="false"/>
+    </form-bean>
+
   </form-beans>
 
   <!-- ========== Global Exceptions Definitions =================================== -->
   <global-exceptions>
     <exception key="error" type="java.lang.Exception"
-      path="/WEB-INF/errors/error.vm" scope="request" />
+      path="/WEB-INF/errors/error.vm" scope="request"/>
   </global-exceptions>
 
   <!-- ========== Global Forward Definitions =================================== -->
   <global-forwards>
-    <forward name="success" path="/welcome.vm" />
-    <forward name="index" path="/welcome.vm" />
-    <forward name="welcome" path="/welcome.vm" />
-    <forward name="mapbrowser" path="/mapbrowser.vm" />
-    <forward name="error" path="/WEB-INF/errors/error.vm" />
-    <forward name="denied" path="/WEB-INF/errors/error_403.vm" />
+    <forward name="success" path="/welcome.vm"/>
+    <forward name="index" path="/welcome.vm"/>
+    <forward name="welcome" path="/welcome.vm"/>
+    <forward name="mapbrowser" path="/mapbrowser.vm"/>
+    <forward name="error" path="/WEB-INF/errors/error.vm"/>
+    <forward name="denied" path="/WEB-INF/errors/error_403.vm"/>
   </global-forwards>
 
   <!-- ========== Action Mapping Definitions =================================== -->
@@ -93,131 +129,132 @@
       type="de.meningococcus.episcangis.web.DeleteUserAction"
       name="activateUser" scope="request" roles="admin" unknown="false"
       validate="false">
-      <forward name="success" path="/ListUsers.do" redirect="false" />
+      <forward name="success" path="/ListUsers.do" redirect="false"/>
     </action>
     <action path="/ActivateUser"
       type="de.meningococcus.episcangis.web.ActivateUserAction"
-      name="activateUser" scope="request" unknown="false"
-      validate="false">
-      <forward name="success" path="/ListUsers.do" redirect="false" />
+      name="activateUser" scope="request" unknown="false" validate="false">
+      <forward name="success" path="/ListUsers.do" redirect="false"/>
     </action>
 
-    <action path="/Map"
-      type="de.meningococcus.episcangis.web.CreateMapAction"
+    <action path="/Map" type="de.meningococcus.episcangis.web.CreateMapAction"
       name="createMap" scope="request">
       <exception key="error" type="java.lang.Exception"
-        path="/WEB-INF/errors/xmlExceptionResult.jsp" scope="request" />
+        path="/WEB-INF/errors/xmlExceptionResult.jsp" scope="request"/>
     </action>
 
-    <action path="/GetMap"
-      type="de.meningococcus.episcangis.web.GetMapAction">
-    </action>
+    <action path="/GetMap" type="de.meningococcus.episcangis.web.GetMapAction"> </action>
 
     <action path="/CountCasesByAttribute"
       type="de.meningococcus.episcangis.web.CountCasesByAttributeAction"
       name="countCasesByAttribute" scope="request">
-      <forward name="success" path="/WEB-INF/pages/showCases.vm" />
+      <forward name="success" path="/WEB-INF/views/showCases.vm"/>
     </action>
 
     <action path="/GetMapLayer"
       type="de.meningococcus.episcangis.web.GetMapLayerAction"
-      name="layer" scope="request">
-    </action>
+      name="mapLayerForm" scope="request"> </action>
 
     <action path="/GetLegendGraphic"
       type="de.meningococcus.episcangis.web.GetLegendGraphicAction"
-      name="layer" scope="request">
-    </action>
+      name="mapLayerForm" scope="request"> </action>
 
     <action path="/PrintMap"
       type="de.meningococcus.episcangis.web.PrintMapAction">
-      <forward name="success" path="/WEB-INF/pages/printableMap.vm" />
+      <forward name="success" path="/WEB-INF/views/printableMap.vm"/>
     </action>
 
-    <action path="/MoveMap"
-      type="de.meningococcus.episcangis.web.MoveMapAction" name="move"
-      scope="request">
-      <forward name="success"
-        path="/WEB-INF/results/xmlDefaultSuccess.jsp" />
-      <forward name="error" path="/WEB-INF/errors/xmlDefaultError.jsp" />
+    <action path="/MoveMap" type="de.meningococcus.episcangis.web.MoveMapAction"
+      name="moveMap" scope="request">
+      <forward name="success" path="/WEB-INF/results/xmlDefaultSuccess.jsp"/>
+      <forward name="error" path="/WEB-INF/errors/xmlDefaultError.jsp"/>
     </action>
 
     <action path="/SetParameter"
-      type="de.meningococcus.episcangis.web.SetParameterAction"
-      name="parameter" scope="request">
-      <forward name="success"
-        path="/WEB-INF/results/xmlSetParameterSuccess.jsp" />
-      <forward name="error" path="/WEB-INF/errors/xmlDefaultError.jsp" />
+      type="de.meningococcus.episcangis.web.SetParameterAction" name="parameter"
+      scope="request">
+      <forward name="success" path="/WEB-INF/results/xmlSetParameterSuccess.jsp"/>
+      <forward name="error" path="/WEB-INF/errors/xmlDefaultError.jsp"/>
     </action>
 
     <action path="/ToggleLayerState"
       type="de.meningococcus.episcangis.web.ToggleLayerStateAction"
-      name="layer" scope="request">
+      name="mapLayerForm" scope="request">
       <forward name="success"
-        path="/WEB-INF/results/xmlToggleLayerStateSuccess.jsp" />
+        path="/WEB-INF/results/xmlToggleLayerStateSuccess.jsp"/>
     </action>
 
     <action path="/GetFeatureInfo"
-      type="de.meningococcus.episcangis.web.GetFeatureInfoAction"
-      name="info" scope="request">
+      type="de.meningococcus.episcangis.web.GetFeatureInfoAction" name="info"
+      scope="request">
       <exception key="error" type="java.lang.Exception"
-        path="/WEB-INF/errors/xmlExceptionResult.jsp" scope="request" />
+        path="/WEB-INF/errors/xmlExceptionResult.jsp" scope="request"/>
     </action>
 
-    <action path="/Login"
-      type="de.meningococcus.episcangis.web.LoginAction">
-    </action>
+    <action path="/Login" type="de.meningococcus.episcangis.web.LoginAction"> </action>
 
-    <action path="/Logout"
-      type="de.meningococcus.episcangis.web.LogoutAction">
-    </action>
+    <action path="/Logout" type="de.meningococcus.episcangis.web.LogoutAction"> </action>
 
     <action path="/ManageUsers"
       type="de.meningococcus.episcangis.web.ManageUsersAction"
-      name="registerUser" scope="request" validate="true"
-      parameter="method" input="/registerUser.vm">
-      <forward name="success"
-        path="/WEB-INF/pages/registerUserSuccess.vm" />
+      name="registerUser" scope="request" validate="true" parameter="method"
+      input="/registerUser.vm">
+      <forward name="success" path="/WEB-INF/views/registerUserSuccess.vm"/>
     </action>
 
     <!-- Locale Action -->
-    <action path="/Locale"
-      type="de.meningococcus.episcangis.web.LocaleAction"
-      name="localeForm" scope="request">
-    </action>
+    <action path="/Locale" type="de.meningococcus.episcangis.web.LocaleAction"
+      name="localeForm" scope="request"> </action>
 
     <action path="/ListUsers"
       type="de.meningococcus.episcangis.web.ListUsersAction">
-      <forward name="success" path="/WEB-INF/pages/listUsers.vm" />
+      <forward name="success" path="/WEB-INF/views/listUsers.vm"/>
     </action>
 
     <action path="/ForgotPassword"
       type="de.meningococcus.episcangis.web.ForgotPasswordAction"
       scope="request" name="forgotPassword" input="/forgotPassword.vm"
       validate="true">
-      <forward name="success" path="/forgotPassword.vm" />
+      <forward name="success" path="/forgotPassword.vm"/>
+    </action>
+
+    <action path="/ClusterFeedback"
+      type="de.meningococcus.episcangis.web.ClusterFeedbackAction"
+      scope="request" name="clusterFeedback" input="/clusterFeedback.vm"
+      validate="true" parameter="method">
+      <forward name="success" path="/WEB-INF/views/clusterfeedback/success.vm"/>
+      <forward name="list" path="/WEB-INF/views/clusterfeedback/list.vm"/>
+      <forward name="input" path="/clusterFeedback.vm"/>
+      <forward name="tan" path="/feedbackLogin.vm"/>
     </action>
 
     <action path="/ClusterInformation"
       type="de.meningococcus.episcangis.web.ClusterInformationAction"
       scope="request" name="clusterInformation">
-      <forward name="success" path="/WEB-INF/pages/clusterInformation.vm" />
+      <forward name="success" path="/WEB-INF/views/clusterInformation.vm"/>
+      <forward name="inline" path="/WEB-INF/views/inlineClusterInformation.vm"/>
     </action>
+
+    <action path="/ClusterMap"
+      type="de.meningococcus.episcangis.web.ClusterMapAction"
+      scope="request" />
+
 
 
   </action-mappings>
 
-  <controller
-    processorClass="org.apache.struts.action.RequestProcessor" />
+  <controller processorClass="org.apache.struts.action.RequestProcessor"/>
 
-  <message-resources parameter="MessageResources" />
+  <message-resources parameter="MessageResources"/>
 
   <!-- Validator plugin configuration -->
   <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
     <set-property property="pathnames"
       value="/WEB-INF/validator-rules.xml,
-        /WEB-INF/validation.xml" />
+        /WEB-INF/validation.xml"/>
   </plug-in>
+
+  <plug-in className="de.meningococcus.episcangis.web.ContextAttributes"/>
 
   <!-- sslext plugin
     <plug-in className="org.apache.struts.action.SecurePlugIn">

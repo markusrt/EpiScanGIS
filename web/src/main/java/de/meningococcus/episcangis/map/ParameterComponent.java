@@ -197,7 +197,7 @@ public abstract class ParameterComponent implements
       element.selectValue(selectedValue);
     }
     else
-      throw new ParameterNotFoundException();
+      throw new ParameterNotFoundException("The parameter '" +parameterName +"' does not exist.");
   }
 
   public abstract boolean isSelected();

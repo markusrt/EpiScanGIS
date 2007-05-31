@@ -70,7 +70,7 @@ final class PgSQLSatScanDAO extends DbUtilsDAO implements SatScanDAO
           + "area_id AS mostCentralLocation, satscan_job_id AS jobId, * FROM satscan_clusters "
           + "WHERE number=? AND satscan_job_id=? AND case_type_id = ? AND analysisdate=? ORDER BY satscan_cluster_id DESC",
       GET_CLUSTER_ANALYSISDATES_JOBID = "SELECT analysisdate FROM satscan_clusters WHERE satscan_job_id=? GROUP BY analysisdate ORDER BY analysisdate",
-      GET_SATSCAN_CLUSTER_ID = "SELECT satscan_cluster_id AS id, case_type_id AS caseTypeId, * FROM satscan_clusters WHERE satscan_cluster_id=?",
+      GET_SATSCAN_CLUSTER_ID = "SELECT satscan_cluster_id AS id, case_type_id AS caseTypeId, episcangis_cases_per_cluster(satscan_cluster_id) AS observedCases, * FROM satscan_clusters WHERE satscan_cluster_id=?",
       INSERT_SATSCAN_CLUSTER_CASES = "INSERT INTO satscan_cluster_cases "
           + "(satscan_cluster_id, case_id)" + "VALUES (?, ?)";
 
@@ -333,9 +333,7 @@ final class PgSQLSatScanDAO extends DbUtilsDAO implements SatScanDAO
           cluster.addCase(rc);
         }
         CaseTypeDAO ctDao = DaoFactory.getDaoFactory().getCaseTypeDAO();
-        System.err.println("CTID: " + cluster.getCasetypeId());
         cluster.setCaseType(ctDao.getCaseType(cluster.getCasetypeId()));
-        System.err.println(ctDao.getCaseType(cluster.getCasetypeId()));
       }
     }
     catch (SQLException e)

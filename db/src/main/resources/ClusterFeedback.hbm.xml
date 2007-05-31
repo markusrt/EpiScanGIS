@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+  <class name="de.meningococcus.episcangis.db.model.ClusterFeedback"
+    table="cluster_feedback">
+    <id name="id" column="cluster_feedback_id">
+      <generator class="sequence">
+        <param name="sequence">cluster_feedback_cluster_feedback_id_seq</param>
+      </generator>
+    </id>
+    <timestamp name="lastChange" column="last_change" />
+    <property name="tan" unique="true" update="false" />
+    <property name="workContact" column="work_contact"/>
+    <property name="schoolContact" column="school_contact"/>
+    <property name="relationship" column="relationship"/>
+    <property name="relationshipByMarriage" column="relationship_by_marriage"/>
+    <property name="leisureContact" column="leisure_contact"/>
+    <property name="miscContact" column="misc_contact"/>
+    <property name="massEvent" column="mass_event"/>
+    <property name="discoPub" column="disco_pub"/>
+    <property name="knownAcquaintanceCase" column="known_acquaintance_case"/>
+    <property name="infoByReport" column="info_by_report"/>
+    <property name="caseId" update="false" column="case_id"/>
+    <property name="clusterId" update="false" column="satscan_cluster_id"/>
+    <property name="expirationDate" column="expiration_date"/>
+  </class>
+</hibernate-mapping>

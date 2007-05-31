@@ -10,6 +10,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessages;
+import org.apache.struts.action.DynaActionForm;
 
 import de.meningococcus.episcangis.map.AbstractWmsMap;
 import de.meningococcus.episcangis.map.LayerState;
@@ -26,22 +27,24 @@ public class ToggleLayerStateAction extends Action
       throws Exception
   {
     String forward = GlobalSettings.FORWARD_ERROR;
-    ActionMessages messages = new ActionMessages();
-    LayerFormBean layer = (LayerFormBean) form;
-    AbstractWmsMap map = (AbstractWmsMap) request.getSession().getAttribute(
-        "map");
-    if (map != null)
+    DynaActionForm dynaForm = (DynaActionForm) form;
+
+    if (dynaForm.get("layer") != null && dynaForm.get("active") != null)
     {
-      Collection<LayerState> layerstate = map.toggleLayerState(
-          layer.getLayer(), layer.isActive());
-      request.setAttribute("layerstates", layerstate);
-      forward = GlobalSettings.FORWARD_SUCCESS;
+      AbstractWmsMap map = (AbstractWmsMap) request.getSession().getAttribute(
+          "map");
+      if (map != null)
+      {
+        Collection<LayerState> layerstate = map.toggleLayerState(
+            (String) dynaForm.get("layer"), (Boolean) dynaForm.get("active"));
+        request.setAttribute("layerstates", layerstate);
+        forward = GlobalSettings.FORWARD_SUCCESS;
+      }
+      else
+      {
+        throw new SessionBeanNotFoundException("map");
+      }
     }
-    else
-    {
-      throw new SessionBeanNotFoundException("map");
-    }
-    saveMessages(request, messages);
     return (mapping.findForward(forward));
   }
 }

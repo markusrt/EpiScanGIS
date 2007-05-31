@@ -5,7 +5,7 @@ package de.meningococcus.episcangis.map;
  * ====================================================================
  */
 
-public class InvalidParameterValueException extends Throwable
+public class InvalidParameterValueException extends Exception
 {
   private static final long serialVersionUID = 1L;
 

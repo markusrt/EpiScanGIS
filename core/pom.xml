@@ -17,12 +17,12 @@
 
   <scm>
     <connection>
-      scm:svn:http://132.187.144.10/svn/episcangis/trunk
+      scm:svn:svn+ssh://fileserver/srv/svn/episcangis/trunk
     </connection>
     <developerConnection>
-      scm:svn:http://132.187.144.10/svn/episcangis/trunk
+      scm:svn:svn+ssh://fileserver/srv/svn/episcangis/trunk
     </developerConnection>
-    <url>http://132.187.144.10/svn/episcangis/trunk</url>
+    <url>http://fileserver/srv/svn/episcangis/trunk</url>
   </scm>
 
   <organization>
@@ -74,7 +74,7 @@
       <plugin>
         <artifactId>maven-release-plugin</artifactId>
         <configuration>
-          <tagBase>scm:svn:http://132.187.144.10/svn/episcangis/tags</tagBase>
+          <tagBase>scm:svn:svn+ssh://fileserver/srv/svn/episcangis/tags</tagBase>
         </configuration>
       </plugin>
       <plugin>
@@ -146,14 +146,6 @@
       </dependency>
     </dependencies>
   </dependencyManagement>
-  <dependencies>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>3.8.1</version>
-      <scope>test</scope>
-    </dependency>
-  </dependencies>
 
   <distributionManagement>
     <site>
@@ -235,7 +227,7 @@
           <aggregate>true</aggregate>
         </configuration>
       </plugin>
-      <!-- 
+      <!--
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-pmd-plugin</artifactId>
@@ -279,13 +271,13 @@
       <id>ibiblio</id>
       <url>http://www.ibiblio.org/maven2</url>
     </repository>
-    
+
     <repository>
       <name>Geotools repository</name>
       <id>maven.geotools.fr</id>
       <url>http://maven.geotools.fr/repository/</url>
     </repository>
-    <!-- 
+    <!--
       <repository>
       <name>Repository Hygiene</name>
       <id>uni-hygiene</id>

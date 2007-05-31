@@ -9,9 +9,11 @@ import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.apache.struts.action.DynaActionForm;
 
 import de.meningococcus.episcangis.db.DaoFactory;
 import de.meningococcus.episcangis.db.dao.ReportedCaseDAO;
+import de.meningococcus.episcangis.db.dao.SatScanDAO;
 
 /* ====================================================================
  *   Copyright © 2005 Markus Reinhardt - All Rights Reserved.
@@ -30,11 +32,14 @@ public class CountCasesByAttributeAction extends Action
       throws Exception
   {
     String forward = FORWARD_ERROR;
-    ReportedCaseDAO rcDao = DaoFactory.getDaoFactory().getReportedCaseDAO();
-    CountCasesByAttributeFormBean countCasesForm = (CountCasesByAttributeFormBean) form;
-    if(countCasesForm != null ){
-      request.setAttribute("cases", rcDao.countCasesPerAreaGroupedByAttribute(
-      countCasesForm.getAttribute(), countCasesForm.getAreaTier()));
+    DynaActionForm dynaForm = (DynaActionForm) form;
+
+    if (dynaForm.get("areaTier") != null && dynaForm.get("attribute") != null)
+    {
+      ReportedCaseDAO rcDao = ContextAttributes.getReportedCaseDAO();
+      request.setAttribute("cases", rcDao
+            .countCasesPerAreaGroupedByAttribute((String) dynaForm
+                .get("attribute"), (Integer) dynaForm.get("areaTier")));
       forward = FORWARD_SUCCESS;
     }
     return (mapping.findForward(forward));

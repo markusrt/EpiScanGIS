@@ -1,5 +1,7 @@
 package de.meningococcus.episcangis.web;
 
+import java.security.SecureRandom;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -27,9 +29,9 @@ import de.meningococcus.episcangis.db.model.User;
 
 /**
  * TODO only redirect to referer if its needed (i.e. mapbrowser.vm)
- * 
+ *
  * @author Markus Reinhardt
- * 
+ *
  */
 public class ForgotPasswordAction extends Action
 {
@@ -46,13 +48,13 @@ public class ForgotPasswordAction extends Action
     ActionMessages errors = new ActionMessages();
     UserDAO userDao = DaoFactory.getDaoFactory().getUserDAO();
     String pretendedEmail = dynaForm.getString("email");
-    
+
     for( User user : userDao.getUsers() ) {
       if( user.getEmail().equals(pretendedEmail)) {
-        String newPassword = RandomStringUtils.random(8,true,true);
+        String newPassword = RandomStringUtils.random(8, 0, 0, true, true, null, new SecureRandom());
         user.setPassword(newPassword);
         userDao.updateUser(user);
-        
+
         SimpleEmail email = new SimpleEmail();
         email.setHostName(GlobalSettings
             .getConfigurationProperty("mailserver.hostname"));
@@ -67,7 +69,7 @@ public class ForgotPasswordAction extends Action
                 + "Passwort:\t\t" + newPassword + "\n\n"
                 + "Dies ist eine automatisch erzeugte Email, bitte antworten Sie nicht darauf.");
         email.send();
-        
+
         ActionMessage msg = new ActionMessage("user.resetPassword.success", pretendedEmail );
         messages.add(ActionMessages.GLOBAL_MESSAGE, msg);
         log.info(msg.toString());
@@ -82,7 +84,7 @@ public class ForgotPasswordAction extends Action
       log.error(msg.toString());
       saveErrors(request, errors);
     }
-    
+
     return mapping.findForward(forward);
   }
 }

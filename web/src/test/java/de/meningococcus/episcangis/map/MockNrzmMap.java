@@ -1,12 +1,15 @@
 package de.meningococcus.episcangis.map;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 
 import org.geotools.data.ows.CRSEnvelope;
 import org.geotools.data.ows.Layer;
 
 import de.meningococcus.episcangis.db.model.BoundingBox;
+import de.meningococcus.episcangis.db.model.CaseTypeAttribute;
 import de.meningococcus.episcangis.map.layer.MapLayer;
 
 public class MockNrzmMap extends NrzmMap
@@ -68,5 +71,10 @@ public class MockNrzmMap extends NrzmMap
       }
       layerNumber++;
     }
+  }
+  @Override
+  protected MapLayerFactory getMapLayerFactory()
+  {
+    return new MockNrzmMapLayerFactory();
   }
 }

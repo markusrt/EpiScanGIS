@@ -12,7 +12,7 @@
 <action path="/CountCasesByAttribute"
   type="de.meningococcus.episcangis.web.CountCasesByAttributeAction"
   name="countCasesByAttribute" scope="request">
-  <forward name="success" path="/WEB-INF/pages/showCases.vm" />
+  <forward name="success" path="/WEB-INF/views/showCases.vm" />
 </action>
 
 <action path="/GetMapLayer"
@@ -27,7 +27,7 @@
 
 <action path="/PrintMap"
   type="de.meningococcus.episcangis.web.PrintMapAction">
-  <forward name="success" path="/WEB-INF/pages/printableMap.vm" />
+  <forward name="success" path="/WEB-INF/views/printableMap.vm" />
 </action>
 
 <action path="/MoveMap"
@@ -71,7 +71,7 @@
   name="registerUser" scope="request" validate="true" parameter="method"
   input="/registerUser.vm">
   <forward name="success"
-    path="/WEB-INF/pages/registerUserSuccess.vm" />
+    path="/WEB-INF/views/registerUserSuccess.vm" />
 </action>
 
 <!-- Locale Action -->
@@ -80,7 +80,7 @@
   scope="request">
 </action>
 
-<action path="/ListUsers" 
+<action path="/ListUsers"
   type="de.meningococcus.episcangis.web.ListUsersAction">
-  <forward name="success" path="/WEB-INF/pages/listUsers.vm" />
+  <forward name="success" path="/WEB-INF/views/listUsers.vm" />
 </action>

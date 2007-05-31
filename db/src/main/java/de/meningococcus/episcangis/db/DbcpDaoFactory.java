@@ -17,6 +17,8 @@ import org.apache.commons.dbcp.BasicDataSource;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import de.meningococcus.episcangis.db.dao.ClusterFeedbackDAO;
+
 /**
  * This is a concrete factory which extends the abstract class DaoFactory. It
  * uses the Jakarta Commons DBCP library (<a
