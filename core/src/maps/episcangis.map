@@ -14,7 +14,7 @@
 # COLOR 0 153 255
 # COLOR 0 102 255
 # COLOR 0 51 255
-#
+# 
 # approx. harmonising colors:
 #  COLOR 255 0 255
 #  COLOR 255 255 0
@@ -30,7 +30,7 @@ MAP
   EXTENT 3280173.25 5238019 3921337.5 6103262.5
 #EXTENT -180 -90 180 90
   FONTSET "fonts/fonts.list"
-  SYMBOLSET "symbols/symbols35.sym"
+  SYMBOLSET "symbols/symbols35.sym" 
   DEBUG ON
   WEB
     log "epidegis-map.log"
@@ -59,7 +59,7 @@ MAP
     IMAGEMODE RGB
     EXTENSION "jpg"
   END
-
+  
   OUTPUTFORMAT
     NAME png
     DRIVER "GD/PNG"
@@ -67,23 +67,23 @@ MAP
     IMAGEMODE RGB
     EXTENSION "png"
   END
-
+  
   IMAGETYPE gif
-
+  
   LEGEND
     KEYSIZE 12 12
     KEYSPACING 3 3
     LABEL
       ANTIALIAS true
-      TYPE TRUETYPE
+      TYPE TRUETYPE 
       FONT "verdana"
-      SIZE 8
+      SIZE 8 
       COLOR 0 0 89
     END
     IMAGECOLOR 238 238 238
     STATUS OFF
   END
-
+  
   SCALEBAR
     IMAGECOLOR 255 255 255
     LABEL
@@ -102,14 +102,14 @@ MAP
   END
 
   SIZE  460 500
-
+  
   IMAGECOLOR     255 255 255
-
+  
   PROJECTION
     "init=epsg:4326"
   END
-
-
+  
+  
   LAYER
     NAME "topography_disabled"
     STATUS ON
@@ -157,7 +157,7 @@ MAP
       COLOR 115 38 0
     END
   END
-
+  
   LAYER #cloudtest
     METADATA
       "wms_title" "Wolkentest"
@@ -168,11 +168,11 @@ MAP
     DATA "the_geom from (
       SELECT case_id AS oid, the_geom
        FROM cases_random NATURAL JOIN types_with_attributes
-          WHERE ( reportdate BETWEEN to_timestamp('%FROMDATE%', 'MMYYYY')
+          WHERE ( reportdate BETWEEN to_timestamp('%FROMDATE%', 'MMYYYY') 
                 AND to_timestamp('%TODATE%', 'MMYYYY'))
-                AND attname='Serogruppe'
+                AND attname='Serogruppe' 
                 AND attvalue IN (%SEROGROUP%) ) AS foo USING SRID=4326 USING UNIQUE oid"
-    STATUS ON
+    STATUS ON 
     TYPE POINT
     PROJECTION
       "init=epsg:4326"
@@ -189,7 +189,7 @@ MAP
       END
     END
   END
-
+  
   LAYER #Population density
     TEMPLATE "DUMMY"
     DUMP TRUE
@@ -200,17 +200,17 @@ MAP
     CONNECTIONTYPE postgis
     CONNECTION "user=apache password=DMmnc dbname=epidegis_works host=localhost"
     DATA "the_geom from (
-      SELECT area_id AS oid, the_geom, identifier AS Areaname,
-        population/(area(transform(the_geom,31467))/1000000) AS popdensity
+      SELECT area_id AS oid, the_geom, identifier AS Areaname, 
+        population/(area(transform(the_geom,31467))/1000000) AS popdensity 
       FROM areas_with_types AS awt
       WHERE tier=%POPDENTIER%
       ) AS foo USING SRID=4326 USING UNIQUE oid"
-    STATUS ON
+    STATUS ON 
     TYPE POLYGON
     PROJECTION
       "init=epsg:4326"
     END
-
+    
     CLASS
      NAME "Population density"
      EXPRESSION (0)
@@ -254,7 +254,7 @@ MAP
     # COLOR 41 21 111
     #END
   END #Layer Population density
-
+  
   LAYER #incidence
     #GROUP "query"
     TEMPLATE "DUMMY"
@@ -268,20 +268,20 @@ MAP
     DATA "the_geom from (
     SELECT DISTINCT ON (oid) oid, the_geom, incidence
      FROM (
-        SELECT awt.area_id AS oid, awt.the_geom,
+        SELECT awt.area_id AS oid, awt.the_geom, 
           count(*)::real/(awt.population::real/100000::real)*
-           ( 12/((%toYear%*12+%toMonth%) -
-             (%fromYear%*12+%fromMonth%)+1)::real)::real
+           ( 12/((%toYear%*12+%toMonth%) - 
+             (%fromYear%*12+%fromMonth%)+1)::real)::real 
           AS incidence
         FROM contains_area_case, areas_with_types AS awt, cases
-        WHERE contains_area_case.area_id=awt.area_id
+        WHERE contains_area_case.area_id=awt.area_id 
           AND contains_area_case.case_id=cases.case_id
           AND case_type_id = types_with_attributes.case_type_id
           AND types_with_attributes.attname LIKE 'Serogroup'
           AND types_with_attributes.attvalue IN (%SEROGROUPS%)
-          AND CAST(to_char(reportdate, 'YYYY') AS int) * 12
+          AND CAST(to_char(reportdate, 'YYYY') AS int) * 12 
                + CAST(to_char(reportdate, 'MM') AS int)
-              BETWEEN %fromYear%*12+%fromMonth%
+              BETWEEN %fromYear%*12+%fromMonth% 
                 AND %toYear%*12+%toMonth%
           AND awt.tier=%INCITIER%
         GROUP BY awt.area_id, awt.the_geom, population
@@ -292,12 +292,12 @@ MAP
         ORDER BY incidence DESC
       ) AS sub
     ) AS foo USING SRID=4326 USING UNIQUE oid"
-    STATUS ON
+    STATUS ON 
     TYPE POLYGON
     PROJECTION
       "init=epsg:4326"
     END
-
+   
     CLASS
      NAME "Annual incidence"
      EXPRESSION (0)
@@ -341,7 +341,7 @@ MAP
       COLOR 0 51 255
     END
   END #Layer incidence
-
+  
   LAYER #borders
     DUMP TRUE
     NAME borders_default
@@ -356,14 +356,14 @@ MAP
     CONNECTION "user=apache password=DMmnc dbname=epidegis_works host=localhost"
     DATA "the_geom FROM (
       SELECT areas.oid, the_geom, areas.identifier AS areaname,
-        area_types.tier AS depth
-        FROM areas NATURAL JOIN area_types
+        area_types.tier AS depth 
+        FROM areas NATURAL JOIN area_types 
         WHERE tier=%BORDERTIER% OR tier=2
-        )
+        ) 
       AS foo USING SRID=4326 USING UNIQUE oid"
     #FILTER "(area_types.area_type_id='4|5')"
     SYMBOLSCALE 3000000
-    STATUS ON
+    STATUS ON 
     TYPE POLYGON
     PROJECTION
       "init=epsg:4326"
@@ -415,7 +415,7 @@ MAP
       END
 		END
   END #Layer borders
-
+  
   LAYER #rivers
     METADATA
       "wms_title" "Rivers"
@@ -425,7 +425,7 @@ MAP
     CONNECTION "user=apache password=DMmnc dbname=epidegis_works host=localhost"
 #DEBUG ON
     DATA "the_geom FROM rivers AS foo USING SRID=4326"
-    STATUS OFF
+    STATUS OFF 
     TYPE LINE
     PROJECTION
       "init=epsg:4326"
@@ -435,7 +435,7 @@ MAP
      SIZE 0
     END
   END #Layer rivers
-
+  
   LAYER
     NAME casetypes
     #GROUP "query"
@@ -448,18 +448,18 @@ MAP
     END
     CONNECTIONTYPE postgis
     CONNECTION "user=apache password=DMmnc dbname=epidegis_works host=localhost"
-    DATA "the_geom from (
+    DATA "the_geom from ( 
     SELECT case_id AS oid, the_geom, nice_identifier AS finetype
         FROM cases_random NATURAL JOIN case_types_nrzm
-          WHERE
-            CAST(to_char(reportdate, 'YYYY') AS int) * 12
+          WHERE 
+            CAST(to_char(reportdate, 'YYYY') AS int) * 12 
               + CAST(to_char(reportdate, 'MM') AS int)
-              BETWEEN %fromYear%*12+%fromMonth%
+              BETWEEN %fromYear%*12+%fromMonth% 
                 AND %toYear%*12+%toMonth%
-            AND identifier IN (%CASETYPES%)
+            AND identifier IN (%CASETYPES%) 
             AND age BETWEEN %fromAge% AND %toAge%
     ) AS foo USING SRID=4326 USING UNIQUE oid"
-
+    
     STATUS ON
 #DEBUG ON
    TYPE POINT
@@ -467,19 +467,19 @@ MAP
    MINSCALE 500000
    #kleinerer Wert -> Ebene verschwindet beim rauszoomen eher
    MAXSCALE 4000000
-
+   
    PROJECTION
      "init=epsg:4326"
    END
    #TRANSPARENCY 50
-   SYMBOLSCALE 50000000
+   SYMBOLSCALE 50000000 
     CLASS
      NAME " Finetypes:"
      EXPRESSION (0)
     END
     CLASS
       NAME ' Selected finetype'
-      SYMBOL 'circle'
+      SYMBOL 'circle' 		
       MINSCALE 500000
       MAXSCALE 4000000
       MINSIZE 23
@@ -488,7 +488,7 @@ MAP
       OUTLINECOLOR 0 0 0
     END
   END
-
+  
   LAYER
     #GROUP "query"
     TEMPLATE "DUMMY"
@@ -500,16 +500,16 @@ MAP
     END
     CONNECTIONTYPE postgis
     CONNECTION "user=apache password=DMmnc dbname=epidegis_works host=localhost"
-#SELECT case_id AS oid, setSrid(translate(the_geom,random(),random(),random()),4326) AS the_geom, identifier, attvalue, attname
-    DATA "the_geom from (
+#SELECT case_id AS oid, setSrid(translate(the_geom,random(),random(),random()),4326) AS the_geom, identifier, attvalue, attname 
+    DATA "the_geom from ( 
     SELECT case_id AS oid, the_geom, attvalue AS serogroup, reportdate
         FROM cases_random NATURAL JOIN types_with_attributes
-        WHERE
-          CAST(to_char(reportdate, 'YYYY') AS int) * 12
+        WHERE 
+          CAST(to_char(reportdate, 'YYYY') AS int) * 12 
             + CAST(to_char(reportdate, 'MM') AS int)
-            BETWEEN %fromYear%*12+%fromMonth%
+            BETWEEN %fromYear%*12+%fromMonth% 
               AND %toYear%*12+%toMonth%
-          AND attname='Serogroup'
+          AND attname='Serogroup' 
           AND attvalue IN (%SEROGROUPS%)
           AND age BETWEEN %fromAge% AND %toAge%
     ) AS foo USING SRID=4326 USING UNIQUE oid"
@@ -517,11 +517,11 @@ MAP
    TYPE POINT
 
    SYMBOLSCALE 3000000
-
+   
    PROJECTION
      "init=epsg:4326"
    END
-    CLASSITEM "Serogroup"
+    CLASSITEM "Serogroup"    
     CLASS
      NAME "Serogroups"
      EXPRESSION (0)
@@ -533,7 +533,7 @@ MAP
       MAXSCALE 15000000
       NAME 'B'
       EXPRESSION "B"
-      SYMBOL 'triangle'
+      SYMBOL 'triangle' 		
       COLOR 255 0 255
       OUTLINECOLOR 0 0 0
     END
@@ -544,7 +544,7 @@ MAP
       MAXSCALE 15000000
       NAME 'C'
       EXPRESSION "C"
-      SYMBOL 'triangle'
+      SYMBOL 'triangle' 		
       COLOR 255 255 0
       OUTLINECOLOR 0 0 0
     END
@@ -555,7 +555,7 @@ MAP
       MAXSCALE 15000000
       NAME 'Y'
       EXPRESSION "Y"
-      SYMBOL 'triangle'
+      SYMBOL 'triangle' 		
       COLOR 0 255 0
       OUTLINECOLOR 0 0 0
     END
@@ -566,7 +566,7 @@ MAP
       MAXSCALE 15000000
       NAME 'W135'
       EXPRESSION "W135"
-      SYMBOL 'square'
+      SYMBOL 'square' 		
       COLOR 255 0 255
       OUTLINECOLOR 0 0 0
     END
@@ -577,7 +577,7 @@ MAP
       MAXSCALE 15000000
       NAME '29E'
       EXPRESSION "29E"
-      SYMBOL 'square'
+      SYMBOL 'square' 		
       COLOR 255 255 0
       OUTLINECOLOR 0 0 0
     END
@@ -588,7 +588,7 @@ MAP
       MAXSCALE 15000000
       NAME 'A'
       EXPRESSION "A"
-      SYMBOL 'square'
+      SYMBOL 'square' 		
       COLOR 0 255 0
       OUTLINECOLOR 0 0 0
     END
@@ -598,13 +598,13 @@ MAP
       MINSCALE 1000
       MAXSCALE 15000000
       NAME 'others'
-      SYMBOL 'star'
+      SYMBOL 'star' 		
       COLOR 255 0 0
       OUTLINECOLOR 0 255 0
     END
   END
-
-
+  
+  
   LAYER
     DUMP TRUE
     TEMPLATE "DUMMY"
@@ -622,9 +622,9 @@ MAP
 #UNITS METERS
 #  SIZEUNITS PIXELS
 #SYMBOLSCALE 1200000
-
+		
     LABELITEM "name"
-
+    
 	  METADATA
       "WMS_SRS"    "epsg:4326"
       "WMS_TITLE"    "Cities"
@@ -633,10 +633,10 @@ MAP
     PROJECTION
       "init=epsg:4326"
     END
-
+      
    LABELMAXSCALE 15000000
    SYMBOLSCALE 1000
-
+		
      CLASS
        NAME "Cities"
       EXPRESSION (0)
@@ -647,7 +647,7 @@ MAP
      END
      CLASS	#over 1M citizens
       EXPRESSION ([population] > 1000000)
-      NAME 'over 1 Million'
+      NAME 'over 1 Million' 
       MINSCALE 1000
       MAXSCALE 15000000
       STYLE
@@ -655,7 +655,7 @@ MAP
         MINSIZE 8
         MAXSIZE 16
         COLOR 255 0 0 #169 169 169
-        OUTLINECOLOR 0 0 0
+        OUTLINECOLOR 0 0 0 
       END
       #STYLE
       #  SYMBOL 'square'
@@ -681,11 +681,11 @@ MAP
         PARTIALS FALSE
       END
 		END
-
+	  
     CLASS #500K - 1M citizens
       EXPRESSION ([population] > 500000 AND [population] <= 1000000)
       #SYMBOL 'square'
-      NAME '500000 - 1 Million'
+      NAME '500000 - 1 Million' 
       MINSCALE 1000
       MAXSCALE 15000000
       #MINSIZE 6
@@ -696,7 +696,7 @@ MAP
         MINSIZE 9
         MAXSIZE 11
         COLOR 255 0 0 #169 169 169
-        OUTLINECOLOR 0 0 0
+        OUTLINECOLOR 0 0 0 
       END
       STYLE
         SYMBOL 'circle'
@@ -721,10 +721,10 @@ MAP
         PARTIALS FALSE
       END
 		END
-
+    
     CLASS #100K - 500K citizens
       EXPRESSION ([population] > 100000 AND [population] <= 500000)
-      NAME '100000 - 500000'
+      NAME '100000 - 500000' 
       MINSCALE 1000
       MAXSCALE 2500000
       MINSIZE 7
@@ -740,7 +740,7 @@ MAP
         #POSITION ur
         #OFFSET 1 1
         MINDISTANCE 10
-
+        
         #BACKGROUNDCOLOR 255 255 255
         OUTLINECOLOR 254 254 254
         COLOR 0 0 0
@@ -749,10 +749,10 @@ MAP
       END
       OUTLINECOLOR 0 0 0
 		END
-
+    
     CLASS #50K - 100K citizens
       EXPRESSION ([population] > 20000 AND [population] <= 100000)
-      NAME '20000 - 100000'
+      NAME '20000 - 100000' 
       MINSCALE 1000
       MAXSCALE 500000
       MINSIZE 5
@@ -768,7 +768,7 @@ MAP
         #POSITION ur
         #OFFSET 1 1
         MINDISTANCE 10
-
+        
         #BACKGROUNDCOLOR 255 255 255
         OUTLINECOLOR 254 254 254
         COLOR 0 0 0
@@ -777,10 +777,10 @@ MAP
       END
       OUTLINECOLOR 0 0 0
 		END
-
+    
     CLASS #20K citizens and below
       EXPRESSION ([population] <= 20000)
-      NAME 'less than 20000'
+      NAME 'less than 20000' 
       MINSCALE 1000
       MAXSCALE 300000
       MINSIZE 3
@@ -796,7 +796,7 @@ MAP
         #POSITION ur
         #OFFSET 1 1
         MINDISTANCE 10
-
+        
         #BACKGROUNDCOLOR 255 255 255
         OUTLINECOLOR 254 254 254
         COLOR 0 0 0
@@ -804,8 +804,8 @@ MAP
         PARTIALS FALSE
       END
 		END
-
-    #CLASS
+    
+    #CLASS	
     #  EXPRESSION "3"
     #  MINSCALE 1000
     #  MAXSCALE 200000
@@ -814,8 +814,8 @@ MAP
     #  COLOR 255 255 255 #169 169 169
     #  OUTLINECOLOR 0 0 0
     #END
-
-    #CLASS
+    
+    #CLASS	
     #  EXPRESSION "4"
     #  MINSCALE 1000
     #  MAXSCALE 200000
@@ -824,7 +824,7 @@ MAP
     #  COLOR 0 255 0 #169 169 169
     #END
   END
-
+  
   LAYER
     NAME citynames_disabled
     STATUS ON
@@ -841,7 +841,7 @@ MAP
       "WMS_SRS"    "epsg:4326"
       "WMS_TITLE"    "City names"
       "WMS_FEATURE_INFO_MIME_TYPE"    "text/html"
-
+    
     END
     PROJECTION
      "init=epsg:4326"
@@ -891,7 +891,7 @@ MAP
       END
   END
 
-  CLASS
+  CLASS			
    EXPRESSION ('[pc]' = '2')
    MINSCALE 0
     MAXSCALE 1000000
@@ -913,8 +913,8 @@ MAP
         #FORCE TRUE
       END
     END
-
-  CLASS
+      
+  CLASS			
    EXPRESSION ('[pc]' = '3')
    MINSCALE 0
     MAXSCALE 450000
@@ -935,10 +935,10 @@ MAP
         PARTIALS FALSE
         #FORCE TRUE
       END
-
+      
       END
-
-  CLASS
+      
+  CLASS			
    EXPRESSION ('[pc]' = '4')
    MINSCALE 0
     MAXSCALE 225000
@@ -958,10 +958,10 @@ MAP
         ANTIALIAS FALSE
         PARTIALS FALSE
         #FORCE TRUE
-      END
-    END
+      END	
+    END		
   END
-
+  
   LAYER #cluster_perimeter
     GROUP cluster
     NAME cluster_perimeter_disabled
@@ -980,14 +980,14 @@ MAP
     DATA "the_geom FROM (
      SELECT a.area_id AS oid, ct.nice_identifier AS finetype,
        sc.startdate, sc.enddate, sc.pvalue,
-       CASE
+       CASE 
          WHEN circleradius=0 THEN
           (|/(area(transform(a.the_geom,31467))/pi()))/1000 || ' km'
          ELSE
            sc.circleradius || ' km'
        END AS circleradius,
        ct.case_type_id%3 AS color,
-       CASE
+       CASE 
          WHEN circleradius=0 THEN
            transform(
              setSRID(
@@ -1016,20 +1016,20 @@ MAP
         AND pvalue<=0.05
         AND sc.case_type_id=ct.case_type_id
         AND analysisdate IN (
-          SELECT analysisdate
-            FROM satscan_clusters
+          SELECT analysisdate 
+            FROM satscan_clusters 
             WHERE satscan_job_id=82
-            GROUP BY analysisdate
-            ORDER BY analysisdate DESC
+            GROUP BY analysisdate 
+            ORDER BY analysisdate DESC 
             LIMIT 1)
-      )
+      ) 
       AS foo USING SRID=4326 USING UNIQUE oid"
-    STATUS ON
+    STATUS ON 
     TYPE POLYGON
     PROJECTION
       "init=epsg:4326"
     END
-    LABELITEM "finetype"
+    LABELITEM "finetype" 
     CLASSITEM "color"
     CLASS
       EXPRESSION "0"
@@ -1088,7 +1088,7 @@ MAP
       END
     END
   END #Layer cluster_perimeter
-
+  
   LAYER
     GROUP cluster
     TEMPLATE "DUMMY"
@@ -1100,21 +1100,21 @@ MAP
     END
     CONNECTIONTYPE postgis
     CONNECTION "user=apache password=DMmnc dbname=epidegis_works host=localhost"
-    DATA "the_geom from (
-     SELECT c.case_id AS oid, c.the_geom, ct.identifier,
+    DATA "the_geom from ( 
+     SELECT c.case_id AS oid, c.the_geom, ct.identifier, 
        ct.case_type_id%3 AS color
-      FROM cases_random AS c, satscan_clusters AS sc, satscan_cluster_cases AS scc,
+      FROM cases_random AS c, satscan_clusters AS sc, satscan_cluster_cases AS scc, 
         case_types AS ct
       WHERE c.case_type_id = ct.case_type_id AND
         sc.satscan_cluster_id = scc.satscan_cluster_id AND
-        c.case_id = scc.case_id
+        c.case_id = scc.case_id    
         AND pvalue<=0.05
         AND analysisdate IN (
-          SELECT analysisdate
-            FROM satscan_clusters
+          SELECT analysisdate 
+            FROM satscan_clusters 
             WHERE satscan_job_id=82
-            GROUP BY analysisdate
-            ORDER BY analysisdate DESC
+            GROUP BY analysisdate 
+            ORDER BY analysisdate DESC 
             LIMIT 1)
     ) AS foo USING SRID=4326 USING UNIQUE oid"
     STATUS ON
@@ -1127,32 +1127,32 @@ MAP
       EXPRESSION "0"
       COLOR 255 0 255
       OUTLINECOLOR 0 0 0
-      SYMBOL 'star'
+      SYMBOL 'star' 		
       SIZE 10
     END
     CLASS
       EXPRESSION "1"
       COLOR 255 255 0
       OUTLINECOLOR 0 0 0
-      SYMBOL 'star'
+      SYMBOL 'star' 		
       SIZE 10
     END
     CLASS
       EXPRESSION "2"
       COLOR 255 0 0
       OUTLINECOLOR 0 0 0
-      SYMBOL 'star'
+      SYMBOL 'star' 		
       SIZE 10
     END
     CLASS
       EXPRESSION "3"
       COLOR 0 255 0
       OUTLINECOLOR 0 0 0
-      SYMBOL 'star'
+      SYMBOL 'star' 		
       SIZE 10
     END
   END
-
+  
   LAYER #cluster_perimeter
     GROUP clusterretro
     NAME clusterretroperimeter_disabled
@@ -1171,14 +1171,14 @@ MAP
      SELECT a.area_id AS oid, ct.nice_identifier AS finetype,
        a.identifier AS center,
        sc.startdate, sc.enddate, sc.pvalue,
-       CASE
+       CASE 
          WHEN circleradius=0 THEN
           (|/(area(transform(a.the_geom,31467))/pi()))/1000 || ' km'
          ELSE
            sc.circleradius || ' km'
        END AS circleradius,
        ct.case_type_id%3 AS color,
-       CASE
+       CASE 
          WHEN circleradius=0 THEN
            transform(
              setSRID(
@@ -1208,14 +1208,14 @@ MAP
         AND sc.case_type_id=ct.case_type_id
         AND analysisdate='%CLUSTERANALYSISDATE211%'
         AND satscan_job_id=211
-      )
+      ) 
       AS foo USING SRID=4326 USING UNIQUE oid"
-    STATUS ON
+    STATUS ON 
     TYPE POLYGON
     PROJECTION
       "init=epsg:4326"
     END
-    LABELITEM "finetype"
+    LABELITEM "finetype" 
     CLASSITEM "color"
     CLASS
       EXPRESSION "0"
@@ -1274,7 +1274,7 @@ MAP
       END
     END
   END #Layer cluster_perimeter
-
+  
   LAYER
     GROUP clusterretro
     TEMPLATE "DUMMY"
@@ -1286,14 +1286,14 @@ MAP
     END
     CONNECTIONTYPE postgis
     CONNECTION "user=apache password=DMmnc dbname=epidegis_works host=localhost"
-    DATA "the_geom from (
-     SELECT c.case_id AS oid, c.the_geom, ct.identifier,
+    DATA "the_geom from ( 
+     SELECT c.case_id AS oid, c.the_geom, ct.identifier, 
        ct.case_type_id%3 AS color
-      FROM cases_random AS c, satscan_clusters AS sc, satscan_cluster_cases AS scc,
+      FROM cases_random AS c, satscan_clusters AS sc, satscan_cluster_cases AS scc, 
         case_types AS ct
       WHERE c.case_type_id = ct.case_type_id AND
         sc.satscan_cluster_id = scc.satscan_cluster_id AND
-        c.case_id = scc.case_id
+        c.case_id = scc.case_id    
         AND pvalue<=0.05
         AND analysisdate='%CLUSTERANALYSISDATE211%'
         AND satscan_job_id=211
@@ -1308,32 +1308,32 @@ MAP
       EXPRESSION "0"
       COLOR 255 0 255
       OUTLINECOLOR 0 0 0
-      SYMBOL 'star'
+      SYMBOL 'star' 		
       SIZE 10
     END
     CLASS
       EXPRESSION "1"
       COLOR 255 255 0
       OUTLINECOLOR 0 0 0
-      SYMBOL 'star'
+      SYMBOL 'star' 		
       SIZE 10
     END
     CLASS
       EXPRESSION "2"
       COLOR 255 0 0
       OUTLINECOLOR 0 0 0
-      SYMBOL 'star'
+      SYMBOL 'star' 		
       SIZE 10
     END
     CLASS
       EXPRESSION "3"
       COLOR 0 255 0
       OUTLINECOLOR 0 0 0
-      SYMBOL 'star'
+      SYMBOL 'star' 		
       SIZE 10
     END
   END
-
+  
   LAYER #cluster_perimeter
     NAME caseperimeter_disabled
     TEMPLATE "DUMMY"
@@ -1346,9 +1346,9 @@ MAP
     CONNECTION "user=apache password=DMmnc dbname=epidegis_works host=localhost"
     DATA "the_geom FROM (
      SELECT case_id AS oid, the_geom, count
-      FROM count_cases_in_perimeter ORDER BY COUNT )
+      FROM count_cases_in_perimeter ORDER BY COUNT ) 
       AS foo USING SRID=4326 USING UNIQUE oid"
-    STATUS ON
+    STATUS ON 
     TYPE POLYGON
     PROJECTION
       "init=epsg:4326"

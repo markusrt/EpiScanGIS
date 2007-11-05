@@ -37,8 +37,8 @@ MAP
     MINSCALE 1000
     MAXSCALE 15000000
     METADATA
-      "wms_title" "EpiDeGIS Web Surveillance WMS"
-      "wms_onlineresource" "http://132.187.144.10/cgi-bin/mapserv?map=../maps/fmv7.map&"
+      "wms_title" "EpiScanGIS Web Surveillance WMS"
+      #"wms_onlineresource" "http://132.187.144.10/cgi-bin/mapserv?map=../maps/fmv7.map&"
       "wms_srs" "EPSG:4326 EPSG:31467"
     END
   END
@@ -106,90 +106,17 @@ MAP
   IMAGECOLOR     255 255 255
   
   PROJECTION
-    "init=epsg:4326"
-  END
-  
-  
-  LAYER
-    NAME "topography_disabled"
-    STATUS ON
-    CONNECTIONTYPE postgis
-    CONNECTION "user=apache password=DMmnc dbname=epidegis_works host=localhost"
-    DATA "the_geom from topography"
-    TYPE POLYGON
-    PROJECTION "init=epsg:4326"
-    END
-    METADATA
-      "WMS_SRS"    "epsg:4326"
-      "WMS_TITLE"    "Topography"
-      "WMS_FEATURE_INFO_MIME_TYPE"    "text/html"
-    END
-    CLASSITEM "hypytype"
-    CLASS
-      NAME "Lowlands"
-      EXPRESSION "1"
-      SYMBOL 0
-      COLOR 255 255 255
-    END
-    CLASS
-      NAME "Lowlands"
-      EXPRESSION "2"
-      SYMBOL 0
-      COLOR 204 253 161
-    END
-    CLASS
-      NAME "Highland"
-      EXPRESSION "3"
-      SYMBOL 0
-      COLOR 215 200 145
-    END
-    CLASS
-      NAME "Alps"
-      EXPRESSION "4"
-      SYMBOL 0
-      COLOR 173 136 77
-    END
-    CLASS
-      NAME "High mountains"
-      EXPRESSION "5"
-      SYMBOL 0
-      COLOR 115 38 0
-    END
-  END
-  
-  LAYER #cloudtest
-    METADATA
-      "wms_title" "Wolkentest"
-    END
-    NAME cloudtest_disabled
-    CONNECTIONTYPE postgis
-    CONNECTION "user=apache password=DMmnc dbname=epidegis_works host=localhost"
-    DATA "the_geom from (
-      SELECT case_id AS oid, the_geom
-       FROM cases_random NATURAL JOIN types_with_attributes
-          WHERE ( reportdate BETWEEN to_timestamp('%FROMDATE%', 'MMYYYY') 
-                AND to_timestamp('%TODATE%', 'MMYYYY'))
-                AND attname='Serogruppe' 
-                AND attvalue IN (%SEROGROUP%) ) AS foo USING SRID=4326 USING UNIQUE oid"
-    STATUS ON 
-    TYPE POINT
-    PROJECTION
-      "init=epsg:4326"
-    END
-    TRANSPARENCY 50
-    CLASS
-#STYLE
-#       SYMBOL "cloud1"
-#       SIZE 20
-#     END
-      STYLE
-        SYMBOL "cloud3"
-        SIZE 30
-      END
-    END
+    "proj=longlat"
+    "ellps=WGS84"
+    "datum=WGS84"
   END
   
   LAYER #Population density
+    PROJECTION
+      "proj=longlat"
+      "ellps=WGS84"
+      "datum=WGS84"
+    END
     TEMPLATE "DUMMY"
     DUMP TRUE
     METADATA
@@ -206,9 +133,6 @@ MAP
       ) AS foo USING SRID=4326 USING UNIQUE oid"
     STATUS ON 
     TYPE POLYGON
-    PROJECTION
-      "init=epsg:4326"
-    END
     
     CLASS
      NAME "Population density"
@@ -244,12 +168,55 @@ MAP
      COLOR 51 51 51
     END
   END #Layer Population density
+
+  LAYER #incidence_finetype
+    TEMPLATE "DUMMY"
+    METADATA
+      "wms_title" "Annual incidence / finetype"
+    END
+    NAME incidenceft
+    CONNECTIONTYPE postgis
+    CONNECTION "user=apache password=DMmnc dbname=epidegis_works host=localhost"
+    DATA "the_geom from (
+      SELECT * 
+        FROM episcangis_incidence_finetype_per_area
+         ( %fromMonth%, %fromYear%, %toMonth%, %toYear%, %CASETYPES%, %INCITIERFT%) 
+          AS (oid int4, the_geom geometry, incidence real, area varchar)
+    ) AS foo USING SRID=4326 USING UNIQUE oid"
+    STATUS ON 
+    TYPE POLYGON
+   
+    CLASS
+     EXPRESSION ([incidence] <= 0)
+     COLOR 254 254 254
+    END
+    CLASS
+     EXPRESSION (([incidence] > 0 AND [incidence] <= 0.3))
+     COLOR  0 220 220
+    END
+    CLASS
+     EXPRESSION (([incidence] > 0.3 AND [incidence] <= 0.6))
+     COLOR 0 190 190
+    END
+    CLASS
+     EXPRESSION (([incidence] > 0.6 AND [incidence] <= 1.2))
+     COLOR 0 143 143
+    END
+    CLASS
+     EXPRESSION (([incidence] > 1.2 AND [incidence] <= 2.4))
+     COLOR 0 92 92
+    END
+    CLASS
+     EXPRESSION ([incidence] > 2.4)
+      COLOR 0 41 41
+    END
+  END #Layer incidence_finetype
   
   LAYER #incidence
     TEMPLATE "DUMMY"
     DUMP TRUE
     METADATA
-      "wms_title" "Annual incidence of selected area"
+      "wms_title" "Annual incidence"
     END
     NAME incidence
     CONNECTIONTYPE postgis
@@ -311,17 +278,14 @@ MAP
   END #Layer incidence
   
   LAYER #borders
-    DUMP TRUE
     NAME borders_default
-    DEBUG ON
     METADATA
       "wms_title" "Borders"
     END
     CONNECTIONTYPE postgis
     CONNECTION "user=apache password=DMmnc dbname=epidegis_works host=localhost"
     DATA "the_geom FROM (
-      SELECT areas.oid, the_geom, areas.identifier AS areaname,
-        area_types.tier AS depth 
+      SELECT areas.oid, the_geom, area_types.tier AS depth 
         FROM areas NATURAL JOIN area_types 
         WHERE tier=%BORDERTIER% OR tier=2
         ) 
@@ -336,12 +300,11 @@ MAP
       EXPRESSION ([depth] = 2)
       STYLE
         OUTLINECOLOR 0 0 0
-        SYMBOL 'circle'
+        SYMBOL 'border'
         MAXSIZE 3
       END
     END
     CLASS
-      TEMPLATE "DUMMY"
       EXPRESSION ([depth] > 2)
       STYLE
       OUTLINECOLOR 0 0 0
@@ -379,7 +342,7 @@ MAP
     TOLERANCE 10
 
     METADATA
-  "wms_title" "Finetypes"
+     "wms_title" "Finetypes"
     END
     CONNECTIONTYPE postgis
     CONNECTION "user=apache password=DMmnc dbname=epidegis_works host=localhost"
@@ -417,8 +380,8 @@ MAP
       SYMBOL 'circle' 		
       MINSCALE 500000
       MAXSCALE 6000000
-      MINSIZE 13
-      MAXSIZE 31
+      MINSIZE 7
+      MAXSIZE 15
       COLOR 255 180 30
       OUTLINECOLOR 0 0 0
     END

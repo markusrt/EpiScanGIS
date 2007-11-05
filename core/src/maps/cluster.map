@@ -1,0 +1,333 @@
+#-------------------------------------------------------------------------------
+# EpiScanGIS Web Surveillance, UMN Mapserver (WMS) MAP file
+#
+# Copyright �2005 Markus Reinhardt - All Rights Reserved.
+# Author: Markus Reinhardt <m.reinhardt[at]bitmap-friends.de>
+#-------------------------------------------------------------------------------
+
+
+
+#-------------------------------------------------------------------------------
+# cold cyan websafe gradient (5 values)
+# COLOR 0 255 255
+# COLOR 0 204 255
+# COLOR 0 153 255
+# COLOR 0 102 255
+# COLOR 0 51 255
+# 
+# approx. harmonising colors:
+#  COLOR 255 0 255
+#  COLOR 255 255 0
+#  COLOR 255 102 0
+#  COLOR 255 0 0
+#-------------------------------------------------------------------------------
+
+MAP
+  NAME EPIDEGIS_WEB_SURVEILLANCE
+  #EXTENT 3237147 5579525 3588719 5834935
+  #EXTENT 2886610 5230448 4285190 6130010
+  #EXTENT 3280173.17737989 5238018.88155289 3921337.60817421 6103262.57144029
+  EXTENT 3280173.25 5238019 3921337.5 6103262.5
+#EXTENT -180 -90 180 90
+  FONTSET "fonts/fonts.list"
+  SYMBOLSET "symbols/symbols35.sym" 
+  DEBUG OFF
+  WEB
+    log "epidegis-map.log"
+    MINSCALE 1000
+    MAXSCALE 15000000
+    METADATA
+      "wms_title" "EpiDeGIS Web Surveillance WMS"
+      "wms_onlineresource" "http://132.187.144.10/cgi-bin/mapserv?map=../maps/fmv7.map&"
+      "wms_srs" "EPSG:4326 EPSG:31467"
+    END
+  END
+
+  OUTPUTFORMAT
+    NAME gif
+    DRIVER "GD/GIF"
+    MIMETYPE "image/gif"
+    IMAGEMODE PC256
+    EXTENSION "gif"
+  END
+
+  OUTPUTFORMAT
+    NAME jpeg
+    DRIVER "GD/JPEG"
+    FORMATOPTION "QUALITY=95"
+    MIMETYPE "image/jpeg"
+    IMAGEMODE RGB
+    EXTENSION "jpg"
+  END
+  
+  OUTPUTFORMAT
+    NAME png
+    DRIVER "GD/PNG"
+    MIMETYPE "image/png"
+    IMAGEMODE RGB
+    EXTENSION "png"
+  END
+  
+  IMAGETYPE gif
+  
+  LEGEND
+    KEYSIZE 12 12
+    KEYSPACING 3 3
+    LABEL
+      ANTIALIAS true
+      TYPE TRUETYPE 
+      FONT "verdana"
+      SIZE 8 
+      COLOR 0 0 89
+    END
+    IMAGECOLOR 238 238 238
+    STATUS OFF
+  END
+  
+  SCALEBAR
+    IMAGECOLOR 255 255 255
+    LABEL
+      COLOR 0 0 0
+      SIZE TINY
+    END
+    STYLE 0
+    SIZE 120 2
+    COLOR 0 0 0
+    BACKGROUNDCOLOR 232 239 250
+    UNITS KILOMETERS
+    INTERVALS 3
+    TRANSPARENT TRUE
+    STATUS EMBED
+    POSITION LR
+  END
+
+  SIZE  460 500
+  
+  IMAGECOLOR     255 255 255
+  
+  PROJECTION
+    "init=epsg:4326"
+  END
+  
+  LAYER #borders
+    DUMP TRUE
+    NAME borders_default
+    DEBUG ON
+    METADATA
+      "wms_title" "Borders"
+    END
+    CONNECTIONTYPE postgis
+    CONNECTION "user=apache password=DMmnc dbname=epidegis_works host=localhost"
+    DATA "the_geom FROM (
+      SELECT areas.oid, the_geom, areas.identifier AS areaname,
+        area_types.tier AS depth 
+        FROM areas NATURAL JOIN area_types 
+        WHERE tier=%BORDERTIER% OR tier=2
+        ) 
+      AS foo USING SRID=4326 USING UNIQUE oid"
+    SYMBOLSCALE 3000000
+    STATUS ON 
+    TYPE POLYGON
+    PROJECTION
+      "init=epsg:4326"
+    END
+    CLASS
+      EXPRESSION ([depth] = 2)
+      STYLE
+        OUTLINECOLOR 0 0 0
+        SYMBOL 'circle'
+        MAXSIZE 3
+      END
+    END
+    CLASS
+      TEMPLATE "DUMMY"
+      EXPRESSION ([depth] > 2)
+      STYLE
+      OUTLINECOLOR 0 0 0
+      SYMBOL 'circle'
+      MAXSIZE 1
+      END
+    END
+  END #Layer borders
+  
+  LAYER #cluster_perimeter
+    GROUP singlecluster
+    NAME singlecluster_perimeter_disabled
+    TEMPLATE "DUMMY"
+    DEBUG ON
+    METADATA
+      "wms_title" "Cluster Perimeter"
+      "wms_layer_group" "/cluster"
+      "wms_group_title" "Living clusters"
+    END
+    CONNECTIONTYPE postgis
+    CONNECTION "user=apache password=DMmnc dbname=epidegis_works host=localhost"
+    DATA "the_geom FROM (
+    SELECT a.area_id AS oid, ct.nice_identifier AS finetype,
+       sc.startdate, sc.enddate, sc.pvalue,
+       CASE
+         WHEN circleradius=0 THEN
+          (|/(area(transform(a.the_geom,31467))/pi()))/1000 || ' km'
+         ELSE
+           sc.circleradius || ' km'
+       END AS circleradius,
+       ct.case_type_id%4 AS color,
+       CASE
+         WHEN circleradius=0 THEN
+           transform(
+             setSRID(
+               buffer(
+                 transform(centroid(a.the_geom),31467)
+                 ,|/(area(transform(a.the_geom,31467))/pi())
+               ),
+               31467
+             ),
+             4326
+           )
+         ELSE
+           transform(
+             setSRID(
+               buffer(
+                 transform(centroid(a.the_geom),31467)
+                 ,circleradius*1000
+               ),
+               31467
+             ),
+             4326
+           )
+      END AS the_geom,
+      episcangis_cases_per_cluster(sc.satscan_cluster_id) AS casecount,
+      episcangis_population_per_cluster(sc.satscan_cluster_id) AS population
+
+      FROM areas AS a, satscan_clusters AS sc, case_types_nrzm AS ct
+      WHERE a.area_id=sc.area_id
+        AND sc.case_type_id=ct.case_type_id
+        AND sc.satscan_cluster_id='%CLUSTERID%'
+      ) 
+      AS foo USING SRID=4326 USING UNIQUE oid"
+    STATUS ON 
+    TYPE POLYGON
+    PROJECTION
+      "init=epsg:4326"
+    END
+    LABELITEM "finetype" 
+    CLASSITEM "color"
+    CLASS
+      EXPRESSION "0"
+      OUTLINECOLOR 255 0 255
+      COLOR 220 0 220
+      SYMBOL 'schraffur'
+      SIZE 2
+      LABEL
+        TYPE TRUETYPE
+        FONT "arial-bold"
+        MINSIZE 10
+        MAXSIZE 15
+        OUTLINECOLOR 220 0 220
+        COLOR 0 0 0
+      END
+    END
+    CLASS
+      EXPRESSION "1"
+      OUTLINECOLOR 255 180 30
+      COLOR 255 180 30
+      SYMBOL 'schraffur'
+      SIZE 2
+      LABEL
+        TYPE TRUETYPE
+        FONT "arial-bold"
+        MINSIZE 10
+        MAXSIZE 15
+        OUTLINECOLOR 255 180 30
+        COLOR 0 0 0
+      END
+    END
+    CLASS
+      EXPRESSION "2"
+      OUTLINECOLOR 220 0 0
+      COLOR 220 0 0
+      SYMBOL 'schraffur'
+      SIZE 2
+      LABEL
+        TYPE TRUETYPE
+        FONT "arial-bold"
+        MINSIZE 10
+        MAXSIZE 15
+        OUTLINECOLOR 220 0 0
+        COLOR 0 0 0
+      END
+    END
+    CLASS
+      EXPRESSION "3"
+      OUTLINECOLOR 0 220 0
+      COLOR 0 220 0
+      SYMBOL 'schraffur'
+      SIZE 2
+      LABEL
+        TYPE TRUETYPE
+        FONT "arial-bold"
+        MINSIZE 10
+        MAXSIZE 15
+        OUTLINECOLOR 0 220 0
+        COLOR 0 0 0
+      END
+    END
+  END #Layer cluster_perimeter
+  
+  LAYER
+    GROUP singlecluster
+    TEMPLATE "DUMMY"
+    DUMP TRUE
+    NAME singlecluster_cases_disabled
+    METADATA
+      "wms_layer_group" "/cluster"
+      "wms_title" "Cluster cases"
+    END
+    CONNECTIONTYPE postgis
+    CONNECTION "user=apache password=DMmnc dbname=epidegis_works host=localhost"
+    DATA "the_geom from ( 
+     SELECT c.case_id AS oid, c.the_geom, ct.identifier, 
+       ct.case_type_id%4 AS color
+      FROM cases_random AS c, satscan_clusters AS sc, satscan_cluster_cases AS scc, 
+        case_types AS ct
+      WHERE c.case_type_id = ct.case_type_id AND
+        sc.satscan_cluster_id = scc.satscan_cluster_id AND
+        c.case_id = scc.case_id    
+        AND sc.satscan_cluster_id='%CLUSTERID%'
+    ) AS foo USING SRID=4326 USING UNIQUE oid"
+    STATUS ON
+    TYPE POINT
+    PROJECTION
+      "init=epsg:4326"
+    END
+    CLASSITEM "color"
+    CLASS
+      EXPRESSION "0"
+      COLOR 220 0 220
+      OUTLINECOLOR 0 0 0
+      SYMBOL 'star' 		
+      SIZE 12
+    END
+    CLASS
+      EXPRESSION "1"
+      COLOR 255 180 30
+      OUTLINECOLOR 0 0 0
+      SYMBOL 'star' 		
+      SIZE 12
+    END
+    CLASS
+      EXPRESSION "2"
+      COLOR 220 0 0
+      OUTLINECOLOR 0 0 0
+      SYMBOL 'star' 		
+      SIZE 12
+    END
+    CLASS
+      EXPRESSION "3"
+      COLOR 0 220 0
+      OUTLINECOLOR 0 0 0
+      SYMBOL 'star' 		
+      SIZE 12
+    END
+  END
+END # end of map file/object

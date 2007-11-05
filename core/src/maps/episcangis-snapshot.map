@@ -1,5 +1,5 @@
 #-------------------------------------------------------------------------------
-# EpiScanGIS Web Surveillance, UMN Mapserver (WMS) MAP file
+# EpiDeGIS Web Surveillance, UMN Mapserver (WMS) MAP file
 #
 # Copyright �2005 Markus Reinhardt - All Rights Reserved.
 # Author: Markus Reinhardt <m.reinhardt[at]bitmap-friends.de>
@@ -31,7 +31,7 @@ MAP
 #EXTENT -180 -90 180 90
   FONTSET "fonts/fonts.list"
   SYMBOLSET "symbols/symbols35.sym" 
-  DEBUG OFF
+  DEBUG ON
   WEB
     log "epidegis-map.log"
     MINSCALE 1000
@@ -249,7 +249,7 @@ MAP
     TEMPLATE "DUMMY"
     DUMP TRUE
     METADATA
-      "wms_title" "Annual incidence of selected area"
+      "wms_title" "Annual incidence"
     END
     NAME incidence
     CONNECTIONTYPE postgis
@@ -426,7 +426,7 @@ MAP
   
   LAYER
     #GROUP "query"
-    TEMPLATE "DUMMY"
+    #TEMPLATE "DUMMY"
     DUMP TRUE
     NAME serogroups_default
     TOLERANCE 10
@@ -537,7 +537,7 @@ MAP
   LAYER
     DUMP TRUE
     TEMPLATE "DUMMY"
-    NAME cities
+    NAME cities_default
     STATUS ON
     CONNECTIONTYPE postgis
     CONNECTION "user=apache password=DMmnc dbname=epidegis_works host=localhost"
@@ -548,9 +548,13 @@ MAP
       ) AS foo USING SRID=4326 USING UNIQUE oid"
     TOLERANCE 3
     TYPE POINT
+#UNITS METERS
+#  SIZEUNITS PIXELS
+#SYMBOLSCALE 1200000
+		
     LABELITEM "name"
     
-    METADATA
+	  METADATA
       "WMS_SRS"    "epsg:4326"
       "WMS_TITLE"    "Cities"
       "WMS_FEATURE_INFO_MIME_TYPE"    "application/vnd.ogc.gml"
@@ -558,140 +562,196 @@ MAP
     PROJECTION
       "init=epsg:4326"
     END
-
-    LABELMAXSCALE 15000000
-    SYMBOLSCALE 1000
-
-    CLASS
-      NAME "Cities"
-      EXPRESSION (0)
-    END
-
-    CLASS
-      NAME "(Population):"
-      EXPRESSION (0)
-    END
-
-    CLASS #20K citizens and below
-      EXPRESSION ([population] <= 20000)
-      NAME '0 - 20 k' 
-      MINSCALE 1000
-      MAXSCALE 300000
-      MINSIZE 3
-      MAXSIZE 5
-      SYMBOL 'circle'
-      COLOR 0 0 0
-      LABEL
-        TYPE TRUETYPE
-        FONT "arial-bold"
-        MINSIZE 8
-        POSITION AUTO
-        MINDISTANCE 10
-        OUTLINECOLOR 254 254 254
-        COLOR 0 0 0
-        PARTIALS FALSE
-      END
-    END
-    
-    CLASS #50K - 100K citizens
-      EXPRESSION ([population] > 20000 AND [population] <= 100000)
-      NAME '20 k - 100 k' 
-      MINSCALE 1000
-      MAXSCALE 500000
-      MINSIZE 5
-      MAXSIZE 7
-      SYMBOL 'circle'
-      COLOR 250 250 250
-      LABEL
-        TYPE TRUETYPE
-        FONT "arial-bold"
-        MINSIZE 8
-        POSITION AUTO
-        MINDISTANCE 10
-        OUTLINECOLOR 254 254 254
-        COLOR 0 0 0
-        PARTIALS FALSE
-      END
-      OUTLINECOLOR 0 0 0
-    END
-
-    CLASS #100K - 500K citizens
-      EXPRESSION ([population] > 100000 AND [population] <= 500000)
-      NAME '100 k - 500 k' 
-      MINSCALE 1000
-      MAXSCALE 2500000
-      MINSIZE 7
-      MAXSIZE 9
-      SYMBOL 'circle'
-      COLOR 255 0 0
-      LABEL
-        TYPE TRUETYPE
-        FONT "arial-bold"
-        MINSIZE 8
-        POSITION AUTO
-        MINDISTANCE 10
-        OUTLINECOLOR 254 254 254
-        COLOR 0 0 0
-        PARTIALS FALSE
-      END
-      OUTLINECOLOR 0 0 0
-    END
       
-    CLASS #500K - 1M citizens
-      EXPRESSION ([population] > 500000 AND [population] <= 1000000)
-      NAME '500 k - 1 M' 
-      MINSCALE 1000
-      MAXSCALE 15000000
-      STYLE
-        SYMBOL 'circle'
-        MINSIZE 9
-        MAXSIZE 11
-        COLOR 255 0 0
-        OUTLINECOLOR 0 0 0 
-      END
-      STYLE
-        SYMBOL 'circle'
-        MINSIZE 3
-        MAXSIZE 5
-        COLOR 0 0 0
-      END
-      LABEL
-        TYPE TRUETYPE
-        FONT "arial-bold"
-        MINSIZE 9
-        MAXSIZE 11
-        POSITION AUTO
-        MINDISTANCE -1
-        OUTLINECOLOR 254 254 254
-        COLOR 0 0 0
-        PARTIALS FALSE
-      END
-    END
+   LABELMAXSCALE 15000000
+   SYMBOLSCALE 1000
 		
-    CLASS #over 1M citizens
+     CLASS
+       NAME "Cities"
+      EXPRESSION (0)
+     END
+     CLASS
+       NAME "(Population):"
+      EXPRESSION (0)
+     END
+     CLASS	#over 1M citizens
       EXPRESSION ([population] > 1000000)
-      NAME '> 1 M' 
+      NAME 'over 1 Million' 
       MINSCALE 1000
       MAXSCALE 15000000
       STYLE
         SYMBOL 'square'
         MINSIZE 8
         MAXSIZE 16
-        COLOR 255 0 0
+        COLOR 255 0 0 #169 169 169
         OUTLINECOLOR 0 0 0 
       END
+      #STYLE
+      #  SYMBOL 'square'
+      #  MINSIZE 3
+      #  MAXSIZE 6
+      #  COLOR 0 0 0 #169 169 169
+      #END
       LABEL
+        #TYPE BITMAP
         TYPE TRUETYPE
         FONT "arial-bold"
         MINSIZE 10
         MAXSIZE 15
+        #MAXSIZE 15
         POSITION AUTO
+        #POSITION ur
+        #OFFSET 1 1
         MINDISTANCE 2
+        #BACKGROUNDCOLOR 255 255 255
         OUTLINECOLOR 230 230 230
         COLOR 0 0 0
+        #ANTIALIAS TRUE
         PARTIALS FALSE
       END
-    END
+		END
+	  
+    CLASS #500K - 1M citizens
+      EXPRESSION ([population] > 500000 AND [population] <= 1000000)
+      #SYMBOL 'square'
+      NAME '500000 - 1 Million' 
+      MINSCALE 1000
+      MAXSCALE 15000000
+      #MINSIZE 6
+      #COLOR 255 0 0 #169 169 169
+      #OUTLINECOLOR 0 0 0
+      STYLE
+        SYMBOL 'circle'
+        MINSIZE 9
+        MAXSIZE 11
+        COLOR 255 0 0 #169 169 169
+        OUTLINECOLOR 0 0 0 
+      END
+      STYLE
+        SYMBOL 'circle'
+        MINSIZE 3
+        MAXSIZE 5
+        COLOR 0 0 0 #169 169 169
+      END
+      LABEL
+        #TYPE BITMAP
+        TYPE TRUETYPE
+        FONT "arial-bold"
+        MINSIZE 9
+        MAXSIZE 11
+        POSITION AUTO
+        #POSITION ur
+        #OFFSET 1 1
+        MINDISTANCE -1
+        #BACKGROUNDCOLOR 255 255 255
+        OUTLINECOLOR 254 254 254
+        COLOR 0 0 0
+        #ANTIALIAS TRUE
+        PARTIALS FALSE
+      END
+		END
+    
+    CLASS #100K - 500K citizens
+      EXPRESSION ([population] > 100000 AND [population] <= 500000)
+      NAME '100000 - 500000' 
+      MINSCALE 1000
+      MAXSCALE 2500000
+      MINSIZE 7
+      MAXSIZE 9
+      SYMBOL 'circle'
+      COLOR 255 0 0 #169 169 169
+      LABEL
+        #TYPE BITMAP
+        TYPE TRUETYPE
+        FONT "arial-bold"
+        MINSIZE 8
+        POSITION AUTO
+        #POSITION ur
+        #OFFSET 1 1
+        MINDISTANCE 10
+        
+        #BACKGROUNDCOLOR 255 255 255
+        OUTLINECOLOR 254 254 254
+        COLOR 0 0 0
+        #ANTIALIAS TRUE
+        PARTIALS FALSE
+      END
+      OUTLINECOLOR 0 0 0
+		END
+    
+    CLASS #50K - 100K citizens
+      EXPRESSION ([population] > 20000 AND [population] <= 100000)
+      NAME '20000 - 100000' 
+      MINSCALE 1000
+      MAXSCALE 500000
+      MINSIZE 5
+      MAXSIZE 7
+      SYMBOL 'circle'
+      COLOR 250 250 250 #169 169 169
+      LABEL
+        #TYPE BITMAP
+        TYPE TRUETYPE
+        FONT "arial-bold"
+        MINSIZE 8
+        POSITION AUTO
+        #POSITION ur
+        #OFFSET 1 1
+        MINDISTANCE 10
+        
+        #BACKGROUNDCOLOR 255 255 255
+        OUTLINECOLOR 254 254 254
+        COLOR 0 0 0
+        #ANTIALIAS TRUE
+        PARTIALS FALSE
+      END
+      OUTLINECOLOR 0 0 0
+		END
+    
+    CLASS #20K citizens and below
+      EXPRESSION ([population] <= 20000)
+      NAME 'less than 20000' 
+      MINSCALE 1000
+      MAXSCALE 300000
+      MINSIZE 3
+      MAXSIZE 5
+      SYMBOL 'circle'
+      COLOR 0 0 0 #169 169 169
+      LABEL
+        #TYPE BITMAP
+        TYPE TRUETYPE
+        FONT "arial-bold"
+        MINSIZE 8
+        POSITION AUTO
+        #POSITION ur
+        #OFFSET 1 1
+        MINDISTANCE 10
+        
+        #BACKGROUNDCOLOR 255 255 255
+        OUTLINECOLOR 254 254 254
+        COLOR 0 0 0
+        #ANTIALIAS TRUE
+        PARTIALS FALSE
+      END
+		END
+    
+    #CLASS	
+    #  EXPRESSION "3"
+    #  MINSCALE 1000
+    #  MAXSCALE 200000
+    #  SYMBOL 'circle'
+    #  #SIZE 3
+    #  COLOR 255 255 255 #169 169 169
+    #  OUTLINECOLOR 0 0 0
+    #END
+    
+    #CLASS	
+    #  EXPRESSION "4"
+    #  MINSCALE 1000
+    #  MAXSCALE 200000
+    #  SYMBOL 'square'
+    #  #SIZE 1
+    #  COLOR 0 255 0 #169 169 169
+    #END
   END
   
   LAYER
@@ -840,20 +900,23 @@ MAP
       "wms_title" "Cluster Perimeter"
       "wms_layer_group" "/cluster"
       "wms_group_title" "Living clusters"
+      #"wms_feature_info_mime_type" "application/vnd.ogc.gml"
+      #"wms_style"        "mystyle"
+      #"wms_mystyle_sld"  "http://afs2b.informatik.uni-wuerzburg.de/ms4/mystyle.xml"
     END
     CONNECTIONTYPE postgis
     CONNECTION "user=apache password=DMmnc dbname=epidegis_works host=localhost"
     DATA "the_geom FROM (
-    SELECT a.area_id AS oid, ct.nice_identifier AS finetype,
+     SELECT a.area_id AS oid, ct.nice_identifier AS finetype,
        sc.startdate, sc.enddate, sc.pvalue,
-       CASE
+       CASE 
          WHEN circleradius=0 THEN
           (|/(area(transform(a.the_geom,31467))/pi()))/1000 || ' km'
          ELSE
            sc.circleradius || ' km'
        END AS circleradius,
-       ct.case_type_id%4 AS color,
-       CASE
+       ct.case_type_id%3 AS color,
+       CASE 
          WHEN circleradius=0 THEN
            transform(
              setSRID(
@@ -876,16 +939,18 @@ MAP
              ),
              4326
            )
-      END AS the_geom,
-      episcangis_cases_per_cluster(sc.satscan_cluster_id) AS casecount,
-      episcangis_population_per_cluster(sc.satscan_cluster_id) AS population
-
+      END AS the_geom
       FROM areas AS a, satscan_clusters AS sc, case_types_nrzm AS ct
       WHERE a.area_id=sc.area_id
         AND pvalue<=0.05
         AND sc.case_type_id=ct.case_type_id
-        AND analysisdate='%CLUSTERANALYSISDATE82%'
-
+        AND analysisdate IN (
+          SELECT analysisdate 
+            FROM satscan_clusters 
+            WHERE satscan_job_id=82
+            GROUP BY analysisdate 
+            ORDER BY analysisdate DESC 
+            LIMIT 1)
       ) 
       AS foo USING SRID=4326 USING UNIQUE oid"
     STATUS ON 
@@ -898,60 +963,56 @@ MAP
     CLASS
       EXPRESSION "0"
       OUTLINECOLOR 255 0 255
-      COLOR 220 0 220
-      SYMBOL 'schraffur'
-      SIZE 2
+      SYMBOL 'circle'
+      SIZE 3
       LABEL
         TYPE TRUETYPE
         FONT "arial-bold"
         MINSIZE 10
         MAXSIZE 15
-        OUTLINECOLOR 220 0 220
+        OUTLINECOLOR 255 0 255
         COLOR 0 0 0
       END
     END
     CLASS
       EXPRESSION "1"
-      OUTLINECOLOR 255 180 30
-      COLOR 255 180 30
-      SYMBOL 'schraffur'
-      SIZE 2
+      OUTLINECOLOR 255 255 0
+      SYMBOL 'circle'
+      SIZE 3
       LABEL
         TYPE TRUETYPE
         FONT "arial-bold"
         MINSIZE 10
         MAXSIZE 15
-        OUTLINECOLOR 255 180 30
+        OUTLINECOLOR 255 255 0
         COLOR 0 0 0
       END
     END
     CLASS
       EXPRESSION "2"
-      OUTLINECOLOR 220 0 0
-      COLOR 220 0 0
-      SYMBOL 'schraffur'
-      SIZE 2
+      OUTLINECOLOR 255 0 0
+      SYMBOL 'circle'
+      SIZE 3
       LABEL
         TYPE TRUETYPE
         FONT "arial-bold"
         MINSIZE 10
         MAXSIZE 15
-        OUTLINECOLOR 220 0 0
+        OUTLINECOLOR 255 0 0
         COLOR 0 0 0
       END
     END
     CLASS
       EXPRESSION "3"
-      OUTLINECOLOR 0 220 0
-      COLOR 0 220 0
-      SYMBOL 'schraffur'
-      SIZE 2
+      OUTLINECOLOR 0 255 0
+      SYMBOL 'circle'
+      SIZE 3
       LABEL
         TYPE TRUETYPE
         FONT "arial-bold"
         MINSIZE 10
         MAXSIZE 15
-        OUTLINECOLOR 0 220 0
+        OUTLINECOLOR 0 255 0
         COLOR 0 0 0
       END
     END
@@ -970,14 +1031,20 @@ MAP
     CONNECTION "user=apache password=DMmnc dbname=epidegis_works host=localhost"
     DATA "the_geom from ( 
      SELECT c.case_id AS oid, c.the_geom, ct.identifier, 
-       ct.case_type_id%4 AS color
+       ct.case_type_id%3 AS color
       FROM cases_random AS c, satscan_clusters AS sc, satscan_cluster_cases AS scc, 
         case_types AS ct
       WHERE c.case_type_id = ct.case_type_id AND
         sc.satscan_cluster_id = scc.satscan_cluster_id AND
         c.case_id = scc.case_id    
         AND pvalue<=0.05
-        AND analysisdate='%CLUSTERANALYSISDATE82%'
+        AND analysisdate IN (
+          SELECT analysisdate 
+            FROM satscan_clusters 
+            WHERE satscan_job_id=82
+            GROUP BY analysisdate 
+            ORDER BY analysisdate DESC 
+            LIMIT 1)
     ) AS foo USING SRID=4326 USING UNIQUE oid"
     STATUS ON
     TYPE POINT
@@ -987,43 +1054,42 @@ MAP
     CLASSITEM "color"
     CLASS
       EXPRESSION "0"
-      COLOR 220 0 220
+      COLOR 255 0 255
       OUTLINECOLOR 0 0 0
       SYMBOL 'star' 		
-      SIZE 12
+      SIZE 10
     END
     CLASS
       EXPRESSION "1"
-      COLOR 255 180 30
+      COLOR 255 255 0
       OUTLINECOLOR 0 0 0
       SYMBOL 'star' 		
-      SIZE 12
+      SIZE 10
     END
     CLASS
       EXPRESSION "2"
-      COLOR 220 0 0
+      COLOR 255 0 0
       OUTLINECOLOR 0 0 0
       SYMBOL 'star' 		
-      SIZE 12
+      SIZE 10
     END
     CLASS
       EXPRESSION "3"
-      COLOR 0 220 0
+      COLOR 0 255 0
       OUTLINECOLOR 0 0 0
       SYMBOL 'star' 		
-      SIZE 12
+      SIZE 10
     END
   END
   
   LAYER #cluster_perimeter
-    GROUP clusterretro_disabled
+    GROUP clusterretro
     NAME clusterretroperimeter_disabled
     TEMPLATE "DUMMY"
     DEBUG ON
     METADATA
       "wms_title" "Cluster Perimeter"
-      #"wms_group_title" "Monthly retrospective clusters"
-      "wms_group_title" "Prospective with adjustment"
+      "wms_group_title" "Monthly retrospective clusters"
       #"wms_feature_info_mime_type" "application/vnd.ogc.gml"
       #"wms_style"        "mystyle"
       #"wms_mystyle_sld"  "http://afs2b.informatik.uni-wuerzburg.de/ms4/mystyle.xml"
@@ -1064,8 +1130,7 @@ MAP
              ),
              4326
            )
-      END AS the_geom,
-      episcangis_cases_per_cluster(sc.satscan_cluster_id) AS casecount
+      END AS the_geom
       FROM areas AS a, satscan_clusters AS sc, case_types_nrzm AS ct
       WHERE a.area_id=sc.area_id
         AND pvalue<=0.05
@@ -1140,7 +1205,7 @@ MAP
   END #Layer cluster_perimeter
   
   LAYER
-    GROUP clusterretro_disabled
+    GROUP clusterretro
     TEMPLATE "DUMMY"
     DUMP TRUE
     NAME clusterretrocases_disabled
