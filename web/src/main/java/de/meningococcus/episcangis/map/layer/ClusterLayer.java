@@ -25,13 +25,13 @@ public class ClusterLayer extends MapLayer
     super(name, title, hasLegend, map);
     ParameterComponent clusterDateSelector = new SelectParameter(
         "CLUSTERANALYSISDATE" + jobId, "Date");
-    if (isValid())
+    SatScanDAO ssDao = DaoFactory.getDaoFactory().getSatScanDAO();
+    SatScanJob ssJob = ssDao.getSatScanJob(jobId);
+    Vector<Date> analysisDates = new Vector<Date>(ssDao
+        .getClusterAnalysisDates(ssJob));
+    if (isValid() && analysisDates.size()>0)
     {
-      SatScanDAO ssDao = DaoFactory.getDaoFactory().getSatScanDAO();
-      SatScanJob ssJob = ssDao.getSatScanJob(jobId);
-      Vector<Date> analysisDates = new Vector<Date>(ssDao
-          .getClusterAnalysisDates(ssJob));
-      if (hasDateSelector)
+      if (hasDateSelector )
       {
         for (Date date : analysisDates)
         {
