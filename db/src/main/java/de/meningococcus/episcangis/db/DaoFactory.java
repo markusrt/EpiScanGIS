@@ -5,6 +5,9 @@ package de.meningococcus.episcangis.db;
  * ====================================================================
  */
 
+import java.sql.Connection;
+import java.sql.SQLException;
+
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.PropertiesConfiguration;
 import org.apache.commons.logging.Log;
@@ -169,6 +172,8 @@ public abstract class DaoFactory
    */
   public abstract ClusterFeedbackDAO getClusterFeedbackDAO();
 
+  public abstract Connection getConnection() throws SQLException;
+  
   /**
    * @param configFile
    *          The configFile to set.

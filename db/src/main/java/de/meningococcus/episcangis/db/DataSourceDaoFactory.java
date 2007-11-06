@@ -5,6 +5,9 @@ package de.meningococcus.episcangis.db;
  * ====================================================================
  */
 
+import java.sql.Connection;
+import java.sql.SQLException;
+
 import javax.sql.DataSource;
 
 import de.meningococcus.episcangis.db.dao.AreaDAO;
@@ -119,6 +122,11 @@ abstract class DataSourceDaoFactory extends DaoFactory
   public ClusterFeedbackDAO getClusterFeedbackDAO()
   {
     return new PgSQLClusterFeedbackDAO();
+  }
+  
+  @Override
+  public Connection getConnection() throws SQLException {
+  	return getDataSource().getConnection();
   }
 
 }
