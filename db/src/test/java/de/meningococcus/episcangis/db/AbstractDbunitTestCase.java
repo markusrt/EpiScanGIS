@@ -23,10 +23,7 @@ public abstract class AbstractDbunitTestCase extends DatabaseTestCase
   @Override
   protected IDatabaseConnection getConnection() throws Exception
   {
-    Class driverClass = Class.forName("org.postgresql.Driver");
-    Connection jdbcConnection = DriverManager.getConnection(
-        "jdbc:postgresql://localhost:5432/episcangis_test", "tomcat", "DTh1eP");
-    return new DatabaseConnection(jdbcConnection);
+    return new DatabaseConnection(DaoFactory.getDaoFactory().getConnection());
   }
 
   @Override
