@@ -41,6 +41,7 @@ abstract class AbstractWmsExporter implements AbstractWmsMap.Exporter
     urlBuilder.append("&BBOX=").append(bbox.toString());
     urlBuilder.append("&WIDTH=").append(width);
     urlBuilder.append("&HEIGHT=").append(height);
+    urlBuilder.append("&STYLES=default");
 
     Map<String, String> usedParameters = new HashMap<String, String>();
 

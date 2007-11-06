@@ -32,7 +32,7 @@ public class WmsImageExporter extends AbstractWmsExporter
 {
   private static Log log = LogFactory.getLog(WmsImageExporter.class);
 
-  private String format = "image/gif";
+  static String format = "image/gif";
 
   String singleLayer = null;
 

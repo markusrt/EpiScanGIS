@@ -78,6 +78,7 @@ public class WmsInformationExporter extends AbstractWmsExporter
       urlBuilder.append("&X=").append(x);
       urlBuilder.append("&Y=").append(y);
       urlBuilder.append("&QUERY_LAYERS=").append(mlb.getName());
+      urlBuilder.append("&FORMAT=").append(WmsImageExporter.format);
       log.debug("Feature URL: " + urlBuilder.toString());
       String parsed = parseGetFeatureInfoResult(new URL(urlBuilder.toString()));
       if (parsed.length() > 0)
