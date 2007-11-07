@@ -1,47 +1,34 @@
 <library>
-  <class name="errorwindow">
-    <window clip="true" width="800" height="400"
-      resizable="true">
-      <view width="100%" layout="spacing:10">
-        <text>
-          <font size='12' color='#ff0000'>Error(s) occured, feel free to report
-            <font color="#0000ff">
-              <u>
-                <a target="_blank" href="http://episcangis.hygiene.uni-wuerzburg.de/contact.vm">here</a>
-              </u>
-            </font>
-          </font>
-        </text>
-        <view x="10" width="${parent.width-40}" datapath="./error" layout="spacing:5">
-          <text width="760" multiline="false">
-            <b>Error:</b>
-          </text>
-          <text width="760" multiline="true"
-            text="$path{'message/text()'}" selectable="true"/>
-          <button x="10" text="Show more...">
-            <method event="onclick"><![CDATA[
-              parent.stacktrace.setVisible(!parent.stacktrace.visible);
-              if(parent.stacktrace.visible) {
-              this.setAttribute("text","Hide Stacktrace");
-              }
-              else {
-              this.setAttribute("text", "Show more...");
-              }
-              ]]></method>
-          </button>
-          <view name="stacktrace" x="10" width="${parent.width-30}"
-            height="250" bgcolor="red" visible="false">
-            <view name="stacktrace" y="5" x="5" width="${parent.width-10}"
-              height="${parent.height-10}" clip="true" bgcolor="white">
-              <text
-                width="${parent.width}" multiline="true"
-                text="$path{'stacktrace/text()'}" selectable="true"/>
-              <vscrollbar/>
-            </view>
-          </view>
-        </view>
+  <class name="errorwindow" bgcolor="#ffffff" height="100%" width="100%">
+    <view x="10" y="10" height="32" width="32" resource="icon_warning" />
+    <text x="64" y="10"  width="100%" fontsize="15" multiline="true">
+      Error(s) occured while launching the application, feel free to report <font color="#0000ee"><u><a target="_blank" href="http://episcangis.hygiene.uni-wuerzburg.de/contact.vm">here</a></u></font>
+    </text>
+    <text x="64" y="48" fontsize="15" multiline="false">
+      <b>Message:</b>
+    </text>
+    <text x="58" y="32" fontsize="15" width="80%" multiline="true"
+      text="$path{'error/message/text()'}" selectable="true"/>
+    <button x="80" y="120" text="Show more...">
+      <method event="onclick"><![CDATA[
+        parent.stacktrace.setVisible(!parent.stacktrace.visible);
+        if(parent.stacktrace.visible) {
+          this.setAttribute("text","Hide Stacktrace");
+        }
+        else {
+          this.setAttribute("text", "Show more...");
+        }
+      ]]></method>
+    </button>
+    <view x="80" y="150" datapath="error/stacktrace/" name="stacktrace" width="80%"
+      height="250" bgcolor="#dd0000" visible="false">
+      <view name="stacktrace" y="5" x="5" width="${parent.width-10}"
+        height="${parent.height-10}" clip="true" bgcolor="white">
+        <text
+          width="${parent.width}" multiline="true"
+          text="$path{'text()'}" selectable="true"/>
+        <vscrollbar/>
       </view>
-      <vscrollbar/>
-    </window>
+    </view>
   </class>
 </library>
