@@ -1,3 +1,4 @@
+SYMBOLSET
 # 1
 Symbol 
 Name 'tent'
@@ -136,7 +137,7 @@ SYMBOL
   IMAGE "red_cloud_2.png"
   TRANSPARENT 1
 END
-# 8
+
 Symbol
 NAME 'line1'
 Type VECTOR
@@ -215,3 +216,25 @@ POINTS
 1 1
 END
 END 
+
+SYMBOL
+  NAME "border"
+  TYPE VECTOR
+  POINTS
+    0 0
+    1 0
+    1 0.8
+    0 0.8
+    0 0
+  END
+  STYLE
+    10 6 1 6
+  END
+  FILLED TRUE
+END
+
+SYMBOL
+  NAME "schraffur"
+  TYPE HATCH
+END
+END

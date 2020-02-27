@@ -12,7 +12,7 @@
 # COLOR 0 153 255
 # COLOR 0 102 255
 # COLOR 0 51 255
-# 
+#
 # approx. harmonising colors:
 #  COLOR 255 0 255
 #  COLOR 255 255 0
@@ -22,23 +22,23 @@
 
 MAP
 	INCLUDE "meningo-header.inc"
-  
+
   # INCLUDE "layer-cloudtest.inc"
-  
+
   INCLUDE "layer-popdensity.inc"
-  
+
   INCLUDE "layer-incidence.inc"
-    
+
   INCLUDE "layer-border.inc"
-  
+
   INCLUDE "layer-finetypes.inc"
-  
-  INCLUDE "layer-serogroups.inc"  
-  
+
+  INCLUDE "layer-serogroups-nrzm.inc"
+
   INCLUDE "layer-cities.inc"
-  
+
   # INCLUDE "layer-citynames.inc"
-  
+
   LAYER #cluster_perimeter
     GROUP cluster
     NAME cluster_perimeter_disabled
@@ -48,9 +48,7 @@ MAP
       "wms_title" "Cluster Perimeter"
       "wms_layer_group" "/cluster"
       "wms_group_title" "Living clusters"
-      #"wms_feature_info_mime_type" "application/vnd.ogc.gml"
-      #"wms_style"        "mystyle"
-      #"wms_mystyle_sld"  "http://afs2b.informatik.uni-wuerzburg.de/ms4/mystyle.xml"
+      "wms_include_items" "all"
     END
     CONNECTIONTYPE postgis
     CONNECTION "user=apache password=DMmnc dbname=epidegis_works host=localhost"
@@ -63,7 +61,8 @@ MAP
          ELSE
            sc.circleradius || ' km'
        END AS circleradius,
-       ct.case_type_id%3 AS color,
+       ct.case_type_id%4 AS color,
+       ct.case_type_id AS typeId,
        CASE
          WHEN circleradius=0 THEN
            transform(
@@ -88,7 +87,8 @@ MAP
              4326
            )
       END AS the_geom,
-      episcangis_cases_per_cluster(sc.satscan_cluster_id) AS casecount
+      episcangis_cases_per_cluster(sc.satscan_cluster_id) AS casecount,
+      episcangis_population_per_cluster(sc.satscan_cluster_id) AS population
 
       FROM areas AS a, satscan_clusters AS sc, case_types_nrzm AS ct
       WHERE a.area_id=sc.area_id
@@ -96,73 +96,81 @@ MAP
         AND sc.case_type_id=ct.case_type_id
         AND analysisdate='%CLUSTERANALYSISDATE82%'
 
-      ) 
+      )
       AS foo USING SRID=4326 USING UNIQUE oid"
-    STATUS ON 
+    STATUS ON
     TYPE POLYGON
     PROJECTION
       "init=epsg:4326"
     END
-    LABELITEM "finetype" 
+    LABELITEM "finetype"
     CLASSITEM "color"
     CLASS
       EXPRESSION "0"
       OUTLINECOLOR 255 0 255
-      SYMBOL 'circle'
-      SIZE 3
+      COLOR 220 0 220
+      SYMBOL 'schraffur'
+      SIZE 2
       LABEL
-        TYPE TRUETYPE
+	TYPE BITMAP
+        #TYPE TRUETYPE
         FONT "arial-bold"
         MINSIZE 10
         MAXSIZE 15
-        OUTLINECOLOR 255 0 255
+        OUTLINECOLOR 220 0 220
         COLOR 0 0 0
       END
     END
     CLASS
       EXPRESSION "1"
-      OUTLINECOLOR 255 255 0
-      SYMBOL 'circle'
-      SIZE 3
+      OUTLINECOLOR 255 180 30
+      COLOR 255 180 30
+      SYMBOL 'schraffur'
+      SIZE 2
       LABEL
-        TYPE TRUETYPE
+	TYPE BITMAP
+        #TYPE TRUETYPE
         FONT "arial-bold"
         MINSIZE 10
         MAXSIZE 15
-        OUTLINECOLOR 255 255 0
+        OUTLINECOLOR 255 180 30
         COLOR 0 0 0
       END
     END
     CLASS
       EXPRESSION "2"
-      OUTLINECOLOR 255 0 0
-      SYMBOL 'circle'
-      SIZE 3
+      OUTLINECOLOR 220 0 0
+      COLOR 220 0 0
+      SYMBOL 'schraffur'
+      SIZE 2
       LABEL
-        TYPE TRUETYPE
+	TYPE BITMAP
+        #TYPE TRUETYPE
         FONT "arial-bold"
         MINSIZE 10
         MAXSIZE 15
-        OUTLINECOLOR 255 0 0
+        OUTLINECOLOR 220 0 0
         COLOR 0 0 0
       END
     END
     CLASS
       EXPRESSION "3"
-      OUTLINECOLOR 0 255 0
-      SYMBOL 'circle'
-      SIZE 3
+      OUTLINECOLOR 0 220 0
+      COLOR 0 220 0
+      SYMBOL 'schraffur'
+      SIZE 2
       LABEL
-        TYPE TRUETYPE
+	TYPE BITMAP
+        #TYPE TRUETYPE
         FONT "arial-bold"
         MINSIZE 10
         MAXSIZE 15
-        OUTLINECOLOR 0 255 0
+        OUTLINECOLOR 0 220 0
         COLOR 0 0 0
       END
     END
   END #Layer cluster_perimeter
-  
+
   LAYER
     GROUP cluster
     TEMPLATE "DUMMY"
@@ -171,17 +179,18 @@ MAP
     METADATA
       "wms_layer_group" "/cluster"
       "wms_title" "Cluster cases"
+      "wms_include_items" "all"
     END
     CONNECTIONTYPE postgis
     CONNECTION "user=apache password=DMmnc dbname=epidegis_works host=localhost"
-    DATA "the_geom from ( 
-     SELECT c.case_id AS oid, c.the_geom, ct.identifier, 
-       ct.case_type_id%3 AS color
-      FROM cases_random AS c, satscan_clusters AS sc, satscan_cluster_cases AS scc, 
+    DATA "the_geom from (
+     SELECT c.case_id AS oid, c.the_geom, ct.identifier,
+       ct.case_type_id%4 AS color
+      FROM cases_random AS c, satscan_clusters AS sc, satscan_cluster_cases AS scc,
         case_types AS ct
       WHERE c.case_type_id = ct.case_type_id AND
         sc.satscan_cluster_id = scc.satscan_cluster_id AND
-        c.case_id = scc.case_id    
+        c.case_id = scc.case_id
         AND pvalue<=0.05
         AND analysisdate='%CLUSTERANALYSISDATE82%'
     ) AS foo USING SRID=4326 USING UNIQUE oid"
@@ -193,36 +202,36 @@ MAP
     CLASSITEM "color"
     CLASS
       EXPRESSION "0"
-      COLOR 255 0 255
+      COLOR 220 0 220
       OUTLINECOLOR 0 0 0
-      SYMBOL 'star' 		
-      SIZE 10
+      SYMBOL 'star'
+      SIZE 12
     END
     CLASS
       EXPRESSION "1"
-      COLOR 255 255 0
+      COLOR 255 180 30
       OUTLINECOLOR 0 0 0
-      SYMBOL 'star' 		
-      SIZE 10
+      SYMBOL 'star'
+      SIZE 12
     END
     CLASS
       EXPRESSION "2"
-      COLOR 255 0 0
+      COLOR 220 0 0
       OUTLINECOLOR 0 0 0
-      SYMBOL 'star' 		
-      SIZE 10
+      SYMBOL 'star'
+      SIZE 12
     END
     CLASS
       EXPRESSION "3"
-      COLOR 0 255 0
+      COLOR 0 220 0
       OUTLINECOLOR 0 0 0
-      SYMBOL 'star' 		
-      SIZE 10
+      SYMBOL 'star'
+      SIZE 12
     END
   END
-  
+
   LAYER #cluster_perimeter
-    GROUP clusterretro
+    GROUP clusterretro_disabled
     NAME clusterretroperimeter_disabled
     TEMPLATE "DUMMY"
     DEBUG ON
@@ -240,14 +249,14 @@ MAP
      SELECT a.area_id AS oid, ct.nice_identifier AS finetype,
        a.identifier AS center,
        sc.startdate, sc.enddate, sc.pvalue,
-       CASE 
+       CASE
          WHEN circleradius=0 THEN
           (|/(area(transform(a.the_geom,31467))/pi()))/1000 || ' km'
          ELSE
            sc.circleradius || ' km'
        END AS circleradius,
        ct.case_type_id%3 AS color,
-       CASE 
+       CASE
          WHEN circleradius=0 THEN
            transform(
              setSRID(
@@ -278,14 +287,14 @@ MAP
         AND sc.case_type_id=ct.case_type_id
         AND analysisdate='%CLUSTERANALYSISDATE211%'
         AND satscan_job_id=211
-      ) 
+      )
       AS foo USING SRID=4326 USING UNIQUE oid"
-    STATUS ON 
+    STATUS ON
     TYPE POLYGON
     PROJECTION
       "init=epsg:4326"
     END
-    LABELITEM "finetype" 
+    LABELITEM "finetype"
     CLASSITEM "color"
     CLASS
       EXPRESSION "0"
@@ -293,7 +302,8 @@ MAP
       SYMBOL 'circle'
       SIZE 3
       LABEL
-        TYPE TRUETYPE
+	TYPE BITMAP
+        #TYPE TRUETYPE
         FONT "arial-bold"
         MINSIZE 10
         MAXSIZE 15
@@ -307,7 +317,8 @@ MAP
       SYMBOL 'circle'
       SIZE 3
       LABEL
-        TYPE TRUETYPE
+	TYPE BITMAP
+        #TYPE TRUETYPE
         FONT "arial-bold"
         MINSIZE 10
         MAXSIZE 15
@@ -321,7 +332,8 @@ MAP
       SYMBOL 'circle'
       SIZE 3
       LABEL
-        TYPE TRUETYPE
+	TYPE BITMAP
+        #TYPE TRUETYPE
         FONT "arial-bold"
         MINSIZE 10
         MAXSIZE 15
@@ -335,7 +347,8 @@ MAP
       SYMBOL 'circle'
       SIZE 3
       LABEL
-        TYPE TRUETYPE
+	TYPE BITMAP
+        #TYPE TRUETYPE
         FONT "arial-bold"
         MINSIZE 10
         MAXSIZE 15
@@ -344,9 +357,9 @@ MAP
       END
     END
   END #Layer cluster_perimeter
-  
+
   LAYER
-    GROUP clusterretro
+    GROUP clusterretro_disabled
     TEMPLATE "DUMMY"
     DUMP TRUE
     NAME clusterretrocases_disabled
@@ -356,14 +369,14 @@ MAP
     END
     CONNECTIONTYPE postgis
     CONNECTION "user=apache password=DMmnc dbname=epidegis_works host=localhost"
-    DATA "the_geom from ( 
-     SELECT c.case_id AS oid, c.the_geom, ct.identifier, 
+    DATA "the_geom from (
+     SELECT c.case_id AS oid, c.the_geom, ct.identifier,
        ct.case_type_id%3 AS color
-      FROM cases_random AS c, satscan_clusters AS sc, satscan_cluster_cases AS scc, 
+      FROM cases_random AS c, satscan_clusters AS sc, satscan_cluster_cases AS scc,
         case_types AS ct
       WHERE c.case_type_id = ct.case_type_id AND
         sc.satscan_cluster_id = scc.satscan_cluster_id AND
-        c.case_id = scc.case_id    
+        c.case_id = scc.case_id
         AND pvalue<=0.05
         AND analysisdate='%CLUSTERANALYSISDATE211%'
         AND satscan_job_id=211
@@ -378,47 +391,47 @@ MAP
       EXPRESSION "0"
       COLOR 255 0 255
       OUTLINECOLOR 0 0 0
-      SYMBOL 'star' 		
+      SYMBOL 'star'
       SIZE 10
     END
     CLASS
       EXPRESSION "1"
       COLOR 255 255 0
       OUTLINECOLOR 0 0 0
-      SYMBOL 'star' 		
+      SYMBOL 'star'
       SIZE 10
     END
     CLASS
       EXPRESSION "2"
       COLOR 255 0 0
       OUTLINECOLOR 0 0 0
-      SYMBOL 'star' 		
+      SYMBOL 'star'
       SIZE 10
     END
     CLASS
       EXPRESSION "3"
       COLOR 0 255 0
       OUTLINECOLOR 0 0 0
-      SYMBOL 'star' 		
+      SYMBOL 'star'
       SIZE 10
     END
   END
-  
+
   LAYER #cluster_perimeter
     NAME caseperimeter_disabled
     TEMPLATE "DUMMY"
     DEBUG ON
     METADATA
       "wms_srs"    "epsg:4326"
-      "wms_title"  "Case count"
+      "wms_title"    "Case count"
     END
     CONNECTIONTYPE postgis
     CONNECTION "user=apache password=DMmnc dbname=epidegis_works host=localhost"
     DATA "the_geom FROM (
      SELECT case_id AS oid, the_geom, count
-      FROM count_cases_in_perimeter ORDER BY COUNT ) 
+      FROM count_cases_in_perimeter ORDER BY COUNT )
       AS foo USING SRID=4326 USING UNIQUE oid"
-    STATUS ON 
+    STATUS ON
     TYPE POLYGON
     PROJECTION
       "init=epsg:4326"

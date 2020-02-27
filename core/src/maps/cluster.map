@@ -109,46 +109,7 @@ MAP
     "init=epsg:4326"
   END
   
-  LAYER #borders
-    DUMP TRUE
-    NAME borders_default
-    DEBUG ON
-    METADATA
-      "wms_title" "Borders"
-    END
-    CONNECTIONTYPE postgis
-    CONNECTION "user=apache password=DMmnc dbname=epidegis_works host=localhost"
-    DATA "the_geom FROM (
-      SELECT areas.oid, the_geom, areas.identifier AS areaname,
-        area_types.tier AS depth 
-        FROM areas NATURAL JOIN area_types 
-        WHERE tier=%BORDERTIER% OR tier=2
-        ) 
-      AS foo USING SRID=4326 USING UNIQUE oid"
-    SYMBOLSCALE 3000000
-    STATUS ON 
-    TYPE POLYGON
-    PROJECTION
-      "init=epsg:4326"
-    END
-    CLASS
-      EXPRESSION ([depth] = 2)
-      STYLE
-        OUTLINECOLOR 0 0 0
-        SYMBOL 'circle'
-        MAXSIZE 3
-      END
-    END
-    CLASS
-      TEMPLATE "DUMMY"
-      EXPRESSION ([depth] > 2)
-      STYLE
-      OUTLINECOLOR 0 0 0
-      SYMBOL 'circle'
-      MAXSIZE 1
-      END
-    END
-  END #Layer borders
+
   
   LAYER #cluster_perimeter
     GROUP singlecluster
