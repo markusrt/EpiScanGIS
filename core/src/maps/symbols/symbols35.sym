@@ -1,6 +1,6 @@
 SYMBOLSET
 # 1
-Symbol 
+Symbol
 Name 'tent'
 Type VECTOR
 Filled TRUE
@@ -13,7 +13,7 @@ Points
 .25 1
 0 1
 END
-END 
+END
 
 #2
 Symbol
@@ -32,7 +32,7 @@ Points
 .125 1
 .25 .625
 END
-END 
+END
 
 #3
 Symbol
@@ -45,7 +45,7 @@ Points
 1 1
 0 1
 END
-END 
+END
 
 #4
 Symbol
@@ -59,7 +59,7 @@ Points
 1 1
 0 1
 END
-END 
+END
 
 #5
 Symbol
@@ -72,7 +72,7 @@ Points
 0 .5
 1 .5
 END
-END 
+END
 
 #6
 Symbol
@@ -109,7 +109,7 @@ Filled TRUE
 Points
 1 1
 END
-END 
+END
 SYMBOL
     NAME "town"
     TYPE PIXMAP
@@ -146,7 +146,7 @@ Points
 0 1
 1 1
 END
-END 
+END
 
 # 9
 Symbol
@@ -157,7 +157,7 @@ Points
 1 0
 1 1
 END
-END 
+END
 
 # 10
 Symbol
@@ -168,7 +168,7 @@ Points
 0 0
 1 1
 END
-END 
+END
 
 # 11
 Symbol
@@ -179,7 +179,7 @@ Points
 0 1
 1 0
 END
-END 
+END
 
 # 12
 Symbol
@@ -192,7 +192,7 @@ Points
 0 1
 1 0
 END
-END 
+END
 
 # 13
 Symbol
@@ -210,12 +210,12 @@ END
 #14
 SYMBOL
 NAME 'line7'
-TYPE ELLIPSE 
+TYPE ELLIPSE
 FILLED FALSE
 POINTS
 1 1
 END
-END 
+END
 
 SYMBOL
   NAME "border"
@@ -227,9 +227,10 @@ SYMBOL
     0 0.8
     0 0
   END
-  STYLE
-    10 6 1 6
-  END
+  # TODO Migrate to PATTERN once when used again
+  #STYLE
+  #  10 6 1 6
+  #END
   FILLED TRUE
 END
 

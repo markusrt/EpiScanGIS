@@ -1,6 +1,9 @@
 LAYER #Population density
   TEMPLATE "DUMMY"
   #DUMP TRUE
+  VALIDATION
+    "POPDENTIER" "^[0-9]$"
+  END
   METADATA
     "wms_title" "Population density"
     "wms_include_items" "all"
@@ -8,11 +11,11 @@ LAYER #Population density
   NAME popdensity
   INCLUDE "connection.inc"
   DATA "the_geom from (
-    SELECT area_id AS oid, the_geom, identifier AS Areaname,
-      population/(area(transform(the_geom,31467))/1000000) AS popdensity
+    SELECT area_id, the_geom, identifier AS Areaname,
+      population/(st_area(st_transform(the_geom,31467))/1000000) AS popdensity
     FROM areas_with_types AS awt
     WHERE tier=%POPDENTIER%
-    ) AS foo USING SRID=4326 USING UNIQUE oid"
+    ) AS foo USING SRID=4326 USING UNIQUE area_id"
   STATUS ON
   TYPE POLYGON
   PROJECTION

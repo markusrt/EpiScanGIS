@@ -2,6 +2,14 @@ LAYER #incidence
   #GROUP "query"
   TEMPLATE "DUMMY"
   #DUMP TRUE
+  VALIDATION
+    "fromMonth" "^[0-9]{2}$"
+    "toMonth" "^[0-9]{2}$"
+    "fromYear" "^[0-9]{4}$"
+    "toYear" "^[0-9]{4}$"
+    "INCITIER" "^[0-9]$"
+    "SEROGROUPS" "^.*$"
+  END
   METADATA
     "wms_title" "Annual incidence"
       "wms_include_items" "all"

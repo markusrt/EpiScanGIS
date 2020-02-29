@@ -1,6 +1,9 @@
 LAYER #borders
   TEMPLATE "DUMMY"
   DUMP TRUE
+  VALIDATION
+    "BORDERTIER" "^[0-9]$"
+  END
   NAME borders_default
   DEBUG ON
   METADATA
@@ -9,13 +12,13 @@ LAYER #borders
   END
   INCLUDE "connection.inc"
   DATA "the_geom FROM (
-    SELECT areas.oid, the_geom, areas.identifier AS areaname,
+    SELECT areas.area_id, the_geom, areas.identifier AS areaname,
       area_types.tier AS depth, areas.area_id AS Id
       FROM areas NATURAL JOIN area_types
       WHERE tier=%BORDERTIER% OR tier=2
       ORDER BY tier ASC
       )
-    AS foo USING SRID=4326 USING UNIQUE oid"
+    AS foo USING SRID=4326 USING UNIQUE area_id"
   SYMBOLSCALE 3000000
   STATUS ON
   TYPE POLYGON
@@ -39,5 +42,5 @@ LAYER #borders
     SYMBOL 'circle'
     MAXSIZE 1
     END
-	END
+        END
 END #Layer borders
