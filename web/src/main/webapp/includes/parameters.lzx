@@ -113,7 +113,7 @@
               var lastclone = this.clones[ this.clones.length - 1 ];
 
               if( typeof this.del == "undefined" ) {
-              this.del = new LzDelegate( this, "lastCloneInit")
+              this.del = new lz.Delegate( this, "lastCloneInit")
               }
               else {
               this.del.ungregisterAll();
@@ -155,6 +155,7 @@
     datapath="multiselectparameter">
     <attribute name="mapview" type="expression" />
     <method event="onselect"><![CDATA[
+      Debug.write("I AM MULTI, DO MY COMMAND: " + this.getValue());
       classroot.mapview.setMapparam(this.name, this.getValue());
     ]]></method>
     <method name="getValue">return this.subviews[1].getValue();</method>
@@ -168,26 +169,12 @@
           parent.chosen.setVisible(true);
         }
         else parent.chosen.setVisible(false);
-        parent.onselect.sendEvent();
-      </method>
+        parent.onselect.sendEvent();      </method>
       <!-- initstage="late" required because otherwise
         parent is initialized after textlistitem -->
       <textlistitem datapath="value" text="$path{'@name'}"
-        value="$path{'text()'}" initstage="late">
-        <method event="oninit">
-          if(this.datapath.getNodeAttribute('selected') == 'true'){
-           var selection;
-           if(parent.getValue instanceof Array) {
-             selection = parent.getValue();
-           }
-           else {
-             selection = new Array();
-           }
-           selection.push(this);
-           parent.select(selection);
-          }
-        </method>
-      </textlistitem>
+        value="$path{'text()'}" initstage="late"
+        oninit="if(this.datapath.getNodeAttribute('selected') == 'true') parent.select(this)" />
     </list>
   </class>
 </library>

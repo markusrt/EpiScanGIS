@@ -1,7 +1,7 @@
 /*
 function getBaseUrl() {
   var url = new LzUrl();
-  url = LzBrowser.getLoadURLAsLzURL();
+  url = lz.Browser.getLoadURLAsLzURL();
 
   return url.protocol + "://"
     + url.host + ":" + url.port + url.path;
@@ -11,7 +11,7 @@ function getBaseUrl() {
 // Non proxied app
 function getBaseUrl() {
   var url = new LzURL();
-  url = LzBrowser.getLoadURLAsLzURL();
+  url = lz.Browser.getLoadURLAsLzURL();
   
   return url.protocol + ":" /*+ "//"
     + url.host + ":" + url.port + */;

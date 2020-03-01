@@ -26,7 +26,7 @@
         <attribute name="seekSpeed" type="number" value="2500" />
 
         <method event="oninit">
-          this.seekerDelegate = new LzDelegate( this, "seekDelegate" );
+          this.seekerDelegate = new lz.Delegate( this, "seekDelegate" );
         </method>
         <method name="changeMonth" args="direction">
           <![CDATA[
@@ -61,20 +61,20 @@
 
         <method name="seek" args="direction">
           <![CDATA[
-          LzTimer.removeTimer(seekerDelegate);
+          lz.Timer.removeTimer(seekerDelegate);
           seekAmount = direction;
           seek_forward_button.setAttribute("enabled",false);
           seek_backward_button.setAttribute("enabled",false);
           skip_forward_button.setAttribute("enabled",false);
           skip_backward_button.setAttribute("enabled",false);
           stop_button.setAttribute("enabled",true);
-          LzTimer.addTimer( seekerDelegate, 0 );
+          lz.Timer.addTimer( seekerDelegate, 0 );
         ]]>
         </method>
 
         <method name="stop_seek">
           <![CDATA[
-          LzTimer.removeTimer(seekerDelegate);
+          lz.Timer.removeTimer(seekerDelegate);
           seekAmount = 0;
           seek_forward_button.setAttribute("enabled",true);
           seek_backward_button.setAttribute("enabled",true);
@@ -87,7 +87,7 @@
         <method name="seekDelegate">
           <![CDATA[
           if( changeMonth(seekAmount) ) {
-            LzTimer.addTimer( this.seekerDelegate, seekSpeed );
+            lz.Timer.addTimer( this.seekerDelegate, seekSpeed );
           }
           else {
             stop_seek();

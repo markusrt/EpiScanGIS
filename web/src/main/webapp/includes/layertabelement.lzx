@@ -1,11 +1,5 @@
 <library>
-  <datasource name="tls">
-    <method event="oninit">
-      this.ToggleLayerState.setSrc(getBaseUrl() +
-      'ToggleLayerState.do');
-    </method>
-    <dataset type="http" name="ToggleLayerState" />
-  </datasource>
+  <dataset type="http" name="ToggleLayerState" src="${getBaseUrl()+'ToggleLayerState.do'}"/>
   <class name="layertabelement" extends="tabelement" text_x="20">
     <attribute name="mapview" type="expression" />
     <attribute name="layer" type="expression" />
@@ -22,8 +16,8 @@
         <method event="onclick">
           <![CDATA[
           var layer = classroot.layer;
-          var d = canvas.tls.ToggleLayerState;
-          var p=new LzParam();
+          var d = canvas.ToggleLayerState;
+          var p=new lz.Param();
           p.addValue("layer", layer.getAttribute("name"), true);
           p.addValue("active", this.value, true);
           d.setQueryString(p);
@@ -48,6 +42,7 @@
             var xp = "ToggleLayerState:/result[1]/layer[@name='" + classroot.layername + "']/@active";
          var active = this.xpathQuery(xp);
          var value = parent.classroot.top.header.subviews[1].hider.getAttribute('value');
+         Debug.write("Layer: " + classroot.layername + "=" + active + "<->" + value);
          if( active == 'false' && value ) {
            parent.classroot.top.header.subviews[1].hider.onclick.sendEvent();
          }

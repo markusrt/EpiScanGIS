@@ -26,42 +26,19 @@
   </splash>
 
   <debug y="500" width="600" height="200"/>
-  <datasource name="ds">
-    <method event="oninit">
-      if( LzBrowser.getVersion() &lt; 7 ) {
-        canvas.flashVersionAlert.open();
-      }
-      else {
-        this.mapserverData.setSrc(getBaseUrl() + 'Map.do');
-        var p=new LzParam();
-        p.addValue("width", canvas.width-4-240-190, true);
-        p.addValue("height", canvas.height-4-40, true);
-        this.mapserverData.setQueryString(p);
-        this.mapserverData.doRequest();
+  <method event="oninit">
+    Debug.write("Init");
+    Debug.write(getBaseUrl());
+  </method> 
 
-        this.SetParameter.setSrc(getBaseUrl() + 'SetParameter.do');
-      }
-    </method>
-    <dataset type="http" name="mapserverData"/>
-    <dataset type="http" name="SetParameter"/>
-  </datasource>
-  <datasource name="mm">
-    <method event="oninit">
-      this.MoveMap.setSrc(getBaseUrl() + 'MoveMap.do');
-    </method>
-    <dataset type="http" name="MoveMap"/>
-  </datasource>
-  <datasource name="fi">
-    <method event="oninit">
-      this.GetFeatureInfo.setSrc(getBaseUrl() + 'GetFeatureInfo.do');
-    </method>
-    <dataset type="http" name="GetFeatureInfo"/>
-  </datasource>
-
+  <dataset type="http" request="true" name="mapserverData" src="${getBaseUrl()+'Map.do'+'?width='+(canvas.width-4-240-190)+'&amp;height='+(canvas.height-4-40)}"/>
+  <dataset type="http" name="SetParameter" src="${getBaseUrl()+'SetParameter.do'}" />
+  <dataset type="http" name="MoveMap" src="${getBaseUrl()+'MoveMap.do'}"/>
+  <dataset type="http" name="GetFeatureInfo" src="${getBaseUrl()+'GetFeatureInfo.do'}"/>
   <script src="scripts/global_functions.js"/>
 
   <alert height="300" width="600" layout="spacing:10" name="flashVersionAlert">
-    <text height="200" visible="$once{LzBrowser.getVersion() &lt; 7}">
+    <text height="200" visible="$once{lz.Browser.getVersion() &lt; 7}">
       <font size='16' color='#ff0000'><b>TIP:</b>
         Ihr Flash-Player hat die falsche Version.<br />
         Bitte installieren Sie die neueste Version!
@@ -88,14 +65,14 @@
 
     <method event="oninit">
       this.pendingSPs = new Array();
-      this.setParameterDelegate = new LzDelegate( this, "processSPs" );
-      this.sessionTimeoutDelegate = new LzDelegate( this, "sessionTimeout" );
+      this.setParameterDelegate = new lz.Delegate( this, "processSPs" );
+      this.sessionTimeoutDelegate = new lz.Delegate( this, "sessionTimeout" );
       this.updateTimoutTimer();
     </method>
 
     <method name="updateTimoutTimer">
-      LzTimer.removeTimer( this.sessionTimeoutDelegate );
-      LzTimer.addTimer( this.sessionTimeoutDelegate, 1750000 );
+      lz.Timer.removeTimer( this.sessionTimeoutDelegate );
+      lz.Timer.addTimer( this.sessionTimeoutDelegate, 1750000 );
     </method>
 
     <method name="sessionTimeout">
@@ -143,24 +120,26 @@
         strValue = new String(value);
       }
       if( strName.length > 0 && strValue.length > 0 && needsUpdate ) {
-        var p=new LzParam();
+        Debug.write("Setting Mapparam: " + strName + "=" + strValue);
+
+        var p=new lz.Param();
         p.addValue("name", strName, true);
         p.addValue("value", strValue, true);
         this.pendingSPs.push(p);
         if( pendingSPs.length > 3 ) {
-          LzTimer.addTimer( setParameterDelegate, 200 );
+          lz.Timer.addTimer( setParameterDelegate, 200 );
         }
         else {
-          LzTimer.addTimer( setParameterDelegate, 0 );
+          lz.Timer.addTimer( setParameterDelegate, 0 );
         }
       }
       ]]></method>
     <method name="processSPs"><![CDATA[
-      var d= canvas.ds.SetParameter;
+      var d= canvas.SetParameter;
       d.setQueryString(this.pendingSPs.pop());
       d.doRequest();
       if( pendingSPs.length == 0 ) {
-        LzTimer.removeTimer( setParameterDelegate );
+        lz.Timer.removeTimer( setParameterDelegate );
       }
     ]]></method>
     <method name="refreshAllLayers"><![CDATA[
@@ -169,6 +148,11 @@
       {
         this.maplayerview.subviews[layer].refresh();
       }
+      //var set = this.maplayersettings.content.subviews;
+      //var smp = 0;
+      //for(smp=0; smp < set.length; smp++) {
+      //set[smp].refreshLayer();
+      //}
       ]]></method>
 
     <alert name="timeoutAlert">
@@ -177,7 +161,7 @@
       <method event="onresult">
         if( this.result )
         {
-          LzBrowser.loadURL(LzBrowser.getLoadURL());
+          lz.Browser.loadURL(lz.Browser.getLoadURL());
         }
       </method>
     </alert>
@@ -190,7 +174,7 @@
           <iconbutton icon_resource="icon_print" width="40" height="40">
             <method event="onclick"><![CDATA[
               var url = classroot.getMapUrl();
-              LzBrowser.loadURL(url, "_blank");
+              lz.Browser.loadURL(url, "_blank");
             ]]></method>
           </iconbutton>
           <text x="${classroot.sidebar.width + ((classroot.mainArea.width-this.width)/2)}" height="30">
@@ -210,7 +194,7 @@
 
     <view y="${classroot.toolbar.height}" width="240"
       height="${parent.height-classroot.toolbar.height}"
-      name="sidebar" visible="false">
+      name="sidebar" visible="true">
       <stableborderlayout axis="x"/>
       <!-- left border -->
       <view width="5" height="100%"/>
@@ -246,25 +230,28 @@
               layerTab.top.header.subviews[1].loadbar.setVisible(show);
             </method>
             <layertabelement visible="true" layername="$path{'@name'}"
-              datapath="mapserverData:/map/layer" text="$path{'@title'}"
+              text="$path{'@title'}"
               layout="spacing:5" mapview="${classroot}" initstage="late">
-              <datapath>
+	      <datapath xpath="mapserverData:/map/layer">
                 <method event="onclones"><![CDATA[
                   if(!this['doneDel']) {
                   this.doneDel =
-                  new LzDelegate( this, 'lastCloneInit');
+                  new lz.Delegate( this, 'lastCloneInit');
                   this.doneDel.
                   register(clones[clones.length -1], 'oninit');
                   }
                   ]]></method>
                 <method name="lastCloneInit"><![CDATA[
-                  this.doneDel = new LzDelegate( this, "allDone" );
-                  LzTimer.addTimer( this.doneDel, 3000 );
+                  this.doneDel = new lz.Delegate( this, "allDone" );
+                  lz.Timer.addTimer( this.doneDel, 0 );
                   ]]></method>
                 <method name="allDone"><![CDATA[
+                  Debug.write("ALL DONE");
                   parent.classroot.sidebar.setAttribute("visible", true);
                   parent.selectItemAt(0);
-                  parent.classroot.setAttribute("allLayerTabsConstructed",true);
+                  parent.classroot.setAttribute(
+                  "allLayerTabsConstructed",true);
+                  //parent.classroot.refreshAllLayers();
                 ]]></method>
               </datapath>
             </layertabelement>
@@ -302,13 +289,33 @@
       </method>
       <method event="ondata">
         <![CDATA[
-              for ( var view in this.border.content.subviews )
-              {
-                this.border.content.subviews[view].setVisible(true);
-                }
-               this.loadbar.setVisible(false);
-
-              ]]>
+        var features = datapath.xpathQuery('./layer/feature');
+	var featureLength = 1;
+	if(features.length) {
+      	  featureLength = features.length;
+        }
+        var layers = datapath.xpathQuery('./layer');
+        var layerLength = 1;
+        if(layers.length) {
+	  layerLength = layers.length;
+	}
+	Debug.write('Features: ' + featureLength);
+        Debug.write('Layers: ' + layerLength);
+        var totalHeight = featureLength*21;
+        totalHeight += layerLength*21;
+        totalHeight -= 9;
+        for ( var view in this.border.content.subviews )
+        {
+          this.border.content.subviews[view].setVisible(true);
+        }
+        var yEnd = y+totalHeight;
+        Debug.write('Total height: ' + totalHeight + ', yEnd: ' + yEnd + ', Canvas height: ' + canvas.height);
+        
+        if( yEnd > canvas.height ) {
+        	setY(y-yEnd+canvas.height);
+        }
+        this.loadbar.setVisible(false);
+        ]]>
       </method>
       <loadstar x="10" y="10" name="loadbar"/>
       <animatorgroup name="fadeIn" duration="1000" start="false">
@@ -356,8 +363,8 @@
             this.mouseOver = false;
             ]]></method>
           <method event="oninit"><![CDATA[
-            //del = new LzDelegate(this, "pressCtrl");
-            //LzKeys.callOnKeyCombo(del, ["control"]);
+            //del = new lz.Delegate(this, "pressCtrl");
+            //lz.Keys.callOnKeyCombo(del, ["control"]);
             ]]></method>
           <method event="onmousedown"><![CDATA[
             moveMap.apply();
@@ -368,8 +375,8 @@
             if(moveMap.isapplied && (Math.abs(x) > 3 || Math.abs(y) > 3) )
             {
               moveMap.remove();
-              var d=canvas.mm.MoveMap;
-              var p=new LzParam();
+              var d=canvas.MoveMap;
+              var p=new lz.Param();
               p.addValue("xoffset", -x/width, true);
               p.addValue("yoffset", y/height, true);
               d.setQueryString(p);
@@ -381,12 +388,14 @@
               setX(0);
               setY(0);
             }
+
+
             ]]></method>
           <method event="onclick"><![CDATA[
             if( this.mouseOver && !this.mapJustMoved ) {
               moveMap.remove();
-              var d=canvas.fi.GetFeatureInfo;
-              var p=new LzParam();
+              var d=canvas.GetFeatureInfo;
+              var p=new lz.Param();
               var x = Math.round(getMouse('x'));
               var y = Math.round(getMouse('y'));
               p.addValue("x", x, true);
@@ -415,6 +424,7 @@
           </datapointer>
           <datapointer id="moveMapPtr" xpath="MoveMap:/result">
             <method event="ondata" args="d"><![CDATA[
+              //TODO check for result success
               classroot.refreshAllLayers();
               parent.setX(0);
               parent.setY(0);
@@ -425,7 +435,7 @@
             drag_max_x="$once{width-width/10}"
             drag_min_y="$once{-height+height/10}"
             drag_max_y="$once{height-height/10}"/>
-          <!-- SINGLE MAP LAYER -->
+          <!-- MAPLAYER -->
           <view visible="false" width="100%" height="100%"
             datapath="mapserverData:/map[1]/layer/">
             <attribute name="title" type="string"/>
@@ -464,10 +474,12 @@
                 classroot.maplayersettings.showLoadBar(this.name,true);
               }
               else {
+                Debug.write( 'Layer ' + this.title + ' not refreshed (invisible)');
                 this.changed = true;
               }
             </method>
             <method name="bufferLoaded">
+              Debug.write("LOADED " + this.title);
               this.isloading = false;
               classroot.maplayersettings.showLoadBar(this.name,false);
               subviews[currentBuffer].hide.doStart();
@@ -479,9 +491,9 @@
             <view name="buffer1" visible="true" opacity="0"
               width="100%" height="100%">
               <animator name="show"
-                 attribute="opacity" to="1"  duration="100" start="false"/>
+                 attribute="opacity" to="1"  duration="300" start="false"/>
               <animator name="hide"
-                 attribute="opacity" to="0"  duration="100" start="false"/>
+                 attribute="opacity" to="0"  duration="300" start="false"/>
               <method event="onload">
                 parent.bufferLoaded();
               </method>
@@ -502,6 +514,7 @@
         <!--<scrollbar axis="x"/>-->
         <!--<scrollbar axis="y"/>-->
       </borderview>
+
     </view>
     <view width="190"
       x="${parent.sidebar.width+parent.mainArea.width}"

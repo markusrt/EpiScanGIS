@@ -1,6 +1,9 @@
 <library>
+  <!-- TODO migrate from flash to HTML, maybe using GIFs as resource? -->
+  <!--
   <resource name="loadstar" src="../animations/loadstar.swf"/>
   <resource name="loadwheel" src="../animations/loadwheel.swf"/>
+  -->
 
   <class name="loadstar" width="16" height="16" extends="view" resource="loadstar">
     <method event="onvisible"><![CDATA[
