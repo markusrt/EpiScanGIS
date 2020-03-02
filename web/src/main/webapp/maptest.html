@@ -1,0 +1,58 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <title>EpiScanGIS - HTML mode</title>
+</head>
+
+<body>
+    <section>
+        <div id="canvasesdiv" style="position:relative; width:800px; height:600px">
+            <canvas id="layer1" style="z-index: 1; position:absolute; left:0px; top:0px;" height="800px" width="600">
+                This text is displayed if your browser does not support HTML5 Canvas.
+            </canvas>
+            <canvas id="layer2" style="z-index: 2; position:absolute; left:0px; top:0px;" height="800px" width="600">
+            </canvas>
+            <canvas id="layer3" style="z-index: 3; position:absolute; left:0px; top:0px;" height="800px" width="600">
+            </canvas>
+            <canvas id="layer4" style="z-index: 3; position:absolute; left:0px; top:0px;" height="800px" width="600">
+            </canvas>
+        </div>
+
+        <script type="text/javascript">
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    var popdensity = new Image();
+                    popdensity.onload = function () {
+                        document.getElementById("layer1").getContext("2d").drawImage(popdensity, 0, 0);
+                    };
+                    popdensity.src = './GetMapLayer.do?layer=popdensity';
+
+                    var borders = new Image();
+                    borders.onload = function () {
+                        document.getElementById("layer2").getContext("2d").drawImage(borders, 0, 0);
+                    };
+                    borders.src = './GetMapLayer.do?layer=borders_default';
+
+                    var serogroups = new Image();
+                    serogroups.onload = function () {
+                        document.getElementById("layer3").getContext("2d").drawImage(serogroups, 0, 0);
+                    };
+                    serogroups.src = './GetMapLayer.do?layer=serogroups_default';
+
+                    var cities = new Image();
+                    cities.onload = function () {
+                        document.getElementById("layer4").getContext("2d").drawImage(cities, 0, 0);
+                    };
+                    cities.src = './GetMapLayer.do?layer=cities_default';
+                }
+            };
+            xhttp.open("GET", "./Map.do?width=600&height=800", true);
+            xhttp.send();
+        </script>
+    </section>
+</body>
+
+</html>
