@@ -4,10 +4,10 @@ LAYER
   NAME cities_default
   STATUS ON
     TEMPLATE "DUMMY"
-	DUMP TRUE
+        DUMP TRUE
     NAME cities_default
     METADATA
-	  "wms_srs"    "epsg:4326"
+          "wms_srs"    "epsg:4326"
       "wms_title" "Cities"
       "wms_include_items" "all"
     END
@@ -41,7 +41,7 @@ LAYER
      NAME "(Population):"
     EXPRESSION (0)
    END
-   CLASS	#over 1M citizens
+   CLASS        #over 1M citizens
     EXPRESSION ([population] > 1000000)
     NAME 'over 1 Million'
     MINSCALE 1000
@@ -62,7 +62,7 @@ LAYER
     LABEL
       TYPE BITMAP
       #TYPE TRUETYPE
-      FONT "arial-bold"
+      #FONT "arial-bold"
       MINSIZE 10
       MAXSIZE 15
       #MAXSIZE 15
@@ -77,7 +77,7 @@ LAYER
       PARTIALS FALSE
       ENCODING UTF-8
     END
-	END
+        END
 
   CLASS #500K - 1M citizens
     EXPRESSION ([population] > 500000 AND [population] <= 1000000)
@@ -104,7 +104,7 @@ LAYER
     LABEL
       TYPE BITMAP
       #TYPE TRUETYPE
-      FONT "arial-bold"
+      #FONT "arial-bold"
       MINSIZE 9
       MAXSIZE 11
       POSITION AUTO
@@ -117,7 +117,7 @@ LAYER
       #ANTIALIAS TRUE
       PARTIALS FALSE
     END
-	END
+        END
 
   CLASS #100K - 500K citizens
     EXPRESSION ([population] > 100000 AND [population] <= 500000)
@@ -131,7 +131,7 @@ LAYER
     LABEL
       TYPE BITMAP
       #TYPE TRUETYPE
-      FONT "arial-bold"
+      #FONT "arial-bold"
       MINSIZE 8
       POSITION AUTO
       #POSITION ur
@@ -145,7 +145,7 @@ LAYER
       PARTIALS FALSE
     END
     OUTLINECOLOR 0 0 0
-	END
+        END
 
   CLASS #50K - 100K citizens
     EXPRESSION ([population] > 20000 AND [population] <= 100000)
@@ -159,7 +159,7 @@ LAYER
     LABEL
       TYPE BITMAP
       #TYPE TRUETYPE
-      FONT "arial-bold"
+      #FONT "arial-bold"
       MINSIZE 8
       POSITION AUTO
       #POSITION ur
@@ -173,7 +173,7 @@ LAYER
       PARTIALS FALSE
     END
     OUTLINECOLOR 0 0 0
-	END
+        END
 
   CLASS #20K citizens and below
     EXPRESSION ([population] <= 20000)
@@ -187,7 +187,7 @@ LAYER
     LABEL
       TYPE BITMAP
       #TYPE TRUETYPE
-      FONT "arial-bold"
+      #FONT "arial-bold"
       MINSIZE 8
       POSITION AUTO
       #POSITION ur
@@ -200,7 +200,7 @@ LAYER
       #ANTIALIAS TRUE
       PARTIALS FALSE
     END
-	END
+        END
 
   #CLASS
   #  EXPRESSION "3"

@@ -2,6 +2,15 @@ LAYER
   #GROUP "query"
   #TEMPLATE "DUMMY"
   #DUMP TRUE
+  VALIDATION
+    "fromAge" "^[0-9]{4}$"
+    "toAge" "^[0-9]{4}$"
+    "fromMonth" "^[0-9]{2}$"
+    "toMonth" "^[0-9]{2}$"
+    "fromYear" "^[0-9]{4}$"
+    "toYear" "^[0-9]{4}$"
+    "SEROGROUPS" "^.*$"
+  END
   NAME serogroups_default
   TOLERANCE 10
   METADATA
