@@ -11,9 +11,8 @@
     <title>EpiScanGIS - Map Browser</title>
 
     <!-- Bootstrap core CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <!-- Custom styles -->
     <link href="mapviewer.css" rel="stylesheet">
 </head>
@@ -25,7 +24,6 @@
 
     <div class="container-fluid">
         <div class="row">
-
             <nav class="col-md-2 d-none d-md-block bg-light sidebar">
                 <div class="sidebar-sticky">
                     <h6
@@ -34,13 +32,13 @@
                     </h6>
                     <ul class="nav flex-column mb-2">
                         <li class="nav-item">
-                            <a class="nav-link active" href="#">
+                            <a class="nav-link active" href="#" id="set_parameter_tier_3">
                                 <span data-feather="minus-circle"></span>
                                 Federal states
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" href="#" id="set_parameter_tier_4">
                                 <span data-feather="plus-circle"></span>
                                 Counties
                             </a>
@@ -106,6 +104,9 @@
                 <div
                     class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
                     <h1 class="h2">Dashboard</h1>
+                    <div class="spinner-border" role="status" id="loadingIndicator">
+                        <span class="sr-only">Loading...</span>
+                    </div>
                     <div class="btn-toolbar mb-2 mb-md-0">
                         <div class="btn-group mr-2">
                             <button class="btn btn-sm btn-outline-secondary">
@@ -113,6 +114,7 @@
                                 Print
                             </button>
                         </div>
+
                     </div>
                 </div>
 
@@ -142,14 +144,13 @@
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
         crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-        crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
         crossorigin="anonymous"></script>
 
     <!-- Icons -->
@@ -159,6 +160,10 @@
     </script>
 
     <script>
+        const baseUrl = "./";
+        const loadingStack = [];
+
+
         $(document).ready(function () {
             const layers = [
                 "popdensity",
@@ -168,21 +173,17 @@
                 "cities_default"
             ];
 
-            layers.forEach(
-                layer => registerToggleCheckbox(layer)
-            )
+            initializeFilters();
+            initializeLayerCheckboxes(layers);
 
-            var xhttp = new XMLHttpRequest();
-            xhttp.onreadystatechange = function () {
-                if (this.readyState == 4 && this.status == 200) {
-
+            loading(true);
+            $.ajax({ url: baseUrl + "/Map.do?width=600&height=800" }).then(
+                function (data) {
                     refreshLayers(layers);
                 }
-            };
-            xhttp.open("GET", "./Map.do?width=600&height=800", true);
-            xhttp.send();
-
-            refreshLayers(layers);
+            ).always(function () {
+                loading(false);
+            });
         });
 
         function refreshLayers(layers) {
@@ -191,24 +192,79 @@
             );
         }
 
-        function registerToggleCheckbox(layerId) {
-            $("#toggle_layer_" + layerId).change(function () {
-                if (this.checked) {
-                    showLayer(layerId);
+        function initializeFilters() {
+            $("#set_parameter_tier_3").on("click", function () {
+                $("#set_parameter_tier_3").addClass("active");
+                $("#set_parameter_tier_4").removeClass("active");
+                setTier(3);
+            });
+            $("#set_parameter_tier_4").on("click", function () {
+                $("#set_parameter_tier_4").addClass("active");
+                $("#set_parameter_tier_3").removeClass("active");
+                setTier(4);
+            });
+        }
+
+        function initializeLayerCheckboxes(layers) {
+            layers.forEach(
+                layer => $("#toggle_layer_" + layer).change(
+                    function () {
+                        if (this.checked) {
+                            showLayer(layer);
+                        }
+                        else {
+                            hideLayer(layer);
+                        }
+                    })
+            );
+        }
+
+        function loading(started) {
+            if (started) {
+                loadingStack.push(1);
+            }
+            else {
+                loadingStack.pop();
+            }
+            if (loadingStack.length > 0) {
+                $("#loadingIndicator").show();
+            }
+            else {
+                $("#loadingIndicator").hide();
+            }
+        }
+
+        function setTier(depth) {
+            setParameter("BORDERTIER", depth);
+            setParameter("INCITIER", depth);
+            setParameter("POPDENTIER", depth);
+        }
+
+        function setParameter(name, value) {
+            loading(true);
+            $.ajax({ url: baseUrl + "/SetParameter.do?name=" + name + "&&value=" + value }).then(
+                function (data) {
+                    $(data).find('update').each(function () {
+                        var layer = $(this).text();
+                        refreshLayer(layer);
+                    });
                 }
-                else {
-                    hideLayer(layerId);
-                }
+            ).always(function () {
+                loading(false);
             });
         }
 
         function refreshLayer(layerId) {
+            loading(true);
             var layerImage = new Image();
             layerImage.onload = function () {
                 var canvas = $("#canvas_layer_" + layerId).get(0);
-                canvas.getContext("2d").drawImage(layerImage, 0, 0);
+                var context = canvas.getContext("2d");
+                context.clearRect(0, 0, canvas.width, canvas.height);
+                context.drawImage(layerImage, 0, 0);
+                loading(false);
             };
-            layerImage.src = "./GetMapLayer.do?layer=" + layerId;
+            layerImage.src = baseUrl + "/GetMapLayer.do?layer=" + layerId;
         }
 
         function hideLayer(layerId) {
