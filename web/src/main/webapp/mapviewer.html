@@ -20,10 +20,14 @@
 <body>
     <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
         <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">EpiScanGIS</a>
+        <a class="nav-link active" href="#" id="loadingIndicator">
+            <span class="spinner-border"></span>
+        </a>
     </nav>
 
     <div class="container-fluid">
         <div class="row">
+
             <nav class="col-md-2 d-none d-md-block bg-light sidebar">
                 <div class="sidebar-sticky">
                     <h6
@@ -57,6 +61,7 @@
                                     <label class="form-check-label" for="toggle_layer_popdensity">
                                         Population densitity
                                     </label>
+                                    <span id="loadingIndicator_layer_popdensity" style="display: none" class="spinner-grow spinner-grow-sm"></span>
                                 </div>
                             </a>
                             <a class="nav-link" href="#">
@@ -66,6 +71,7 @@
                                     <label class="form-check-label" for="toggle_layer_incidence">
                                         Annual incidence
                                     </label>
+                                    <span id="loadingIndicator_layer_incidence" style="display: none" class="spinner-grow spinner-grow-sm"></span>
                                 </div>
                             </a>
                             <a class="nav-link" href="#">
@@ -75,6 +81,7 @@
                                     <label class="form-check-label" for="toggle_layer_borders_default">
                                         Borders
                                     </label>
+                                    <span id="loadingIndicator_layer_borders_default" style="display: none" class="spinner-grow spinner-grow-sm"></span>
                                 </div>
                             </a>
                             <a class="nav-link" href="#">
@@ -84,6 +91,7 @@
                                     <label class="form-check-label" for="toggle_layer_serogroups_default">
                                         Serogroups
                                     </label>
+                                    <span id="loadingIndicator_layer_serogroups_default" style="display: none" class="spinner-grow spinner-grow-sm"></span>
                                 </div>
                             </a>
                             <a class="nav-link" href="#">
@@ -93,6 +101,7 @@
                                     <label class="form-check-label" for="toggle_layer_cities_default">
                                         Cities
                                     </label>
+                                    <span id="loadingIndicator_layer_cities_default" style="display: none" class="spinner-grow spinner-grow-sm"></span>
                                 </div>
                             </a>
                         </li>
@@ -103,13 +112,49 @@
             <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
                 <div
                     class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
-                    <h1 class="h2">Dashboard</h1>
-                    <div class="spinner-border" role="status" id="loadingIndicator">
-                        <span class="sr-only">Loading...</span>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Serogroup</label>
+                        <div class="col-sm-4 btn-group btn-group-toggle" data-toggle="buttons">
+                            <label class="btn btn-secondary active">
+                                <input type="checkbox" data-serogroup='"B"' class="toggle_parameter_serogroup" checked>B
+                            </label>
+                            <label class="btn btn-secondary">
+                                <input type="checkbox" data-serogroup='"C"' class="toggle_parameter_serogroup"
+                                    autocomplete="off">C
+                            </label>
+                            <label class="btn btn-secondary">
+                                <input type="checkbox" data-serogroup='"Y"' class="toggle_parameter_serogroup"
+                                    autocomplete="off">Y
+                            </label>
+                            <label class="btn btn-secondary">
+                                <input type="checkbox" data-serogroup='"W"' class="toggle_parameter_serogroup"
+                                    autocomplete="off">W
+                            </label>
+                            <label class="btn btn-secondary">
+                                <input type="checkbox" data-serogroup='"A"' class="toggle_parameter_serogroup"
+                                    autocomplete="off">A
+                            </label>
+                            <label class="btn btn-secondary">
+                                <input type="checkbox" data-serogroup='"29E"' class="toggle_parameter_serogroup"
+                                    autocomplete="off">29E
+                            </label>
+                            <label class="btn btn-secondary">
+                                <input type="checkbox" data-serogroup='"Z"' class="toggle_parameter_serogroup"
+                                    autocomplete="off">Z
+                            </label>
+                            <label class="btn btn-secondary">
+                                <input type="checkbox" data-serogroup='"X"' class="toggle_parameter_serogroup"
+                                    autocomplete="off">X
+                            </label>
+                            <label class="btn btn-secondary">
+                                <input type="checkbox" data-serogroup='"E"' class="toggle_parameter_serogroup"
+                                    autocomplete="off">E
+                            </label>
+                        </div>
                     </div>
                     <div class="btn-toolbar mb-2 mb-md-0">
                         <div class="btn-group mr-2">
-                            <button class="btn btn-sm btn-outline-secondary">
+                            <button class="btn btn-sm btn-outline-secondary" onclick="window.open(baseUrl + 'PrintMap.do','_blank')">
                                 <span data-feather="printer"></span>
                                 Print
                             </button>
@@ -120,21 +165,21 @@
 
                 <div id="canvasesdiv" class="position-absolute">
                     <canvas id="canvas_layer_popdensity" style="z-index: 1; position:absolute; left:0px; top:0px;"
-                        height="800px" width="600">
+                        height="700px" width="500">
                         This text is displayed if your browser does not support HTML5 Canvas.
                     </canvas>
                     <canvas id="canvas_layer_incidence" style="z-index: 2; position:absolute; left:0px; top:0px;"
-                        height="800px" width="600">
+                        height="700px" width="500">
                         This text is displayed if your browser does not support HTML5 Canvas.
                     </canvas>
                     <canvas id="canvas_layer_borders_default" style="z-index: 3; position:absolute; left:0px; top:0px;"
-                        height="800px" width="600">
+                        height="700px" width="500">
                     </canvas>
                     <canvas id="canvas_layer_serogroups_default"
-                        style="z-index: 4; position:absolute; left:0px; top:0px;" height="800px" width="600">
+                        style="z-index: 4; position:absolute; left:0px; top:0px;" height="700px" width="500">
                     </canvas>
                     <canvas id="canvas_layer_cities_default" style="z-index: 5; position:absolute; left:0px; top:0px;"
-                        height="800px" width="600">
+                        height="700px" width="500">
                     </canvas>
                 </div>
             </main>
@@ -177,7 +222,7 @@
             initializeLayerCheckboxes(layers);
 
             loading(true);
-            $.ajax({ url: baseUrl + "/Map.do?width=600&height=800" }).then(
+            $.ajax({ url: baseUrl + "/Map.do?width=500&height=700" }).then(
                 function (data) {
                     refreshLayers(layers);
                 }
@@ -193,6 +238,7 @@
         }
 
         function initializeFilters() {
+            // Tier
             $("#set_parameter_tier_3").on("click", function () {
                 $("#set_parameter_tier_3").addClass("active");
                 $("#set_parameter_tier_4").removeClass("active");
@@ -202,6 +248,16 @@
                 $("#set_parameter_tier_4").addClass("active");
                 $("#set_parameter_tier_3").removeClass("active");
                 setTier(4);
+            });
+
+            // Serogroups
+            $(".toggle_parameter_serogroup").on("change", function () {
+                var serogroups = [];
+                $(".toggle_parameter_serogroup:checked").each(function () {
+                    serogroups.push($(this).data("serogroup"))
+                }
+                );
+                setParameter("SEROGROUPS", serogroups.join(","))
             });
         }
 
@@ -256,13 +312,16 @@
 
         function refreshLayer(layerId) {
             loading(true);
+            $("#loadingIndicator_layer_" + layerId).show();
+            var canvas = $("#canvas_layer_" + layerId).get(0);
+            var context = canvas.getContext("2d");
+            context.clearRect(0, 0, canvas.width, canvas.height);
+
             var layerImage = new Image();
             layerImage.onload = function () {
-                var canvas = $("#canvas_layer_" + layerId).get(0);
-                var context = canvas.getContext("2d");
-                context.clearRect(0, 0, canvas.width, canvas.height);
                 context.drawImage(layerImage, 0, 0);
                 loading(false);
+                $("#loadingIndicator_layer_" + layerId).hide();
             };
             layerImage.src = baseUrl + "/GetMapLayer.do?layer=" + layerId;
         }

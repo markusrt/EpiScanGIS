@@ -6,21 +6,15 @@
       <b><a style="vertical-align:middle" href="$link.setAction('Login')">$msg.global.login</a></b> <img style="font-size:smaller;cursor:help;text-decoration:none;vertical-align:middle" src="images/icons/help-browser.png" alt="(?)" title="$msg.global.infoNoLogout" />
     #end
     </li>
-    <li><a href="#"
-      onclick="window.open('mapbrowser.vm','mapbrowser','status=no,scrollbars=no,width=1020,height=820')"
+    <li>
+<a href="#"
+      onclick="window.open('mapviewer.html','mapbrowser','status=no,scrollbars=no,width=1120,height=880')"
       >$msg.page.navigation.launch</a></li>
-    <li style="font-size:smaller;"><a href="#"
-      onclick="window.open('mapbrowser.vm?width=800&amp;height=600','mapbrowser','status=no,scrollbars=no,width=800,height=670')">$msg.page.navigation.smallversion</a></li>
-
   </ul>
   <h5>$msg.page.navigation.about</h5>
   <ul>
     <li><a href="whatis.vm">$msg.page.whatis.title</a></li>
     <li><a href="manual.vm">$msg.page.manual.title</a></li>
-  </ul>
-  <h5>$msg.page.navigation.report</h5>
-  <ul>
-    <li><a href="feedbackLogin.vm">$msg.page.feedbackLogin.title</a></li>
   </ul>
   <h5>$msg.page.navigation.other</h5>
   <ul>
@@ -38,7 +32,7 @@
   ## || $user.isInRole("nrzm"))
   <h5>$msg.role.public_health</h5>
   <ul>
-    <li></li>
+        <li></li>
   </ul>
   #end
   #if($user.isInRole("nrzm"))

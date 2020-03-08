@@ -51,14 +51,10 @@
   <p style="text-align:center">
     <b>Starten Sie den Kartenbetrachter!</b><br />
     <a href="#"
-      onclick="window.open('mapbrowser.vm','mapbrowser','status=no,scrollbars=yes,width=1040,height=820')"><img
+      onclick="window.open('mapviewer.html','mapbrowser','status=no,scrollbars=no,width=1120,height=880')"><img
         src="images/go_episcangis.png" alt="EpiScanGIS - Web Surveillance starten" />
     </a>
     <br />
-    <a style="font-size: smaller" href="#"
-      onclick="window.open('mapbrowser.vm?width=800&amp;height=600','mapbrowser','status=no,scrollbars=yes,width=800,height=670')">
-      Kleine Größe (800x600)
-    </a>
   </p>
   <p style="font-size: smaller">
     Mit dem Kartenbetrachter können Sie die geografische Verteilung der
@@ -79,4 +75,33 @@
     gibt Ihnen einen kurzen Einblick in die Software und erklärt, wie sie
     angewendet wird.
   </p>
+  <div class="section">
+    <h2>Publikationen</h2>
+    <p>
+      EpiScanGIS und seine Implementierung wurde im "International
+      Journal of Health Geographics" publiziert. Sie können  sich den Artikel
+      unter folgendem Link herunterladen:
+      <a href="http://www.ij-healthgeographics.com/content/7/1/33">http://www.ij-healthgeographics.com/content/7/1/33</a>
+      <pre style="font-size:smaller">
+        Reinhardt M, Elias J, Albert J, Frosch M, Harmsen D, Vogel U.
+        EpiScanGIS: an online geographic surveillance system for meningococcal disease.
+        Int J Health Geogr.
+        2008 Jul 1;7:33.
+        PubMed PMID: 18593474; PubMed Central PMCID: PMC2483700
+      </pre>
+    </p>
+    <p>
+      Die Methodik zur SaTScan-Analyse von
+      Meningokokken-Feintypen wurde von Elias et al. publiziert.
+      Sie können sich den Artikel  unter folgendem Link herunterladen:
+      <a href="http://www.cdc.gov/ncidod/EID/vol12no11/06-0682.htm">http://www.cdc.gov/ncidod/EID/vol12no11/06-0682.htm</a>
+      <pre style="font-size:smaller">
+        Elias J, Harmsen D, Claus H, Hellenbrand W, Frosch M, Vogel U.
+        Spatiotemporal analysis of invasive meningococcal disease, Germany.
+        Emerg Infect Dis.
+        2006 Nov;12(11):1689-95.
+        PubMed PMID: 17283618.
+      </pre>
+    </p>
+  </div>
 </div>
