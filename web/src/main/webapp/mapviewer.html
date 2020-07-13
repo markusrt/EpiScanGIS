@@ -210,20 +210,20 @@
 
 
         $(document).ready(function () {
-            const layers = [
-                "popdensity",
-                "incidence",
-                "borders_default",
-                "serogroups_default",
-                "cities_default"
-            ];
-
-            initializeFilters();
-            initializeLayerCheckboxes(layers);
+            var layers = [];
 
             loading(true);
             $.ajax({ url: baseUrl + "/Map.do?width=500&height=700" }).then(
                 function (data) {
+                    var l = [];
+                    $(data).find('layer').each(function () {
+                        var name = $(this).attr("name");
+                        var active = $(this).attr("active");
+                        console.log("Layer: "+ name + " - " + active);
+                        layers.push({name: name, active: active});
+                    });
+                    initializeFilters();
+                    initializeLayerCheckboxes(layers);
                     refreshLayers(layers);
                 }
             ).always(function () {
@@ -233,7 +233,9 @@
 
         function refreshLayers(layers) {
             layers.forEach(
-                layer => refreshLayer(layer)
+                layer => {
+                    if(layer.active == "true") refreshLayer(layer.name);
+                }
             );
         }
 
@@ -263,15 +265,27 @@
 
         function initializeLayerCheckboxes(layers) {
             layers.forEach(
-                layer => $("#toggle_layer_" + layer).change(
+                layer =>
+                {
+                    $("#toggle_layer_" + layer.name).prop("checked", layer.active == "true");
+                    $("#toggle_layer_" + layer.name).change(
                     function () {
-                        if (this.checked) {
-                            showLayer(layer);
-                        }
-                        else {
-                            hideLayer(layer);
-                        }
+                        loading(true);
+                        var checked = this.checked;
+                        $.ajax({ url: baseUrl + "/ToggleLayerState.do?layer=" + layer.name + "&active=" + checked }).then(
+                            function (data) {
+                                if (checked) {
+                                    refreshLayer(layer.name);
+                                }
+                                else {
+                                    hideLayer(layer.name);
+                                }
+                            }
+                        ).always(function () {
+                            loading(false);
+                        });
                     })
+                }
             );
         }
 
@@ -311,7 +325,15 @@
         }
 
         function refreshLayer(layerId) {
-            loading(true);
+            if($("#loadingIndicator_layer_" + layerId).is(":visible")) {
+                return;
+            }
+            if($("#toggle_layer_" + layerId).prop("checked")) {
+                showLayer(layerId);
+            }
+            else {
+                hideLayer(layerId);
+            }
             $("#loadingIndicator_layer_" + layerId).show();
             var canvas = $("#canvas_layer_" + layerId).get(0);
             var context = canvas.getContext("2d");
@@ -320,10 +342,9 @@
             var layerImage = new Image();
             layerImage.onload = function () {
                 context.drawImage(layerImage, 0, 0);
-                loading(false);
                 $("#loadingIndicator_layer_" + layerId).hide();
             };
-            layerImage.src = baseUrl + "/GetMapLayer.do?layer=" + layerId;
+            layerImage.src = baseUrl + "/GetMapLayer.do?layer=" + layerId + "&nocache=" + Math.floor(Math.random() * 1000000); ;
         }
 
         function hideLayer(layerId) {
