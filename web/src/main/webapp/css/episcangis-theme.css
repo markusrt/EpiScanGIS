@@ -158,13 +158,14 @@ table.bodyTable tr.b {
   border: 1px solid #999;
 }
 dl {
-  padding: 4px 4px 4px 6px;
+  padding: 10px 20px 0px 20px;
   border: 1px solid #aaa;
   background-color: #ffc;
   color: inherit;
 }
 dt {
-  color: #900;
+  color: #000;
+  font-weight: bold;
   background-color: inherit;
 }
 #organizationLogo img, #projectLogo img, #projectLogo span{

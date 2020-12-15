@@ -2,39 +2,20 @@
 
 <div class="section">
   <h1>$msg.global.title</h1>
-  <!--
-  <b>Aktuelle Meldung:</b>
-  <dl style="font-size:smaller;">
-   <dt>31. Mai 2006 - 15.00 Uhr</dt>
+  <b>Aktueller Status:</b>
+  <dl>
+   <dt>1. Dezember 2020</dt>
    <dd>
      <p>
-     Vor der Einführung von EpiScanGIS konnten wir nicht die Kompatibilität mit
-     allen verfügbaren Browser/Betriebssystem-Kombinationen prüfen. Besonders die
-     Verwendung des Internet Explorers kann stellenweise zu Problemen führen.
+        Das System wird im Moment aktualisiert, da der Flash Player ab 2021 nicht mehr verfügbar ist.
+        Aus diesem Grund funktioniert der Kartenbetrachter nur eingeschränkt bzw. teilweise gar nicht.
+        Zudem ist die Datenaktualisierung pausiert.        
      </p>
      <p>
-       <b>
-         Wenn Sie den Internet Explorer verwenden, dann stellen Sie
-         bitte sicher, dass der aktuellste Flash-Player
-         (mindestens <i>Version 7</i>) installiert ist:
-         <br />
-         <a target="_blank" class="newWindow"
-           href="http://www.adobe.com/go/getflashplayer">
-           http://www.adobe.com/go/getflashplayer</a>
-       </b>
-     </p>
-     <p>
-     Aktuell wurde eine Änderung durchgeführt, die einen Großteil der Probleme beheben
-     sollte. Falls der Kartenbetrachter bei Ihnen auch nach einem Neustart Ihres
-     Browsers nicht funktionieren sollte, wäre es nett, wenn Sie mir die Version und
-     den Namen Ihres Browsers bzw. Betriebssystems mitteilen könnten.
-     </p>
-     <p>
-       Email an: <a href="mailto:mreinhardt@hygiene.uni-wuerzburg.de">M. Reinhardt</a>
+       Im Jahr 2021 wird EpiScanGIS wieder verfügbar sein. Entschuldigen Sie bitte die Unannehmlichkeiten.
      </p>
    </dd>
   </dl>
-  -->
   <p>
     Um die Anzahl der Meningokokken-Infektionen in der Bevökerung so gering wie
     möglich halten zu können, ist eine frühzeitige Erkennung von
@@ -51,7 +32,7 @@
   <p style="text-align:center">
     <b>Starten Sie den Kartenbetrachter!</b><br />
     <a href="#"
-      onclick="window.open('mapviewer.html','mapbrowser','status=no,scrollbars=no,width=1120,height=880')"><img
+      onclick="window.open('http://episcangis.hygiene.uni-wuerzburg.de:8080/mapviewer.html','mapbrowser','status=no,scrollbars=no,width=1120,height=880')"><img
         src="images/go_episcangis.png" alt="EpiScanGIS - Web Surveillance starten" />
     </a>
     <br />
@@ -59,15 +40,7 @@
   <p style="font-size: smaller">
     Mit dem Kartenbetrachter können Sie die geografische Verteilung der
     Meningokokken-Erkrankungsfälle anzeigen, die seit Dezember 2001 in
-    Deutschland aufgetreten sind. EpiScanGIS nutzt den
-    <a target="_blank" class="newWindow"
-      href="http://www.adobe.com/products/flashplayer/">
-      Macromedia Flash® Player</a> (mindestens <b>Version 7</b>) um Ihnen einen unkomplizierten Zugriff auf
-    die epidemiologischen Beobachtungsdaten zu ermöglichen. Für den Fall, dass
-    dieses PlugIn noch nicht mit Ihrem Browser installiert ist, können Sie es
-    <a target="_blank" class="newWindow"
-      href="http://www.adobe.com/go/getflashplayer">
-      hier</a> herunterladen.
+    Deutschland aufgetreten sind.
   </p>
   <p style="font-size: smaller">
     Die
