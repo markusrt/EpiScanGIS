@@ -2,38 +2,19 @@
 
 <div class="section">
   <h1>$msg.global.title</h1>
-  <!--
-  <b>Latest Information:</b>
-  <dl style="font-size:smaller;">
-   <dt>Mai 31, 2006 - 15.00 Uhr</dt>
+  <b>Current Status:</b>
+  <dl>
+   <dt>December 1, 2020</dt>
    <dd>
      <p>
-     We weren't able to test the compatibility of EpiScanGIS with all possible
-     browser/operating system combinations prior to the launch. Especially the
-     use of the Internet Explorer may cause problems.
+        The system is currently updated to run without flash player.
+        Therefore the map browser is not fully available/may have issues and data update is paused.
      </p>
      <p>
-       <b>
-         If you are using the Internet Explorer, then make sure that you have
-         installed the latest Flash-Player (<i>version 7</i> at least):
-         <br />
-         <a target="_blank" class="newWindow"
-           href="http://www.adobe.com/go/getflashplayer">
-           http://www.adobe.com/go/getflashplayer</a>
-       </b>
-     </p>
-     <p>
-     By now, we carried out some changes, that should solve most of the difficulties.
-     If the map browser isn't functioning, even after you have restarted your browser,
-     then it would be nice if you sent me an e-mail including the Version and name of
-     your browser and operating system respectively.
-     </p>
-     <p>
-       E-mail to: <a href="mailto:mreinhardt@hygiene.uni-wuerzburg.de">M. Reinhardt</a>
+       EpiScanGIS will be up and running again beginning of 2021. Sorry for the inconvenience.
      </p>
    </dd>
   </dl>
-   -->
   <p>
     Detecting meningococcal disease outbreaks as early as possible is
     important in order to minimize the number of infections amongst the
@@ -50,27 +31,14 @@
   <p style="text-align:center">
     <b>Start the map browser!</b><br />
     <a href="#"
-      onclick="window.open('mapviewer.html','mapbrowser','status=no,scrollbars=no,width=1120,height=880')"><img
+      onclick="window.open('http://episcangis.hygiene.uni-wuerzburg.de:8080/mapviewer.html','mapbrowser','status=no,scrollbars=no,width=1120,height=880')"><img
         src="images/go_episcangis.png" alt="Start EpiScanGIS - Web Surveillance" />
     </a>
     <br />
-    <a style="font-size: smaller" href="#"
-      onclick="window.open('mapbrowser.vm?width=800&amp;height=600','mapbrowser','status=no,scrollbars=yes,width=800,height=670')">
-      Start small size (800x600)
-    </a>
   </p>
   <p style="font-size: smaller">
     The map browser allows you to explore the geographical distribution of all cases of
-    meningococcal disease, that occurred in Germany since December 2001.
-    EpiScanGIS uses
-    <a target="_blank" class="newWindow"
-      href="http://www.adobe.com/products/flashplayer/">
-      Macromedia Flash® Player</a> (<b>version 7</b> at least) to provide you with easy access to
-    epidemiological surveillance data. Just in case that this PlugIn is not
-    already installed with your browser, you can download it
-    <a target="_blank" class="newWindow"
-      href="http://www.adobe.com/go/getflashplayer">
-      here</a>.
+    meningococcal disease, that occurred in Germany since December 2001.    
   </p>
   <p style="font-size: smaller">
     The
