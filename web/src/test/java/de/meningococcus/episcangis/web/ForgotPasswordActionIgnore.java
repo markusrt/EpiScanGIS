@@ -3,16 +3,16 @@ package de.meningococcus.episcangis.web;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-public class ForgotPasswordActionTest extends AbstractStrutsTestCase
+public class ForgotPasswordActionIgnore extends AbstractStrutsTestCase
 {
-  public ForgotPasswordActionTest(String testName)
+  public ForgotPasswordActionIgnore(String testName)
   {
     super(testName);
   }
 
   public static Test suite()
   {
-    return new TestSuite(ForgotPasswordActionTest.class);
+    return new TestSuite(ForgotPasswordActionIgnore.class);
   }
 
   public void testResetNonexistentEmail()

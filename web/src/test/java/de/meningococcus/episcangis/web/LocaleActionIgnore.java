@@ -7,16 +7,16 @@ import javax.servlet.http.HttpSession;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-public class LocaleActionTest extends AbstractStrutsTestCase
+public class LocaleActionIgnore extends AbstractStrutsTestCase
 {
-  public LocaleActionTest(String testName)
+  public LocaleActionIgnore(String testName)
   {
     super(testName);
   }
 
   public static Test suite()
   {
-    return new TestSuite(LocaleActionTest.class);
+    return new TestSuite(LocaleActionIgnore.class);
   }
 
   public void testSwitchLocale()

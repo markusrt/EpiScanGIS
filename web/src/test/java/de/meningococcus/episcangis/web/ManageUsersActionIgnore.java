@@ -10,16 +10,16 @@ import de.meningococcus.episcangis.db.model.User;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-public class ManageUsersActionTest extends AbstractStrutsTestCase
+public class ManageUsersActionIgnore extends AbstractStrutsTestCase
 {
-  public ManageUsersActionTest(String testName)
+  public ManageUsersActionIgnore(String testName)
   {
     super(testName);
   }
 
   public static Test suite()
   {
-    return new TestSuite(ManageUsersActionTest.class);
+    return new TestSuite(ManageUsersActionIgnore.class);
   }
 
   public void testRegisterNewUser()

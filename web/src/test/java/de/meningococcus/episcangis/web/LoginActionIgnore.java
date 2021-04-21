@@ -9,16 +9,16 @@ import de.meningococcus.episcangis.db.model.User;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-public class LoginActionTest extends AbstractStrutsTestCase
+public class LoginActionIgnore extends AbstractStrutsTestCase
 {
-  public LoginActionTest(String testName)
+  public LoginActionIgnore(String testName)
   {
     super(testName);
   }
 
   public static Test suite()
   {
-    return new TestSuite(LoginActionTest.class);
+    return new TestSuite(LoginActionIgnore.class);
   }
 
   public void testSuccessfulLogin()

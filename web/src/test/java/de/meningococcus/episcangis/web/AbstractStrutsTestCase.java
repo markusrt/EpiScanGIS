@@ -1,5 +1,7 @@
 package de.meningococcus.episcangis.web;
 
+import java.io.File;
+
 import de.meningococcus.episcangis.db.DaoFactory;
 import servletunit.struts.MockStrutsTestCase;
 
@@ -7,7 +9,6 @@ import servletunit.struts.MockStrutsTestCase;
  *   Copyright �2005 Markus Reinhardt - All Rights Reserved.
  * ====================================================================
  */
-
 public abstract class AbstractStrutsTestCase extends MockStrutsTestCase
 {
 
@@ -20,7 +21,7 @@ public abstract class AbstractStrutsTestCase extends MockStrutsTestCase
 
   public void tearDown() throws Exception
   {
-    super.tearDown();
+    //super.tearDown();
   }
 
   public AbstractStrutsTestCase(String testName)
