@@ -2,7 +2,7 @@ package de.meningococcus.episcangis.db;
 
 /*
  * ====================================================================
- * Copyright �2006 Markus Reinhardt - All Rights Reserved.
+ * Copyright ©2006 Markus Reinhardt - All Rights Reserved.
  * ====================================================================
  */
 

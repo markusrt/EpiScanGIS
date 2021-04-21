@@ -14,7 +14,7 @@ import de.meningococcus.episcangis.map.ParameterComposite;
 import de.meningococcus.episcangis.map.ParameterReference;
 
 /* ====================================================================
- *   Copyright �2005 Markus Reinhardt - All Rights Reserved.
+ *   Copyright ©2005 Markus Reinhardt - All Rights Reserved.
  * ====================================================================
  */
 

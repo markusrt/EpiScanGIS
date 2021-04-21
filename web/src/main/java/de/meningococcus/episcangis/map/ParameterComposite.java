@@ -9,7 +9,7 @@ import org.apache.commons.collections.map.LinkedMap;
 import org.apache.commons.lang.StringEscapeUtils;
 
 /* ====================================================================
- *   Copyright �2006 Markus Reinhardt - All Rights Reserved.
+ *   Copyright ©2006 Markus Reinhardt - All Rights Reserved.
  * ====================================================================
  */
 

@@ -3,7 +3,7 @@ package de.meningococcus.episcangis.map;
 import de.meningococcus.episcangis.map.layer.MapLayer;
 
 /* ====================================================================
- *   Copyright �2005 Markus Reinhardt - All Rights Reserved.
+ *   Copyright ©2005 Markus Reinhardt - All Rights Reserved.
  * ====================================================================
  */
 

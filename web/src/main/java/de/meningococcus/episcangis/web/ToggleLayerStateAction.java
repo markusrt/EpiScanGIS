@@ -16,7 +16,7 @@ import de.meningococcus.episcangis.map.AbstractWmsMap;
 import de.meningococcus.episcangis.map.LayerState;
 
 /* ====================================================================
- *   Copyright �2005 Markus Reinhardt - All Rights Reserved.
+ *   Copyright ©2005 Markus Reinhardt - All Rights Reserved.
  * ====================================================================
  */
 

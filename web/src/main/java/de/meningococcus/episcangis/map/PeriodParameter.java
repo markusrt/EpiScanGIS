@@ -9,7 +9,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 /* ====================================================================
- *   Copyright �2005 Markus Reinhardt - All Rights Reserved.
+ *   Copyright ©2005 Markus Reinhardt - All Rights Reserved.
  * ====================================================================
  */
 

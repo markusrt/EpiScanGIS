@@ -13,7 +13,7 @@ import de.meningococcus.episcangis.map.ParameterValue;
 import de.meningococcus.episcangis.map.SelectParameter;
 
 /* ====================================================================
- *   Copyright �2005 Markus Reinhardt - All Rights Reserved.
+ *   Copyright ©2005 Markus Reinhardt - All Rights Reserved.
  * ====================================================================
  */
 

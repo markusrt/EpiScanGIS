@@ -15,7 +15,7 @@ import de.meningococcus.episcangis.db.model.Area;
 import de.meningococcus.episcangis.db.model.AreaType;
 
 /* ====================================================================
- *   Copyright �2005 Markus Reinhardt - All Rights Reserved.
+ *   Copyright ©2005 Markus Reinhardt - All Rights Reserved.
  * ====================================================================
  */
 

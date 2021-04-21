@@ -23,7 +23,7 @@ import de.meningococcus.episcangis.db.DaoFactory;
 import de.meningococcus.episcangis.db.model.User;
 
 /* ====================================================================
- *   Copyright �2005 Markus Reinhardt - All Rights Reserved.
+ *   Copyright ©2005 Markus Reinhardt - All Rights Reserved.
  * ====================================================================
  */
 

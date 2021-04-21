@@ -18,7 +18,7 @@ import de.meningococcus.episcangis.db.model.SatScanExecution;
 import de.meningococcus.episcangis.db.model.SatScanJob;
 
 /* ====================================================================
- *   Copyright �2005 Markus Reinhardt - All Rights Reserved.
+ *   Copyright ©2005 Markus Reinhardt - All Rights Reserved.
  * ====================================================================
  */
 

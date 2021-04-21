@@ -1,7 +1,7 @@
 #-------------------------------------------------------------------------------
 # EpiDeGIS Web Surveillance, UMN Mapserver (WMS) MAP file
 #
-# Copyright �2005 Markus Reinhardt - All Rights Reserved.
+# Copyright ©2005 Markus Reinhardt - All Rights Reserved.
 # Author: Markus Reinhardt <m.reinhardt[at]bitmap-friends.de>
 #-------------------------------------------------------------------------------
 
@@ -400,7 +400,7 @@ MAP
     STATUS ON
 #DEBUG ON
    TYPE POINT
-   #kleinerer Wert -> Ebene auch bei gr��erem Zoom sichtbar
+   #kleinerer Wert -> Ebene auch bei größerem Zoom sichtbar
    MINSCALE 500000
    #kleinerer Wert -> Ebene verschwindet beim rauszoomen eher
    MAXSCALE 6000000
@@ -783,7 +783,7 @@ MAP
     END
 
     CLASSITEM "pc"
-    CLASS	#Gro�st�dte
+    CLASS	#Großstädte
       EXPRESSION  "10" #('[NAME_TYP]' = '1')	#das gleiche wie EXPRESSION "1"
       MINSCALE 0
       MAXSCALE 50000000
@@ -806,7 +806,7 @@ MAP
       END
     END
 
-  CLASS			#Landeshauptst�dte
+  CLASS			#Landeshauptstädte
      EXPRESSION '1'
      MINSCALE 0
      MAXSCALE 5000000

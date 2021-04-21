@@ -19,7 +19,7 @@ import de.meningococcus.episcangis.map.InvalidParameterValueException;
 import de.meningococcus.episcangis.map.ParameterNotFoundException;
 
 /* ====================================================================
- *   Copyright �2005 Markus Reinhardt - All Rights Reserved.
+ *   Copyright ©2005 Markus Reinhardt - All Rights Reserved.
  * ====================================================================
  * 
  * TODO check if synchronized is really needed

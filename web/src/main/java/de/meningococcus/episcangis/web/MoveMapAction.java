@@ -18,7 +18,7 @@ import de.meningococcus.episcangis.db.model.User;
 import de.meningococcus.episcangis.map.AbstractWmsMap;
 
 /* ====================================================================
- *   Copyright �2005 Markus Reinhardt - All Rights Reserved.
+ *   Copyright ©2005 Markus Reinhardt - All Rights Reserved.
  * ====================================================================
  */
 

@@ -3,7 +3,7 @@ package de.meningococcus.episcangis.web;
 import org.apache.struts.action.ActionForm;
 
 /* ====================================================================
- *   Copyright �2005 Markus Reinhardt - All Rights Reserved.
+ *   Copyright ©2005 Markus Reinhardt - All Rights Reserved.
  * ====================================================================
  */
 

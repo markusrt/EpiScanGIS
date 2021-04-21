@@ -19,7 +19,7 @@ import de.meningococcus.episcangis.db.dao.ImportDAO;
 import de.meningococcus.episcangis.db.dao.ReportedCaseDAO;
 
 /* ====================================================================
- *   Copyright �2005 Markus Reinhardt - All Rights Reserved.
+ *   Copyright ©2005 Markus Reinhardt - All Rights Reserved.
  * ====================================================================
  */
 

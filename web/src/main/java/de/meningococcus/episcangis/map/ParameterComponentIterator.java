@@ -4,7 +4,7 @@ import java.util.Iterator;
 import java.util.Stack;
 
 /* ====================================================================
- *   Copyright �2006 Markus Reinhardt - All Rights Reserved.
+ *   Copyright ©2006 Markus Reinhardt - All Rights Reserved.
  * ====================================================================
  */
 

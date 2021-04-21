@@ -6,7 +6,7 @@ import de.meningococcus.episcangis.db.DaoFactory;
 import servletunit.struts.MockStrutsTestCase;
 
 /* ====================================================================
- *   Copyright �2005 Markus Reinhardt - All Rights Reserved.
+ *   Copyright ©2005 Markus Reinhardt - All Rights Reserved.
  * ====================================================================
  */
 public abstract class AbstractStrutsTestCase extends MockStrutsTestCase

@@ -26,7 +26,7 @@ import de.meningococcus.episcangis.db.model.BoundingBox;
 import de.meningococcus.episcangis.map.layer.MapLayer;
 
 /* ====================================================================
- *   Copyright �2005 Markus Reinhardt - All Rights Reserved.
+ *   Copyright ©2005 Markus Reinhardt - All Rights Reserved.
  * ====================================================================
  */
 
@@ -126,7 +126,7 @@ public abstract class AbstractWmsMap
    * <p>
    * Initializes this map by querying a server with Web Map Service (<a
    * href="http://portal.opengeospatial.org/files/?artifact_id=5316"
-   * target="_blank">OpenGIS� Web Map Service (WMS) Implementation Specification</a>)
+   * target="_blank">OpenGIS™ Web Map Service (WMS) Implementation Specification</a>)
    * capabilities.
    * </p>
    * <p>

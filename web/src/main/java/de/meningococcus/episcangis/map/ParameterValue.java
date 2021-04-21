@@ -5,7 +5,7 @@ import java.util.Iterator;
 import org.apache.commons.lang.StringEscapeUtils;
 
 /* ====================================================================
- *   Copyright �2005 Markus Reinhardt - All Rights Reserved.
+ *   Copyright ©2005 Markus Reinhardt - All Rights Reserved.
  * ====================================================================
  */
 
