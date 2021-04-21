@@ -112,46 +112,23 @@
             <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
                 <div
                     class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
-                    <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">Serogroup</label>
-                        <div class="col-sm-4 btn-group btn-group-toggle" data-toggle="buttons">
-                            <label class="btn btn-secondary active">
-                                <input type="checkbox" data-serogroup='"B"' class="toggle_parameter_serogroup" checked>B
-                            </label>
-                            <label class="btn btn-secondary">
-                                <input type="checkbox" data-serogroup='"C"' class="toggle_parameter_serogroup"
-                                    autocomplete="off">C
-                            </label>
-                            <label class="btn btn-secondary">
-                                <input type="checkbox" data-serogroup='"Y"' class="toggle_parameter_serogroup"
-                                    autocomplete="off">Y
-                            </label>
-                            <label class="btn btn-secondary">
-                                <input type="checkbox" data-serogroup='"W"' class="toggle_parameter_serogroup"
-                                    autocomplete="off">W
-                            </label>
-                            <label class="btn btn-secondary">
-                                <input type="checkbox" data-serogroup='"A"' class="toggle_parameter_serogroup"
-                                    autocomplete="off">A
-                            </label>
-                            <label class="btn btn-secondary">
-                                <input type="checkbox" data-serogroup='"29E"' class="toggle_parameter_serogroup"
-                                    autocomplete="off">29E
-                            </label>
-                            <label class="btn btn-secondary">
-                                <input type="checkbox" data-serogroup='"Z"' class="toggle_parameter_serogroup"
-                                    autocomplete="off">Z
-                            </label>
-                            <label class="btn btn-secondary">
-                                <input type="checkbox" data-serogroup='"X"' class="toggle_parameter_serogroup"
-                                    autocomplete="off">X
-                            </label>
-                            <label class="btn btn-secondary">
-                                <input type="checkbox" data-serogroup='"E"' class="toggle_parameter_serogroup"
-                                    autocomplete="off">E
-                            </label>
-                        </div>
-                    </div>
+                    <form class="col-sm-10">
+
+                        <div class="form-group row">
+                            <label for="serogroupSelect" class="col-sm-2 col-form-label">Serogroup</label>
+                            <div class="col-sm-10 btn-group btn-group-toggle" data-toggle="buttons" id="serogroupSelect"></div>
+                          </div>
+                          <div class="form-group row">
+                            <label class="col-sm-2 col-form-label">Period</label>
+                            <div class="col-sm-10">
+                                <select class="col-sm-3 form-control-sm" id="fromMonthSelect"></select>
+                                <select class="col-sm-2 form-control-sm" id="fromYearSelect"></select>
+                                <label class="col-sm-1 col-form-label">to</label>
+                                <select class="col-sm-3 form-control-sm" id="toMonthSelect"></select>
+                                <select class="col-sm-2 form-control-sm" id="toYearSelect"></select>
+                            </div>
+                          </div>
+                    </form>
                     <div class="btn-toolbar mb-2 mb-md-0">
                         <div class="btn-group mr-2">
                             <button class="btn btn-sm btn-outline-secondary" onclick="window.open(baseUrl + 'PrintMap.do','_blank')">
@@ -159,7 +136,6 @@
                                 Print
                             </button>
                         </div>
-
                     </div>
                 </div>
 
@@ -222,7 +198,7 @@
                         console.log("Layer: "+ name + " - " + active);
                         layers.push({name: name, active: active});
                     });
-                    initializeFilters();
+                    initializeFilters(data);
                     initializeLayerCheckboxes(layers);
                     refreshLayers(layers);
                 }
@@ -239,20 +215,82 @@
             );
         }
 
-        function initializeFilters() {
-            // Tier
-            $("#set_parameter_tier_3").on("click", function () {
-                $("#set_parameter_tier_3").addClass("active");
-                $("#set_parameter_tier_4").removeClass("active");
-                setTier(3);
-            });
-            $("#set_parameter_tier_4").on("click", function () {
-                $("#set_parameter_tier_4").addClass("active");
-                $("#set_parameter_tier_3").removeClass("active");
-                setTier(4);
+        function initializeFilters(data) {
+            var filters = $(data).find("selectparameter");
+            filters.each(function () {
+                var name = $(this).attr("name");
+                
+                // Tier filter
+                if(name == "BORDERTIER") {
+                    $(this).find("value").each(function () {
+                        var name = $(this).attr("name");
+                        var selected = $(this).attr("selected") == "true";
+                        var value = $(this).text();
+                        if(selected && value == "3") {
+                            $("#set_parameter_tier_3").addClass("active");
+                            $("#set_parameter_tier_4").removeClass("active");
+                        }
+                        if(selected && value == "4") {
+                            $("#set_parameter_tier_4").addClass("active");
+                            $("#set_parameter_tier_3").removeClass("active");
+                        }
+                        console.log("Bordertier: "+ name + " - " + selected);
+                    });
+
+                    $("#set_parameter_tier_3").on("click", function () {
+                        $("#set_parameter_tier_3").addClass("active");
+                        $("#set_parameter_tier_4").removeClass("active");
+                        setTier(3);
+                    });
+                    $("#set_parameter_tier_4").on("click", function () {
+                        $("#set_parameter_tier_4").addClass("active");
+                        $("#set_parameter_tier_3").removeClass("active");
+                        setTier(4);
+                    });
+                }
+
+                // Period filter
+                else if(name == "fromMonth" || name == "toMonth" || name == "fromYear" || name == "toYear") {
+                    var selectId = "#" + name + "Select";
+                    var parameter = name;
+                    $(this).find("value").each(function () {
+                        var name = $(this).attr("name");
+                        var selected = $(this).attr("selected") == "true";
+                        var value = $(this).text();
+                        $(selectId).append(new Option(name, value));
+                        if(selected){
+                            $(selectId).val(value);
+                        }
+                        console.log(selectId + ": "+ name + " - " + selected);
+                    });
+                    $(selectId).on("change", function () {
+                        console.log(selectId + " changed to " + $(selectId).val());
+                        setParameter(parameter, $(selectId).val());
+                    });
+                }
+
+                // TODO
+                else {
+                    console.log("Unhandled filter: " + name);
+                }
             });
 
-            // Serogroups
+            // Serogroups filter
+            var serogroups = $(data).find("multiselectparameter");
+            serogroups.find("value").each(function () {
+                var name = $(this).attr("name");
+                var selected = $(this).attr("selected") == "true";
+                var value = $(this).text();
+                var active = selected ? "active" : "";
+                var checked = selected ? "checked" : "";
+                $("#serogroupSelect").append(
+                    "<label class=\"btn btn-secondary " + active + "\">"
+                        + "<input type=\"checkbox\" data-serogroup='" + value + "' class=\"toggle_parameter_serogroup\" "
+                        + checked + ">" + name 
+                    + "</label>");
+                console.log("Select: "+ name + " - " + selected);
+            });
+
             $(".toggle_parameter_serogroup").on("change", function () {
                 var serogroups = [];
                 $(".toggle_parameter_serogroup:checked").each(function () {
