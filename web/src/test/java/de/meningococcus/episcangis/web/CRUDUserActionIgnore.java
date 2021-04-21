@@ -10,7 +10,7 @@ import de.meningococcus.episcangis.db.model.User;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-public class CRUDUserActionTest extends AbstractStrutsTestCase
+public class CRUDUserActionIgnore extends AbstractStrutsTestCase
 {
   public final String USERNAME = "strutstest", PASSWORD = "password",
       TITLE = "Dr. med.", FORENAME = "Hans", LASTNAME = "Moleman",
@@ -19,14 +19,14 @@ public class CRUDUserActionTest extends AbstractStrutsTestCase
       MESSAGE = "Hi folks", STREET = "Testdrive 10", ZIP = "9832489",
       CITY = "Testme";
 
-  public CRUDUserActionTest(String testName)
+  public CRUDUserActionIgnore(String testName)
   {
     super(testName);
   }
 
   public static Test suite()
   {
-    return new TestSuite(CRUDUserActionTest.class);
+    return new TestSuite(CRUDUserActionIgnore.class);
   }
 
   public void testCreateNewUser()

@@ -11,16 +11,16 @@ import de.meningococcus.episcangis.map.exporter.XmlExporter;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-public class SetParameterActionTest extends AbstractStrutsTestCase
+public class SetParameterActionIgnore extends AbstractStrutsTestCase
 {
-  public SetParameterActionTest(String testName)
+  public SetParameterActionIgnore(String testName)
   {
     super(testName);
   }
 
   public static Test suite()
   {
-    return new TestSuite(SetParameterActionTest.class);
+    return new TestSuite(SetParameterActionIgnore.class);
   }
 
   public void testSwitchLocale()

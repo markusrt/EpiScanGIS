@@ -5,16 +5,16 @@ import javax.servlet.http.HttpSession;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-public class LogoutActionTest extends AbstractStrutsTestCase
+public class LogoutActionIgnore extends AbstractStrutsTestCase
 {
-  public LogoutActionTest(String testName)
+  public LogoutActionIgnore(String testName)
   {
     super(testName);
   }
 
   public static Test suite()
   {
-    return new TestSuite(LogoutActionTest.class);
+    return new TestSuite(LogoutActionIgnore.class);
   }
 
   public void testNewSessionOnLogout()

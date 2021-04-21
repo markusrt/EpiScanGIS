@@ -12,16 +12,16 @@ import de.meningococcus.episcangis.map.NrzmMap;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-public class PrintMapActionTest extends AbstractStrutsTestCase
+public class PrintMapActionIgnore extends AbstractStrutsTestCase
 {
-  public PrintMapActionTest(String testName)
+  public PrintMapActionIgnore(String testName)
   {
     super(testName);
   }
 
   public static Test suite()
   {
-    return new TestSuite(PrintMapActionTest.class);
+    return new TestSuite(PrintMapActionIgnore.class);
   }
 
   public void testExceptionIfNotInitialized()
