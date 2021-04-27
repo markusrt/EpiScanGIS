@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Iterator;
 import java.util.List;
+import java.nio.charset.StandardCharsets;
 
 import javax.sql.DataSource;
 
@@ -50,7 +51,7 @@ final class PgSQLImportDAO extends DbUtilsDAO implements ImportDAO
     int exitStatus = -1;
     try
     {
-      List lines = FileUtils.readLines(csvFile);
+      List lines = FileUtils.readLines(csvFile, StandardCharsets.UTF_8);
       int lineCount = 0;
       Iterator lineIterator = lines.iterator();
       log.debug("Clearing temporary import table");
