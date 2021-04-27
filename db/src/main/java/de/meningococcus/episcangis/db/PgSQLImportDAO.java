@@ -50,7 +50,7 @@ final class PgSQLImportDAO extends DbUtilsDAO implements ImportDAO
     int exitStatus = -1;
     try
     {
-      List lines = FileUtils.readLines(csvFile, null);
+      List lines = FileUtils.readLines(csvFile);
       int lineCount = 0;
       Iterator lineIterator = lines.iterator();
       log.debug("Clearing temporary import table");
