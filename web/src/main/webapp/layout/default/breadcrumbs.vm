@@ -4,6 +4,12 @@
   ##############################################################################
 </div>
 <div class="xright">
+  <span>
+    <a href="http://www.cdc.gov/ncidod/EID/vol12no11/06-0682.htm">$msg.global.publication Elias et al.</a>
+  </span> |
+  <span>
+    <a href="http://www.ij-healthgeographics.com/content/7/1/33">$msg.global.publication Reinhardt et al.</a>
+  </span> |
   ##############################################################################
   ## Login/Register respectively Logout
   ##############################################################################

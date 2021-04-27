@@ -10,7 +10,9 @@
     , <a href="#incidence">$msg.map.layer.incidence</a>
     , <a href="#casetypes">$msg.map.layer.casetypes</a>
     , <a href="#serogroups">$msg.map.layer.serogroups</a>
+    #if($user.isInRole("public_health") || $user.isInRole("nrzm"))
     , <a href="#cluster">$msg.map.layer.cluster</a>
+    #end      
   </p>
   <p>
     Diese Seite gibt einen Überblick über die Funktionsweise der
@@ -23,13 +25,13 @@
   <div class="section">
     <a name="overview"></a><h2>Gesamtübersicht</h2>
     <p>
-      Wir erklären Ihnen anhand der Nummerierungen in der folgenden Abbildung,
+      Wir erklären Ihnen anhand der Nummerierungen in der folgenden Abbildung, 
       was Sie mit den jeweiligen Schaltflächen des Programms
       einstellen können bzw. welche Informationen in den entsprechenden
       Bereichen angezeigt werden.
     </p>
     <p class="figure">
-      <img style="border:1px solid black" width="90%"
+      <img style="border:1px solid black" width="90%" 
         src="images/manual/screenshot_public_health__nrzm.png"
         alt="Screenshot der EpiScanGIS Webanwendung" />
       <br />
@@ -111,7 +113,7 @@
         #end
 
         Sie können sich mehr Informationen zu einem Punkt auf der Karte
-        einblenden lassen, indem Sie mit der linken Maustaste klicken.
+        einblenden lassen, indem Sie mit der linken Maustaste klicken. 
         Dieser Vorgang fragt alle aktiven Ebenen nach zusätzlichen Daten ab.
       </li>
       <li>
@@ -167,7 +169,7 @@
       <a name="incidence"></a><h3>$msg.map.layer.incidence</h3>
       <p>
         Zeigt die Jahresinzidenz der Erkrankungsfälle für Bundesländer
-        bzw. Landkreise an. Die Berechnung bezieht dabei alle Fälle der
+        bzw. Landkreise an. Die Berechnung bezieht dabei alle Fälle der 
         ausgewählten Serogruppe(n) mit ein, die während des angegebenen
         Zeitraums aufgetreten sind.
       </p>
@@ -195,7 +197,7 @@
         Stellt die Verteilung eines Meningokokken-Feintyps auf der
         Landkarte dar, wobei die Menge der angezeigten Fälle durch die
         Altersgrenzen und den Zeitraum beschränkt werden. Sie können über das
-        Suchfeld ein spezifischer Feintyp aus den bisher im System erfassten
+        Suchfeld ein spezifischer Feintyp aus den bisher im System erfassten 
         finden.
       </p>
       <p>
@@ -237,7 +239,7 @@
         mit gedrückter <tt>Strg</tt>-Taste aus der Liste gewählt werden.
       </p>
       <p>
-        Unterschiedliche Symbole und Farben kennzeichnen die Gruppen
+        Unterschiedliche Symbole und Farben kennzeichnen die Gruppen 
         B, C, Y, W135, 29E, A und Z eindeutig.
       </p>
       <p>
@@ -253,6 +255,7 @@
       </p>
     </div>
 
+    #if($user.isInRole("public_health") || $user.isInRole("nrzm"))
     <div class="section">
       <a name="cluster"></a><h3>$msg.map.layer.cluster</h3>
       <p>
@@ -265,7 +268,7 @@
         Die folgenden Abbildungen zeigen zwei Beispieldarstellungen der
         Ebene.
       </p>
-      <p class="figure">
+      <p class="figure">  
       <img style="border:1px solid black" width="90%"
         src="images/manual/cluster.gif"
         alt="Cluster, Feintyp C : P1.7-4,14-6 : F3-9" />
@@ -277,7 +280,7 @@
         2005
       </p>
     </div>
-    <!--
+    <!-- 
     <div class="section">
       <h3>Monthly retrospective clusters</h3>
       <p>
@@ -290,7 +293,7 @@
         Die folgenden Abbildungen zeigen zwei Beispieldarstellungen der
         Ebene.
       </p>
-      <p class="figure">
+      <p class="figure">  
       <img style="border:1px solid black" width="400px"
         src="images/manual/cluster_retro.gif"
         alt="Historische Cluster vom 1. September 2005" />
@@ -301,6 +304,7 @@
       </p>
     </div>
     -->
+    #end
 
   </div>
 </div>

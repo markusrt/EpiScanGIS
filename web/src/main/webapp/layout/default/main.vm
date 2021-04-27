@@ -1,11 +1,7 @@
-<!DOCTYPE html
+<!DOCTYPE html 
 PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-#if( $request.getParameter("disableNav") )
- #set( $disableNav=$request.getParameter("disableNav"))
-#end
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="$msg.lang"
-  lang="$msg.lang">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="$msg.lang" lang="$msg.lang">
   <head>
     <title>$msg.global.name - $!page_title</title>
     <style type="text/css" media="all">
@@ -31,38 +27,40 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
     </style>
     <meta name="author" content="Markus Reinhardt" />
     <meta name="robots" content="index,follow" />
-    <meta name="keywords" lang="de"
-      content="Meningokokken,Infektion,Epidemiologie,Frühwarnsystem,Ausbruch,Überwachung,GIS,Geographisches,Informationssystem" />
-    <meta name="description" lang="de"
-      content="Web-basiertes System zur Überwachung der Meningokokken-Infektionen in Deutschland" />
-    <meta name="keywords" lang="en-us"
-      content="meningococcal,disease,epidemiology,early warning,surveillance,outbreak,GIS,geographical information system" />
-    <meta name="description" lang="en-us"
-      content="Online meningococcal disease surveillance and outbreak detection in Germany using a web-based geographical information system." />
-    <meta name="keywords" lang="en"
-      content="meningococcal,disease,epidemiology,early warning,surveillance,outbreak,GIS,geographical information system" />
-    <meta name="description" lang="en"
-      content="Online meningococcal disease surveillance and outbreak detection in Germany using a web-based geographical information system." />
+    <meta name="keywords" lang="de" 
+    content="Meningokokken,Infektion,Epidemiologie,Frühwarnsystem,Ausbruch,Überwachung,GIS,Geographisches,Informationssystem" />
+    <meta name="description" lang="de" 
+    content="Web-basiertes System zur Überwachung der Meningokokken-Infektionen in Deutschland" />
+    <meta name="keywords" lang="en-us" 
+    content="meningococcal,disease,epidemiology,early warning,surveillance,outbreak,GIS,geographical information system" />
+    <meta name="description" lang="en-us" 
+    content="Online meningococcal disease surveillance and outbreak detection in Germany using a web-based geographical information system." />
+    <meta name="keywords" lang="en" 
+    content="meningococcal,disease,epidemiology,early warning,surveillance,outbreak,GIS,geographical information system" />
+    <meta name="description" lang="en" 
+    content="Online meningococcal disease surveillance and outbreak detection in Germany using a web-based geographical information system." />
+    <meta prefix="og: http://ogp.me/ns#" property="og:image" content="http://episcangis.org/images/logo_episcangis.png" />
+    $!headerStuff
   </head>
-  <body onload="$!page_onload">
+  <body>
     #if ( !$disableBanner || $disableBanner==false )
     <div id="banner">
       <div id="bannerLeft">
-        <a href="welcome.vm">
-          <img src="images/logo_episcangis.png" alt="$msg.global.title" />
-        </a>
+        <a href="welcome.vm"><img 
+          src="images/logo_episcangis.png" alt="$msg.global.title"/></a>
       </div>
 
-      <div id="bannerRight"></div>
+      <div id="bannerRight">
+      </div>
       <div class="clear">
-        <hr />
+        <hr/>
       </div>
     </div>
     #end
     <div id="breadcrumbs">
       #parse('layout/default/breadcrumbs.vm')
       <div class="clear">
-        <hr />
+        <hr/>
       </div>
     </div>
     #if ($messages.exist())
@@ -70,27 +68,38 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
       <dl style="font-size:smaller;">
         <dt>Message/s</dt>
         <dd>
-          #foreach ($e in $messages.all ) $e
-          <br />
+          #foreach ($e in $messages.all )
+            $e<br />
           #end
         </dd>
-      </dl>
+     </dl>
     </div>
     #end
     #if ( !$disableNav || $disableNav==false )
-    <div id="leftColumn">#parse('layout/default/navigation.vm')</div>
+    <div id="leftColumn">
+      #parse('layout/default/navigation.vm')
+    </div>
     #end
     <div id="bodyColumn">
-      <div id="contentBox">$screen_content</div>
+      <div id="contentBox">
+        $screen_content
+      </div>
     </div>
     <div class="clear">
-      <hr />
+      <hr/>
     </div>
     <div id="footer">
       #parse('layout/default/footer.vm')
       <div class="clear">
-        <hr />
+        <hr/>
       </div>
     </div>
+    <script src="http://www.google-analytics.com/urchin.js" 
+      type="text/javascript">
+    </script>
+    <script type="text/javascript">
+      _uacct = "UA-1889676-1";
+      urchinTracker();
+    </script>
   </body>
 </html>
