@@ -60,7 +60,7 @@
         <configuration>
           <archive>
             <manifest>
-              <mainClass>de.meningococcus.episcangis.import.ImportApp</mainClass>
+              <mainClass>de.meningococcus.episcangis.importer.ImportApp</mainClass>
               <packageName>episcangis-import</packageName>
               <addClasspath>true</addClasspath>
             </manifest>
@@ -68,20 +68,18 @@
         </configuration>
       </plugin>
       <plugin>
-        <artifactId>maven-assembly-plugin
-        </artifactId>
+        <artifactId>maven-assembly-plugin</artifactId>
         <configuration>
           <descriptorRefs>
             <value>jar-with-dependencies</value>
           </descriptorRefs>
-          <manifest>
-            <mainClass>de.meningococcus.episcangis.import.ImportApp
-            </mainClass>
-            <packageName>episcangis-import
-            </packageName>
-            <addClasspath>true
-            </addClasspath>
-          </manifest>
+          <archive>
+            <manifest>
+              <mainClass>de.meningococcus.episcangis.importer.ImportApp</mainClass>
+              <packageName>episcangis-import</packageName>
+              <addClasspath>true</addClasspath>
+            </manifest>
+          </archive>
         </configuration>
       </plugin>
     </plugins>
