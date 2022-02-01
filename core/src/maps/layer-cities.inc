@@ -1,17 +1,15 @@
 LAYER
-  DUMP TRUE
-  TEMPLATE "DUMMY"
+  #TEMPLATE "DUMMY"
   NAME cities_default
-  STATUS ON
-    TEMPLATE "DUMMY"
-        DUMP TRUE
-    NAME cities_default
-    METADATA
-          "wms_srs"    "epsg:4326"
-      "wms_title" "Cities"
-      "wms_include_items" "all"
-    END
-
+  STATUS ON 
+  #TEMPLATE "DUMMY"
+	#DUMP TRUE
+  NAME cities_default
+  METADATA
+	  #"wms_srs"    "epsg:4326"
+    "wms_title" "Cities"
+    #"wms_include_items" "all"
+  END
   INCLUDE "connection.inc"
   DATA "the_geom from (
     SELECT gid AS oid, the_geom,
@@ -23,16 +21,16 @@ LAYER
   #UNITS METERS
   #  SIZEUNITS PIXELS
   #SYMBOLSCALE 1200000
-
+	
   LABELITEM "name"
-
+  
   PROJECTION
     "init=epsg:4326"
   END
-
+    
  LABELMAXSCALE 15000000
  SYMBOLSCALE 1000
-
+	
    CLASS
      NAME "Cities"
     EXPRESSION (0)
@@ -41,9 +39,9 @@ LAYER
      NAME "(Population):"
     EXPRESSION (0)
    END
-   CLASS        #over 1M citizens
+   CLASS	#over 1M citizens
     EXPRESSION ([population] > 1000000)
-    NAME 'over 1 Million'
+    NAME 'over 1 Million' 
     MINSCALE 1000
     MAXSCALE 15000000
     STYLE
@@ -51,7 +49,7 @@ LAYER
       MINSIZE 8
       MAXSIZE 16
       COLOR 255 0 0 #169 169 169
-      OUTLINECOLOR 0 0 0
+      OUTLINECOLOR 0 0 0 
     END
     #STYLE
     #  SYMBOL 'square'
@@ -77,12 +75,12 @@ LAYER
       PARTIALS FALSE
       ENCODING UTF-8
     END
-        END
-
+	END
+  
   CLASS #500K - 1M citizens
     EXPRESSION ([population] > 500000 AND [population] <= 1000000)
     #SYMBOL 'square'
-    NAME '500000 - 1 Million'
+    NAME '500000 - 1 Million' 
     MINSCALE 1000
     MAXSCALE 15000000
     #MINSIZE 6
@@ -93,7 +91,7 @@ LAYER
       MINSIZE 9
       MAXSIZE 11
       COLOR 255 0 0 #169 169 169
-      OUTLINECOLOR 0 0 0
+      OUTLINECOLOR 0 0 0 
     END
     STYLE
       SYMBOL 'circle'
@@ -117,11 +115,11 @@ LAYER
       #ANTIALIAS TRUE
       PARTIALS FALSE
     END
-        END
-
+	END
+  
   CLASS #100K - 500K citizens
     EXPRESSION ([population] > 100000 AND [population] <= 500000)
-    NAME '100000 - 500000'
+    NAME '100000 - 500000' 
     MINSCALE 1000
     MAXSCALE 2500000
     MINSIZE 7
@@ -137,7 +135,7 @@ LAYER
       #POSITION ur
       #OFFSET 1 1
       MINDISTANCE 10
-
+      
       #BACKGROUNDCOLOR 255 255 255
       OUTLINECOLOR 254 254 254
       COLOR 0 0 0
@@ -145,11 +143,11 @@ LAYER
       PARTIALS FALSE
     END
     OUTLINECOLOR 0 0 0
-        END
-
+	END
+  
   CLASS #50K - 100K citizens
     EXPRESSION ([population] > 20000 AND [population] <= 100000)
-    NAME '20000 - 100000'
+    NAME '20000 - 100000' 
     MINSCALE 1000
     MAXSCALE 500000
     MINSIZE 5
@@ -165,7 +163,7 @@ LAYER
       #POSITION ur
       #OFFSET 1 1
       MINDISTANCE 10
-
+      
       #BACKGROUNDCOLOR 255 255 255
       OUTLINECOLOR 254 254 254
       COLOR 0 0 0
@@ -173,11 +171,11 @@ LAYER
       PARTIALS FALSE
     END
     OUTLINECOLOR 0 0 0
-        END
-
+	END
+  
   CLASS #20K citizens and below
     EXPRESSION ([population] <= 20000)
-    NAME 'less than 20000'
+    NAME 'less than 20000' 
     MINSCALE 1000
     MAXSCALE 300000
     MINSIZE 3
@@ -193,16 +191,16 @@ LAYER
       #POSITION ur
       #OFFSET 1 1
       MINDISTANCE 10
-
+      
       #BACKGROUNDCOLOR 255 255 255
       OUTLINECOLOR 254 254 254
       COLOR 0 0 0
       #ANTIALIAS TRUE
       PARTIALS FALSE
     END
-        END
-
-  #CLASS
+	END
+  
+  #CLASS	
   #  EXPRESSION "3"
   #  MINSCALE 1000
   #  MAXSCALE 200000
@@ -211,8 +209,8 @@ LAYER
   #  COLOR 255 255 255 #169 169 169
   #  OUTLINECOLOR 0 0 0
   #END
-
-  #CLASS
+  
+  #CLASS	
   #  EXPRESSION "4"
   #  MINSCALE 1000
   #  MAXSCALE 200000

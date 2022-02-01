@@ -3,12 +3,12 @@ LAYER
   #TEMPLATE "DUMMY"
   #DUMP TRUE
   VALIDATION
-    "fromAge" "^[0-9]{4}$"
-    "toAge" "^[0-9]{4}$"
-    "fromMonth" "^[0-9]{2}$"
-    "toMonth" "^[0-9]{2}$"
-    "fromYear" "^[0-9]{4}$"
-    "toYear" "^[0-9]{4}$"
+    "fromAge" "^[0-9]+$"
+    "toAge" "^[0-9]+$"
+    "fromMonth" "^[0-9]+$"
+    "toMonth" "^[0-9]+$"
+    "fromYear" "^[0-9]+$"
+    "toYear" "^[0-9]+$"
     "SEROGROUPS" "^.*$"
   END
   NAME serogroups_default
@@ -115,3 +115,4 @@ LAYER
     OUTLINECOLOR 0 255 0
   END
 END
+

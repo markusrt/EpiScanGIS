@@ -7,10 +7,10 @@ LAYER #voronoi
   END
   INCLUDE "connection.inc"
   DATA "polygon FROM (
-    SELECT id, polygon FROM vornoi_areas )
+    SELECT id, polygon FROM vornoi_areas ) 
     AS foo USING SRID=4326 USING UNIQUE id"
   SYMBOLSCALE 3000000
-  STATUS ON
+  STATUS ON 
   TYPE POLYGON
   PROJECTION
     "init=epsg:4326"
