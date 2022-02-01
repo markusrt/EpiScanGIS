@@ -3,16 +3,13 @@
 <div class="section">
   <h1>$msg.global.title</h1>
   <b>Aktueller Status:</b>
-  <dl>
-   <dt>1. Dezember 2020</dt>
+  <dl style="background-color: #BEE5B0;">
+   <dt>1. Februar 2022</dt>
    <dd>
      <p>
-        Das System wird im Moment aktualisiert, da der Flash Player ab 2021 nicht mehr verfügbar ist.
-        Aus diesem Grund funktioniert der Kartenbetrachter nur eingeschränkt bzw. teilweise gar nicht.
-        Zudem ist die Datenaktualisierung pausiert.        
-     </p>
-     <p>
-       Anfang Mai 2021 wird EpiScanGIS wieder verfügbar sein. Entschuldigen Sie bitte die Unannehmlichkeiten.
+        EpiScanGIS funktioniert wieder wie gewohnt. Ab heute werden die Daten auf
+        dieser Seite wieder <u>wöchentlich</u> aktualisiert. Entschuldigen Sie bitte
+        die lange Verzögerung!        
      </p>
    </dd>
   </dl>
@@ -32,7 +29,7 @@
   <p style="text-align:center">
     <b>Starten Sie den Kartenbetrachter!</b><br />
     <a href="#"
-      onclick="window.open('http://episcangis.hygiene.uni-wuerzburg.de:8080/mapviewer.html','mapbrowser','status=no,scrollbars=no,width=1120,height=880')"><img
+      onclick="window.open('https://episcangis.hygiene.uni-wuerzburg.de/mapviewer.html','mapbrowser','status=no,scrollbars=no,width=1120,height=930')"><img
         src="images/go_episcangis.png" alt="EpiScanGIS - Web Surveillance starten" />
     </a>
     <br />

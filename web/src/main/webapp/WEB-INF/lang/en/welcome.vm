@@ -3,15 +3,12 @@
 <div class="section">
   <h1>$msg.global.title</h1>
   <b>Current Status:</b>
-  <dl>
-   <dt>December 1, 2020</dt>
+  <dl style="background-color: #BEE5B0;">
+   <dt>February 1, 2022</dt>
    <dd>
      <p>
-        The system is currently updated to run without flash player.
-        Therefore the map browser is not fully available/may have issues and data update is paused.
-     </p>
-     <p>
-       EpiScanGIS will be up and running again beginning of Mai 2021. Sorry for the inconvenience.
+        EpiScanGIS is up and running again. Starting from today data will be refreshed again on
+        a <u>weekly basis</u>. Sorry for the long delay!
      </p>
    </dd>
   </dl>
@@ -31,7 +28,7 @@
   <p style="text-align:center">
     <b>Start the map browser!</b><br />
     <a href="#"
-      onclick="window.open('http://episcangis.hygiene.uni-wuerzburg.de:8080/mapviewer.html','mapbrowser','status=no,scrollbars=no,width=1120,height=880')"><img
+      onclick="window.open('https://episcangis.hygiene.uni-wuerzburg.de/mapviewer.html','mapbrowser','status=no,scrollbars=no,width=1120,height=930')"><img
         src="images/go_episcangis.png" alt="Start EpiScanGIS - Web Surveillance" />
     </a>
     <br />
