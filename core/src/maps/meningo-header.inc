@@ -2,7 +2,7 @@
 
 NAME EPISCANGIS
 
-CONFIG "MS_ERRORFILE" "stderr"
+CONFIG "MS_ERRORFILE" "/tmp/mapdebug"
 DEBUG 5
 
 #Bounding box of the displayed map area
@@ -13,67 +13,68 @@ EXTENT 3280173.25 5238019 3921337.5 6103262.5
 
 FONTSET "fonts/fonts.list"
 
-SYMBOLSET "symbols/symbols35.sym"
+SYMBOLSET "symbols/symbols35.sym" 
 
 WEB
-        MINSCALE 1000
+    MINSCALE 1000
     MAXSCALE 15000000
     METADATA
       "wms_title" "EpiScanGIS Web Surveillance WMS"
       "wms_srs" "EPSG:4326 EPSG:31467"
       "wms_enable_request" "*"
+      "ows_onlineresource" ""
     END
 END
 
 OUTPUTFORMAT
-        NAME gif
-        DRIVER "GD/GIF"
-        MIMETYPE "image/gif"
-        IMAGEMODE PC256
-        EXTENSION "gif"
+	NAME gif
+	DRIVER "GD/GIF"
+	MIMETYPE "image/gif"
+	IMAGEMODE PC256
+	EXTENSION "gif"
 END
 
 OUTPUTFORMAT
-        NAME jpeg
-        DRIVER "GD/JPEG"
-        FORMATOPTION "QUALITY=95"
-        MIMETYPE "image/jpeg"
-        IMAGEMODE RGB
-        EXTENSION "jpg"
+	NAME jpeg
+	DRIVER "GD/JPEG"
+	FORMATOPTION "QUALITY=95"
+	MIMETYPE "image/jpeg"
+	IMAGEMODE RGB
+	EXTENSION "jpg"
 END
 
 OUTPUTFORMAT
-        NAME png
-        DRIVER "GD/PNG"
-        MIMETYPE "image/png"
-        IMAGEMODE RGB
-        EXTENSION "png"
+	NAME png
+	DRIVER "GD/PNG"
+	MIMETYPE "image/png"
+	IMAGEMODE RGB
+	EXTENSION "png"
 END
 
 IMAGETYPE gif
 
 LEGEND
-        KEYSIZE 12 12
-        KEYSPACING 3 3
-        IMAGECOLOR 238 238 238
-        STATUS OFF
+	KEYSIZE 12 12
+	KEYSPACING 3 3
+	IMAGECOLOR 238 238 238
+	STATUS OFF
 END
 
 SCALEBAR
-        IMAGECOLOR 255 255 255
-        LABEL
-        COLOR 0 0 0
-        SIZE TINY
-        END
-        STYLE 0
-        SIZE 120 2
-        COLOR 0 0 0
-        BACKGROUNDCOLOR 232 239 250
-        UNITS KILOMETERS
-        INTERVALS 3
-        TRANSPARENT TRUE
-        STATUS EMBED
-        POSITION LR
+	IMAGECOLOR 255 255 255
+	LABEL
+	COLOR 0 0 0
+	SIZE TINY
+	END
+	STYLE 0
+	SIZE 120 2
+	COLOR 0 0 0
+	BACKGROUNDCOLOR 232 239 250
+	UNITS KILOMETERS
+	INTERVALS 3
+	TRANSPARENT TRUE
+	STATUS EMBED
+	POSITION LR
 END
 
 SIZE  460 500
@@ -81,5 +82,5 @@ SIZE  460 500
 IMAGECOLOR     255 255 255
 
 PROJECTION
-        "init=epsg:4326"
+	"init=epsg:4326"
 END

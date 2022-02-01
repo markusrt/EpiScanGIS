@@ -1,2 +1,2 @@
 CONNECTIONTYPE postgis
-CONNECTION "user=apache password=DMmnc dbname=epidegis_works host=localhost"
+CONNECTION "user=xxx password=yyy dbname=episcangis host=zzz"

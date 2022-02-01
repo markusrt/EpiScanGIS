@@ -21,7 +21,7 @@
 #-------------------------------------------------------------------------------
 
 MAP
-	INCLUDE "meningo-header.inc"
+  INCLUDE "meningo-header.inc"
   
   # INCLUDE "layer-cloudtest.inc"
   
@@ -31,7 +31,7 @@ MAP
   
   INCLUDE "layer-border.inc"
   
-  INCLUDE "layer-finetypes.inc"
+  # INCLUDE "layer-finetypes.inc"
   
   INCLUDE "layer-serogroups.inc"
   
