@@ -274,11 +274,6 @@
   </reporting>
   <repositories>
     <repository>
-      <name>StrutsTest</name>
-      <id>strutstest</id>
-      <url>http://www.nurflugel.com/Home/repository</url>
-    </repository>
-    <repository>
       <name>Geotools repository</name>
       <id>osgeo.org</id>
       <url>https://repo.osgeo.org/repository/release/</url>
