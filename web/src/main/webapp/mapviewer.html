@@ -165,11 +165,8 @@
                     <canvas id="canvas_layer_cities_default" style="z-index: 5; position:absolute; left:0px; top:0px;"
                         height="700px" width="500">
                     </canvas>
-                    <div style="z-index: 1; position:absolute; left:550px; top:0px;">
-                        <img src="./GetLegendGraphic.do?layer=serogroups_default" />
-                        <img src="./GetLegendGraphic.do?layer=incidence" style="margin-top: 1em"/>
-                        <img src="./GetLegendGraphic.do?layer=popdensity" style="margin-top: 1em"/>
-                        <img src="./GetLegendGraphic.do?layer=cities_default" style="margin-top: 1em"/>
+                    <div id="legends" style="z-index: 1; position:absolute; left:550px; top:0px;padding:1em;background-color:#eeeeee">
+                        <b>Legend</b>
                     </div>
                 </div>
             </main>
@@ -210,11 +207,12 @@
                         var name = $(this).attr("name");
                         var active = $(this).attr("active");
                         console.log("Layer: "+ name + " - " + active);
-                        layers.push({name: name, active: active});
+                        layers.push({name: name, active: active, legend: $(this).find("legend").length>0});
                     });
                     initializeFilters(data);
                     initializeLayerCheckboxes(layers);
                     refreshLayers(layers);
+                    addLegends(layers)
                 }
             ).always(function () {
                 loading(false);
@@ -225,6 +223,16 @@
             layers.forEach(
                 layer => {
                     if(layer.active == "true") refreshLayer(layer.name);
+                }
+            );
+        }
+
+        function addLegends(layers) {
+            layers.forEach(
+                layer => {
+                    if(layer.legend) {
+                        $("#legends").append( "<img src='./GetLegendGraphic.do?layer=" + layer.name + "' style='margin-top: 1em'/>" )
+                    }
                 }
             );
         }
