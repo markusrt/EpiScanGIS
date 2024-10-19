@@ -33,26 +33,36 @@ LAYER #Population density
   CLASS
    NAME "0 - 50"
    EXPRESSION ([popdensity] <= 50)
-   COLOR 230 230 230
+   STYLE
+    COLOR 230 230 230
+   END
   END
   CLASS
    NAME "50 - 130"
    EXPRESSION ([popdensity] > 50 AND [popdensity] <= 130)
-   COLOR 204 204 204
+   STYLE
+    COLOR 204 204 204
+   END
   END
   CLASS
    NAME "130 - 210"
    EXPRESSION ([popdensity] > 130 AND [popdensity] <= 210)
-   COLOR 153 153 153
+   STYLE
+    COLOR 153 153 153
+   END
   END
   CLASS
    NAME "210 - 390"
    EXPRESSION ([popdensity] > 210 AND [popdensity] <= 390)
-   COLOR 102 102 102
+   STYLE
+    COLOR 102 102 102
+   END
   END
   CLASS
    NAME "> 390"
    EXPRESSION ([popdensity] > 390)
-   COLOR 51 51 51
+   STYLE
+    COLOR 51 51 51
+   END
   END
 END #Layer Population density

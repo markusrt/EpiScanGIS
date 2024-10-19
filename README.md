@@ -35,17 +35,25 @@ SaTScan™ is a trademark of Martin Kulldorff. The SaTScan™ software was devel
 
 EpiScanGIS and its implementation has been published in the International Journal of Health Geographics. Please download the paper under the following link: http://www.ij-healthgeographics.com/content/7/1/33
 
->      Reinhardt M, Elias J, Albert J, Frosch M, Harmsen D, Vogel U.
->      EpiScanGIS: an online geographic surveillance system for meningococcal disease.
->      Int J Health Geogr.
->      2008 Jul 1;7:33.
->      PubMed PMID: 18593474; PubMed Central PMCID: PMC2483700
+> Reinhardt M, Elias J, Albert J, Frosch M, Harmsen D, Vogel U.
+> EpiScanGIS: an online geographic surveillance system for meningococcal disease.
+> Int J Health Geogr.
+> 2008 Jul 1;7:33.
+> PubMed PMID: 18593474; PubMed Central PMCID: PMC2483700
       
 SaTScan analysis based on meningococcal finetypes has been published by Elias et al. Please download the paper under the following link: http://www.cdc.gov/ncidod/EID/vol12no11/06-0682.htm
 
->      Elias J, Harmsen D, Claus H, Hellenbrand W, Frosch M, Vogel U.
->      Spatiotemporal analysis of invasive meningococcal disease, Germany.
->      Emerg Infect Dis.
->      2006 Nov;12(11):1689-95.
->      PubMed PMID: 17283618.
-      
+> Elias J, Harmsen D, Claus H, Hellenbrand W, Frosch M, Vogel U.
+> Spatiotemporal analysis of invasive meningococcal disease, Germany.
+> Emerg Infect Dis.
+> 2006 Nov;12(11):1689-95.
+> PubMed PMID: 17283618.
+
+## Development
+
+### Mapfile syntax checking
+
+With every MapServer major release there is ususally a change in syntax for `.map` files.
+[MapServer Studio](https://app.mapserverstudio.net/) is a helpful tool to detect issues.
+
+Just put in your `.map` file or `.inc` snippet, e.g., a layer, and click format to validate.

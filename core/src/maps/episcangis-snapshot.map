@@ -35,8 +35,8 @@ MAP
   SYMBOLSET "symbols/symbols35.sym"
   DEBUG 5
   WEB
-    MINSCALE 1000
-    MAXSCALE 15000000
+    MINSCALEDENOM 1000
+    MAXSCALEDENOM 15000000
     METADATA
       "wms_title" "EpiScanGIS Web Surveillance WMS"
       "wms_srs" "EPSG:4326 EPSG:31467"
@@ -401,9 +401,9 @@ MAP
 #DEBUG ON
    TYPE POINT
    #kleinerer Wert -> Ebene auch bei größerem Zoom sichtbar
-   MINSCALE 500000
+   MINSCALEDENOM 500000
    #kleinerer Wert -> Ebene verschwindet beim rauszoomen eher
-   MAXSCALE 6000000
+   MAXSCALEDENOM 6000000
 
    PROJECTION
      "init=epsg:4326"
@@ -417,8 +417,8 @@ MAP
     CLASS
       NAME ' Selected finetype'
       SYMBOL 'circle'
-      MINSCALE 500000
-      MAXSCALE 6000000
+      MINSCALEDENOM 500000
+      MAXSCALEDENOM 6000000
       MINSIZE 13
       MAXSIZE 31
       COLOR 255 180 30
@@ -460,8 +460,8 @@ MAP
     CLASS
       MINSIZE 7
       MAXSIZE 30
-      MINSCALE 1000
-      MAXSCALE 15000000
+      MINSCALEDENOM 1000
+      MAXSCALEDENOM 15000000
       NAME 'B'
       EXPRESSION "B"
       SYMBOL 'triangle'
@@ -471,8 +471,8 @@ MAP
     CLASS
       MINSIZE 7
       MAXSIZE 30
-      MINSCALE 1000
-      MAXSCALE 15000000
+      MINSCALEDENOM 1000
+      MAXSCALEDENOM 15000000
       NAME 'C'
       EXPRESSION "C"
       SYMBOL 'triangle'
@@ -482,8 +482,8 @@ MAP
     CLASS
       MINSIZE 7
       MAXSIZE 30
-      MINSCALE 1000
-      MAXSCALE 15000000
+      MINSCALEDENOM 1000
+      MAXSCALEDENOM 15000000
       NAME 'Y'
       EXPRESSION "Y"
       SYMBOL 'triangle'
@@ -493,8 +493,8 @@ MAP
     CLASS
       MINSIZE 6
       MAXSIZE 27
-      MINSCALE 1000
-      MAXSCALE 15000000
+      MINSCALEDENOM 1000
+      MAXSCALEDENOM 15000000
       NAME 'W135'
       EXPRESSION "W135"
       SYMBOL 'square'
@@ -504,8 +504,8 @@ MAP
     CLASS
       MINSIZE 6
       MAXSIZE 27
-      MINSCALE 1000
-      MAXSCALE 15000000
+      MINSCALEDENOM 1000
+      MAXSCALEDENOM 15000000
       NAME '29E'
       EXPRESSION "29E"
       SYMBOL 'square'
@@ -515,8 +515,8 @@ MAP
     CLASS
       MINSIZE 6
       MAXSIZE 27
-      MINSCALE 1000
-      MAXSCALE 15000000
+      MINSCALEDENOM 1000
+      MAXSCALEDENOM 15000000
       NAME 'A'
       EXPRESSION "A"
       SYMBOL 'square'
@@ -526,8 +526,8 @@ MAP
     CLASS
       MINSIZE 10
       MAXSIZE 27
-      MINSCALE 1000
-      MAXSCALE 15000000
+      MINSCALEDENOM 1000
+      MAXSCALEDENOM 15000000
       NAME 'others'
       SYMBOL 'star'
       COLOR 255 0 0
@@ -569,7 +569,7 @@ MAP
       "init=epsg:4326"
     END
 
-   LABELMAXSCALE 15000000
+   LABELMAXSCALEDENOM 15000000
    SYMBOLSCALE 1000
 
      CLASS
@@ -583,8 +583,8 @@ MAP
      CLASS	#over 1M citizens
       EXPRESSION ([population] > 1000000)
       NAME 'over 1 Million'
-      MINSCALE 1000
-      MAXSCALE 15000000
+      MINSCALEDENOM 1000
+      MAXSCALEDENOM 15000000
       STYLE
         SYMBOL 'square'
         MINSIZE 8
@@ -621,8 +621,8 @@ MAP
       EXPRESSION ([population] > 500000 AND [population] <= 1000000)
       #SYMBOL 'square'
       NAME '500000 - 1 Million'
-      MINSCALE 1000
-      MAXSCALE 15000000
+      MINSCALEDENOM 1000
+      MAXSCALEDENOM 15000000
       #MINSIZE 6
       #COLOR 255 0 0 #169 169 169
       #OUTLINECOLOR 0 0 0
@@ -660,8 +660,8 @@ MAP
     CLASS #100K - 500K citizens
       EXPRESSION ([population] > 100000 AND [population] <= 500000)
       NAME '100000 - 500000'
-      MINSCALE 1000
-      MAXSCALE 2500000
+      MINSCALEDENOM 1000
+      MAXSCALEDENOM 2500000
       MINSIZE 7
       MAXSIZE 9
       SYMBOL 'circle'
@@ -688,8 +688,8 @@ MAP
     CLASS #50K - 100K citizens
       EXPRESSION ([population] > 20000 AND [population] <= 100000)
       NAME '20000 - 100000'
-      MINSCALE 1000
-      MAXSCALE 500000
+      MINSCALEDENOM 1000
+      MAXSCALEDENOM 500000
       MINSIZE 5
       MAXSIZE 7
       SYMBOL 'circle'
@@ -716,8 +716,8 @@ MAP
     CLASS #20K citizens and below
       EXPRESSION ([population] <= 20000)
       NAME 'less than 20000'
-      MINSCALE 1000
-      MAXSCALE 300000
+      MINSCALEDENOM 1000
+      MAXSCALEDENOM 300000
       MINSIZE 3
       MAXSIZE 5
       SYMBOL 'circle'
@@ -742,8 +742,8 @@ MAP
 
     #CLASS
     #  EXPRESSION "3"
-    #  MINSCALE 1000
-    #  MAXSCALE 200000
+    #  MINSCALEDENOM 1000
+    #  MAXSCALEDENOM 200000
     #  SYMBOL 'circle'
     #  #SIZE 3
     #  COLOR 255 255 255 #169 169 169
@@ -752,8 +752,8 @@ MAP
 
     #CLASS
     #  EXPRESSION "4"
-    #  MINSCALE 1000
-    #  MAXSCALE 200000
+    #  MINSCALEDENOM 1000
+    #  MAXSCALEDENOM 200000
     #  SYMBOL 'square'
     #  #SIZE 1
     #  COLOR 0 255 0 #169 169 169
@@ -785,8 +785,8 @@ MAP
     CLASSITEM "pc"
     CLASS	#Großstädte
       EXPRESSION  "10" #('[NAME_TYP]' = '1')	#das gleiche wie EXPRESSION "1"
-      MINSCALE 0
-      MAXSCALE 50000000
+      MINSCALEDENOM 0
+      MAXSCALEDENOM 50000000
       LABEL
 #TYPE BITMAP
         TYPE TRUETYPE
@@ -808,8 +808,8 @@ MAP
 
   CLASS			#Landeshauptstädte
      EXPRESSION '1'
-     MINSCALE 0
-     MAXSCALE 5000000
+     MINSCALEDENOM 0
+     MAXSCALEDENOM 5000000
      LABEL
        TYPE TRUETYPE
        FONT "arial-bold"
@@ -828,8 +828,8 @@ MAP
 
   CLASS
    EXPRESSION ('[pc]' = '2')
-   MINSCALE 0
-    MAXSCALE 1000000
+   MINSCALEDENOM 0
+    MAXSCALEDENOM 1000000
      LABEL
       #TYPE BITMAP
        TYPE TRUETYPE
@@ -851,8 +851,8 @@ MAP
 
   CLASS
    EXPRESSION ('[pc]' = '3')
-   MINSCALE 0
-    MAXSCALE 450000
+   MINSCALEDENOM 0
+    MAXSCALEDENOM 450000
      LABEL
       #TYPE BITMAP
        TYPE TRUETYPE
@@ -875,8 +875,8 @@ MAP
 
   CLASS
    EXPRESSION ('[pc]' = '4')
-   MINSCALE 0
-    MAXSCALE 225000
+   MINSCALEDENOM 0
+    MAXSCALEDENOM 225000
      LABEL
       #TYPE BITMAP
        TYPE TRUETYPE

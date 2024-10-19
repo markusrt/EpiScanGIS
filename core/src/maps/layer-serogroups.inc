@@ -1,7 +1,4 @@
 LAYER
-  #GROUP "query"
-  #TEMPLATE "DUMMY"
-  #DUMP TRUE
   VALIDATION
     "fromAge" "^[0-9]+$"
     "toAge" "^[0-9]+$"
@@ -17,7 +14,6 @@ LAYER
     "wms_title" "Serogroups"
   END
   INCLUDE "connection.inc"
-  #SELECT case_id AS oid, setSrid(translate(the_geom,random(),random(),random()),4326) AS the_geom, identifier, attvalue, attname
   DATA "the_geom from (
   SELECT *
       FROM episcangis_cases_per_attribute_value
@@ -28,7 +24,7 @@ LAYER
   STATUS ON
  TYPE POINT
 
- SYMBOLSCALE 3000000
+ SYMBOLSCALEDENOM 3000000
 
  PROJECTION
    "init=epsg:4326"
@@ -39,80 +35,97 @@ LAYER
    EXPRESSION (0)
   END
   CLASS
-    MINSIZE 7
-    MAXSIZE 30
-    MINSCALE 1000
-    MAXSCALE 15000000
+    MINSCALEDENOM 1000
+    MAXSCALEDENOM 15000000
     NAME 'B'
     EXPRESSION "B"
-    SYMBOL 'triangle'
-    COLOR 255 0 255
-    OUTLINECOLOR 0 0 0
+    STYLE
+     MINSIZE 7
+     MAXSIZE 30     
+     SYMBOL 'triangle'
+     COLOR 255 0 255
+     OUTLINECOLOR 0 0 0
+    END
   END
   CLASS
-    MINSIZE 7
-    MAXSIZE 30
-    MINSCALE 1000
-    MAXSCALE 15000000
+
+    MINSCALEDENOM 1000
+    MAXSCALEDENOM 15000000
     NAME 'C'
     EXPRESSION "C"
-    SYMBOL 'triangle'
-    COLOR 255 255 0
-    OUTLINECOLOR 0 0 0
+    STYLE
+     MINSIZE 7
+     MAXSIZE 30
+     SYMBOL 'triangle'
+     COLOR 255 255 0
+     OUTLINECOLOR 0 0 0
+    END
   END
   CLASS
-    MINSIZE 7
-    MAXSIZE 30
-    MINSCALE 1000
-    MAXSCALE 15000000
+
+    MINSCALEDENOM 1000
+    MAXSCALEDENOM 15000000
     NAME 'Y'
     EXPRESSION "Y"
-    SYMBOL 'triangle'
-    COLOR 0 255 0
-    OUTLINECOLOR 0 0 0
+    STYLE
+     MINSIZE 7
+     MAXSIZE 30
+     SYMBOL 'triangle'
+     COLOR 0 255 0
+     OUTLINECOLOR 0 0 0
+    END
   END
   CLASS
-    MINSIZE 6
-    MAXSIZE 27
-    MINSCALE 1000
-    MAXSCALE 15000000
+    MINSCALEDENOM 1000
+    MAXSCALEDENOM 15000000
     NAME 'W'
     EXPRESSION "W"
-    SYMBOL 'square'
-    COLOR 255 0 255
-    OUTLINECOLOR 0 0 0
+    STYLE
+     MINSIZE 6
+     MAXSIZE 27
+     SYMBOL 'square'
+     COLOR 255 0 255
+     OUTLINECOLOR 0 0 0
+    END
   END
   CLASS
-    MINSIZE 6
-    MAXSIZE 27
-    MINSCALE 1000
-    MAXSCALE 15000000
+
+    MINSCALEDENOM 1000
+    MAXSCALEDENOM 15000000
     NAME '29E'
     EXPRESSION "29E"
-    SYMBOL 'square'
-    COLOR 255 255 0
-    OUTLINECOLOR 0 0 0
+    STYLE
+     SYMBOL 'square'
+     COLOR 255 255 0
+     OUTLINECOLOR 0 0 0
+     MINSIZE 6
+     MAXSIZE 27
+    END 
   END
   CLASS
-    MINSIZE 6
-    MAXSIZE 27
-    MINSCALE 1000
-    MAXSCALE 15000000
+    MINSCALEDENOM 1000
+    MAXSCALEDENOM 15000000
     NAME 'A'
     EXPRESSION "A"
-    SYMBOL 'square'
-    COLOR 0 255 0
-    OUTLINECOLOR 0 0 0
+    STYLE
+     MINSIZE 6
+     MAXSIZE 27
+     SYMBOL 'square'
+     COLOR 0 255 0
+     OUTLINECOLOR 0 0 0
+    END
   END
   CLASS
-    MINSIZE 10
-    MAXSIZE 27
-    MINSCALE 1000
-    MAXSCALE 15000000
+    MINSCALEDENOM 1000
+    MAXSCALEDENOM 15000000
     NAME 'others'
-    SYMBOL 'star'
-    COLOR 255 0 0
-    OUTLINECOLOR 0 255 0
+    STYLE
+     MINSIZE 10
+     MAXSIZE 27
+     SYMBOL 'star'
+     COLOR 255 0 0
+     OUTLINECOLOR 0 255 0
+    END
   END
 END
 

@@ -4,8 +4,8 @@ MAP
   FONTSET "fonts/fonts.list"
   SYMBOLSET "symbols/symbols35.sym" 
   WEB
-    MINSCALE 1000
-    MAXSCALE 15000000
+    MINSCALEDENOM 1000
+    MAXSCALEDENOM 15000000
     METADATA
       "wms_title" "EpiDeGIS Web Surveillance WMS"
       "wms_onlineresource" "http://localhost/cgi-bin/ms4?map=../maps/simple.map&"
@@ -54,13 +54,13 @@ MAP
     PROJECTION
       "init=epsg:4326"
     END
-    LABELMAXSCALE 15000000
+    LABELMAXSCALEDENOM 15000000
     SYMBOLSCALE 1000
     CLASS	
       EXPRESSION ([population] > 1000000)
       NAME 'over 1 Million' 
-      MINSCALE 1000
-      MAXSCALE 15000000
+      MINSCALEDENOM 1000
+      MAXSCALEDENOM 15000000
       STYLE
         SYMBOL 'square'
         MINSIZE 8

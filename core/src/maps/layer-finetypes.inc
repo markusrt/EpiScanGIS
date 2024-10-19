@@ -25,10 +25,10 @@ LAYER
   #DEBUG ON
   TYPE POINT
   #kleinerer Wert -> Ebene auch bei größerem Zoom sichtbar
-  MINSCALE 500000
+  MINSCALEDENOM 500000
   #kleinerer Wert -> Ebene verschwindet beim rauszoomen früher
-  # MAXSCALE 4000000
-  MAXSCALE 6000000
+  # MAXSCALEDENOM 4000000
+  MAXSCALEDENOM 6000000
 
   PROJECTION
     "init=epsg:4326"
@@ -43,9 +43,9 @@ LAYER
   CLASS
     NAME ' Selected finetype'
     SYMBOL 'circle'
-    MINSCALE 500000
-    # MAXSCALE 4000000
-    MAXSCALE 6000000
+    MINSCALEDENOM 500000
+    # MAXSCALEDENOM 4000000
+    MAXSCALEDENOM 6000000
     # MINSIZE 23
     MINSIZE 13
     # MAXSIZE 100

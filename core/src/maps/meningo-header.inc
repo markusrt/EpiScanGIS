@@ -16,11 +16,12 @@ FONTSET "fonts/fonts.list"
 SYMBOLSET "symbols/symbols35.sym" 
 
 WEB
-    MINSCALE 1000
-    MAXSCALE 15000000
+    MINSCALEDENOM 1000
+    MAXSCALEDENOM 15000000
     METADATA
       "wms_title" "EpiScanGIS Web Surveillance WMS"
       "wms_srs" "EPSG:4326 EPSG:31467"
+	  "wms_allow_getmap_without_styles" "true"
       "wms_enable_request" "*"
       "ows_onlineresource" ""
     END

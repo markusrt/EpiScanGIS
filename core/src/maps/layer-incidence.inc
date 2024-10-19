@@ -1,7 +1,5 @@
 LAYER #incidence
-  #GROUP "query"
   TEMPLATE "DUMMY"
-  #DUMP TRUE
   VALIDATION
     "fromMonth" "^[0-9]{2}$"
     "toMonth" "^[0-9]{2}$"
@@ -12,7 +10,7 @@ LAYER #incidence
   END
   METADATA
     "wms_title" "Annual incidence"
-      "wms_include_items" "all"
+    "wms_include_items" "all"
   END
   NAME incidence
   INCLUDE "connection.inc"
@@ -43,31 +41,43 @@ LAYER #incidence
   CLASS
    NAME "0"
    EXPRESSION ([incidence] <= 0)
-   COLOR 254 254 254
+   STYLE
+    COLOR 254 254 254
+   END
   END
   CLASS
    NAME "> 0 - 0.3"
    EXPRESSION (([incidence] > 0 AND [incidence] <= 0.3))
-     COLOR  0 220 220
+   STYLE
+    COLOR  0 220 220
+   END
   END
   CLASS
    NAME "0.3 - 0.6"
    EXPRESSION (([incidence] > 0.3 AND [incidence] <= 0.6))
-     COLOR 0 190 190
+   STYLE
+    COLOR 0 190 190
+   END
   END
   CLASS
    NAME "0.6 - 1.2"
    EXPRESSION (([incidence] > 0.6 AND [incidence] <= 1.2))
-     COLOR 0 143 143
+   STYLE  
+    COLOR 0 143 143
+   END
   END
   CLASS
    NAME "1.2 - 2.4"
    EXPRESSION (([incidence] > 1.2 AND [incidence] <= 2.4))
-     COLOR 0 92 92
+   STYLE
+    COLOR 0 92 92
+   END
   END
   CLASS
    NAME "> 2.4"
    EXPRESSION ([incidence] > 2.4)
-      COLOR 0 41 41
+   STYLE
+    COLOR 0 41 41
+   END
   END
 END #Layer incidence

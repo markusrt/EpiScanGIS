@@ -34,8 +34,8 @@ MAP
   DEBUG OFF
   WEB
     log "epidegis-map.log"
-    MINSCALE 1000
-    MAXSCALE 15000000
+    MINSCALEDENOM 1000
+    MAXSCALEDENOM 15000000
     METADATA
       "wms_title" "EpiDeGIS Web Surveillance WMS"
       "wms_onlineresource" "http://132.187.144.10/cgi-bin/mapserv?map=../maps/fmv7.map&"
