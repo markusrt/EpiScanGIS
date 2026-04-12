@@ -48,7 +48,7 @@ final class PgSQLClusterFeedbackDAO extends HibernateDAO implements
       }
       tan = RandomStringUtils.random(tanLength, 0, 0, true, true, null, random);
       tanFeedback = (ClusterFeedback) session.createQuery(
-          "from ClusterFeedback where tan=?").setString(0, tan).uniqueResult();
+          "from ClusterFeedback where tan=:tan").setParameter("tan", tan).uniqueResult();
       countTries++;
     } while (tanFeedback != null);
     feedback.setTan(tan);
@@ -69,7 +69,7 @@ final class PgSQLClusterFeedbackDAO extends HibernateDAO implements
     Session session = HibernateUtil.getSessionFactory().getCurrentSession();
     session.beginTransaction();
     ClusterFeedback feedback = (ClusterFeedback) session.createQuery(
-        "from ClusterFeedback where tan=?").setString(0, tan).uniqueResult();
+        "from ClusterFeedback where tan=:tan").setParameter("tan", tan).uniqueResult();
     session.close();
     return feedback;
   }

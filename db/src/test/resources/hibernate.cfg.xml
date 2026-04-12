@@ -17,7 +17,7 @@
       >de.meningococcus.episcangis.db.HibernateConnectionProvider</property>
 
     <!-- Disable the second-level cache  -->
-    <property name="cache.provider_class">org.hibernate.cache.NoCacheProvider</property>
+    <property name="cache.use_second_level_cache">false</property>
 
     <mapping resource="ClusterFeedback.hbm.xml"/>
 
