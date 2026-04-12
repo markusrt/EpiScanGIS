@@ -2,7 +2,7 @@
 \lyxformat 221
 \textclass scrbook
 \language german
-\inputencoding default
+\inputencoding utf8
 \fontscheme palatino
 \graphics default
 \float_placement hbtp
@@ -40,14 +40,14 @@ thispagestyle{empty}
 Zusammenfassung
 \layout Standard
 \added_space_top medskip 
-Die Überwachung von Infektionen erlangt in einer globalen Gesellschaft eine
- immer größere Bedeutung.
- Der Zugang zu Informationen über potenzielle Erkrankungsherde sollte aus
- diesem Grund so einfach wie möglich sein.
+Die Ãœberwachung von Infektionen erlangt in einer globalen Gesellschaft eine
+ immer grÃ¶ÃŸere Bedeutung.
+ Der Zugang zu Informationen Ã¼ber potenzielle Erkrankungsherde sollte aus
+ diesem Grund so einfach wie mÃ¶glich sein.
  Die vorliegende Arbeit befasst sich mit der Entwicklung einer web-basierten
  Anwendung, welche den Zugriff auf Untersuchungsergebnisse aus der Epidemiologie
  beschleunigt und vereinfacht.
- Erkrankungsfälle werden auf Landkarten visualisiert und Risikoanalysen
- automatisch ausgeführt.
- Über die globale Plattform Internet sind alle Informationen sofort sichtbar.
+ ErkrankungsfÃ¤lle werden auf Landkarten visualisiert und Risikoanalysen
+ automatisch ausgefÃ¼hrt.
+ Ãœber die globale Plattform Internet sind alle Informationen sofort sichtbar.
 \the_end

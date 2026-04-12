@@ -6,7 +6,7 @@
 \usepackage[all]{draftcopy}
 \end_preamble
 \language ngerman
-\inputencoding auto
+\inputencoding utf8
 \fontscheme default
 \graphics default
 \paperfontsize 12

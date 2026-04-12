@@ -14,7 +14,7 @@
 \usepackage{amssymb}
 \end_preamble
 \language german
-\inputencoding default
+\inputencoding utf8
 \fontscheme palatino
 \graphics default
 \float_placement tbph
@@ -91,7 +91,7 @@ titlepage
 \family sans
 \series bold
 \size larger
-Universität Würzburg
+UniversitÃ¤t WÃ¼rzburg
 \newline
 
 \newline
@@ -103,7 +103,7 @@ Universität Würzburg
 \family sans
 \series bold
 \size larger
-Lehrstuhl für Informatik II
+Lehrstuhl fÃ¼r Informatik II
 \end_layout
 
 \begin_layout Standard
@@ -151,7 +151,7 @@ Diplomarbeit
 \newline
 
 \size larger
-Web-basierter GIS-Service zur Überwachung von Infektionen
+Web-basierter GIS-Service zur Ãœberwachung von Infektionen
 \end_layout
 
 \begin_layout Standard
@@ -240,7 +240,7 @@ Anschrift:
 
 \family sans
 \size large
-Friesstraße 18
+FriesstraÃŸe 18
 \end_layout
 
 \end_inset
@@ -263,7 +263,7 @@ Friesstraße 18
 
 \family sans
 \size large
-97074 Würzburg
+97074 WÃ¼rzburg
 \end_layout
 
 \end_inset
@@ -311,7 +311,7 @@ Betreuer:
 \size large
 Prof.
  Dr.
- Jürgen Albert
+ JÃ¼rgen Albert
 \end_layout
 
 \end_inset
@@ -411,7 +411,7 @@ Dr.
 \family sans
 \size large
 Dipl.-Inf.
- Jörg Rothgänger
+ JÃ¶rg RothgÃ¤nger
 \end_layout
 
 \end_inset

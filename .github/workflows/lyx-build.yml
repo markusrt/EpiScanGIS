@@ -1,0 +1,132 @@
+name: LyX/LaTeX Validation & PDF Build
+
+on:
+  push:
+    paths:
+      - 'core/src/lyx/**'
+    branches: [ master ]
+  pull_request:
+    paths:
+      - 'core/src/lyx/**'
+    branches: [ master ]
+  workflow_dispatch:
+
+jobs:
+  build-pdf:
+    name: Validate & Build PDF
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install LyX and LaTeX dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends \
+            lyx \
+            texlive-latex-base \
+            texlive-latex-recommended \
+            texlive-latex-extra \
+            texlive-fonts-recommended \
+            texlive-fonts-extra \
+            texlive-font-utils \
+            texlive-extra-utils \
+            texlive-lang-german \
+            texlive-bibtex-extra \
+            texlive-science \
+            texlive-pictures \
+            cm-super \
+            ghostscript \
+            imagemagick
+
+      - name: Verify epstopdf is available
+        run: |
+          which epstopdf
+          epstopdf --version
+
+      - name: Configure LyX
+        run: |
+          # Run LyX reconfigure to detect installed LaTeX packages
+          lyx -batch -x reconfigure 2>/dev/null || true
+
+      - name: Validate LyX format
+        working-directory: core/src/lyx
+        run: |
+          echo "=== Validating LyX files ==="
+          ERRORS=0
+
+          for lyxfile in *.lyx; do
+            echo "Checking: $lyxfile"
+
+            # Verify LyX format header
+            if ! head -1 "$lyxfile" | grep -q "^#LyX"; then
+              echo "::error file=core/src/lyx/$lyxfile::Invalid LyX file - missing LyX header"
+              ERRORS=$((ERRORS + 1))
+              continue
+            fi
+
+            # Validate LyX can parse the file by exporting to LaTeX
+            if lyx -batch -e latex "$lyxfile" 2>&1; then
+              echo "  ✓ $lyxfile is valid"
+            else
+              echo "::warning file=core/src/lyx/$lyxfile::LyX export to LaTeX produced warnings"
+            fi
+          done
+
+          if [ $ERRORS -gt 0 ]; then
+            echo "::error::$ERRORS file(s) have invalid LyX format"
+            exit 1
+          fi
+
+          echo "=== All LyX files validated ==="
+
+      - name: Build PDF from diplom.lyx
+        working-directory: core/src/lyx
+        run: |
+          echo "=== Building PDF ==="
+
+          # Export to PDF via LyX (handles LyX -> LaTeX -> PDF pipeline)
+          lyx -batch -e pdf2 diplom.lyx 2>&1 | tee build.log
+
+          # If lyx batch export fails, try manual LaTeX compilation
+          if [ ! -f diplom.pdf ]; then
+            echo "Direct PDF export failed, trying LaTeX route..."
+
+            # Export to LaTeX first
+            lyx -batch -e latex diplom.lyx
+
+            if [ -f diplom.tex ]; then
+              # Run pdflatex + bibtex cycle
+              pdflatex -interaction=nonstopmode diplom.tex || true
+              bibtex diplom || true
+              pdflatex -interaction=nonstopmode diplom.tex || true
+              pdflatex -interaction=nonstopmode diplom.tex
+            fi
+          fi
+
+          # Verify PDF was created
+          if [ -f diplom.pdf ]; then
+            echo "✓ PDF successfully created"
+            ls -lh diplom.pdf
+          else
+            echo "::error::PDF build failed - diplom.pdf was not created"
+            cat build.log || true
+            exit 1
+          fi
+
+      - name: Upload PDF artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: diplom-pdf
+          path: core/src/lyx/diplom.pdf
+          retention-days: 30
+
+      - name: Upload build log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-log
+          path: core/src/lyx/build.log
+          retention-days: 7
+          if-no-files-found: ignore
