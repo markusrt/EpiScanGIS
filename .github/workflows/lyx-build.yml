@@ -30,6 +30,8 @@ jobs:
             texlive-latex-extra \
             texlive-fonts-recommended \
             texlive-fonts-extra \
+            texlive-font-utils \
+            texlive-extra-utils \
             texlive-lang-german \
             texlive-bibtex-extra \
             texlive-science \
@@ -37,6 +39,11 @@ jobs:
             cm-super \
             ghostscript \
             imagemagick
+
+      - name: Verify epstopdf is available
+        run: |
+          which epstopdf
+          epstopdf --version
 
       - name: Configure LyX
         run: |
