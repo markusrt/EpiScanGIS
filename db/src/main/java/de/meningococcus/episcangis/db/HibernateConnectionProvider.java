@@ -44,6 +44,7 @@ public class HibernateConnectionProvider implements ConnectionProvider, Configur
   @Override
   public void stop()
   {
+    // No cleanup needed; the connection pool is managed by DataSourceDaoFactory
   }
 
   @Override
@@ -53,6 +54,7 @@ public class HibernateConnectionProvider implements ConnectionProvider, Configur
   }
 
   @Override
+  @SuppressWarnings("rawtypes")
   public boolean isUnwrappableAs(Class unwrapType)
   {
     return ConnectionProvider.class.equals(unwrapType) ||
